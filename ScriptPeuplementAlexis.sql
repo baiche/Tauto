@@ -35,12 +35,12 @@ GO
 
 PRINT '> Ajout des permis '
 INSERT INTO Permis(numero, valide, points_estime) VALUES 
-	('0000000001', 'true', 0),
-	('0000000002', 'true', 0)
+	('0000000001', 'true', 5),
+	('0000000002', 'true', DEFAULT)
 GO
 
 PRINT '> Ajout des conducteurs '
 INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES 
-	('123456789', 'Francaise', 'de Finance', 'Boris', '0000000001'),
-	('987654321', 'Francaise', 'le Coco', 'David', '0000000002')
+	('123456789', 'Française', 'de Finance', 'Boris', '0000000001'),
+	('987654321', 'Française', 'le Coco', 'David', '0000000002')
 GO
