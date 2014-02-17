@@ -6,7 +6,7 @@ USE IBDR;
 
 CREATE TABLE Catalogue
 (nom char(50) PRIMARY KEY,
-date_debut date NOT NULL,
+date_debut date NOT NULL DEFAULT GETDATE(),
 date_fin date);
 
 
@@ -22,7 +22,7 @@ type_carburant char(50),--un enum serait peut-etre mieu
 annee int,
 prix money NOT NULL,
 reduction tinyint,
-portieres tinyint NOT NULL,
+portieres tinyint NOT NULL DEFAULT 5,
 PRIMARY KEY(marque,serie,type_carburant));
 
 CREATE TABLE TypePermis
@@ -33,19 +33,19 @@ CREATE TABLE SousPermis
 numero_permis char(50),
 date_obtention date NOT NULL,
 date_expiration date NOT NULL,
-periode_probatoire tinyint NOT NULL,
+periode_probatoire tinyint NOT NULL DEFAULT 3,
 PRIMARY KEY(nom_typepermis,numero_permis));
 
 CREATE TABLE Permis
 (numero char(50) PRIMARY KEY,
-valide bit,
-points_estimes tinyint NOT NULL);
+valide bit DEFAULT 'true',
+points_estimes tinyint NOT NULL DEFAULT 12);
 
 CREATE TABLE Vehicule
 (matricule char(50) PRIMARY KEY,
-kilometrage int NOT NULL,
-couleur char(50) NOT NULL, --un enum serait peut-etre mieu
-etat char(50) NOT NULL, -- un enum est prévu ici
+kilometrage int NOT NULL DEFAULT 0,
+couleur char(50) NOT NULL DEFAULT '', --un enum serait peut-etre mieu
+etat char(50) NOT NULL DEFAULT '', -- un enum est prévu ici
 marque_modele char(50),
 serie_modele char(50) NOT NULL,
 type_carburant_modele char(50));
@@ -55,14 +55,15 @@ CREATE TABLE Reservation
 date_creation date NOT NULL,
 date_debut datetime NOT NULL,
 date_fin datetime NOT NULL, 
-annule bit,
+annule bit DEFAULT 'false',
 matricule_vehicule char(50),
 id_abonnement int);
 
 CREATE TABLE Abonnement
 (id int PRIMARY KEY IDENTITY(1,1),
-date_debut date NOT NULL,
-duree int NOT NULL,
+date_debut date NOT NULL DEFAULT GETDATE(),
+duree int NOT NULL DEFAULT 1,
+renouvellement_auto bit DEFAULT 'false',
 nom_typeabonnement char(50),
 nom_compteabonne char(50),
 prenom_compteabonne char(50),
@@ -72,17 +73,32 @@ CREATE TABLE CompteAbonne
 (nom char(50),
 prenom char(50),
 date_naissance date,
-actif bit NOT NULL,
-liste_grise bit NOT NULL,
-iban char(50) NOT NULL,
-courriel char(50) NOT NULL,
-telephone char(50) NOT NULL,
+actif bit NOT NULL DEFAULT 'true',
+liste_grise bit NOT NULL DEFAULT 'false',
+iban char(25) NOT NULL,
+courriel char(50) NOT NULL DEFAULT '',
+telephone char(50) NOT NULL DEFAULT '',
 PRIMARY KEY(nom,prenom,date_naissance));
+
+CREATE TABLE Entreprise
+(siret char(14) NOT NULL DEFAULT '',
+nom char(50) NOT NULL DEFAULT '',
+nom_compte char(50),
+prenom_compte char(50),
+date_naissance_compte date,
+PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte));
+
+CREATE TABLE Particulier
+(nom_compte char(50),
+prenom_compte char(50),
+date_naissance_compte date,
+PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte)
+);
 
 CREATE TABLE TypeAbonnement
 (nom char(50) PRIMARY KEY,
-prix money NOT NULL, --j'ai changé le type, dans le dictionnaire c'est un entier
-nb_max_vehicules int);
+prix money NOT NULL DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
+nb_max_vehicules int DEFAULT 1);
 
 CREATE TABLE Location
 (id int PRIMARY KEY IDENTITY(1,1),
@@ -95,14 +111,14 @@ id_contratLocation int);
 CREATE TABLE Facturation
 (id int PRIMARY KEY IDENTITY(1,1),
 numero_location int NOT NULL,
-date_creation date NOT NULL,
+date_creation date NOT NULL DEFAULT GETDATE(),
 date_reception date,
 montant money NOT NULL);
 
 CREATE TABLE Etat
-(date_creation datetime,
+(date_creation datetime DEFAULT GETDATE(),
 id_location int,
-km int NOT NULL,
+km int NOT NULL DEFAULT 0,
 degat bit NOT NULL,
 fiche char(50) NOT NULL,
 PRIMARY KEY(date_creation,id_location));
@@ -117,41 +133,41 @@ id_abonnement int);
 
 CREATE TABLE Conducteur
 (piece_identite char(50),
-nationalite char(50),
+nationalite char(50) NOT NULL,
 nom char(50) NOT NULL,
 prenom char(50) NOT NULL,
 id_permis char(50)
 PRIMARY KEY(piece_identite,nationalite));
 
 CREATE TABLE Infraction
-(date datetime,
+(date datetime DEFAULT GETDATE(),
 id_location int,
-nom char(50) NOT NULL,
-montant money NOT NULL,
-description char(50) NOT NULL,
-regle bit,
+nom char(50) NOT NULL DEFAULT '',
+montant money NOT NULL DEFAULT 0,
+description char(50) NOT NULL DEFAULT '',
+regle bit DEFAULT 'false',
 PRIMARY KEY(date,id_location));
 
 CREATE TABLE Incident
-(date datetime,
+(date datetime DEFAULT GETDATE(),
 id_location int,
-description char(50) NOT NULL,
-penalisable bit NOT NULL,
+description char(50) NOT NULL DEFAULT '',
+penalisable bit NOT NULL DEFAULT 'false',
 PRIMARY KEY(date,id_location));
 
 CREATE TABLE Retard
-(date datetime,
+(date datetime DEFAULT GETDATE(),
 id_location int,
-regle bit,
-niveau tinyint,
+regle bit DEFAULT 'false',
+niveau tinyint DEFAULT 1,
 PRIMARY KEY(date,id_location));
 
 CREATE TABLE RelanceDecouvert
-(date datetime,
+(date datetime DEFAULT GETDATE(),
 nom_compteabonne char(50),
 prenom_compteabonne char(50),
 date_naissance_compteabonne date,
-niveau tinyint NOT NULL,
+niveau tinyint NOT NULL DEFAULT 0,
 PRIMARY KEY(date,nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne));
 
 CREATE TABLE ListeNoire
@@ -200,25 +216,12 @@ FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 FOREIGN KEY(nationalite_conducteur,piece_identite_conducteur) 
 	REFERENCES Conducteur(piece_identite,nationalite));
 
-CREATE TABLE Entreprise
-(siret char(14),
-nom char(50),
-nom_compte char(50),
-prenom_compte char(50),
-date_naissance_compte date,
-PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
-FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
-	REFERENCES CompteAbonne(nom,prenom,date_naissance)
-);
+ALTER TABLE Entreprise
+ADD FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
+	REFERENCES CompteAbonne(nom,prenom,date_naissance);
 
-CREATE TABLE Particulier
-(nom_compte char(50),
-prenom_compte char(50),
-date_naissance_compte date,
-PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
-FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
-	REFERENCES CompteAbonne(nom,prenom,date_naissance)
-);
+ALTER TABLE Particulier
+ADD FOREIGN KEY(nom_compte, prenom_compte, date_naissance_compte) REFERENCES CompteAbonne(nom,prenom,date_naissance);
 	
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
