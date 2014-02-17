@@ -15,12 +15,12 @@ date_fin date);
 CREATE TABLE Categorie
 (nom char(50) PRIMARY KEY,
 description char(50) NOT NULL,
-constraint nom_typepermis foreign key references TypePermis(nom));
+nom_typepermis char(50) NOT NULL); --c'est un enum
 
 CREATE TABLE Modele
 (marque char(50),
 serie char(50),
-contraint type_carburant foreign key references TypeCarburant(nom),
+type_carburant char(50) NOT NULL, --c'est un enum
 annee int,
 prix money NOT NULL,
 reduction tinyint,
@@ -31,7 +31,7 @@ CREATE TABLE TypePermis
 (nom char(50) PRIMARY KEY);
 
 CREATE TABLE SousPermis
-(constraint nom_typepermis foreign key references TypePermis(nom),
+(nom_typepermis char(50) NOT NULL, --c'est un enum
 numero_permis char(50),
 date_obtention date NOT NULL,
 date_expiration date NOT NULL,
@@ -46,11 +46,11 @@ points_estimes tinyint NOT NULL);
 CREATE TABLE Vehicule
 (matricule char(50) PRIMARY KEY,
 kilometrage int NOT NULL,
-couleur char(50) NOT NULL, --un enum serait peut-etre mieu
-etat char(50) NOT NULL, -- un enum est prévu ici
-marque_modele char(50),
+couleur char(50) NOT NULL, --c'est un enum
+etat char(50) NOT NULL, --c'est un enum
+marque_modele char(50) NOT NULL,
 serie_modele char(50) NOT NULL,
-type_carburant_modele char(50));
+type_carburant_modele char(50) NOT NULL); --c'est un enum
 
 CREATE TABLE Reservation
 (id int PRIMARY KEY IDENTITY(1,1),
@@ -165,23 +165,23 @@ PRIMARY KEY(date_naissance,nom, prenom));
 
 
 -----------------------------------
--- Ajout des tables énumérations --
+-- Ajout des tables-énumérations --
 -----------------------------------
 
 CREATE TABLE TypePermis
-(nom char(50) PRIMARY KEY);
+(nom char(50) PRIMARY KEY CHECK nom IN('A', 'B', 'C'));
 
 CREATE TABLE TypeCarburant
-(nom char(50) PRIMARY KEY);
+(nom char(50) PRIMARY KEY CHECK nom IN('Essence', 'Diesel'));
 
 CREATE TABLE Natianalite
-(nom char(50) PRIMARY KEY);
+(nom char(50) PRIMARY KEY CHECK nom IN('Français', 'Anglais'));
 
 CREATE TABLE CouleurVehicule
-(nom char(50) PRIMARY KEY);
+(nom char(50) PRIMARY KEY CHECK nom IN('Bleu', 'Blanc', 'Rouge'));
 
 CREATE TABLE StatutVehicule
-(nom char(50) PRIMARY KEY);
+(nom char(50) PRIMARY KEY CHECK nom IN('Disponible', 'Louee', 'En panne'));
 
 
 
@@ -244,7 +244,7 @@ PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
 FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 	REFERENCES CompteAbonne(nom,prenom,date_naissance)
 );
-	
+
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
 
