@@ -80,7 +80,7 @@ telephone char(50) NOT NULL,
 PRIMARY KEY(nom,prenom,date_naissance));
 
 CREATE TABLE TypeAbonnement
-(nom char(50) PRIMARY KEY IDENTITY(1,1),
+(nom char(50) PRIMARY KEY,
 prix money NOT NULL, --j'ai changé le type, dans le dictionnaire c'est un entier
 nb_max_vehicules int);
 
