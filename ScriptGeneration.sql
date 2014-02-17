@@ -1,8 +1,10 @@
 USE IBDR;
 
-------------------------------------------------------
---Création des tables sans les relations             -
-------------------------------------------------------
+
+
+---------------------------------
+-- Création des tables-entités --
+---------------------------------
 
 CREATE TABLE Catalogue
 (nom char(50) PRIMARY KEY,
@@ -13,23 +15,23 @@ date_fin date);
 CREATE TABLE Categorie
 (nom char(50) PRIMARY KEY,
 description char(50) NOT NULL,
-nom_typepermis char(50)); -- clef etrangere
+nom_typepermis char(50) NOT NULL); --c'est un enum
 
 CREATE TABLE Modele
 (marque char(50),
 serie char(50),
-type_carburant char(50),--un enum serait peut-etre mieu
+type_carburant char(50) NOT NULL, --c'est un enum
 annee int,
 prix money NOT NULL,
 reduction tinyint,
 portieres tinyint NOT NULL DEFAULT 5,
-PRIMARY KEY(marque,serie,type_carburant));
+PRIMARY KEY(marque,serie,type_carburant, portieres));
 
 CREATE TABLE TypePermis
 (nom char(50) PRIMARY KEY);
 
 CREATE TABLE SousPermis
-(nom_typepermis char(50),
+(nom_typepermis char(50) NOT NULL, --c'est un enum
 numero_permis char(50),
 date_obtention date NOT NULL,
 date_expiration date NOT NULL,
@@ -44,11 +46,12 @@ points_estimes tinyint NOT NULL DEFAULT 12);
 CREATE TABLE Vehicule
 (matricule char(50) PRIMARY KEY,
 kilometrage int NOT NULL DEFAULT 0,
-couleur char(50) NOT NULL DEFAULT '', --un enum serait peut-etre mieu
-etat char(50) NOT NULL DEFAULT '', -- un enum est prévu ici
-marque_modele char(50),
+couleur char(50) NOT NULL DEFAULT '', --c'est un enum
+etat char(50) NOT NULL DEFAULT '', --c'est un enum
+marque_modele char(50) NOT NULL,
 serie_modele char(50) NOT NULL,
-type_carburant_modele char(50));
+portieres_modele tinyint NOT NULL,
+type_carburant_modele char(50) NOT NULL); --c'est un enum
 
 CREATE TABLE Reservation
 (id int PRIMARY KEY IDENTITY(1,1),
@@ -176,9 +179,32 @@ nom char(50),
 prenom char(50),
 PRIMARY KEY(date_naissance,nom, prenom)); 
 
---------------------------------------------------------
---Ajout des relations                                  -
---------------------------------------------------------
+
+
+-----------------------------------
+-- Ajout des tables-énumérations --
+-----------------------------------
+
+CREATE TABLE TypePermis
+(nom char(50) PRIMARY KEY CHECK nom IN('A', 'B', 'C'));
+
+CREATE TABLE TypeCarburant
+(nom char(50) PRIMARY KEY CHECK nom IN('Essence', 'Diesel'));
+
+CREATE TABLE Natianalite
+(nom char(50) PRIMARY KEY CHECK nom IN('Français', 'Anglais'));
+
+CREATE TABLE CouleurVehicule
+(nom char(50) PRIMARY KEY CHECK nom IN('Bleu', 'Blanc', 'Rouge'));
+
+CREATE TABLE StatutVehicule
+(nom char(50) PRIMARY KEY CHECK nom IN('Disponible', 'Louee', 'En panne'));
+
+
+
+-----------------------------
+-- Ajout des associations  --
+-----------------------------
 
 CREATE TABLE CatalogueCategorie
 (nom_catalogue char(50) REFERENCES Catalogue(nom),
@@ -222,7 +248,7 @@ ADD FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 
 ALTER TABLE Particulier
 ADD FOREIGN KEY(nom_compte, prenom_compte, date_naissance_compte) REFERENCES CompteAbonne(nom,prenom,date_naissance);
-	
+
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
 
@@ -233,8 +259,8 @@ ALTER TABLE SousPermis
 ADD FOREIGN KEY(numero_permis) REFERENCES Permis(numero);
 
 ALTER TABLE Vehicule
-ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele) 
-REFERENCES Modele(marque,serie,type_carburant);
+ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele, portieres_modele) 
+REFERENCES Modele(marque, serie, type_carburant, portieres);
 
 ALTER TABLE Reservation
 ADD FOREIGN KEY(matricule_vehicule) REFERENCES Vehicule(matricule);
