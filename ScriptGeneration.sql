@@ -43,8 +43,8 @@ points_estimes tinyint NOT NULL DEFAULT 12);
 CREATE TABLE Vehicule
 (matricule char(50) PRIMARY KEY,
 kilometrage int NOT NULL DEFAULT 0,
-couleur char(50) NOT NULL DEFAULT '', --c'est un enum
-etat char(50) NOT NULL DEFAULT '', --c'est un enum
+couleur char(50) NOT NULL, --c'est un enum
+etat char(50) NOT NULL DEFAULT 'Disponible', --c'est un enum
 marque_modele char(50) NOT NULL,
 serie_modele char(50) NOT NULL,
 portieres_modele tinyint NOT NULL,
