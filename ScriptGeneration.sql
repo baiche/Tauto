@@ -195,7 +195,7 @@ CREATE TABLE CouleurVehicule
 (nom char(50) PRIMARY KEY CHECK(nom IN('Bleu', 'Blanc', 'Rouge')));
 
 CREATE TABLE StatutVehicule
-(nom char(50) PRIMARY KEY CHECK nom IN('Disponible', 'Louee', 'En panne'));
+(nom char(50) PRIMARY KEY CHECK(nom IN('Disponible', 'Louee', 'En panne')));
 
 
 
