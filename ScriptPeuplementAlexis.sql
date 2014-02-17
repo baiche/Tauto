@@ -1,0 +1,4 @@
+USE IBDR
+
+INSERT INTO TypePermis
+VALUES()
