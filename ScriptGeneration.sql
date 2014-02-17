@@ -51,16 +51,16 @@ serie_modele char(50) NOT NULL,
 type_carburant_modele char(50));
 
 CREATE TABLE Reservation
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 date_creation date NOT NULL,
-date_debut datetime NOT NULL, --date_debut ?
+date_debut datetime NOT NULL,
 date_fin datetime NOT NULL, 
 annule bit,
 matricule_vehicule char(50),
 id_abonnement int);
 
 CREATE TABLE Abonnement
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 date_debut date NOT NULL,
 duree int NOT NULL,
 nom_typeabonnement char(50),
@@ -85,7 +85,7 @@ prix money NOT NULL, --j'ai changé le type, dans le dictionnaire c'est un entier
 nb_max_vehicules int);
 
 CREATE TABLE Location
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 matricule_vehicule char(50),
 id_facturation int,
 date_etat_avant datetime,
@@ -93,7 +93,7 @@ date_etat_apres datetime,
 id_contratLocation int);
 
 CREATE TABLE Facturation
-(id int PRIMARY KEY, --generation automatique de l'id à gérer
+(id int PRIMARY KEY IDENTITY(1,1),
 numero_location int NOT NULL,
 date_creation date NOT NULL,
 date_reception date,
@@ -108,7 +108,7 @@ fiche char(50) NOT NULL,
 PRIMARY KEY(date_creation,id_location));
 
 CREATE TABLE ContratLocation
-(id int PRIMARY KEY, --pas géré automatiquement ?
+(id int PRIMARY KEY IDENTITY(1,1),
 date_debut datetime NOT NULL,
 date_fin datetime NOT NULL,
 date_fin_effective datetime,
