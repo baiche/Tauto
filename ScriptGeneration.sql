@@ -183,7 +183,7 @@ PRIMARY KEY(date_naissance,nom, prenom));
 -----------------------------------
 
 CREATE TABLE TypePermis
-(nom char(50) PRIMARY KEY CHECK(nom IN('A', 'B', 'C')));
+(nom char(50) PRIMARY KEY CHECK(nom IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')));
 
 CREATE TABLE TypeCarburant
 (nom char(50) PRIMARY KEY CHECK(nom IN('Essence', 'Diesel')));
