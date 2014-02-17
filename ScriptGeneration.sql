@@ -1,8 +1,10 @@
 USE IBDR;
 
-------------------------------------------------------
---Création des tables sans les relations             -
-------------------------------------------------------
+
+
+---------------------------------
+-- Création des tables-entités --
+---------------------------------
 
 
 CREATE TABLE Catalogue
@@ -14,12 +16,12 @@ date_fin date);
 CREATE TABLE Categorie
 (nom char(50) PRIMARY KEY,
 description char(50) NOT NULL,
-nom_typepermis char(50)); -- clef etrangere
+constraint nom_typepermis foreign key references TypePermis(nom));
 
 CREATE TABLE Modele
 (marque char(50),
 serie char(50),
-type_carburant char(50),--un enum serait peut-etre mieu
+contraint type_carburant foreign key references TypeCarburant(nom),
 annee int,
 prix money NOT NULL,
 reduction tinyint,
@@ -30,7 +32,7 @@ CREATE TABLE TypePermis
 (nom char(50) PRIMARY KEY);
 
 CREATE TABLE SousPermis
-(nom_typepermis char(50),
+(constraint nom_typepermis foreign key references TypePermis(nom),
 numero_permis char(50),
 date_obtention date NOT NULL,
 date_expiration date NOT NULL,
@@ -52,16 +54,16 @@ serie_modele char(50) NOT NULL,
 type_carburant_modele char(50));
 
 CREATE TABLE Reservation
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 date_creation date NOT NULL,
-date_debut datetime NOT NULL, --date_debut ?
+date_debut datetime NOT NULL,
 date_fin datetime NOT NULL, 
 annule bit,
 matricule_vehicule char(50),
 id_abonnement int);
 
 CREATE TABLE Abonnement
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 date_debut date NOT NULL,
 duree int NOT NULL,
 nom_typeabonnement char(50),
@@ -81,12 +83,12 @@ telephone char(50) NOT NULL,
 PRIMARY KEY(nom,prenom,date_naissance));
 
 CREATE TABLE TypeAbonnement
-(nom char(50) PRIMARY KEY IDENTITY(1,1),
+(nom char(50) PRIMARY KEY,
 prix money NOT NULL, --j'ai changé le type, dans le dictionnaire c'est un entier
 nb_max_vehicules int);
 
 CREATE TABLE Location
-(id int PRIMARY KEY, -- pas généré automatiquement ???
+(id int PRIMARY KEY IDENTITY(1,1),
 matricule_vehicule char(50),
 id_facturation int,
 date_etat_avant datetime,
@@ -94,7 +96,7 @@ date_etat_apres datetime,
 id_contratLocation int);
 
 CREATE TABLE Facturation
-(id int PRIMARY KEY, --generation automatique de l'id à gérer
+(id int PRIMARY KEY IDENTITY(1,1),
 numero_location int NOT NULL,
 date_creation date NOT NULL,
 date_reception date,
@@ -109,7 +111,7 @@ fiche char(50) NOT NULL,
 PRIMARY KEY(date_creation,id_location));
 
 CREATE TABLE ContratLocation
-(id int PRIMARY KEY, --pas géré automatiquement ?
+(id int PRIMARY KEY IDENTITY(1,1),
 date_debut datetime NOT NULL,
 date_fin datetime NOT NULL,
 date_fin_effective datetime,
@@ -136,8 +138,8 @@ PRIMARY KEY(date,id_location));
 CREATE TABLE Incident
 (date datetime,
 id_location int,
-description char(50),
-penalisable bit,
+description char(50) NOT NULL,
+penalisable bit NOT NULL,
 PRIMARY KEY(date,id_location));
 
 CREATE TABLE Retard
@@ -152,7 +154,7 @@ CREATE TABLE RelanceDecouvert
 nom_compteabonne char(50),
 prenom_compteabonne char(50),
 date_naissance_compteabonne date,
-niveau tinyint,
+niveau tinyint NOT NULL,
 PRIMARY KEY(date,nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne));
 
 CREATE TABLE ListeNoire
@@ -161,9 +163,32 @@ nom char(50),
 prenom char(50),
 PRIMARY KEY(date_naissance,nom, prenom)); 
 
---------------------------------------------------------
---Ajout des relations                                  -
---------------------------------------------------------
+
+
+-----------------------------------
+-- Ajout des tables énumérations --
+-----------------------------------
+
+CREATE TABLE TypePermis
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE TypeCarburant
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE Natianalite
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE CouleurVehicule
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE StatutVehicule
+(nom char(50) PRIMARY KEY);
+
+
+
+-----------------------------
+-- Ajout des associations  --
+-----------------------------
 
 CREATE TABLE CatalogueCategorie
 (nom_catalogue char(50) REFERENCES Catalogue(nom),
@@ -211,6 +236,15 @@ PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
 FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 	REFERENCES CompteAbonne(nom,prenom,date_naissance)
 );
+
+CREATE TABLE Particulier
+(nom_compte char(50),
+prenom_compte char(50),
+date_naissance_compte date,
+PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
+FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
+	REFERENCES CompteAbonne(nom,prenom,date_naissance)
+);
 	
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
@@ -245,10 +279,10 @@ ALTER TABLE Location
 ADD FOREIGN KEY(id_facturation) REFERENCES Facturation(id);
 
 ALTER TABLE Location
-ADD FOREIGN KEY(date_etat_avant,id) REFERENCES Etat(date,id_location);
+ADD FOREIGN KEY(date_etat_avant,id) REFERENCES Etat(date_creation,id_location);
 
 ALTER TABLE Location
-ADD FOREIGN KEY(date_etat_apres,id) REFERENCES Etat(date,id_location);
+ADD FOREIGN KEY(date_etat_apres,id) REFERENCES Etat(date_creation,id_location);
 
 ALTER TABLE Location
 ADD FOREIGN KEY(id_contratLocation) REFERENCES  ContratLocation(id);
