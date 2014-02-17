@@ -135,8 +135,8 @@ PRIMARY KEY(date,id_location));
 CREATE TABLE Incident
 (date datetime,
 id_location int,
-description char(50),
-penalisable bit,
+description char(50) NOT NULL,
+penalisable bit NOT NULL,
 PRIMARY KEY(date,id_location));
 
 CREATE TABLE Retard
@@ -151,7 +151,7 @@ CREATE TABLE RelanceDecouvert
 nom_compteabonne char(50),
 prenom_compteabonne char(50),
 date_naissance_compteabonne date,
-niveau tinyint,
+niveau tinyint NOT NULL,
 PRIMARY KEY(date,nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne));
 
 CREATE TABLE ListeNoire
@@ -210,6 +210,15 @@ PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
 FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 	REFERENCES CompteAbonne(nom,prenom,date_naissance)
 );
+
+CREATE TABLE Particulier
+(nom_compte char(50),
+prenom_compte char(50),
+date_naissance_compte date,
+PRIMARY KEY (nom_compte, prenom_compte, date_naissance_compte),
+FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
+	REFERENCES CompteAbonne(nom,prenom,date_naissance)
+);
 	
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
@@ -244,10 +253,10 @@ ALTER TABLE Location
 ADD FOREIGN KEY(id_facturation) REFERENCES Facturation(id);
 
 ALTER TABLE Location
-ADD FOREIGN KEY(date_etat_avant,id) REFERENCES Etat(date,id_location);
+ADD FOREIGN KEY(date_etat_avant,id) REFERENCES Etat(date_creation,id_location);
 
 ALTER TABLE Location
-ADD FOREIGN KEY(date_etat_apres,id) REFERENCES Etat(date,id_location);
+ADD FOREIGN KEY(date_etat_apres,id) REFERENCES Etat(date_creation,id_location);
 
 ALTER TABLE Location
 ADD FOREIGN KEY(id_contratLocation) REFERENCES  ContratLocation(id);
