@@ -1,8 +1,10 @@
 USE IBDR;
 
-------------------------------------------------------
---Création des tables sans les relations             -
-------------------------------------------------------
+
+
+---------------------------------
+-- Création des tables-entités --
+---------------------------------
 
 CREATE TABLE Catalogue
 (nom char(50) PRIMARY KEY,
@@ -13,12 +15,12 @@ date_fin date);
 CREATE TABLE Categorie
 (nom char(50) PRIMARY KEY,
 description char(50) NOT NULL,
-nom_typepermis char(50)); -- clef etrangere
+constraint nom_typepermis foreign key references TypePermis(nom));
 
 CREATE TABLE Modele
 (marque char(50),
 serie char(50),
-type_carburant char(50),--un enum serait peut-etre mieu
+contraint type_carburant foreign key references TypeCarburant(nom),
 annee int,
 prix money NOT NULL,
 reduction tinyint,
@@ -29,7 +31,7 @@ CREATE TABLE TypePermis
 (nom char(50) PRIMARY KEY);
 
 CREATE TABLE SousPermis
-(nom_typepermis char(50),
+(constraint nom_typepermis foreign key references TypePermis(nom),
 numero_permis char(50),
 date_obtention date NOT NULL,
 date_expiration date NOT NULL,
@@ -160,9 +162,32 @@ nom char(50),
 prenom char(50),
 PRIMARY KEY(date_naissance,nom, prenom)); 
 
---------------------------------------------------------
---Ajout des relations                                  -
---------------------------------------------------------
+
+
+-----------------------------------
+-- Ajout des tables énumérations --
+-----------------------------------
+
+CREATE TABLE TypePermis
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE TypeCarburant
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE Natianalite
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE CouleurVehicule
+(nom char(50) PRIMARY KEY);
+
+CREATE TABLE StatutVehicule
+(nom char(50) PRIMARY KEY);
+
+
+
+-----------------------------
+-- Ajout des associations  --
+-----------------------------
 
 CREATE TABLE CatalogueCategorie
 (nom_catalogue char(50) REFERENCES Catalogue(nom),
