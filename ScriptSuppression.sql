@@ -27,3 +27,8 @@ DROP TABLE CompteAbonne;
 DROP TABLE Facturation;
 DROP TABLE Etat;
 DROP TABLE ListeNoire;
+
+DROP TABLE CouleurVehicule;
+DROP TABLE Nationalite;
+DROP TABLE StatutVehicule;
+DROP TABLE TypeCarburant;
