@@ -27,9 +27,6 @@ reduction tinyint,
 portieres tinyint NOT NULL,
 PRIMARY KEY(marque,serie,type_carburant));
 
-CREATE TABLE TypePermis
-(nom char(50) PRIMARY KEY);
-
 CREATE TABLE SousPermis
 (nom_typepermis char(50) NOT NULL, --c'est un enum
 numero_permis char(50),
@@ -169,16 +166,16 @@ PRIMARY KEY(date_naissance,nom, prenom));
 -----------------------------------
 
 CREATE TABLE TypePermis
-(nom char(50) PRIMARY KEY CHECK nom IN('A', 'B', 'C'));
+(nom char(50) PRIMARY KEY CHECK(nom IN('A', 'B', 'C')));
 
 CREATE TABLE TypeCarburant
-(nom char(50) PRIMARY KEY CHECK nom IN('Essence', 'Diesel'));
+(nom char(50) PRIMARY KEY CHECK(nom IN('Essence', 'Diesel')));
 
-CREATE TABLE Natianalite
-(nom char(50) PRIMARY KEY CHECK nom IN('Français', 'Anglais'));
+CREATE TABLE Nationalite
+(nom char(50) PRIMARY KEY CHECK(nom IN('Français', 'Anglais')));
 
 CREATE TABLE CouleurVehicule
-(nom char(50) PRIMARY KEY CHECK nom IN('Bleu', 'Blanc', 'Rouge'));
+(nom char(50) PRIMARY KEY CHECK(nom IN('Bleu', 'Blanc', 'Rouge')));
 
 CREATE TABLE StatutVehicule
 (nom char(50) PRIMARY KEY CHECK nom IN('Disponible', 'Louee', 'En panne'));
@@ -248,6 +245,9 @@ FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 ALTER TABLE Categorie
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
 
+ALTER TABLE Modele
+ADD FOREIGN KEY(type_carburant) REFERENCES TypeCarburant(nom);
+
 ALTER TABLE SousPermis
 ADD FOREIGN KEY(nom_typepermis) REFERENCES TypePermis(nom);
 
@@ -257,6 +257,9 @@ ADD FOREIGN KEY(numero_permis) REFERENCES Permis(numero);
 ALTER TABLE Vehicule
 ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele) 
 REFERENCES Modele(marque,serie,type_carburant);
+
+ALTER TABLE Vehicule
+ADD FOREIGN KEY(couleur) REFERENCES CouleurVehicule(nom);
 
 ALTER TABLE Reservation
 ADD FOREIGN KEY(matricule_vehicule) REFERENCES Vehicule(matricule);
@@ -291,6 +294,9 @@ ADD FOREIGN KEY(id_abonnement) REFERENCES Abonnement(id)
 
 ALTER TABLE Conducteur
 ADD FOREIGN KEY(id_permis) REFERENCES Permis(numero);
+
+ALTER TABLE Conducteur
+ADD FOREIGN KEY(nationalite) REFERENCES Nationalite(nom);
 
 ALTER TABLE Infraction
 ADD FOREIGN KEY(id_location) REFERENCES Location(id);
