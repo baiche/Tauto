@@ -4,6 +4,7 @@ USE IBDR;
 --Création des tables sans les relations             -
 ------------------------------------------------------
 
+
 CREATE TABLE Catalogue
 (nom char(50) PRIMARY KEY,
 date_debut date NOT NULL,
