@@ -1,4 +1,0 @@
-USE IBDR
-
-INSERT INTO Catalogue
-VALUES(' 2014',"20
