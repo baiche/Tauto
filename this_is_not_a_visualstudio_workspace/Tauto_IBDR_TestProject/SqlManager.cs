@@ -9,11 +9,11 @@ namespace Tauto_IBDR_TestProject
 {
     class SqlManager
     {
-        private static readonly string hostname = "localhost";
+        private static readonly string sqlInstance = @"MyPC\SQLExpress";
         private static readonly string id = "TAuto_IBDR_user";
         private static readonly string password = "tauto_UBDR_password2014";
         private static readonly string connectionString =
-            "Server=" + hostname + ";Integrated security=SSPI;user id=" + id +
+            "Server=" + sqlInstance + ";Integrated security=SSPI;user id=" + id +
             ";password=" + password + ";database=master;MultipleActiveResultSets=True;";
         private static readonly SqlConnection sqlConnection = new SqlConnection(connectionString);
 
@@ -29,3 +29,4 @@ namespace Tauto_IBDR_TestProject
         }
     }
 }
+
