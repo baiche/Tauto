@@ -19,7 +19,7 @@ USE TAuto_IBDR;
 
 
 CREATE TABLE Catalogue(
-	nom 				nvarchar(50) 	PRIMARY KEY										CHECK(nom LIKE '[a-zA-Z ‘-]*'),
+	nom 				nvarchar(50) 	PRIMARY KEY											CHECK(nom LIKE '[a-zA-Z ‘-]*'),
 	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
 	date_fin 			date
 );
@@ -27,19 +27,19 @@ CREATE TABLE Catalogue(
 
 
 CREATE TABLE Categorie(
-	nom					nvarchar(50) 	PRIMARY KEY										CHECK(nom LIKE '[a-zA-Z ‘-]*'),
-	description 		nvarchar(50) 					NOT NULL						CHECK(description LIKE '[a-zA-Z ‘-,.]*'),
+	nom					nvarchar(50) 	PRIMARY KEY											CHECK(nom LIKE '[a-zA-Z ‘-]*'),
+	description 		nvarchar(50) 					NOT NULL							CHECK(description LIKE '[a-zA-Z ‘-,.]*'),
 	nom_typepermis 		nvarchar(10) 					NOT NULL --c'est un enum
 ); 
 
 
 CREATE TABLE Modele(
-	marque 				nvarchar(50)													CHECK(marque LIKE '[a-zA-Z0-9 ‘-]*'),
-	serie 				nvarchar(50)													CHECK(serie LIKE '[a-zA-Z0-9 ‘-]*'),
-	type_carburant 		nvarchar(50) 					NOT NULL						CHECK(type_carburant LIKE '[a-zA-Z0-9 ‘-]*'), --c'est un enum
+	marque 				nvarchar(50)														CHECK(marque LIKE '[a-zA-Z0-9 ‘-]*'),
+	serie 				nvarchar(50)														CHECK(serie LIKE '[a-zA-Z0-9 ‘-]*'),
+	type_carburant 		nvarchar(50) 					NOT NULL							CHECK(type_carburant LIKE '[a-zA-Z0-9 ‘-]*'), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
-	reduction 			tinyint										DEFAULT 0			CHECK(reduction >= 0 AND reduction < 100),
+	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
 	PRIMARY KEY(marque, serie, type_carburant, portieres)
 );
@@ -54,17 +54,17 @@ CREATE TABLE SousPermis(
 );
 
 CREATE TABLE Permis(
-	numero 				nvarchar(50) 	PRIMARY KEY										CHECK(numero LIKE '[a-zA-Z0-9]*'),
+	numero 				nvarchar(50) 	PRIMARY KEY											CHECK(numero LIKE '[a-zA-Z0-9]*'),
 	valide 				bit 										DEFAULT 'true',
 	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12
 );
 
 CREATE TABLE Vehicule(
-	matricule 			nvarchar(50) 	PRIMARY KEY										CHECK(matricule LIKE '[a-zA-Z0-9-]*'),
+	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK(matricule LIKE '[a-zA-Z0-9-]*'),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT ''			CHECK(couleur LIKE '[a-zA-Z -]*'), --c'est un enum
-	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible' CHECK(statut LIKE '[a-zA-Z ''-]*'), --c'est un enum
-	num_serie			nvarchar(50)					NOT NULL						CHECK(num_serie LIKE '[a-zA-Z0-9]*'),
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(couleur LIKE '[a-zA-Z -]*'), --c'est un enum
+	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut LIKE '[a-zA-Z ''-]*'), --c'est un enum
+	num_serie			nvarchar(50)					NOT NULL							CHECK(num_serie LIKE '[a-zA-Z0-9]*'),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
