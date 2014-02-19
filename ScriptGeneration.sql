@@ -1,6 +1,7 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptGeneration
 -- Date        : 15/02/2014
+-- Version     : 1.0
 -- Auteur      : Boris de Finance
 -- Correcteur  : David Lecoconnier
 -- Testeur     : 
@@ -17,25 +18,26 @@ USE TAuto_IBDR;
 ---------------------------------
 
 CREATE TABLE Catalogue(
-	nom 				nvarchar(50) 	PRIMARY KEY,
+	nom 				nvarchar(50) 	PRIMARY KEY										CHECK(nom LIKE '[a-zA-Z ‘-]*'),
 	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
 	date_fin 			date
 );
 
 
 CREATE TABLE Categorie(
-	nom					nvarchar(50) 	PRIMARY KEY,
-	description 		nvarchar(50) 					NOT NULL,
+	nom					nvarchar(50) 	PRIMARY KEY										CHECK(nom LIKE '[a-zA-Z ‘-]*'),
+	description 		nvarchar(50) 					NOT NULL						CHECK(description LIKE '[a-zA-Z ‘-,.]*'),
 	nom_typepermis 		nvarchar(10) 					NOT NULL --c'est un enum
 ); 
 
+
 CREATE TABLE Modele(
-	marque 				nvarchar(50),
-	serie 				nvarchar(50),
-	type_carburant 		nvarchar(50) 					NOT NULL, --c'est un enum
+	marque 				nvarchar(50)													CHECK(marque LIKE '[a-zA-Z0-9 ‘-]*'),
+	serie 				nvarchar(50)													CHECK(serie LIKE '[a-zA-Z0-9 ‘-]*'),
+	type_carburant 		nvarchar(50) 					NOT NULL						CHECK(type_carburant LIKE '[a-zA-Z0-9 ‘-]*'), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
-	reduction 			tinyint,
+	reduction 			tinyint										DEFAULT 0			CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
 	PRIMARY KEY(marque, serie, type_carburant, portieres)
 );
@@ -50,16 +52,17 @@ CREATE TABLE SousPermis(
 );
 
 CREATE TABLE Permis(
-	numero 				nvarchar(50) 	PRIMARY KEY,
+	numero 				nvarchar(50) 	PRIMARY KEY										CHECK(numero LIKE '[a-zA-Z0-9]*'),
 	valide 				bit 										DEFAULT 'true',
 	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12
 );
 
 CREATE TABLE Vehicule(
-	matricule 			nvarchar(50) 	PRIMARY KEY,
+	matricule 			nvarchar(50) 	PRIMARY KEY										CHECK(matricule LIKE '[a-zA-Z0-9-]*'),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT '', --c'est un enum
-	etat 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible', --c'est un enum
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT ''			CHECK(couleur LIKE '[a-zA-Z -]*'), --c'est un enum
+	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible' CHECK(statut LIKE '[a-zA-Z ''-]*'), --c'est un enum
+	num_serie			nvarchar(50)					NOT NULL						CHECK(num_serie LIKE '[a-zA-Z0-9]*'),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
@@ -88,20 +91,20 @@ CREATE TABLE Abonnement(
 );
 
 CREATE TABLE CompteAbonne(
-	nom 				nvarchar(50),
-	prenom 				nvarchar(50),
+	nom 				nvarchar(50)														CHECK(nom LIKE '[a-zA-Z ''-]*'),
+	prenom 				nvarchar(50)														CHECK(prenom LIKE '[a-zA-Z ''-]*'),
 	date_naissance 		date,
 	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
-	iban 				char(25) 						NOT NULL,
-	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT '',
-	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT '',
+	iban 				char(25) 						NOT NULL							CHECK(iban LIKE '[A-Z](2)[0-9](25)'),
+	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '[a-z]+[@][a-z]+[.][a-z]+'),
+	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(telephone LIKE '[0-9](10)'),
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
 
 CREATE TABLE Entreprise(
-	siret 				char(14) 						NOT NULL 	DEFAULT '',
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT '',
+	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK(siret LIKE '[0-9](14)'),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(nom LIKE '[a-zA-Z ''-]*'),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
 	date_naissance_compte date,
@@ -116,7 +119,7 @@ CREATE TABLE Particulier(
 );
 
 CREATE TABLE TypeAbonnement(
-	nom 				nvarchar(50) 	PRIMARY KEY,
+	nom 				nvarchar(50) 	PRIMARY KEY											CHECK(nom LIKE '[a-zA-Z]*'),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1
 );
@@ -143,7 +146,7 @@ CREATE TABLE Etat(
 	id_location 		int,
 	km 					int 							NOT NULL 	DEFAULT 0,
 	degat 				bit 							NOT NULL,
-	fiche 				nvarchar(50) 					NOT NULL,
+	fiche 				nvarchar(50) 					NOT NULL							CHECK(fiche LIKE '[a-zA-Z0-9]*'),
 	PRIMARY KEY(date_creation, id_location)
 );
 
@@ -157,10 +160,10 @@ CREATE TABLE ContratLocation(
 );
 
 CREATE TABLE Conducteur(
-	piece_identite 		nvarchar(50),
-	nationalite 		nvarchar(50) 					NOT NULL,
-	nom 				nvarchar(50) 					NOT NULL,
-	prenom 				nvarchar(50) 					NOT NULL,
+	piece_identite 		nvarchar(50)														CHECK(piece_identite LIKE '[a-zA-Z0-9]*'),
+	nationalite 		nvarchar(50) 					NOT NULL							CHECK(nationalite LIKE '[a-zA-Z ‘-]*'),
+	nom 				nvarchar(50) 					NOT NULL							CHECK(nom LIKE '[a-zA-Z ‘-]*'),
+	prenom 				nvarchar(50) 					NOT NULL							CHECK(prenom LIKE '[a-zA-Z ‘-]*'),
 	id_permis 			nvarchar(50)
 	PRIMARY KEY(piece_identite, nationalite)
 );
@@ -168,9 +171,9 @@ CREATE TABLE Conducteur(
 CREATE TABLE Infraction(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT '',
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(nom LIKE '[a-zA-Z ‘-]*'),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT '',
+	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK(description LIKE '[a-zA-Z ‘-.]*'),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -178,7 +181,7 @@ CREATE TABLE Infraction(
 CREATE TABLE Incident(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	description 		nvarchar(50) 					NOT NULL 	DEFAULT '',
+	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(description LIKE '[a-zA-Z ‘-.]*'),
 	penalisable 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -196,14 +199,14 @@ CREATE TABLE RelanceDecouvert(
 	nom_compteabonne 	nvarchar(50),
 	prenom_compteabonne nvarchar(50),
 	date_naissance_compteabonne date,
-	niveau 				tinyint 						NOT NULL 	DEFAULT 0,
+	niveau 				tinyint 						NOT NULL 	DEFAULT 0				CHECK(niveau >= 0 AND niveau <= 5),
 	PRIMARY KEY(date, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
 );
 
 CREATE TABLE ListeNoire(
 	date_naissance 		date,
-	nom 				nvarchar(50),
-	prenom 				nvarchar(50),
+	nom 				nvarchar(50)														CHECK(nom LIKE '[a-zA-Z ‘-]*'),
+	prenom 				nvarchar(50)														CHECK(prenom LIKE '[a-zA-Z ‘-]*'),
 	PRIMARY KEY(date_naissance, nom, prenom)
 ); 
 
