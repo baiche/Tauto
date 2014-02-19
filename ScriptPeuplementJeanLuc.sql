@@ -8,7 +8,7 @@
 -- Commentaire : Remplissage des tables Compte Abonné, Location
 ------------------------------------------------------------
 
-USE IBDR
+USE TAuto_IBDR
 
 INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
 ('Amitousa Mankoy', 'Jean-Luc', '1990-07-18', 'true', 
