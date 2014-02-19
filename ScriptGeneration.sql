@@ -1,8 +1,8 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptGeneration
--- Date        : 19/02/2014
+-- Date        : 15/02/2014
 -- Auteur      : Boris de Finance
--- Correcteur  : David Lecoconniers
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :

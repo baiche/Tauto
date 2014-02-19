@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementBoris
+-- Fichier     : ScriptPeuplementJeanLuc
 -- Date        : 17/02/2014
--- Auteur      : Boris de Finance
+-- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
--- Testeur     :
+-- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables Catalogue et Liste Noire.
+-- Commentaire : Remplissage des tables Compte Abonné, Entreprise, Location
 ------------------------------------------------------------
 
 USE TAuto_IBDR
