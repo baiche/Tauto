@@ -1,6 +1,7 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptPeuplementBoris
 -- Date        : 17/02/2014
+-- Version     : 1.0
 -- Auteur      : Boris de Finance
 -- Correcteur  : 
 -- Testeur     :

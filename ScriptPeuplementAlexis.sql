@@ -1,6 +1,7 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptPeuplementAlexis
 -- Date        : 17/02/2014
+-- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     :
