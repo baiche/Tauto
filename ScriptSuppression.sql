@@ -1,4 +1,4 @@
-USE IBDR
+USE Tauto_IBDR;
 
 DROP TABLE CatalogueCategorie;
 DROP TABLE CategorieModele;
