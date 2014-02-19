@@ -1,6 +1,7 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptPeuplementJeanLuc
 -- Date        : 17/02/2014
+-- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
 -- Testeur     : 
@@ -8,7 +9,7 @@
 -- Commentaire : Remplissage des tables Compte Abonné, Entreprise, Location
 ------------------------------------------------------------
 
-USE IBDR
+USE TAuto_IBDR
 
 INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
 ('Amitousa Mankoy', 'Jean-Luc', '1990-07-18', 'true', 

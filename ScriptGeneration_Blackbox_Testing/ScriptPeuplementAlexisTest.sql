@@ -1,13 +1,12 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptPeuplementAlexis
 -- Date        : 17/02/2014
--- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
--- Testeur     :
+-- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables TypePermis (7),
---               SousPermis (12), Permis (4), Conducteur (4)
+-- Commentaire : Remplissage des tables TypePermis, SousPermis, Permis, Conducteur
+--               avec des informations invalides que le SGBD doit détecter.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;

@@ -1,12 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementBoris
+-- Fichier     : ScriptPeuplementJeanLuc
 -- Date        : 17/02/2014
--- Version     : 1.0
--- Auteur      : Boris de Finance
+-- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
--- Testeur     :
+-- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables Catalogue et Liste Noire.
+-- Commentaire : Remplissage des tables Compte Abonné, Entreprise, Location
 ------------------------------------------------------------
 
 USE TAuto_IBDR
@@ -42,4 +41,3 @@ VALUES('1990-09-08','de Finance de Clairbois','Boris'),
 ('1988-11-21','Tariqui','Ibtissam'),
 ('1990-10-26','Baker','Maïssa'),
 ('1990-07-05','Shu','Jing');
-
