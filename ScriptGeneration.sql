@@ -163,7 +163,6 @@ PRINT('Table Location créée');
 GO
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	numero_location 	int 							NOT NULL,
 	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
 	date_reception 		date,
 	montant money 										NOT NULL

@@ -5,16 +5,24 @@ E-mail : jean-luc.amitousa-mankoy@hotmail.fr
 
 *******************
 
--Le but de chaque scripts dans ce répertoire est de tester la cohérence de la base Tauto_IBDR avec
-la dictionnaire de données Dico_Tauto (version 2). Pour ce faire, chaque test sera réalisé uniquement
-à partir de ce dictionnaire (test en boite noire).
+-Pour ajouter proprement ces fichiers à votre projet Visual Studio 2012 procédé ainsi:
+	-Click droit sur votre solution.
+	-Ajouter un élément existant.
+	-Dans le browser qui s'affiche, selectionner tout les
+	 fichiers c sharp de ce répertoire.
+	-Avant de valider l'ajout, vous devez modifier l'option
+	 dans la liste déroulante en bas du formulaire. 
+	 Elle contient par défaut la valeur "Ajouter" mais valeur 
+	 qu'il faut est "Ajouter en tant que lien". Ainsi vos
+	 fichier seront mis à jour automatiquement aussi bien 
+	 dans votre dépôt que dans votre projet Visual Studio 2012.
 
--Cette base aura préalablement été peuplé avec les scripts de peuplements suivant :
+-Le but de chaque fichier dans ce répertoire est de tester la cohérence de la base Tauto_IBDR avec le dictionnaire de données Dico_Tauto (version 2). Pour ce faire, chaque test sera réalisé uniquement à partir de ce dictionnaire (test en boite noire).
+
+-Cette base aura préalablement été nettoyé et peuplé avec les scripts de peuplements suivant (à executer dans l'ordre):
+
+../ScriptSuppression.sql (version 1.0)
 ../ScriptGeneration.sql (version 1.0)
 ../ScriptPeuplementAlexis.sql (version 1.0)
 ../ScriptPeuplementBoris.sql (version 1.0)
 ../ScriptPeuplementJeanLuc.sql (version 1.0)
-
--Veiller à lancer ScriptSuppression puis ScriptGeneration avant chaque test.
-
--Certain tests ont pour but de faire repérer des erreurs au SGBD. Ce dernier est donc suceptible de s'arrêter. Avant de commenter les tests concernés, veuillez demander au responsable du script si l'erreur est signe de succès ou au contraite si elle met en évidence une incohérence.
