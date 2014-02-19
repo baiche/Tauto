@@ -23,3 +23,5 @@ AS
 GO	
 
 --EXECUTE myDomain.getIBAN_Courriel @nom = N'', @prenom = N'', @date_naissance = N'';
+
+--http://technet.microsoft.com/fr-fr/library/ms345415.aspx
