@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementBoris
+-- Fichier     : ScriptPeuplementJeanLuc
 -- Date        : 17/02/2014
--- Auteur      : Boris de Finance
+-- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
--- Testeur     :
+-- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables Catalogue et Liste Noire.
+-- Commentaire : Remplissage des tables Compte Abonné, Entreprise, Location
 ------------------------------------------------------------
 
 USE TAuto_IBDR
@@ -41,28 +41,3 @@ VALUES('1990-09-08','de Finance de Clairbois','Boris'),
 ('1988-11-21','Tariqui','Ibtissam'),
 ('1990-10-26','Baker','Maïssa'),
 ('1990-07-05','Shu','Jing');
-
-
-
-------------------------------------------------
---Facturation                                  -
-------------------------------------------------
-INSERT INTO Facturation(id,date_creation,date_reception,montant)--voir numero_location
-VALUES(null,'2014-01-07', '2014-01-12',€175.25),
-(null,'2014-02-08', '2014-02-12',€55.25),
-(null,'2013-03-27', '2014-03-28',€15.35),
-(null,'2014-02-13', '2014-03-12',€155.29),
-(null,'2014-03-04', '2014-03-15',€175.23),
-(null,'2012-12-28', '2013-01-14',€175.24);
-
-------------------------------------------------
---Etat                                         -
-------------------------------------------------
---INSERT INTO Etat(date,id_location,km,degat,fiche)
---VALUES(
-
-------------------------------------------------
---Location                                     -
-------------------------------------------------
---INSERT INTO Location(id,matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation)
---VALUES(null,"",

@@ -1,3 +1,13 @@
+------------------------------------------------------------
+-- Fichier     : ScriptSuppression
+-- Date        : 17/02/2014
+-- Auteur      : ?
+-- Correcteur  : 
+-- Testeur     :
+-- Integrateur : 
+-- Commentaire :
+------------------------------------------------------------
+
 USE TAuto_IBDR
 
 DROP TABLE CatalogueCategorie;

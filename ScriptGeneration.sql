@@ -1,3 +1,13 @@
+------------------------------------------------------------
+-- Fichier     : ScriptGeneration
+-- Date        : 15/02/2014
+-- Auteur      : Boris de Finance
+-- Correcteur  : David Lecoconnier
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire :
+------------------------------------------------------------
+
 USE TAuto_IBDR;
 
 
