@@ -14,13 +14,15 @@ USE TAuto_IBDR;
 
 ---------------------------------
 -- Création des tables-entités --
----------------------------------
+--------------------------------- 
 
-CREATE TABLE Catalogue(
+
+CREATE  TABLE Catalogue(
 	nom 				nvarchar(50) 	PRIMARY KEY,
 	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
 	date_fin 			date
 );
+
 
 
 CREATE TABLE Categorie(
@@ -376,3 +378,4 @@ ALTER TABLE RelanceDecouvert
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 
+INSERT INTO Modele(marque,serie,type_carburant,annee,prix,reduction,portieres) VALUES('Peugeot','206','Diesel',2003,39,0,3);

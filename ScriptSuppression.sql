@@ -11,6 +11,7 @@
 
 USE TAuto_IBDR
 
+
 DROP TABLE CatalogueCategorie;
 DROP TABLE CategorieModele;
 DROP TABLE ConducteurLocation;
@@ -38,8 +39,3 @@ DROP TABLE CompteAbonne;
 DROP TABLE Facturation;
 DROP TABLE Etat;
 DROP TABLE ListeNoire;
-
-DROP TABLE CouleurVehicule;
-DROP TABLE Nationalite;
-DROP TABLE StatutVehicule;
-DROP TABLE TypeCarburant;
