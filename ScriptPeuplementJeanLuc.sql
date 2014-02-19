@@ -5,7 +5,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables Compte Abonné, Location
+-- Commentaire : Remplissage des tables Compte Abonné, Entreprise, Location
 ------------------------------------------------------------
 
 USE TAuto_IBDR
@@ -27,4 +27,7 @@ INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courri
  'false', 'HR12 1001 0051 863', 'allan.mottier@gmail.com', '0701030507'),
 ('Neti', 'Mohamed', '1988-03-25', 'true', 
  'false', 'AD12 0001 2030 2003', 'mohamed.neti@gmail.com', '0607080904');
+ 
+INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
+('732 829 320', 'Pokemon Industrie','PIndustrie','PIndustrie','2014-02-17');
 
