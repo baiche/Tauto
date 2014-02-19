@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 USE TAuto_IBDR
 
 ---------------------------------------------
@@ -33,4 +32,4 @@ VALUES('1990-09-08','de Finance de Clairbois','Boris'),
 ('1988-11-21','Tariqui','Ibtissam'),
 ('1990-10-26','Baker','Maïssa'),
 ('1990-07-05','Shu','Jing');
->>>>>>> f2f5bc8b6c58b5244e7ee8d6a658cb1a8eec8bda
+
