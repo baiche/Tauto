@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementJeanLuc
+-- Fichier     : ScriptPeuplementLocation
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
@@ -10,3 +10,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR
+
+--Une location en cours
+
+--Une location en retard

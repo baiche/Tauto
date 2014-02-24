@@ -165,7 +165,7 @@ CREATE TABLE CompteAbonne(
 	date_naissance 		date,
 	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
-	iban 				char(25) 						NOT NULL							CHECK( LEN (iban) = 25),
+	iban 				nvarchar(50)					NOT NULL							CHECK( LEN (iban) >= 10),
 	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '%@%.%'),
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (telephone) > 1),
 	PRIMARY KEY(nom, prenom, date_naissance)
@@ -434,9 +434,14 @@ GO
 -----------------------------
 -- Ajout des associations  --
 -----------------------------
+<<<<<<< HEAD
 PRINT('
 Création des associations');
 PRINT('=======================');
+=======
+PRINT('Création des associations');
+
+>>>>>>> 1ac1c2a7414ff67a24c583ca5bd3f63a0fb36e73
 GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CatalogueCategorie')
 BEGIN
@@ -541,96 +546,60 @@ PRINT('Table Modele modifiée');
 GO
 ALTER TABLE SousPermis
 	ADD FOREIGN KEY(nom_typepermis)
-		REFERENCES TypePermis(nom);
-PRINT('Table SousPermis modifiée');
-
-GO
-ALTER TABLE SousPermis
-	ADD FOREIGN KEY(numero_permis)
+		REFERENCES TypePermis(nom),
+		FOREIGN KEY(numero_permis)
 		REFERENCES Permis(numero);
 PRINT('Table SousPermis modifiée');
 
 GO
 ALTER TABLE Vehicule
 	ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele, portieres_modele) 
-		REFERENCES Modele(marque, serie, type_carburant, portieres);
-PRINT('Table Vehicule modifiée');
-
-GO
-ALTER TABLE Vehicule
-	ADD FOREIGN KEY(couleur)
+		REFERENCES Modele(marque, serie, type_carburant, portieres),
+		FOREIGN KEY(couleur)
 		REFERENCES CouleurVehicule(nom);
 PRINT('Table Vehicule modifiée');
 
 GO
 ALTER TABLE Reservation
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule);
-PRINT('Table Reservation modifiée');
-
-GO
-ALTER TABLE Reservation
-	ADD FOREIGN KEY (id_abonnement)
+		REFERENCES Vehicule(matricule),
+		FOREIGN KEY (id_abonnement)
 		REFERENCES Abonnement(id);
 PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_typeabonnement)
-		REFERENCES TypeAbonnement(nom);
-PRINT('Table Abonnement modifiée');
-
-GO
-ALTER TABLE Abonnement
-	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
+		REFERENCES TypeAbonnement(nom),
+		FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table Abonnement modifiée');
 
 GO
 ALTER TABLE Location
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(id_facturation)
-		REFERENCES Facturation(id);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(date_etat_avant,id)
-		REFERENCES Etat(date_creation,id_location);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(date_etat_apres,id)
-		REFERENCES Etat(date_creation,id_location);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(id_contratLocation)
+		REFERENCES Vehicule(matricule),
+		FOREIGN KEY(id_facturation)
+		REFERENCES Facturation(id),
+		FOREIGN KEY(date_etat_avant,id)
+		REFERENCES Etat(date_creation,id_location),
+		FOREIGN KEY(date_etat_apres,id)
+		REFERENCES Etat(date_creation,id_location),
+		FOREIGN KEY(id_contratLocation)
 		REFERENCES  ContratLocation(id);
 PRINT('Table Location modifiée');
 
 GO
 ALTER TABLE ContratLocation
 	ADD FOREIGN KEY(id_abonnement)
-		REFERENCES Abonnement(id)
+		REFERENCES Abonnement(id);
 PRINT('Table ContratLocation modifiée');
 
 GO
 ALTER TABLE Conducteur
 	ADD FOREIGN KEY(id_permis)
-		REFERENCES Permis(numero);
-PRINT('Table Conducteur modifiée');
-
-GO
-ALTER TABLE Conducteur
-	ADD FOREIGN KEY(nationalite)
+		REFERENCES Permis(numero),
+		FOREIGN KEY(nationalite)
 		REFERENCES Nationalite(nom);
 PRINT('Table Conducteur modifiée');
 
@@ -659,4 +628,3 @@ ALTER TABLE RelanceDecouvert
 PRINT('Table RelanceDecouvert modifiée');
 
 GO
-
