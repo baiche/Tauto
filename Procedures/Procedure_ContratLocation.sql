@@ -45,11 +45,8 @@ CREATE PROCEDURE dbo.updateContratLocation
 AS
 	UPDATE ContratLocation
 	SET
-		date_debut = @date_debut,
-		date_fin = @date_fin,
 		date_fin_effective = @date_fin_effective,
-		extension = @extension,
-		id_abonnement = @id_abonnement
+		extension = @extension
 	WHERE id = @id;
 
 GO

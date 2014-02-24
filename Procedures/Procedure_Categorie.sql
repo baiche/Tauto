@@ -35,7 +35,7 @@ CREATE PROCEDURE dbo.updateCategorie
 	@nom_typepermis 		nvarchar(10)
 AS
 	UPDATE Categorie
-	SET nom = @nom, description = @description, nom_typepermis = @nom_typepermis
+	SET description = @description, nom_typepermis = @nom_typepermis
 	WHERE nom = @nom;
 	
 GO
