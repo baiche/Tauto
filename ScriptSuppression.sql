@@ -2,14 +2,15 @@
 -- Fichier     : ScriptSuppression
 -- Date        : 17/02/2014
 -- Version     : 1.0
--- Auteur      : ?
--- Correcteur  : 
+-- Auteur      : Boris de Finance
+-- Correcteur  : Seyyid Ahmed Ouir
 -- Testeur     :
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Supprimer toutes les tables
 ------------------------------------------------------------
 
 USE TAuto_IBDR
+
 
 DROP TABLE CatalogueCategorie;
 DROP TABLE CategorieModele;
@@ -38,7 +39,6 @@ DROP TABLE CompteAbonne;
 DROP TABLE Facturation;
 DROP TABLE Etat;
 DROP TABLE ListeNoire;
-
 DROP TABLE CouleurVehicule;
 DROP TABLE Nationalite;
 DROP TABLE StatutVehicule;

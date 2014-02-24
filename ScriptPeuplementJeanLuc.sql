@@ -12,8 +12,6 @@
 USE TAuto_IBDR
 
 INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
-('Amitousa Mankoy', 'Jean-Luc', '1990-07-18', 'true', 
- 'false', 'LU28 0019 4006 4475 0000', 'jean-luc.amitousa-mankoy@hotmail.fr', '0656470693'),
 ('Lecoconier', 'David', '1990-02-02', 'true', 
  'false', 'MK072 5012 0000 0589 84', 'david.lecoconier@gmail.Com', '06050403021'),
 ('De Finance', 'Boris', '1990-09-08', 'true', 
