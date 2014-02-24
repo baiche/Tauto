@@ -18,10 +18,12 @@ VALUES
 	('or', 15, 100),
 	('argent', 10, 50),
 	('bronze', 8, 20),
-	('10vehicules', 5, 10),
+	('10vehicule s', 5, 10),
 	('5vehicules', 3, 5),
 	('2vehicules', 2, 2),
 	('1vehicules', 1, 1);
+
+
 
 INSERT INTO Abonnement
 	(date_debut, duree, renouvellement_auto, nom_typeabonnement, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
@@ -35,3 +37,4 @@ VALUES
 	('2014-01-12', 15, false, '10vehicules', 'Deluze', 'Alexis', '1974-02-12'),
 	('2013-11-17', 22, false, 'bronze', 'Deluze', 'Alexis', '1974-02-12'),
 	('2014-02-22', 5, false, '5vehicules', 'Neti', 'Mohamed', '1988-03-25');
+	
