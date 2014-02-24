@@ -32,7 +32,7 @@ AS
 		@date_fin_effective,
 		@extension,
 		@id_abonnement
-	)
+	);
 
 GO
 CREATE PROCEDURE TAuto.updateContratLocation
@@ -50,12 +50,12 @@ AS
 		date_fin_effective = @date_fin_effective,
 		extension = @extension,
 		id_abonnement = @id_abonnement
-	WHERE id = @id
+	WHERE id = @id;
 
 GO
 CREATE PROCEDURE TAuto.deleteContratLocation
 	@id						int
 AS
 	DELETE FROM ContratLocation
-	WHERE id = @id
+	WHERE id = @id;
 GO

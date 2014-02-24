@@ -32,7 +32,7 @@ AS
 		@nom,
 		@prenom,
 		@id_permis
-	)
+	);
 
 GO
 CREATE PROCEDURE TAuto.updateConducteur
@@ -48,7 +48,7 @@ AS
 		nom = @nom,
 		prenom = @prenom,
 		id_permis = @id_permis
-	WHERE piece_identite = @piece_identite AND nationalite = @nationalite
+	WHERE piece_identite = @piece_identite AND nationalite = @nationalite;
 
 GO
 CREATE PROCEDURE TAuto.deleteConducteur
@@ -56,5 +56,5 @@ CREATE PROCEDURE TAuto.deleteConducteur
 	@nationalite 		nvarchar(50)
 AS
 	DELETE FROM Conducteur
-	WHERE piece_identite = @piece_identite AND nationalite = @nationalite
+	WHERE piece_identite = @piece_identite AND nationalite = @nationalite;
 GO

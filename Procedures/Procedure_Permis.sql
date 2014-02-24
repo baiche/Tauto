@@ -26,7 +26,7 @@ AS
 		@numero,
 		@valide,
 		@points_estimes
-	)
+	);
 	
 GO
 CREATE PROCEDURE TAuto.updatePermis
@@ -36,5 +36,5 @@ CREATE PROCEDURE TAuto.updatePermis
 AS
 	UPDATE Permis
 	SET numero = @numero, valide = @valide, points_estimes = @points_estimes
-	WHERE numero = @numero
+	WHERE numero = @numero;
 GO
