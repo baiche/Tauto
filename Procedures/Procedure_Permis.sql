@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_Categorie
+-- Fichier     : Procedure_Permis
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
@@ -9,7 +9,8 @@
 -- Commentaire :
 ------------------------------------------------------------
 
-USE TAuto_IBDR
+USE TAuto_IBDR;
+
 GO
 CREATE PROCEDURE TAuto.createPermis
 	@numero 				nvarchar(50),
