@@ -15,7 +15,7 @@ GO
 
 -- Cette procedure permet de creer un nouveau modele
 
-CREATE PROCEDURE TAuto.createModele
+CREATE PROCEDURE dbo.createModele
 	@marque 				nvarchar(50),
 	@serie 					nvarchar(50),
 	@type_carburant 		nvarchar(50),
@@ -49,7 +49,7 @@ GO
 
 -- Cette procedure permet de modifier le prix d'un modele
 
-CREATE PROCEDURE TAuto.updatePrixModele
+CREATE PROCEDURE dbo.updatePrixModele
 	@marque 				nvarchar(50),
 	@serie 					nvarchar(50),
 	@type_carburant 		nvarchar(50),
@@ -64,7 +64,7 @@ GO
 
 -- Cette procedure permet de modifier le pourcentage de reduction du prix du modele
 
-CREATE PROCEDURE TAuto.updateReductionModele
+CREATE PROCEDURE dbo.updateReductionModele
 	@marque 				nvarchar(50),
 	@serie 					nvarchar(50),
 	@type_carburant 		nvarchar(50),
@@ -79,7 +79,7 @@ GO
 
 -- Cette procedure rend le modele inactif sans reellement le delete pour eviter la perte d'information
 
-CREATE PROCEDURE TAuto.deleteModele
+CREATE PROCEDURE dbo.deleteModele
 	@marque 				nvarchar(50),
 	@serie 					nvarchar(50),
 	@type_carburant 		nvarchar(50),

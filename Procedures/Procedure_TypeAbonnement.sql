@@ -13,7 +13,7 @@ USE TAuto_IBDR;
 
 -- Insertion d'un nouveu type d'abonnement
 
-CREATE PROCEDURE TAuto.createTypeAbonnement
+CREATE PROCEDURE dbo.createTypeAbonnement
 	@nom					nvarchar(50),
 	@prix 					money,
 	@nb_max_vehicules 		int
@@ -34,7 +34,7 @@ GO
 
 -- Update le prix et le nombre max de véhicules
 
-CREATE PROCEDURE TAuto.updateTypeAbonnement
+CREATE PROCEDURE dbo.updateTypeAbonnement
 	@nom					nvarchar(50),
 	@prix 					money,
 	@nb_max_vehicules 		int
@@ -46,10 +46,10 @@ GO
 
 -- Désactive le type d'abonnement (pas de supression)
 
-CREATE PROCEDURE TAuto.deleteTypeAbonnement
+CREATE PROCEDURE dbo.deleteTypeAbonnement
 	@nom					nvarchar(50),
 AS
 	UPDATE TypeAbonnement
 	SET actif = 'false'
-	WHERE nom = @nom;	
+	WHERE nom = @nom;
 GO
