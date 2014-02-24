@@ -15,6 +15,7 @@ USE TAuto_IBDR
 INSERT INTO Abonnement
 	(date_debut, duree, renouvellement_auto, nom_typeabonnement, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
 VALUES
+
 	('2014-01-01', 10, false, '5vehicules', 'Lecoconier', 'David', '1990-02-02'), -- id = 1
 	('2014-02-19', 30, false, '2vehicules', 'Lecoconier', 'David', '1990-02-02'), -- id = 2
 	
@@ -36,3 +37,4 @@ VALUES
 	
 	('2013-05-01', 90, false, 'bronze', 'TASociety', 'TASociety', '1980-02-24'); -- id = 12
 	('2014-02-15', 30, true, 'argent', 'TASociety', 'TASociety', '1980-02-24'); -- id = 13
+
