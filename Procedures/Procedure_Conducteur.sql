@@ -43,11 +43,8 @@ CREATE PROCEDURE dbo.updateConducteur
 	@id_permis 			nvarchar(50)
 AS
 	UPDATE Conducteur
-	SET piece_identite = @piece_identite,
-		nationalite = @nationalite,
-		nom = @nom,
-		prenom = @prenom,
-		id_permis = @id_permis
+	SET nom = @nom,
+		prenom = @prenom
 	WHERE piece_identite = @piece_identite AND nationalite = @nationalite;
 
 GO
