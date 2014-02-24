@@ -3,8 +3,8 @@
 -- Date        : 15/02/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteurs  : David Lecoconnier , Baiche Mourad
--- Testeurs     :  Baiche Mourad
+-- Correcteurs : David Lecoconnier, Baiche Mourad
+-- Testeurs    : Baiche Mourad
 -- Integrateur : 
 -- Commentaire : ce scripte génére toutes les tables
 --				 si elles n'existent pas
