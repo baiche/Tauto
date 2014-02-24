@@ -434,14 +434,13 @@ GO
 -----------------------------
 -- Ajout des associations  --
 -----------------------------
-<<<<<<< HEAD
+
 PRINT('
 Création des associations');
 PRINT('=======================');
-=======
+
 PRINT('Création des associations');
 
->>>>>>> 1ac1c2a7414ff67a24c583ca5bd3f63a0fb36e73
 GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CatalogueCategorie')
 BEGIN
