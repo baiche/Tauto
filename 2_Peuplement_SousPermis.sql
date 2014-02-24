@@ -1,27 +1,16 @@
 ------------------------------------------------------------
 -- Fichier     : ScriptPeuplementAlexis
--- Date        : 17/02/2014
+-- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     :
 -- Integrateur : 
--- Commentaire : Remplissage des tables TypePermis (7),
---               SousPermis (12), Permis (4), Conducteur (4)
+-- Commentaire : Remplissage de la table SousPermis
+--               avec 12 entr�es
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-GO
-
-PRINT '> Ajout des types de permis '
-INSERT INTO TypePermis(nom) VALUES 
-	('A1'),
-	('A2'),
-	('B'),
-	('C'),
-	('D'),
-	('E'),
-	('F')
 GO
 
 PRINT '> Ajout des sous permis '
@@ -40,18 +29,4 @@ INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expir
 	('F', '0000000004', '2002-02-13', DEFAULT, 0)
 GO
 
-PRINT '> Ajout des permis '
-INSERT INTO Permis(numero, valide, points_estime) VALUES 
-	('0000000001', 'true', 5),
-	('0000000002', 'true', DEFAULT),
-	('0000000003', 'true', DEFAULT),
-	('0000000004', 'true', DEFAULT)
-GO
-
-PRINT '> Ajout des conducteurs '
-INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES 
-	('123456789', 'Française', 'de Finance', 'Boris', '0000000001'),
-	('987654321', 'Française', 'le Coco', 'David', '0000000002'),
-	('100000001', 'Anglaise', 'Amitoussa', 'Jean Luc', '0000000003'),
-	('200000002', 'Française', 'Marshall', 'Michel', '0000000004')
-GO
+-- 2
