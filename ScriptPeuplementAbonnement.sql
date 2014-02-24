@@ -6,22 +6,11 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables Abonnement, TypeAbonnement
+-- Commentaire : 
                  
 ------------------------------------------------------------
 
 USE TAuto_IBDR
-
-INSERT INTO TypeAbonnement
-	(nom, prix, nb_max_vehicules)
-VALUES
-	('or', 15, 100),
-	('argent', 10, 50),
-	('bronze', 8, 20),
-	('10vehicules', 5, 10),
-	('5vehicules', 3, 5),
-	('2vehicules', 2, 2),
-	('1vehicules', 1, 1);
 
 INSERT INTO Abonnement
 	(date_debut, duree, renouvellement_auto, nom_typeabonnement, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
