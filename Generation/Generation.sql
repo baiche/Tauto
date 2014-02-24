@@ -114,7 +114,7 @@ CREATE TABLE CompteAbonne(
 	date_naissance 		date,
 	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
-	iban 				char(25) 						NOT NULL							CHECK( LEN (iban) = 25),
+	iban 				nvarchar(50)					NOT NULL							CHECK( LEN (iban) >= 10),
 	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '%@%.%'),
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (telephone) > 1),
 	PRIMARY KEY(nom, prenom, date_naissance)

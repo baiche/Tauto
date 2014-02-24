@@ -19,7 +19,7 @@ CREATE PROCEDURE myDomain.getIBAN_Courriel
 AS
 	SELECT iban, courriel
 	FROM CompteAbonne
-	WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance
+	WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance;
 GO	
 
 --EXECUTE myDomain.getIBAN_Courriel @nom = N'', @prenom = N'', @date_naissance = N'';
