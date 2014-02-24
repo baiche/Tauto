@@ -26,7 +26,7 @@ AS
 		@nom,
 		@description,
 		@nom_typepermis
-	)
+	);
 	
 GO
 CREATE PROCEDURE TAuto.updateCategorie
@@ -36,12 +36,12 @@ CREATE PROCEDURE TAuto.updateCategorie
 AS
 	UPDATE Categorie
 	SET nom = @nom, description = @description, nom_typepermis = @nom_typepermis
-	WHERE nom = @nom
+	WHERE nom = @nom;
 	
 GO
 CREATE PROCEDURE TAuto.deleteCategorie
 	@nom					nvarchar(50),
 AS
 	DELETE FROM Categorie
-	WHERE nom = @nom
+	WHERE nom = @nom;
 GO
