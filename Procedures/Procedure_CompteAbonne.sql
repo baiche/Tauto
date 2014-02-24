@@ -41,7 +41,7 @@ AS
 		@iban,
 		@courriel,
 		@telephone
-	)
+	);
 
 GO
 CREATE PROCEDURE dbo.updateCompteAbonne
@@ -65,16 +65,16 @@ AS
 		telephone = @telephone		
 	WHERE 	nom = @nom,
 			prenom = @prenom,
-			date_naissance = @date_naissance
+			date_naissance = @date_naissance;
 
 GO
 CREATE PROCEDURE dbo.deleteCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
-	@date_naissance 		date,
+	@date_naissance 		date
 AS
 	DELETE FROM CompteAbonne
 	WHERE 	nom = @nom,
 			prenom = @prenom,
-			date_naissance = @date_naissance
+			date_naissance = @date_naissance;
 GO
