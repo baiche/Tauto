@@ -8,11 +8,6 @@
 -- Integrateur : 
 -- Commentaire : Remplissage des tables :
 --				-Catalogue 
---				-Liste Noire
---				-Facturation
---				-Etat
---				-ContratLocation
---				-Location
 ------------------------------------------------------------
 
 USE TAuto_IBDR
