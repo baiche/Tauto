@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createConducteur
+CREATE PROCEDURE dbo.createConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50),
 	@nom 				nvarchar(50),
@@ -35,7 +35,7 @@ AS
 	);
 
 GO
-CREATE PROCEDURE TAuto.updateConducteur
+CREATE PROCEDURE dbo.updateConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50),
 	@nom 				nvarchar(50),
@@ -51,7 +51,7 @@ AS
 	WHERE piece_identite = @piece_identite AND nationalite = @nationalite;
 
 GO
-CREATE PROCEDURE TAuto.deleteConducteur
+CREATE PROCEDURE dbo.deleteConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50)
 AS

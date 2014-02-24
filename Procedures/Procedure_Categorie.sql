@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createCategorie
+CREATE PROCEDURE dbo.createCategorie
 	@nom					nvarchar(50),
 	@description 			nvarchar(50),
 	@nom_typepermis 		nvarchar(10)
@@ -29,7 +29,7 @@ AS
 	);
 	
 GO
-CREATE PROCEDURE TAuto.updateCategorie
+CREATE PROCEDURE dbo.updateCategorie
 	@nom					nvarchar(50),
 	@description 			nvarchar(50),
 	@nom_typepermis 		nvarchar(10)
@@ -39,7 +39,7 @@ AS
 	WHERE nom = @nom;
 	
 GO
-CREATE PROCEDURE TAuto.deleteCategorie
+CREATE PROCEDURE dbo.deleteCategorie
 	@nom					nvarchar(50),
 AS
 	DELETE FROM Categorie

@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.CreateIncident 
+CREATE PROCEDURE dbo.CreateIncident 
 	@date_creation datetime,
 	@id_location int,
 	@description_incident nvarchar(50),

@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE myDomain.getIBAN_Courriel
+CREATE PROCEDURE dbo.getIBAN_Courriel
 	@nom 				nvarchar(50),
 	@prenom				nvarchar(50),
 	@date_naissance		date
@@ -22,6 +22,6 @@ AS
 	WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance;
 GO	
 
---EXECUTE myDomain.getIBAN_Courriel @nom = N'', @prenom = N'', @date_naissance = N'';
+--EXECUTE dbo.getIBAN_Courriel @nom = N'', @prenom = N'', @date_naissance = N'';
 
 --http://technet.microsoft.com/fr-fr/library/ms345415.aspx

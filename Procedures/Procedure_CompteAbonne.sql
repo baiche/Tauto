@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createCompteAbonne
+CREATE PROCEDURE dbo.createCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
 	@date_naissance 		date,
@@ -44,7 +44,7 @@ AS
 	)
 
 GO
-CREATE PROCEDURE TAuto.updateCompteAbonne
+CREATE PROCEDURE dbo.updateCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
 	@date_naissance 		date,
@@ -68,7 +68,7 @@ AS
 			date_naissance = @date_naissance
 
 GO
-CREATE PROCEDURE TAuto.deleteCompteAbonne
+CREATE PROCEDURE dbo.deleteCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
 	@date_naissance 		date,
