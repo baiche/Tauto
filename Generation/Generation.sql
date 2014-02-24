@@ -72,7 +72,7 @@ GO
 CREATE TABLE Vehicule(
 	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( LEN (matricule) > 1),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 							CHECK( LEN (couleur) > 1), --c'est un enum
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (couleur) > 1), --c'est un enum
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK( LEN (statut) > 1), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( LEN (num_serie) > 1),
 	marque_modele 		nvarchar(50) 					NOT NULL,
@@ -115,16 +115,16 @@ CREATE TABLE CompteAbonne(
 	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( LEN (iban) >= 10),
-	courriel 			nvarchar(50) 					NOT NULL 							CHECK(courriel LIKE '%@%.%'),
-	telephone 			nvarchar(50) 					NOT NULL 							CHECK( LEN (telephone) > 1),
+	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '%@%.%'),
+	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (telephone) > 1),
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
 PRINT('Table CompteAbonne créée');
 
 GO
 CREATE TABLE Entreprise(
-	siret 				char(14) 						NOT NULL 							CHECK( LEN (siret) > 1),
-	nom 				nvarchar(50) 					NOT NULL 							CHECK( LEN (nom) > 1),
+	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK( LEN (siret) > 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (nom) > 1),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
 	date_naissance_compte date,
@@ -206,9 +206,9 @@ GO
 CREATE TABLE Infraction(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	nom 				nvarchar(50) 					NOT NULL 							CHECK( LEN (nom) > 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (nom) > 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 							CHECK( LEN (description) > 1),
+	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( LEN (description) > 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -218,7 +218,7 @@ GO
 CREATE TABLE Incident(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	description 		nvarchar(50) 					NOT NULL 							CHECK( LEN (description) > 1),
+	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (description) > 1),
 	penalisable 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -288,8 +288,8 @@ PRINT('Table StatutVehicule créée');
 -----------------------------
 -- Ajout des associations  --
 -----------------------------
-PRINT('
-Création des associations');
+PRINT('Création des associations');
+
 GO
 CREATE TABLE CatalogueCategorie(
 	nom_catalogue 		nvarchar(50) REFERENCES Catalogue(nom),
@@ -371,96 +371,60 @@ PRINT('Table Modele modifiée');
 GO
 ALTER TABLE SousPermis
 	ADD FOREIGN KEY(nom_typepermis)
-		REFERENCES TypePermis(nom);
-PRINT('Table SousPermis modifiée');
-
-GO
-ALTER TABLE SousPermis
-	ADD FOREIGN KEY(numero_permis)
+		REFERENCES TypePermis(nom),
+		FOREIGN KEY(numero_permis)
 		REFERENCES Permis(numero);
 PRINT('Table SousPermis modifiée');
 
 GO
 ALTER TABLE Vehicule
 	ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele, portieres_modele) 
-		REFERENCES Modele(marque, serie, type_carburant, portieres);
-PRINT('Table Vehicule modifiée');
-
-GO
-ALTER TABLE Vehicule
-	ADD FOREIGN KEY(couleur)
+		REFERENCES Modele(marque, serie, type_carburant, portieres),
+		FOREIGN KEY(couleur)
 		REFERENCES CouleurVehicule(nom);
 PRINT('Table Vehicule modifiée');
 
 GO
 ALTER TABLE Reservation
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule);
-PRINT('Table Reservation modifiée');
-
-GO
-ALTER TABLE Reservation
-	ADD FOREIGN KEY (id_abonnement)
+		REFERENCES Vehicule(matricule),
+		FOREIGN KEY (id_abonnement)
 		REFERENCES Abonnement(id);
 PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_typeabonnement)
-		REFERENCES TypeAbonnement(nom);
-PRINT('Table Abonnement modifiée');
-
-GO
-ALTER TABLE Abonnement
-	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
+		REFERENCES TypeAbonnement(nom),
+		FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table Abonnement modifiée');
 
 GO
 ALTER TABLE Location
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(id_facturation)
-		REFERENCES Facturation(id);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(date_etat_avant,id)
-		REFERENCES Etat(date_creation,id_location);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(date_etat_apres,id)
-		REFERENCES Etat(date_creation,id_location);
-PRINT('Table Location modifiée');
-
-GO
-ALTER TABLE Location
-	ADD FOREIGN KEY(id_contratLocation)
+		REFERENCES Vehicule(matricule),
+		FOREIGN KEY(id_facturation)
+		REFERENCES Facturation(id),
+		FOREIGN KEY(date_etat_avant,id)
+		REFERENCES Etat(date_creation,id_location),
+		FOREIGN KEY(date_etat_apres,id)
+		REFERENCES Etat(date_creation,id_location),
+		FOREIGN KEY(id_contratLocation)
 		REFERENCES  ContratLocation(id);
 PRINT('Table Location modifiée');
 
 GO
 ALTER TABLE ContratLocation
 	ADD FOREIGN KEY(id_abonnement)
-		REFERENCES Abonnement(id)
+		REFERENCES Abonnement(id);
 PRINT('Table ContratLocation modifiée');
 
 GO
 ALTER TABLE Conducteur
 	ADD FOREIGN KEY(id_permis)
-		REFERENCES Permis(numero);
-PRINT('Table Conducteur modifiée');
-
-GO
-ALTER TABLE Conducteur
-	ADD FOREIGN KEY(nationalite)
+		REFERENCES Permis(numero),
+		FOREIGN KEY(nationalite)
 		REFERENCES Nationalite(nom);
 PRINT('Table Conducteur modifiée');
 
@@ -489,5 +453,3 @@ ALTER TABLE RelanceDecouvert
 PRINT('Table RelanceDecouvert modifiée');
 
 GO
-INSERT INTO TypeCarburant(nom) VALUES ('Diesel');
-INSERT INTO Modele(marque,serie,type_carburant,annee,prix,reduction,portieres) VALUES('Peugeot','206','Diesel',2003,39,0,3);
