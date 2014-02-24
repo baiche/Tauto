@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : ScriptGeneration
+-- Fichier     : Procedure_Abonnement
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
