@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementJeanLuc
+-- Fichier     : ScriptPeuplementEntreprise
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
