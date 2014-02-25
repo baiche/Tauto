@@ -9,10 +9,10 @@
 -- Commentaire :
 ------------------------------------------------------------
 
-USE TAuto_IBDR
+USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createAbonnement
+CREATE PROCEDURE dbo.createAbonnement
 	@date_debut 					date,
 	@duree 							int,
 	@renouvellement_auto 			bit,
@@ -43,11 +43,11 @@ GO
 
 
 GO
-CREATE PROCEDURE TAuto.update
+CREATE PROCEDURE dbo.update
 
 GO
 
-CREATE PROCEDURE TAuto.deleteAbonnement
+CREATE PROCEDURE dbo.deleteAbonnement
 	@id 							int
 AS
 	DELETE FROM Abonnement

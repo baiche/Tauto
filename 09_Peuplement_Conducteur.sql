@@ -15,10 +15,10 @@ GO
 
 PRINT '> Ajout des conducteurs '
 INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES 
-	('123456789', 'Française', 'de Finance', 'Boris', '0000000001'),
-	('987654321', 'Française', 'le Coco', 'David', '0000000002'),
-	('100000001', 'Anglaise', 'Amitoussa', 'Jean Luc', '0000000003'),
-	('200000002', 'Française', 'Marshall', 'Michel', '0000000004')
+	('123456789', 'Français', 'de Finance', 'Boris', '0000000001'),
+	('987654321', 'Français', 'le Coco', 'David', '0000000002'),
+	('100000001', 'Anglais', 'Amitousa', 'Jean Luc', '0000000003'),
+	('200000002', 'Français', 'Marshall', 'Michel', '0000000004')
 GO
 
 -- 4

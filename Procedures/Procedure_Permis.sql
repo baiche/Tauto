@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createPermis
+CREATE PROCEDURE dbo.createPermis
 	@numero 				nvarchar(50),
 	@valide 				bit,
 	@points_estimes 		tinyint
@@ -29,12 +29,12 @@ AS
 	);
 	
 GO
-CREATE PROCEDURE TAuto.updatePermis
+CREATE PROCEDURE dbo.updatePermis
 	@numero 				nvarchar(50),
 	@valide 				bit,
 	@points_estimes 		tinyint
 AS
 	UPDATE Permis
-	SET numero = @numero, valide = @valide, points_estimes = @points_estimes
+	SET valide = @valide, points_estimes = @points_estimes
 	WHERE numero = @numero;
 GO

@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE TAuto.createContratLocation
+CREATE PROCEDURE dbo.createContratLocation
 	@date_debut 			datetime,
 	@date_fin 				datetime,
 	@date_fin_effective 	datetime,
@@ -35,7 +35,7 @@ AS
 	);
 
 GO
-CREATE PROCEDURE TAuto.updateContratLocation
+CREATE PROCEDURE dbo.updateContratLocation
 	@id						int,
 	@date_debut 			datetime,
 	@date_fin 				datetime,
@@ -45,15 +45,12 @@ CREATE PROCEDURE TAuto.updateContratLocation
 AS
 	UPDATE ContratLocation
 	SET
-		date_debut = @date_debut,
-		date_fin = @date_fin,
 		date_fin_effective = @date_fin_effective,
-		extension = @extension,
-		id_abonnement = @id_abonnement
+		extension = @extension
 	WHERE id = @id;
 
 GO
-CREATE PROCEDURE TAuto.deleteContratLocation
+CREATE PROCEDURE dbo.deleteContratLocation
 	@id						int
 AS
 	DELETE FROM ContratLocation
