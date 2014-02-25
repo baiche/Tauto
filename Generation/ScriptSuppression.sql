@@ -3,10 +3,10 @@
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteur  : Seyyid Ahmed Ouir
--- Testeur     :
+-- Correcteurs  : Seyyid Ahmed Ouir , Baiche
+-- Testeurs     : Baiche
 -- Integrateur : 
--- Commentaire : Supprimer toutes les tables
+-- Commentaire : Supprimer toutes les tables si elle existent
 ------------------------------------------------------------
 
 USE TAuto_IBDR
