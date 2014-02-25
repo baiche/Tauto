@@ -14,7 +14,7 @@ USE TAuto_IBDR;
 -- peugeot 206
 GO
 INSERT INTO Modele(marque,serie,type_carburant,annee,prix,reduction,portieres) VALUES
-		('Peugeot','206','Diesel',2003,39,0,3),
+		('Peugeot','207','Diesel',2003,39,0,3),
 		('Peugeot','206','Diesel',2003,45,0,5),
 		('Peugeot','206','Essence',2003,39,0,3),
 		('Peugeot','206','Essence',2003,45,0,5)
