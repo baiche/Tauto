@@ -4,7 +4,7 @@ USE TAuto_IBDR;
 -- Fichier     : ScriptPeuplementModel.sql
 -- Date        : 17/02/2014
 -- Auteur      : Baiche
--- Correcteur  : 
+-- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Script de remplissage de la table Modele
@@ -96,6 +96,6 @@ GO
 
 INSERT INTO Modele (marque,serie,type_carburant,annee,prix,reduction,portieres) VALUES
 		('Man','Lion''s Regio','Diesel',2013,265,0,6),
-		('VanHool','AGG300','Diese',2013,265,0,6),
+		('VanHool','AGG300','Diesel',2013,265,0,6),
 		('Mercedes-Benz','CITARO','Diesel',2013,265,0,6)
 GO
