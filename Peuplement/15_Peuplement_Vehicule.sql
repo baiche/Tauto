@@ -1,5 +1,3 @@
-USE TAuto_IBDR
-
 -----------------------------------------------------------
 -- Fichier     : ScriptPeuplementVehicule.sql
 -- Date        : 17/02/2014
@@ -11,7 +9,8 @@ USE TAuto_IBDR
 --
 ------------------------------------------------------------
 
-GO
+USE TAuto_IBDR
+
 
 INSERT INTO Vehicule (matricule,kilometrage,couleur,statut,num_serie,marque_modele,serie_modele,portieres_modele,type_carburant_modele)VALUES
 		('0775896wx','18000','Bleu','En panne','VF3 8C4HXF 81100000','Peugeot','406',5,'Diesel'), 

@@ -13,7 +13,6 @@
 USE TAuto_IBDR;
 GO
 
-PRINT '> Ajout des types de permis '
 INSERT INTO TypePermis(nom) VALUES 
 	('A1'),
 	('A2'),

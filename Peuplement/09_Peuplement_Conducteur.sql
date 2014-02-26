@@ -11,9 +11,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-GO
 
-PRINT '> Ajout des conducteurs '
 INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES 
 	('123456789', 'Francais', 'de Finance', 'Boris', '0000000001'),
 	('987654321', 'Francais', 'le Coco', 'David', '0000000002'),

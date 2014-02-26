@@ -1,6 +1,3 @@
-USE TAuto_IBDR;
-
-
 -----------------------------------------------------------
 -- Fichier     : ScriptpeuplementCategorie.sql
 -- Date        : 18/02/2014
@@ -12,7 +9,7 @@ USE TAuto_IBDR;
 --
 ------------------------------------------------------------
 
-GO
+USE TAuto_IBDR;
 
 INSERT INTO Categorie(nom,description,nom_typepermis) VALUES
 		('4x4','description de la catégorie 4x4','B'),
