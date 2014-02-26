@@ -1,7 +1,7 @@
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-sqlcmd -S %mssqlInstanceName% -i .\Generation\ScriptSuppression.sql
-sqlcmd -S %mssqlInstanceName% -i .\Generation\Generation.sql
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql
 sqlcmd -S %mssqlInstanceName% -i .\01_Peuplement_TypePermis.sql
 sqlcmd -S %mssqlInstanceName% -i .\02_Peuplement_TypeCarburant.sql
 sqlcmd -S %mssqlInstanceName% -i .\03_Peuplement_TypeAbonnement.sql
