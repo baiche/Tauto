@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Remplissage des tables "Catalogue" et "Categorie"
+-- Commentaire : Remplissage de la table "CatalogueCategorie"
                  
 ------------------------------------------------------------
 
