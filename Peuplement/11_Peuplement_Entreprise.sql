@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementEntreprise
+-- Fichier     : 11_Peuplement_Entreprise.sql
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table Entreprise
 ------------------------------------------------------------
 

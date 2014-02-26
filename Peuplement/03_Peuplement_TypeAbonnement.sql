@@ -1,11 +1,11 @@
  ------------------------------------------------------------
--- Fichier     : ScriptPeuplementTypeAbonnement
+-- Fichier     : 03_Peuplement_TypeAbonnement.sql
 -- Date        : 20/02/2014
 -- Version     : 1.0
 -- Auteur      : Seyyid Ahmed Ouir
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : 
                  
 ------------------------------------------------------------

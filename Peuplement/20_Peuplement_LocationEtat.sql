@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementLocation
+-- Fichier     : 20_Peuplement_LocationEtat.sql
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table Location
 ------------------------------------------------------------
 

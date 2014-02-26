@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : Peuplement_Permis
+-- Fichier     : 07_Peuplement_Permis.sql
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     :
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table Permis
 --               avec 4 entrées
 ------------------------------------------------------------

@@ -1,10 +1,10 @@
 -----------------------------------------------------------
--- Fichier     : ScriptPeuplementCategorieModele.sql
+-- Fichier     : 25_Peuplement_CategorieModel.sql
 -- Date        : 17/02/2014
 -- Auteur      : Baiche
 -- Correcteur  : David Lecoconnier
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Script de remplissage de la table de jointure entre categorie et modele
 --
 ------------------------------------------------------------

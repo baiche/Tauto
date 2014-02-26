@@ -1,11 +1,11 @@
  ------------------------------------------------------------
--- Fichier     : ScriptPeuplementReservation
+-- Fichier     : 22_Peuplement_Reservation.sql
 -- Date        : 20/02/2014
 -- Version     : 1.0
 -- Auteur      : Seyyid Ahmed Ouir
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage des tables Reservation
                  
 ------------------------------------------------------------

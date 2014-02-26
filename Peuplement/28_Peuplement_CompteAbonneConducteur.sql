@@ -1,10 +1,10 @@
 -----------------------------------------------------------
--- Fichier     : ScriptPeuplementCategorieModele.sql
+-- Fichier     : 28_Peuplement_CompteAbonneConducteur.sql
 -- Date        : 26/02/2014
 -- Auteur      : David Lecoconnier
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Script de remplissage de la table de jointure antre conducteur et compteAbonne (particulier et entreprise).
 --
 ------------------------------------------------------------

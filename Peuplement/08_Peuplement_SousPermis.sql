@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : Peuplement_SousPermis
+-- Fichier     : 08_Peuplement_SousPermis.sql
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     :
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table SousPermis
 --               avec 12 entrées
 ------------------------------------------------------------

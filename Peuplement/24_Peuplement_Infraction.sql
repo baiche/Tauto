@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : ScriptPeuplementBoris
+-- Fichier     : 24_Peuplement_Infraction.sql
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
 -- Correcteur  : 
 -- Testeur     :
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage des tables :
 --				-Infraction
 ------------------------------------------------------------
