@@ -112,6 +112,7 @@ CREATE TABLE Vehicule(
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
+	date_entree			date							NOT NULL	DEFAULT GETDATE(),
 	type_carburant_modele nvarchar(50) 					NOT NULL --c'est un enum
 );
 
