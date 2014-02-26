@@ -1,4 +1,4 @@
-USE TAuto_IBDR
+USE TAuto_IBDR;
 
 
 -----------------------------------------------------------
@@ -16,8 +16,8 @@ GO
 
 INSERT INTO Categorie(nom,description,nom_typepermis) VALUES
 		('4x4','description de la catégorie 4x4','B'),
-		('Pic-up','description d''un pique-up','B'),
+		('Pic-up','description d''un pic-up','B'),
 		('Camion','Transport de marchandise','C'),
 		('Bus','Transport de personne > 9 places ','E'),
-		('Vehicule simple','tout type de véhicule simple a 4 roues','B')	
+		('Vehicule simple','tout type de véhicule simple a 4 roues','B');
 GO
