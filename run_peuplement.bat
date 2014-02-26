@@ -1,4 +1,4 @@
-SET mssqlInstanceName="AMITOUSA-MANKOY\JLUCSQLEXPRESS"
+SET mssqlInstanceName=".\SQLEXPRESS"
 
 sqlcmd -S %mssqlInstanceName% -i .\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i .\Generation\Generation.sql
@@ -30,3 +30,5 @@ sqlcmd -S %mssqlInstanceName% -i .\25_Peuplement_CategorieModel.sql
 sqlcmd -S %mssqlInstanceName% -i .\26_Peuplement_RelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i .\27_Peuplement_CatalogueCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i .\28_Peuplement_CompteAbonneConducteur.sql
+
+pause
