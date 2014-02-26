@@ -15,10 +15,10 @@ USE TAuto_IBDR
 INSERT INTO ConducteurLocation
 	(id_location, piece_identite_conducteur, nationalite_conducteur)
 VALUES
-	(1, '123456789', 'Français'),
-	(1, '987654321', 'Français'),
-	(2, '987654321', 'Français'),
+	(1, '123456789', 'Francais'),
+	(1, '987654321', 'Francais'),
+	(2, '987654321', 'Francais'),
 	(3, '100000001', 'Anglais'),
-	(4, '200000002', 'Français'),
-	(5, '987654321', 'Français'),
-	(6, '123456789', 'Français');
+	(4, '200000002', 'Francais'),
+	(5, '987654321', 'Francais'),
+	(6, '123456789', 'Francais');
