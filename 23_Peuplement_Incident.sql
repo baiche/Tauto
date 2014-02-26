@@ -16,9 +16,9 @@ USE TAuto_IBDR
 ------------------------------------------------
 
 INSERT INTO Incident(date, id_location, description, penalisable)
-VALUES ('2014-03-04',5,'crevaison',0),--5
-('2014-03-10',5,'injure au vendeur',1),--5
-('2012-12-31',5,'crevaison',0);--6
+VALUES ('20140304 00:00:00',5,'crevaison',0),--5
+('20140310 00:00:00',5,'injure au vendeur',1),--5
+('20121231 00:00:00',5,'crevaison',0);--6
 
 
 

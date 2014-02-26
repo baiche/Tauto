@@ -16,6 +16,6 @@ USE TAuto_IBDR
 --Infraction                                    -
 -------------------------------------------------
 INSERT INTO Infraction(date, id_location, nom, montant, description, regle)
-VALUES('2014-01-08',1,'Dépassement de la vitesse autorisée', '€135','Dépassement de plus de 50 km/h a Paris',0),--1
-('2014-02-14',2,'Brule un stop', '€233','Au rond point de Nanterre à 14 h 30',1),--2
-('2014-02-28',2,'Dépassement de la vitesse autorisée', '€135','Dépassement de plus de 20 km/h a Marseille',0);--2
+VALUES('20140108 00:00:00',1,'Dépassement de la vitesse autorisée', '€135','Dépassement de plus de 50 km/h a Paris',0),--1
+('20140214 00:00:00',2,'Brule un stop', '€233','Au rond point de Nanterre à 14 h 30',1),--2
+('20140228 00:00:00',2,'Dépassement de la vitesse autorisée', '€135','Dépassement de plus de 20 km/h a Marseille',0);--2
