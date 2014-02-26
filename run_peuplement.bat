@@ -30,5 +30,5 @@ sqlcmd -S %mssqlInstanceName% -i .\25_Peuplement_CategorieModel.sql
 sqlcmd -S %mssqlInstanceName% -i .\26_Peuplement_RelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i .\27_Peuplement_CatalogueCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i .\28_Peuplement_CompteAbonneConducteur.sql
-
+sqlcmd -S %mssqlInstanceName% -i .\29_Peuplement_ConducteurLocation.sql
 pause
