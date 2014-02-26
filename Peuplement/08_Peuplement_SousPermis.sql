@@ -1,19 +1,16 @@
 ------------------------------------------------------------
--- Fichier     : Peuplement_SousPermis
+-- Fichier     : 08_Peuplement_SousPermis.sql
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     :
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table SousPermis
 --               avec 12 entrées
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-GO
-
-PRINT '> Ajout des sous permis '
 INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expiration, periode_probatoire) VALUES 
 	('B', '0000000001', '2001-01-01', '9999-12-31', 0),
 	('D', '0000000001', '2001-01-02', '9999-12-31', 0),

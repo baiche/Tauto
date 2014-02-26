@@ -1,15 +1,15 @@
  ------------------------------------------------------------
--- Fichier     : Peuplement_StatusVehicule
+-- Fichier     : 04_Peuplement_Nationalite.sql
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : 
                  
 ------------------------------------------------------------
 
 USE TAuto_IBDR
 
-INSERT INTO StatutVehicule(nom) VALUES ('Disponible'), ('Louee'), ('En panne');
+INSERT INTO Nationalite(nom) VALUES ('Francais'), ('Anglais');

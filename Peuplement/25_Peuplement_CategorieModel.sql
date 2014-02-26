@@ -1,19 +1,17 @@
-USE TAuto_IBDR;
-
 -----------------------------------------------------------
--- Fichier     : ScriptPeuplementCategorieModele.sql
+-- Fichier     : 25_Peuplement_CategorieModel.sql
 -- Date        : 17/02/2014
 -- Auteur      : Baiche
 -- Correcteur  : David Lecoconnier
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Script de remplissage de la table de jointure entre categorie et modele
 --
 ------------------------------------------------------------
 
+USE TAuto_IBDR;
 
 -- Ajout des modele pour la categorie Vehicule simple
-GO
 INSERT INTO CategorieModele(marque_modele,serie_modele,type_carburant_modele,portieres_modele,nom_categorie) VALUES
 		('Peugeot','206','Diesel',3,'Vehicule Simple'),
 		('Peugeot','206','Diesel',5,'Vehicule Simple'),
@@ -29,11 +27,9 @@ INSERT INTO CategorieModele(marque_modele,serie_modele,type_carburant_modele,por
 		('Peugeot','607','Essence',5,'Vehicule Simple'),
 		('BMW','5 F10 M5','Diesel',5,'Vehicule Simple'),
 		('BMW','5 F10 M5','Essence',5,'Vehicule Simple');
-GO
 
 
 -- Ajout des modele pour la categorie Camion
-GO
 INSERT INTO CategorieModele(marque_modele,serie_modele,type_carburant_modele,portieres_modele,nom_categorie) VALUES
 		('Man','TGS','Essence',2,'Camion'),
 		('Man','TGS','Diesel',2,'Camion'),
@@ -43,14 +39,11 @@ INSERT INTO CategorieModele(marque_modele,serie_modele,type_carburant_modele,por
 		('Izuzu','P35.Y07','Diesel',2,'Camion'),
 		('Mercedes-Benz','Actros','Essence',2,'Camion'),
 		('Mercedes-Benz','Actros','Diesel',2,'Camion');
-GO
 
 
 -- Ajout des modele pour la categorie Bus
-GO
 INSERT INTO CategorieModele(marque_modele,serie_modele,type_carburant_modele,portieres_modele,nom_categorie) VALUES
 		('Man','Lion''s Regio','Diesel',6,'Bus'),
 		('VanHool','AGG300','Diesel',6,'Bus'),
 		('Mercedes-Benz','CITARO','Diesel',6,'Bus');
-GO
 

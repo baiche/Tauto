@@ -1,11 +1,11 @@
 ------------------------------------------------------------
--- Fichier     : Peuplement_TypePermis
+-- Fichier     : 01_Peuplement_TypePermis.sql
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
 -- Correcteur  : 
--- Testeur     :
--- Integrateur : 
+-- Testeur     : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table TypePermis
 --               avec 7 entrées
 ------------------------------------------------------------
@@ -13,7 +13,6 @@
 USE TAuto_IBDR;
 GO
 
-PRINT '> Ajout des types de permis '
 INSERT INTO TypePermis(nom) VALUES 
 	('A1'),
 	('A2'),

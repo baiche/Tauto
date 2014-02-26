@@ -405,7 +405,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Nationalite')
 BEGIN
 CREATE TABLE Nationalite
-	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Français', 'Anglais')));
+	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Francais', 'Anglais')));
 PRINT('Table Nationalite créée');
 END
 ELSE PRINT('La table Nationnalite existe déja');
