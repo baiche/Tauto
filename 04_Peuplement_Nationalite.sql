@@ -12,4 +12,4 @@
 
 USE TAuto_IBDR
 
-INSERT INTO Nationalite(nom) VALUES ('Français'), ('Anglais');
+INSERT INTO Nationalite(nom) VALUES ('Francais'), ('Anglais');
