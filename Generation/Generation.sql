@@ -55,7 +55,7 @@ BEGIN
 CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( LEN (marque) > 1),
 	serie 				nvarchar(50)														CHECK( LEN (serie) > 1),
-	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')) --c'est un enum
+	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
@@ -107,7 +107,7 @@ CREATE TABLE Vehicule(
 	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( LEN (matricule) > 1),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
 	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
-	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne')), --c'est un enum
+	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( LEN (num_serie) > 1),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
@@ -285,7 +285,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Conducteur(
 	piece_identite 		nvarchar(50)														CHECK( LEN (piece_identite) > 1),
-	nationalite 		nvarchar(50) 					NOT NULL							CHECK( CHECK(nationalite IN('Francais', 'Anglais')),
+	nationalite 		nvarchar(50) 					NOT NULL							CHECK(nationalite IN('Francais', 'Anglais')),
 	nom 				nvarchar(50) 					NOT NULL							CHECK( LEN (nom) > 1),
 	prenom 				nvarchar(50) 					NOT NULL							CHECK( LEN (prenom) > 1),
 	id_permis 			nvarchar(50)
