@@ -2,12 +2,6 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql
-sqlcmd -S %mssqlInstanceName% -i .\01_Peuplement_TypePermis.sql
-sqlcmd -S %mssqlInstanceName% -i .\02_Peuplement_TypeCarburant.sql
-sqlcmd -S %mssqlInstanceName% -i .\03_Peuplement_TypeAbonnement.sql
-sqlcmd -S %mssqlInstanceName% -i .\04_Peuplement_Nationalite.sql
-sqlcmd -S %mssqlInstanceName% -i .\05_Peuplement_CouleurVehicule.sql
-sqlcmd -S %mssqlInstanceName% -i .\06_Peuplement_StatutVehicule.sql
 sqlcmd -S %mssqlInstanceName% -i .\07_Peuplement_Permis.sql
 sqlcmd -S %mssqlInstanceName% -i .\08_Peuplement_SousPermis.sql
 sqlcmd -S %mssqlInstanceName% -i .\09_Peuplement_Conducteur.sql
