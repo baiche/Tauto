@@ -1,12 +1,12 @@
 ------------------------------------------------------------
--- Fichier     : ScriptGeneration
+-- Fichier     : Generation
 -- Date        : 15/02/2014
--- Version     : 1.0
+-- Version     : 1.1
 -- Auteur      : Boris de Finance
--- Correcteurs  : David Lecoconnier , Baiche Mourad
--- Testeurs     :  Baiche Mourad
+-- Correcteurs : David Lecoconnier, Baiche Mourad, Alexis Deluze
+-- Testeurs    : Baiche Mourad
 -- Integrateur : 
--- Commentaire : ce scripte génére toutes les tables
+-- Commentaire : ce script génére toutes les tables
 --				 si elles n'existent pas
 ------------------------------------------------------------
 
@@ -42,7 +42,7 @@ BEGIN
 CREATE TABLE Categorie(
 	nom					nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
 	description 		nvarchar(50) 					NOT NULL							CHECK( LEN (description) > 1),
-	nom_typepermis 		nvarchar(10) 					NOT NULL --c'est un enum
+	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')) --c'est un enum
 ); 
 
 PRINT('Table Categorie créée');
@@ -55,7 +55,7 @@ BEGIN
 CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( LEN (marque) > 1),
 	serie 				nvarchar(50)														CHECK( LEN (serie) > 1),
-	type_carburant 		nvarchar(50) 					NOT NULL, --c'est un enum
+	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
@@ -72,7 +72,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='SousPermis')
 BEGIN
 CREATE TABLE SousPermis(
-	nom_typepermis 		nvarchar(10) 					NOT NULL, --c'est un enum
+	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
 	numero_permis 		nvarchar(50),
 	date_obtention 		date 							NOT NULL,
 	date_expiration 	date 							NOT NULL,
@@ -106,12 +106,13 @@ BEGIN
 CREATE TABLE Vehicule(
 	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( LEN (matricule) > 1),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (couleur) > 1), --c'est un enum
-	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK( LEN (statut) > 1), --c'est un enum
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
+	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( LEN (num_serie) > 1),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
+	date_entree			date							NOT NULL	DEFAULT GETDATE(),
 	type_carburant_modele nvarchar(50) 					NOT NULL --c'est un enum
 );
 
@@ -285,7 +286,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Conducteur(
 	piece_identite 		nvarchar(50)														CHECK( LEN (piece_identite) > 1),
-	nationalite 		nvarchar(50) 					NOT NULL							CHECK( LEN (nationalite) > 1),
+	nationalite 		nvarchar(50) 					NOT NULL							CHECK(nationalite IN('Francais', 'Anglais')),
 	nom 				nvarchar(50) 					NOT NULL							CHECK( LEN (nom) > 1),
 	prenom 				nvarchar(50) 					NOT NULL							CHECK( LEN (prenom) > 1),
 	id_permis 			nvarchar(50)
@@ -371,63 +372,6 @@ CREATE TABLE ListeNoire(
 PRINT('Table ListeNoire créée');
 END
 ELSE PRINT('La table ListeNoire existe déja');
-GO
-
-
-PRINT(' ');
-PRINT('Création des tables d''énumérations');
-PRINT('===================================');
------------------------------------
--- Ajout des tables-énumérations --
------------------------------------
-GO
-IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypePermis')
-BEGIN
-CREATE TABLE TypePermis
-	(nom nvarchar(10) PRIMARY KEY CHECK(nom IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')));
-PRINT('Table TypePermis créée');
-END
-ELSE PRINT('La table TypePermis existe déja');
-GO
-
-GO
-IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypeCarburant')
-BEGIN
-CREATE TABLE TypeCarburant
-	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Essence', 'Diesel')));
-PRINT('Table TypeCarburant créée');
-END
-ELSE PRINT('La table TypeCarburant existe déja');
-GO
-
-GO
-IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Nationalite')
-BEGIN
-CREATE TABLE Nationalite
-	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Français', 'Anglais')));
-PRINT('Table Nationalite créée');
-END
-ELSE PRINT('La table Nationnalite existe déja');
-GO
-
-GO
-IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CouleurVehicule')
-BEGIN
-CREATE TABLE CouleurVehicule
-	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Bleu', 'Blanc', 'Rouge')));
-PRINT('Table CouleurVehicule créée');
-END
-ELSE PRINT('La table CouleurVehicule existe déja');
-GO
-
-GO
-IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='StatutVehicule')
-BEGIN
-CREATE TABLE StatutVehicule
-	(nom nvarchar(50) PRIMARY KEY CHECK(nom IN('Disponible', 'Louee', 'En panne')));
-PRINT('Table StatutVehicule créée');
-END
-ELSE PRINT('La table StatutVehicule existe déja');
 GO
 
 
@@ -531,31 +475,15 @@ ALTER TABLE Particulier
 PRINT('Table Particulier modifiée');
 
 GO
-ALTER TABLE Categorie
-	ADD FOREIGN KEY(nom_typepermis)
-		REFERENCES TypePermis(nom);
-PRINT('Table Categorie modifiée');
-
-GO
-ALTER TABLE Modele
-	ADD FOREIGN KEY(type_carburant)
-		REFERENCES TypeCarburant(nom);
-PRINT('Table Modele modifiée');
-
-GO
 ALTER TABLE SousPermis
-	ADD FOREIGN KEY(nom_typepermis)
-		REFERENCES TypePermis(nom),
-		FOREIGN KEY(numero_permis)
+	ADD FOREIGN KEY(numero_permis)
 		REFERENCES Permis(numero);
 PRINT('Table SousPermis modifiée');
 
 GO
 ALTER TABLE Vehicule
 	ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele, portieres_modele) 
-		REFERENCES Modele(marque, serie, type_carburant, portieres),
-		FOREIGN KEY(couleur)
-		REFERENCES CouleurVehicule(nom);
+		REFERENCES Modele(marque, serie, type_carburant, portieres);
 PRINT('Table Vehicule modifiée');
 
 GO
@@ -568,9 +496,7 @@ PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
-	ADD FOREIGN KEY(nom_typeabonnement)
-		REFERENCES TypeAbonnement(nom),
-		FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
+	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table Abonnement modifiée');
 
@@ -597,9 +523,7 @@ PRINT('Table ContratLocation modifiée');
 GO
 ALTER TABLE Conducteur
 	ADD FOREIGN KEY(id_permis)
-		REFERENCES Permis(numero),
-		FOREIGN KEY(nationalite)
-		REFERENCES Nationalite(nom);
+		REFERENCES Permis(numero);
 PRINT('Table Conducteur modifiée');
 
 GO

@@ -1,17 +1,16 @@
-USE TAuto_IBDR
-
 -----------------------------------------------------------
--- Fichier     : ScriptPeuplementVehicule.sql
+-- Fichier     : 15_Peuplement_Vehicule.sql
 -- Date        : 17/02/2014
 -- Auteur      : Baiche
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Script de remplissage de la table Vehicule
 --
 ------------------------------------------------------------
 
-GO
+USE TAuto_IBDR
+
 
 INSERT INTO Vehicule (matricule,kilometrage,couleur,statut,num_serie,marque_modele,serie_modele,portieres_modele,type_carburant_modele)VALUES
 		('0775896wx','18000','Bleu','En panne','VF3 8C4HXF 81100000','Peugeot','406',5,'Diesel'), 

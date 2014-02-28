@@ -1,18 +1,15 @@
-USE TAuto_IBDR;
-
-
 -----------------------------------------------------------
--- Fichier     : ScriptpeuplementCategorie.sql
+-- Fichier     : 17_Peuplement_Categorie.sql
 -- Date        : 18/02/2014
 -- Auteur      : Baiche
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Script de remplissage de la table Categorie
 --
 ------------------------------------------------------------
 
-GO
+USE TAuto_IBDR;
 
 INSERT INTO Categorie(nom,description,nom_typepermis) VALUES
 		('4x4','description de la catégorie 4x4','B'),

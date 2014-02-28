@@ -1,11 +1,11 @@
  ------------------------------------------------------------
--- Fichier     : ScriptPeuplementCatalogueCategorie
+-- Fichier     : 27_Peuplement_CatalogueCategorie.sql
 -- Date        : 26/02/2014
 -- Version     : 1.0
 -- Auteur      : Seyyid Ahmed Ouir
 -- Correcteur  : 
 -- Testeur     : 
--- Integrateur : 
+-- Integrateur : Boris de Finance
 -- Commentaire : Remplissage de la table "CatalogueCategorie"
                  
 ------------------------------------------------------------
