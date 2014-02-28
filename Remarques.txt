@@ -1,0 +1,17 @@
+remarque réunion du 26 / 02 / 2014 
+
+	- inert join rajouter les outer left et les right 
+	- procedure stockée : séparer les procédure ( une par fichier ) 
+	- remplire les fichiers Readme et Remarques.
+	- tester le contraintes de domaines.
+	- carburant : ethanol , GPL , electrique.
+	- dénormaliser les enum ( pour des raisons de performances ) 
+	- ajouter date de construction pour les voitures.
+	- voir les check( reg exp ) _%
+	- faire un print avant et quelque print pendant l'execution et un dernier aprés !! 
+	- ajouter des commit et des rollback
+	-................... commit else rollback 
+	- faire des print de l'etat de la base slon les commit et les rollback( maitriser les rollback )
+	- se préparer pour la partie centralisée le 15 mars ( loool ) 
+	- faire le réparti pendant les deux dernieres semaines.
+	- choix libre sur les tables à centraliser , et les paprties a répartir. 
