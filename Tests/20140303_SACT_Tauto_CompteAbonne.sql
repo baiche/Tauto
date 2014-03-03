@@ -760,4 +760,4 @@ BEGIN CATCH
 	PRINT('------------------------------Test I.2 NOT OK')
 END CATCH 
 
-DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7'; 
+DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7';
