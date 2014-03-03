@@ -3,7 +3,7 @@
 -- Date        : 15/02/2014
 -- Version     : 1.1
 -- Auteur      : Boris de Finance
--- Correcteurs : David Lecoconnier, Baiche Mourad, Alexis Deluze
+-- Correcteurs : David Lecoconnier, Baiche Mourad, Alexis Deluze, Seyyid Ouir
 -- Testeurs    : Baiche Mourad
 -- Integrateur : 
 -- Commentaire : ce script génére toutes les tables
@@ -12,15 +12,13 @@
 
 USE TAuto_IBDR;
 
-PRINT('Script de génération de la base
-')
+PRINT('Script de génération de la base')
 PRINT('===============================');
 
 ---------------------------------
 -- Création des tables-entités --
 --------------------------------- 
-PRINT('
-Création des tables');
+PRINT('Création des tables');
 PRINT('===================');
 GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Catalogue') 
@@ -28,7 +26,8 @@ BEGIN
  CREATE TABLE  Catalogue(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
 	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
-	date_fin 			date
+	date_fin 			date,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Catalogue créée');
 END
@@ -113,7 +112,8 @@ CREATE TABLE Vehicule(
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
 	date_entree			date							NOT NULL	DEFAULT GETDATE(),
-	type_carburant_modele nvarchar(50) 					NOT NULL --c'est un enum
+	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 
 PRINT('Table Vehicule créée');
@@ -132,7 +132,8 @@ CREATE TABLE Reservation(
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 										DEFAULT 'false',
 	matricule_vehicule 	nvarchar(50),
-	id_abonnement 		int
+	id_abonnement 		int,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Reservation créée');
 END
@@ -150,7 +151,8 @@ CREATE TABLE Abonnement(
 	nom_typeabonnement 	nvarchar(50),
 	nom_compteabonne 	nvarchar(50),
 	prenom_compteabonne nvarchar(50),
-	date_naissance_compteabonne date
+	date_naissance_compteabonne date,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Abonnement créée');
 END
@@ -164,11 +166,11 @@ CREATE TABLE CompteAbonne(
 	nom 				nvarchar(50)														CHECK( LEN (nom) > 1),
 	prenom 				nvarchar(50)														CHECK( LEN (prenom) > 1),
 	date_naissance 		date,
-	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( LEN (iban) >= 10),
 	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '%@%.%'),
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (telephone) > 1),
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
 PRINT('Table CompteAbonne créée');
@@ -212,7 +214,8 @@ BEGIN
 CREATE TABLE TypeAbonnement(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
-	nb_max_vehicules 	int 										DEFAULT 1
+	nb_max_vehicules 	int 										DEFAULT 1,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table TypeAbonnement créée');
 END
@@ -228,7 +231,8 @@ CREATE TABLE Location(
 	id_facturation 		int,
 	date_etat_avant 	datetime,
 	date_etat_apres 	datetime,
-	id_contratLocation 	int
+	id_contratLocation 	int,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Location créée');
 END
@@ -353,6 +357,7 @@ CREATE TABLE RelanceDecouvert(
 	prenom_compteabonne nvarchar(50),
 	date_naissance_compteabonne date,
 	niveau 				tinyint 						NOT NULL 	DEFAULT 0				CHECK(niveau >= 0 AND niveau <= 5),
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
 );
 PRINT('Table RelanceDecouvert créée');
