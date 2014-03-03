@@ -110,6 +110,55 @@ END CATCH
 
 DELETE FROM RelanceDecouvert;
 
+--Test A6
+BEGIN TRY
+	INSERT INTO RelanceDecouvert(nom_compteabonne, prenom_compteabonne,date_naissance_compteabonne, niveau,date) VALUES
+	('de Finance','Boris','1990-09-08',1,null);
+	PRINT('------------------------------Test A.6 NOT OK');	
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.6 OK')
+END CATCH 
+
+DELETE FROM RelanceDecouvert;
+
+--TEST A7
+BEGIN TRY
+	INSERT INTO RelanceDecouvert(date, prenom_compteabonne,date_naissance_compteabonne, niveau, nom_compteabonne) VALUES
+	('20140302 10:00:00','Boris','1990-09-08',1,null);
+	PRINT('------------------------------Test A.7 NOT OK')
+	END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.7 OK')
+END CATCH 
+
+DELETE FROM RelanceDecouvert;
+
+--Test A8
+BEGIN TRY
+	INSERT INTO RelanceDecouvert(date, nom_compteabonne,date_naissance_compteabonne, niveau, prenom_compteabonne) VALUES
+	('20140302 10:00:00','de Finance','1990-09-08',1,null);
+	PRINT('------------------------------Test A.8 NOT OK')
+	END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.8 OK')
+END CATCH 
+
+DELETE FROM RelanceDecouvert;
+
+--Test A9
+BEGIN TRY
+	INSERT INTO RelanceDecouvert(date, nom_compteabonne, prenom_compteabonne,date_naissance_compteabonne,niveau) VALUES
+	('20140302 10:00:00','de Finance','Boris','1990-09-08',null);
+	PRINT('------------------------------Test A.9 NOT OK');	
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.9 OK')
+END CATCH 
+
+DELETE FROM RelanceDecouvert;
+
+
 --Test B1
 BEGIN TRY
 	INSERT INTO RelanceDecouvert(date, nom_compteabonne, prenom_compteabonne,date_naissance_compteabonne, niveau) VALUES
