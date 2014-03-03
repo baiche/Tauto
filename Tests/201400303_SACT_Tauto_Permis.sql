@@ -14,7 +14,7 @@ USE Tauto_IBDR;
 --Test A1
 
 BEGIN TRY
-	INSERT INTO Permis(numero, valide, points_estimes)) VALUES
+	INSERT INTO Permis(numero, valide, points_estimes) VALUES
 		(NULL, DEFAULT, NULL);
      
 	PRINT('------------------------------Test A.1 NOT OK')
@@ -112,23 +112,6 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test B.2 NOT OK')
-END CATCH 
-DELETE FROM Permis;
-
---Test B3
-
-BEGIN TRY
-	INSERT INTO Permis(numero, valide, points_estimes) VALUES
-		('0000000001', DEFAULT, DEFAULT);
-    
-    INSERT INTO Permis(numero, valide, points_estimes) VALUES
-		('0000000001', DEFAULT, DEFAULT);
-	
-	PRINT('------------------------------Test B.3 NOT OK')
-		
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test B.3 OK')
 END CATCH 
 DELETE FROM Permis;
 
