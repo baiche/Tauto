@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : 20140303_SACT_Facturation.sql
+-- Fichier     : 20140303_SACT_Tauto_Facturation.sql
 -- Date        : 03/03/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
