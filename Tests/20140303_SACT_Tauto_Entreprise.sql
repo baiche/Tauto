@@ -120,6 +120,26 @@ DELETE FROM CompteAbonne WHERE nom='Tauto' AND prenom='Tauto' AND date_naissance
 
 
 
+--Test A.6
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Tauto', 'Tauto','1992-05-7','false','true','AB0020012800000012005276005', 'tauto@gmail.fr', '0605040302');
+	
+	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
+	(NULL, 'TAautomobile', 'Tauto', 'Tauto','1992-05-7');
+	
+	PRINT('------------------------------Test A.6 NOT OK')
+	
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.6 OK')
+END CATCH
+
+DELETE FROM Entreprise WHERE nom_compte='Tauto' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'
+DELETE FROM CompteAbonne WHERE nom='Tauto' AND prenom='Tauto' AND date_naissance='1992-05-7'
+
+
+
 --Test B.1
 BEGIN TRY
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
@@ -218,6 +238,26 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test B.2 OK.4')
+END CATCH
+
+DELETE FROM Entreprise WHERE nom_compte='Tauto' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'
+DELETE FROM CompteAbonne WHERE nom='Tauto' AND prenom='Tauto' AND date_naissance='1992-05-7'
+
+
+
+--Test B.3
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Tauto', 'Tauto','1992-05-7','false','true','AB0020012800000012005276005', 'tauto@gmail.fr', '0605040302');
+	
+	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
+	('73282932000074', NULL, 'Tauto', 'Tauto','1992-05-7');
+	
+	PRINT('------------------------------Test B.3 NOT OK')
+	
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test B.3 OK')
 END CATCH
 
 DELETE FROM Entreprise WHERE nom_compte='Tauto' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'
