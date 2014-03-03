@@ -14,7 +14,7 @@ USE TAuto_IBDR;
 
 INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES 
 
-	('123456789', 'Français','', 'Boris', '0000000001')
+	--('123456789', 'Français', '', 'Boris', '0000000001')
 	--('987654321', 'Français', 'le Coco', 'David', '0000000002'),
 	--('100000001', 'Anglais', 'Amitousa', 'Jean Luc', '0000000003'),
 	--('200000002', 'Français', 'Marshall', 'Michel', '0000000004')

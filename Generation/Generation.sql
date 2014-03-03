@@ -286,7 +286,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Conducteur(
 	piece_identite 		nvarchar(50)														CHECK( LEN (piece_identite) > 1),
-	nationalite 		nvarchar(50) 					NOT NULL							CHECK(nationalite IN('Francais', 'Anglais')),
+	nationalite 		nvarchar(50) 					NOT NULL							CHECK( nationalite IN('Francais', 'Anglais')),
 	nom 				nvarchar(50) 					NOT NULL							CHECK( LEN (nom) > 1),
 	prenom 				nvarchar(50) 					NOT NULL							CHECK( LEN (prenom) > 1),
 	id_permis 			nvarchar(50)
@@ -445,13 +445,13 @@ CREATE TABLE CompteAbonneConducteur(
 	nom_compteabonne 				nvarchar(50),
 	prenom_compteabonne 			nvarchar(50),
 	date_naissance_compteabonne 	date,
-	nationalite_conducteur 			nvarchar(50),
 	piece_identite_conducteur 		nvarchar(50),
+	nationalite_conducteur 			nvarchar(50),
 	PRIMARY KEY(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne,nationalite_conducteur,piece_identite_conducteur),
 	
 	FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance),
-	FOREIGN KEY(nationalite_conducteur,piece_identite_conducteur) 
+	FOREIGN KEY(piece_identite_conducteur,nationalite_conducteur) 
 		REFERENCES Conducteur(piece_identite,nationalite)
 );
 PRINT('Table CompteAbonneConducteur créée');
