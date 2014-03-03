@@ -17,13 +17,13 @@ USE Tauto_IBDR;
 --Test A.1
 BEGIN TRY
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,liste_grise,iban,courriel,telephone) VALUES
-    ('Lastname1', 'Firstname1', '1992-05-7','false', 'AB0020012800000012005276005', 
+    ('Lastname', 'Firstname', '1992-05-7','false', 'AB0020012800000012005276005', 
      'firstname.lastname@gmail.fr', '0605040301');
      
     IF(SELECT actif 
 	   FROM CompteAbonne 
-	   WHERE nom='Lastname1' 
-			 AND prenom='Firstname1' 
+	   WHERE nom='Lastname' 
+			 AND prenom='Firstname' 
 		     AND date_naissance='1992-05-7') = 'true'
 	
 		PRINT('------------------------------Test A.1 OK')
@@ -35,7 +35,7 @@ BEGIN CATCH
 	PRINT('------------------------------Test A.1 NOT OK')
 END CATCH 
 
-DELETE FROM CompteAbonne WHERE nom='Lastname1' AND prenom='Firstname1' AND date_naissance='1992-05-7';
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
@@ -43,13 +43,13 @@ DELETE FROM CompteAbonne WHERE nom='Lastname1' AND prenom='Firstname1' AND date_
 BEGIN TRY
 
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
-    ('Lastname2', 'Firstname2', '1992-05-7','false','false', 'AB0020012800000012005276005', 
-     'firstname2.lastname2@gmail.fr', '0605040302');
+    ('Lastname', 'Firstname', '1992-05-7','false','false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040302');
     
     IF(SELECT actif 
 	   FROM CompteAbonne 
-	   WHERE nom='Lastname2' 
-			 AND prenom='Firstname2' 
+	   WHERE nom='Lastname' 
+			 AND prenom='Firstname' 
 		     AND date_naissance='1992-05-7') = 'false'
 	
 		PRINT('------------------------------Test A.2 OK')
@@ -65,17 +65,34 @@ DELETE FROM CompteAbonne WHERE nom='Lastname2' AND prenom='Firstname2' AND date_
 
 
 
+--Test A.3
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', 'Firstname', '1992-05-7', NULL,'false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test A.3 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.3  OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
+
+
+
 --Test B.1
 BEGIN TRY
 
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,iban,courriel,telephone) VALUES
-    ('Lastname3', 'Firstname3', '1992-05-7','false','AB0020012800000012005276005', 
-     'firstname3.lastname3@gmail.fr', '0605040302');
+    ('Lastname', 'Firstname', '1992-05-7','false','AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040302');
     
     IF(SELECT liste_grise 
 	   FROM CompteAbonne 
-	   WHERE nom='Lastname3' 
-			 AND prenom='Firstname3' 
+	   WHERE nom='Lastname' 
+			 AND prenom='Firstname' 
 		     AND date_naissance='1992-05-7') = 'false'
 	
 		PRINT('------------------------------Test B.1 OK')
@@ -87,7 +104,7 @@ BEGIN CATCH
 	PRINT('------------------------------Test B.1 NOT OK')
 END CATCH 
 
-DELETE FROM CompteAbonne WHERE nom='Lastname3' AND prenom='Firstname3' AND date_naissance='1992-05-7';
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
@@ -114,6 +131,23 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM CompteAbonne WHERE nom='Lastname4' AND prenom='Firstname4' AND date_naissance='1992-05-7';
+
+
+
+---Test B.3
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', 'Firstname', '1992-05-7', 'true',NULL, 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test B.3 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test B.3  OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
@@ -235,6 +269,22 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM CompteAbonne WHERE prenom='Jean' AND date_naissance='1992-05-7';
+
+
+
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    (NULL, 'Firstname', '1992-05-7', 'true','false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test C.4 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test C.4 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
@@ -360,6 +410,23 @@ DELETE FROM CompteAbonne WHERE nom='Dupont' AND date_naissance='1992-05-7';
 
 
 
+--Test D.4
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', NULL, '1992-05-7', 'true','false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test D.4 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test D.4 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
+
+
+
 --Test E.1
 BEGIN TRY
 
@@ -480,6 +547,23 @@ DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance
 
 
 
+--Test E.6
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', 'Firstname', '1992-05-7', 'true','false', NULL, 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test E.6 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test E.6 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
+
+
+
 --Test F.1
 BEGIN TRY
 
@@ -541,6 +625,23 @@ DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance
 
 
 
+--Test F.4
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', 'Firstname', '1992-05-7', 'true','false', 'AB0020012800000012005276005', 
+     NULL, '0605040301');
+     
+	PRINT('------------------------------Test F.4 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test F.4 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
+
+
+
 --Test G.1
 BEGIN TRY
 
@@ -592,6 +693,23 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7';
+
+
+
+--Test g.4
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', 'Firstname', NULL, 'true','false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test G.4 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test G.4 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
@@ -721,6 +839,23 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7';
+
+
+
+--TestH.6
+BEGIN TRY
+	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
+    ('Lastname', NULL, '1992-05-7', 'true','false', 'AB0020012800000012005276005', 
+     'firstname.lastname@gmail.fr', '0605040301');
+     
+	PRINT('------------------------------Test H.6 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test H.6 OK')
+END CATCH 
+
+DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_naissance='1992-05-7';
 
 
 
