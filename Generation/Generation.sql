@@ -41,7 +41,8 @@ BEGIN
 CREATE TABLE Categorie(
 	nom					nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
 	description 		nvarchar(50) 					NOT NULL							CHECK( LEN (description) > 1),
-	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')) --c'est un enum
+	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')), --c'est un enum
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 ); 
 
 PRINT('Table Categorie créée');
@@ -59,6 +60,7 @@ CREATE TABLE Modele(
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(marque, serie, type_carburant, portieres)
 );
 
@@ -230,8 +232,7 @@ CREATE TABLE Location(
 	id_facturation 		int,
 	date_etat_avant 	datetime,
 	date_etat_apres 	datetime,
-	id_contratLocation 	int,
-	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
+	id_contratLocation 	int
 );
 PRINT('Table Location créée');
 END
