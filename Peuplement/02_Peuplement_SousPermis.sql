@@ -11,6 +11,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
 INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expiration, periode_probatoire) VALUES 
 	('B', '0000000001', '2001-01-01', '9999-12-31', 0),
 	('D', '0000000001', '2001-01-02', '9999-12-31', 0),
@@ -25,5 +26,3 @@ INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expir
 	('E', '0000000004', '2002-02-12', '9999-12-31', 0),
 	('F', '0000000004', '2002-02-13', '9999-12-31', 0)
 GO
-
--- 2
