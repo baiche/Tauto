@@ -242,7 +242,7 @@ CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
 	date_reception 		date,
-	montant money 										NOT NULL
+	montant money 										NOT NULL							CHECK ( montant > 0)
 );
 PRINT('Table Facturation créée');
 END
