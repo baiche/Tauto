@@ -76,6 +76,49 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM ListeNoire;
+
+--Test A5
+
+BEGIN TRY
+	INSERT INTO ListeNoire(nom,prenom,date_naissance) VALUES
+	('de Finance','Boris',null);
+     
+	PRINT('------------------------------Test A.5 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.5 OK')
+END CATCH 
+
+DELETE FROM ListeNoire;
+--Test A6
+
+BEGIN TRY
+	INSERT INTO ListeNoire(date_naissance,prenom,nom) VALUES
+	('1990-09-08','Boris',null);
+    
+	PRINT('------------------------------Test A.6 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.6 OK')
+END CATCH 
+
+DELETE FROM ListeNoire;
+--Test A7
+
+BEGIN TRY
+	INSERT INTO ListeNoire(date_naissance,nom,prenom) VALUES
+	('1990-09-08','de Finance',null);
+    
+	PRINT('------------------------------Test A.7 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.7 OK')
+END CATCH 
+
+DELETE FROM ListeNoire;
 --Test B1
 
 BEGIN TRY
