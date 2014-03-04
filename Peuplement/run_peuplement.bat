@@ -1,4 +1,4 @@
-SET mssqlInstanceName="AMITOUSA-MANKOY\JLUCSQLEXPRESS"
+SET mssqlInstanceName=".\SQLEXPRESS"
 
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql

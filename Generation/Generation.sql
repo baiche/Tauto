@@ -24,7 +24,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Catalogue') 
 BEGIN
  CREATE TABLE  Catalogue(
-	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
+	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^((\p{L}|[0-9''-]|\s)+)$',nom) = 1),
 	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
 	date_fin 			date,
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
@@ -39,8 +39,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Categorie')
 BEGIN
 CREATE TABLE Categorie(
-	nom					nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
-	description 		nvarchar(50) 					NOT NULL							CHECK( LEN (description) > 1),
+	nom					nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',nom) = 1),
+	description 		nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
 	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')), --c'est un enum
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 ); 
@@ -53,8 +53,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Modele')
 BEGIN
 CREATE TABLE Modele(
-	marque 				nvarchar(50)														CHECK( LEN (marque) > 1),
-	serie 				nvarchar(50)														CHECK( LEN (serie) > 1),
+	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
+	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
 	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
@@ -90,7 +90,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Permis')
 BEGIN
 CREATE TABLE Permis(
-	numero 				nvarchar(50) 	PRIMARY KEY											CHECK( LEN (numero) > 1),
+	numero 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('[a-zA-Z0-9]+',numero) = 1),
 	valide 				bit 										DEFAULT 'true',
 	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12
 );
@@ -105,11 +105,11 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Vehicule')
 BEGIN
 CREATE TABLE Vehicule(
-	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( LEN (matricule) > 1),
+	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1),
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
 	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
-	num_serie			nvarchar(50)					NOT NULL							CHECK( LEN (num_serie) > 1),
+	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
@@ -164,13 +164,13 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CompteAbonne')
 BEGIN
 CREATE TABLE CompteAbonne(
-	nom 				nvarchar(50)														CHECK( LEN (nom) > 1),
-	prenom 				nvarchar(50)														CHECK( LEN (prenom) > 1),
+	nom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
+	prenom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',prenom) = 1),
 	date_naissance 		date,
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
-	iban 				nvarchar(50)					NOT NULL							CHECK( LEN (iban) >= 10),
-	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK(courriel LIKE '%@%.%'),
-	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (telephone) > 1),
+	iban 				nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^([A-Z]{2}[0-9]{25})$',iban) = 1),
+	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
+	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( telephone='' or dbo.clrRegex('^([0-9]{10})$',telephone) = 1),
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
@@ -183,8 +183,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Entreprise')
 BEGIN
 CREATE TABLE Entreprise(
-	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK( LEN (siret) > 1),
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (nom) > 1),
+	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
 	date_naissance_compte date,
@@ -213,7 +213,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypeAbonnement')
 BEGIN
 CREATE TABLE TypeAbonnement(
-	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( LEN (nom) > 1),
+	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',nom) = 1),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1,
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
@@ -261,7 +261,7 @@ CREATE TABLE Etat(
 	id_location 		int,
 	km 					int 							NOT NULL 	DEFAULT 0,
 	degat 				bit 							NOT NULL,
-	fiche 				nvarchar(50) 					NOT NULL							CHECK( LEN (fiche) > 1),
+	fiche 				nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',fiche) = 1),
 	PRIMARY KEY(date_creation, id_location)
 );
 PRINT('Table Etat créée');
@@ -289,10 +289,10 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Conducteur')
 BEGIN
 CREATE TABLE Conducteur(
-	piece_identite 		nvarchar(50)														CHECK( LEN (piece_identite) > 1),
+	piece_identite 		nvarchar(50)														CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',piece_identite) = 1),
 	nationalite 		nvarchar(50) 					NOT NULL							CHECK( nationalite IN('Francais', 'Anglais')),
-	nom 				nvarchar(50) 					NOT NULL							CHECK( LEN (nom) > 1),
-	prenom 				nvarchar(50) 					NOT NULL							CHECK( LEN (prenom) > 1),
+	nom 				nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z''-]|\s)+)$',nom) = 1),
+	prenom 				nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z''-]|\s)+)$',prenom) = 1),
 	id_permis 			nvarchar(50)
 	PRIMARY KEY(piece_identite, nationalite)
 );
@@ -307,9 +307,9 @@ BEGIN
 CREATE TABLE Infraction(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (nom) > 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',nom) = 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( LEN (description) > 1),
+	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.\/]|\s)+)$',description) = 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -324,7 +324,7 @@ BEGIN
 CREATE TABLE Incident(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( LEN (description) > 1),
+	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
 	penalisable 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -369,8 +369,8 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE ListeNoire(
 	date_naissance 		date,
-	nom 				nvarchar(50)														CHECK( LEN (nom) > 1),
-	prenom 				nvarchar(50)														CHECK( LEN (prenom) > 1),
+	nom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
+	prenom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',prenom) = 1),
 	PRIMARY KEY(date_naissance, nom, prenom)
 ); 
 PRINT('Table ListeNoire créée');
