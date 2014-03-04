@@ -1,6 +1,6 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_disableCategorie
--- Date        : 04/03/2014
+-- Fichier     : Procedure_setStatutVehicule
+-- Date        : 04/04/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
 -- Correcteur  : 
@@ -9,14 +9,18 @@
 -- Commentaire :
 ------------------------------------------------------------
 
+
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE dbo.disableCategorie
-	@nom					nvarchar(50)
-AS
-	UPDATE Categorie
-	SET a_spprimer='true'
-	WHERE nom = @nom;
+CREATE PROCEDURE TAuto.setStatutVehicule
+	@matricule 				nvarchar(50),
+	@statut					nvarchar(50)
 	
+AS
+	UPDATE Vehicule
+	SET statut = @statut
+
+	WHERE 	matricule = @matricule;
+
 GO

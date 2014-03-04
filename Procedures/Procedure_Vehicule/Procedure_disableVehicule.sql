@@ -1,6 +1,6 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_disableCategorie
--- Date        : 04/03/2014
+-- Fichier     : Procedure_disableVehicule
+-- Date        : 04/04/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
 -- Correcteur  : 
@@ -12,11 +12,11 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE dbo.disableCategorie
-	@nom					nvarchar(50)
+CREATE PROCEDURE TAuto.disableVehicule
+	@matricule 				nvarchar(50)
 AS
-	UPDATE Categorie
-	SET a_spprimer='true'
-	WHERE nom = @nom;
-	
+	UPDATE Vehicule
+	SET a_supprimer='true'
+	WHERE 	matricule = @matricule;
+
 GO
