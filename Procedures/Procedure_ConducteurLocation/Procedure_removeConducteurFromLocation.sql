@@ -40,7 +40,7 @@ BEGIN
 	END
 	ELSE
 	BEGIN
-		PRINT('addConducteurToLocation: ERROR, tuple inexistant');
+		PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
 		RETURN -1;
 	END
 END
