@@ -541,7 +541,9 @@ PRINT('Table Reservation modifiée');
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance),
+		FOREIGN KEY(nom_typeabonnement)
+		REFERENCES TypeAbonnement(nom);
 PRINT('Table Abonnement modifiée');
 
 GO
