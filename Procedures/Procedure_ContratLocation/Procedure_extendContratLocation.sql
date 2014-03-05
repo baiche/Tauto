@@ -21,18 +21,25 @@ AS
 	DECLARE	@date_fin_effective 	datetime,
 	DECLARE	@extension 				int
 BEGIN
-	if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
+	TRY
 	BEGIN
-		UPDATE ContratLocation
-		SET
-			extension = @extension
-		WHERE id = @id;
-		PRINT('ContratLocation étendu');
-		RETURN 1;
-	END
-	ELSE
+		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
+		BEGIN
+			UPDATE ContratLocation
+			SET
+				extension = @extension
+			WHERE id = @id;
+			PRINT('ContratLocation étendu');
+			RETURN 1;
+		END
+		ELSE
+		BEGIN
+			PRINT('extendContratLocation: ERROR, introuvable');
+			RETURN -1;
+		END
+	CATCH
 	BEGIN
-		PRINT('ContratLocation: ERROR, introuvable');
+		PRINT('extendContratLocation: ERROR');
 		RETURN -1;
 	END
 	
