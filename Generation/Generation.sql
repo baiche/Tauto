@@ -208,6 +208,7 @@ CREATE TABLE CompteAbonne(
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^([A-Z]{2}[0-9]{25})$',iban) = 1),
 	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9\._-]+@[a-z0-9\._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
+
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( telephone='' or dbo.clrRegex('^([0-9]{10})$',telephone) = 1),
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(nom, prenom, date_naissance)
