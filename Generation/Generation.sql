@@ -204,6 +204,7 @@ CREATE TABLE CompteAbonne(
 	nom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	prenom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',prenom) = 1),
 	date_naissance 		date,
+	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^([A-Z]{2}[0-9]{25})$',iban) = 1),
 	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})$',courriel) = 1),

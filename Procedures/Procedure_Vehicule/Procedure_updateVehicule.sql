@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : baiche mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -24,8 +24,7 @@ CREATE PROCEDURE TAuto.updateVehicule
 	@type_carburant_modele	nvarchar(50)
 AS
 	UPDATE Vehicule
-	SET matricule = @matricule,
-		kilometrage = @kilometrage,
+	SET kilometrage = @kilometrage,
 		couleur = @couleur,	
 		statut = @statut,
 		num_serie = @num_serie,

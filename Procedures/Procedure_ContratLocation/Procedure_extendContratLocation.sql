@@ -1,21 +1,21 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_updateContratLocation
--- Date        : 24/02/2014
+-- Fichier     : Procedure_extendContratLocation
+-- Date        : 05/03/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Modifie un contrat de location. Renvoie 1 en cas de succès, -1 autrement
+-- Commentaire : Etend un contrat de location. Renvoie 1 en cas de succès, -1 aurtement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.updateContratLocation', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.updateContratLocation
+IF OBJECT_ID ('dbo.extendContratLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.extendContratLocation
 
 GO
-CREATE PROCEDURE dbo.updateContratLocation
+CREATE PROCEDURE dbo.extendContratLocation
 AS
 	DECLARE	@id						int,
 	DECLARE	@date_fin_effective 	datetime,
@@ -25,10 +25,9 @@ BEGIN
 	BEGIN
 		UPDATE ContratLocation
 		SET
-			date_fin_effective = @date_fin_effective,
 			extension = @extension
 		WHERE id = @id;
-		PRINT('ContratLocation mis à jour');
+		PRINT('ContratLocation étendu');
 		RETURN 1;
 	END
 	ELSE
@@ -36,5 +35,6 @@ BEGIN
 		PRINT('ContratLocation: ERROR, introuvable');
 		RETURN -1;
 	END
+	
 END
 GO
