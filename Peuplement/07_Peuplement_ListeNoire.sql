@@ -29,5 +29,5 @@ VALUES('1990-09-08','de Finance de Clairbois','Boris'),
 ('1990-04-28','Diallo','Abdoul'),
 ('1992-09-17','Boulila','Louiza'),
 ('1988-11-21','Tariqui','Ibtissam'),
-('1990-10-26','Baker','Maïssa'),
+('1990-10-26','Baker','Maissa'),
 ('1990-07-05','Shu','Jing');
