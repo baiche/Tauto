@@ -22,25 +22,33 @@ AS
 	DECLARE	@piece_identite_conducteur 			nvarchar(50),
 	DECLARE	@nationalite_conducteur 			nvarchar(50)
 BEGIN
-	IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
-		id_location = @id_location AND
-		piece_identite_conducteur = @piece_identite_conducteur AND
-		nationalite_conducteur = @nationalite_conducteur
-	) = 1)
+	TRY
 	BEGIN
-		DELETE
-		FROM ConducteurLocation
-		WHERE
+		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			id_location = @id_location AND
 			piece_identite_conducteur = @piece_identite_conducteur AND
-			nationalite_conducteur = @nationalite_conducteur;
-		
-		PRINT('Conducteur supprimé de la location');
-		RETURN 1;
-	END
-	ELSE
+			nationalite_conducteur = @nationalite_conducteur
+		) = 1)
+		BEGIN
+			DELETE
+			FROM ConducteurLocation
+			WHERE
+				id_location = @id_location AND
+				piece_identite_conducteur = @piece_identite_conducteur AND
+				nationalite_conducteur = @nationalite_conducteur;
+			
+			PRINT('Conducteur supprimé de la location');
+			RETURN 1;
+		END
+		ELSE
+		BEGIN
+			PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
+			RETURN -1;
+		END
+		END
+	CATCH
 	BEGIN
-		PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
+		PRINT('removeConducteurFromLocation: ERROR, clef primaire');
 		RETURN -1;
 	END
 END

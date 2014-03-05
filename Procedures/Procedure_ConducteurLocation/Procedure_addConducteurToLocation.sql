@@ -22,28 +22,36 @@ AS
 	DECLARE	@piece_identite_conducteur 			nvarchar(50),
 	DECLARE	@nationalite_conducteur 			nvarchar(50)
 BEGIN
-	IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
-		id_location = @id_location AND
-		piece_identite_conducteur = @piece_identite_conducteur AND
-		nationalite_conducteur = @nationalite_conducteur
-	) = 0)
+	TRY
 	BEGIN
-		INSERT INTO ConducteurLocation (
-			id_location,
-			piece_identite_conducteur,
-			nationalite_conducteur
-		)
-		VALUES (
-			@id_location,
-			@piece_identite_conducteur,
-			@nationalite_conducteur
-		);
-		PRINT('Conducteur ajouté à la location');
-		RETURN 1;
+		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
+			id_location = @id_location AND
+			piece_identite_conducteur = @piece_identite_conducteur AND
+			nationalite_conducteur = @nationalite_conducteur
+		) = 0)
+		BEGIN
+			INSERT INTO ConducteurLocation (
+				id_location,
+				piece_identite_conducteur,
+				nationalite_conducteur
+			)
+			VALUES (
+				@id_location,
+				@piece_identite_conducteur,
+				@nationalite_conducteur
+			);
+			PRINT('Conducteur ajouté à la location');
+			RETURN 1;
+		END
+		ELSE
+		BEGIN
+			PRINT('addConducteurToLocation: ERROR, tuple existant');
+			RETURN -1;
+		END
 	END
-	ELSE
+	CATCH
 	BEGIN
-		PRINT('addConducteurToLocation: ERROR, tuple existant');
+		PRINT('addConducteurToLocation: ERROR, clef primaire');
 		RETURN -1;
 	END
 END
