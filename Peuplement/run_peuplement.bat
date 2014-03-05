@@ -1,15 +1,18 @@
-rem------------------------------------------------------------
-rem-- Fichier     : ScriptSuppression
-rem-- Date        : 17/02/2014
-rem-- Version     : 2.0
-rem-- Auteur      : Jean-Luc Amitousa Mankoy
-rem-- Correcteurs  : Allan Mottier
-rem-- Testeurs     : 
-rem-- Integrateur : 
-rem-- Commentaire : 
-rem------------------------------------------------------------
+@echo off
+rem ------------------------------------------------------------
+rem -- Fichier     : ScriptSuppression
+rem -- Date        : 17/02/2014
+rem -- Version     : 2.0
+rem -- Auteur      : Jean-Luc Amitousa Mankoy
+rem -- Correcteurs  : Allan Mottier
+rem -- Testeurs     : 
+rem -- Integrateur : 
+rem -- Commentaire : 
+rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
+
+@echo on
 
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
