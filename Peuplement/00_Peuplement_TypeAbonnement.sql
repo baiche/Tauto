@@ -6,8 +6,10 @@
 -- Correcteur  : 
 -- Testeur     :
 -- Integrateur : 
--- Commentaire : Remplissage de la table TypeAboonement
+-- Commentaire : Remplissage de la table TypeAbonnement
 ------------------------------------------------------------
+
+USE TAuto_IBDR;
 
 INSERT INTO TypeAbonnement
 	(nom, prix, nb_max_vehicules)
