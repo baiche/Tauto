@@ -21,19 +21,27 @@ AS
 	DECLARE	@date_fin 				datetime,
 	DECLARE	@id_abonnement 			int
 BEGIN
-	INSERT INTO ContratLocation (
-		date_debut,
-		date_fin,
-		extension,
-		id_abonnement
-	)
-	VALUES (
-		@date_debut,
-		@date_fin,
-		0,
-		@id_abonnement
-	);
-	PRINT('ContratLocation créé' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
-	RETURN SCOPE_IDENTITY();
+	TRY
+	BEGIN
+		INSERT INTO ContratLocation (
+			date_debut,
+			date_fin,
+			extension,
+			id_abonnement
+		)
+		VALUES (
+			@date_debut,
+			@date_fin,
+			0,
+			@id_abonnement
+		);
+		PRINT('createContratLocation créé' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
+		RETURN SCOPE_IDENTITY();
+	END
+	CATCH
+	BEGIN
+		PRINT('createContratLocation: ERROR');
+		RETURN -1;
+	END
 END
 GO
