@@ -6,7 +6,7 @@ GO
 RECONFIGURE;
 GO
 
-CREATE ASSEMBLY RegExFunc FROM 'C:\Users\allan.STARWARS\Desktop\SQLServerCLR\SQLServerCLR\bin\Debug\SQLServerCLR.dll'
+CREATE ASSEMBLY RegExFunc FROM 'C:\Users\boris\Documents\IBDR\Repository\Generation\SQLServerCLR.dll'
 GO
 
 CREATE FUNCTION dbo.clrRegex  

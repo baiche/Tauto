@@ -340,3 +340,25 @@ PRINT('Table TypeCarburant supprimée');
 END
 ELSE PRINT('La table TypeCarburant n''existe pas ');
  GO
+ 
+PRINT('
+Suppression de l''assembly ');
+PRINT('=======================');
+GO
+ 
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[clrRegex]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+BEGIN
+DROP FUNCTION [dbo].[clrRegex];
+PRINT('Function clrRegex supprimée');
+END
+ELSE PRINT('La function clrRegex n''existe pas ');
+GO
+
+
+IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'RegExFunc' and is_user_defined = 1)
+BEGIN
+DROP ASSEMBLY [RegExFunc]
+PRINT('Assembly RegExFunc supprimée');
+END
+ELSE PRINT('L''assembly RegExFunc n''existe pas ');
+GO

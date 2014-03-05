@@ -15,10 +15,47 @@ USE TAuto_IBDR;
 PRINT('Script de génération de la base')
 PRINT('===============================');
 
+PRINT('
+Configuration et création de l''assembly')
+PRINT('===============================');
+GO
+
+sp_configure 'clr enabled', 1;
+RECONFIGURE;
+GO
+
+BEGIN TRY
+	CREATE ASSEMBLY RegExFunc FROM 'C:\Users\allan.STARWARS\Desktop\SQLServerCLR\SQLServerCLR\bin\Debug\SQLServerCLR.dll';
+	PRINT('Assembly RegExFunc créée.')
+END TRY
+BEGIN CATCH
+	PRINT('Assembly RegExFunc déjà existante.')
+END CATCH 
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[clrRegex]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+DROP FUNCTION [dbo].[clrRegex]
+GO
+
+CREATE FUNCTION dbo.clrRegex  
+(  
+ @pattern as nvarchar(200),
+ @matchString as nvarchar(200)  
+)   
+RETURNS bit 
+AS EXTERNAL NAME RegExFunc.[SQLServerCLR.RegExCompiled].RegExCompiledMatch
+GO
+
+PRINT('Fonction dbo.clrRegex créée.')
+GO
+
+
 ---------------------------------
 -- Création des tables-entités --
 --------------------------------- 
-PRINT('Création des tables');
+PRINT('
+Création des tables');
 PRINT('===================');
 GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Catalogue') 
