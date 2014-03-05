@@ -10,11 +10,9 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\JLUCSQLEXPRESS"
+SET mssqlInstanceName=".\SQLEXPRESS"
 
 @echo on
-
-
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
 sqlcmd -S %mssqlInstanceName% -i .\00_PeuplementTypeAbonnement.sql
