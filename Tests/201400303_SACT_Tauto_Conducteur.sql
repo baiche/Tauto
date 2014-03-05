@@ -92,11 +92,11 @@ BEGIN TRY
 	INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
 		('123456789', 'Francais', 'Deluze', 'Alexis', NULL);
     
-    PRINT('------------------------------Test A.6 NOT OK')
+    PRINT('------------------------------Test A.6 OK')
 		
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test A.6 OK')
+	PRINT('------------------------------Test A.6 NOT OK')
 END CATCH 
 DELETE FROM Conducteur;
 
@@ -174,10 +174,10 @@ DELETE FROM Conducteur;
 
 BEGIN TRY
 	INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
-		('B', '0000000001', '2001-01-01', '9999-12-31', DEFAULT);
+		('123456789', 'Francais', 'Deluze', 'Alexis', '0000000001');
     
     INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
-		('B', '0000000001', '2001-01-01', '9999-12-31', DEFAULT);
+		('123456789', 'Francais', 'Deluze', 'Alexis', '0000000001');
 	
 	PRINT('------------------------------Test B.1 NOT OK')
 		
@@ -191,10 +191,10 @@ DELETE FROM Conducteur;
 
 BEGIN TRY
 	INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
-		('B', '0000000001', '2001-01-01', '9999-12-31', DEFAULT);
+		('123456788', 'Francais', 'Deluze', 'Alexis', '0000000001');
     
     INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
-		('A1', '0000000001', '2001-01-01', '9999-12-31', DEFAULT);
+		('123456789', 'Francais', 'Deluze', 'Alexis', '0000000001');
 	
 	PRINT('------------------------------Test B.2 OK')
 		
