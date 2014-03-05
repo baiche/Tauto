@@ -25,7 +25,7 @@ RECONFIGURE;
 GO
 
 BEGIN TRY
-	CREATE ASSEMBLY RegExFunc FROM 'C:\Users\boris\Documents\IBDR\Repository\Generation\SQLServerCLR.dll';
+	CREATE ASSEMBLY RegExFunc FROM '$(Param1)\..\Generation\SQLServerCLR.dll';
 	PRINT('Assembly RegExFunc créée.')
 END TRY
 BEGIN CATCH
