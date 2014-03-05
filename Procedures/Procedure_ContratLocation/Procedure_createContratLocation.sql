@@ -6,32 +6,34 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Crée un contrat de location et renvoie l'id de ce contrat
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createContratLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createContratLocation
+
 GO
 CREATE PROCEDURE dbo.createContratLocation
-	@date_debut 			datetime,
-	@date_fin 				datetime,
-	@date_fin_effective 	datetime,
-	@extension 				int,
-	@id_abonnement 			int
 AS
+	DECLARE	@date_debut 			datetime,
+	DECLARE	@date_fin 				datetime,
+	DECLARE	@id_abonnement 			int
+BEGIN
 	INSERT INTO ContratLocation (
 		date_debut,
 		date_fin,
-		date_fin_effective,
 		extension,
 		id_abonnement
 	)
 	VALUES (
 		@date_debut,
 		@date_fin,
-		@date_fin_effective,
-		@extension,
+		0,
 		@id_abonnement
 	);
-
+	PRINT('ContratLocation créé' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
+	RETURN SCOPE_IDENTITY();
+END
 GO
