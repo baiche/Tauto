@@ -15,6 +15,7 @@ USE TAuto_IBDR;
 PRINT('Script de génération de la base')
 PRINT('===============================');
 
+
 PRINT('
 Configuration et création de l''assembly')
 PRINT('===============================');
@@ -62,8 +63,8 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
  CREATE TABLE  Catalogue(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^((\p{L}|[0-9''-]|\s)+)$',nom) = 1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
-	date_fin 			date,
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),		CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
+	date_fin 			date,																
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Catalogue créée');
@@ -93,7 +94,7 @@ CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
 	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
 	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
-	annee 				int,
+	annee 				int,																CHECK(annee <= YEAR(GETDATE())), --A voir si on a besoin de rajouter des modeles qui ne sont pas encor sorti
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
@@ -111,9 +112,9 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE SousPermis(
 	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
-	numero_permis 		nvarchar(50),
-	date_obtention 		date 							NOT NULL,
-	date_expiration 	date 							NOT NULL,
+	numero_permis 		nvarchar(50),							 
+	date_obtention 		date 							NOT NULL, CHECK(date_obtention < date_expiration),
+	date_expiration 	date 							NOT NULL, CHECK(date_obtention < date_expiration),
 	periode_probatoire 	tinyint 						NOT NULL 	DEFAULT 3,
 	PRIMARY KEY(nom_typepermis, numero_permis)
 );
@@ -127,9 +128,9 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Permis')
 BEGIN
 CREATE TABLE Permis(
-	numero 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('[a-zA-Z0-9]+',numero) = 1),
+	numero 				nvarchar(50) 	PRIMARY KEY		/*voir regex sur format numero permis*/	 CHECK( dbo.clrRegex('[a-zA-Z0-9]+',numero) = 1),
 	valide 				bit 										DEFAULT 'true',
-	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12
+	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12, CHECK(points_estimes > 0 and points_estimes <= 12),
 );
 
 PRINT('Table Permis créée');
@@ -142,15 +143,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Vehicule')
 BEGIN
 CREATE TABLE Vehicule(
-	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1),
+	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
 	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
-	date_entree			date							NOT NULL	DEFAULT GETDATE(),
+	date_entree			date							NOT NULL	DEFAULT GETDATE(), 
 	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
@@ -167,9 +168,9 @@ BEGIN
 CREATE TABLE Reservation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	date_creation 		date 							NOT NULL,
-	date_debut datetime 								NOT NULL,
+	date_debut datetime 								NOT NULL, CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
-	annule 				bit 										DEFAULT 'false',
+	annule 				bit 									  DEFAULT 'false',
 	matricule_vehicule 	nvarchar(50),
 	id_abonnement 		int
 );
@@ -183,13 +184,13 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Abonnement(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(), CHECK( GETDATE() <= date_debut ),
 	duree 				int 							NOT NULL 	DEFAULT 1,
 	renouvellement_auto bit 										DEFAULT 'false',
 	nom_typeabonnement 	nvarchar(50),
 	nom_compteabonne 	nvarchar(50),
 	prenom_compteabonne nvarchar(50),
-	date_naissance_compteabonne date,
+	date_naissance_compteabonne date,				
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Abonnement créée');
@@ -270,7 +271,7 @@ CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	matricule_vehicule 	nvarchar(50),
 	id_facturation 		int,
-	date_etat_avant 	datetime,
+	date_etat_avant 	datetime,	CHECK( date_etat_avant <= date_etat_apres ),
 	date_etat_apres 	datetime,
 	id_contratLocation 	int
 );
@@ -284,7 +285,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
@@ -314,9 +315,9 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE ContratLocation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			datetime 						NOT NULL,
+	date_debut 			datetime 						NOT NULL, CHECK( date_debut <= date_fin),
 	date_fin 			datetime 						NOT NULL,
-	date_fin_effective 	datetime,
+	date_fin_effective 	datetime,								  CHECK( date_debut <= date_fin_effective),
 	extension 			int,
 	id_abonnement 		int
 );
