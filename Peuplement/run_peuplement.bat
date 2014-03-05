@@ -1,6 +1,6 @@
 @echo off
 rem ------------------------------------------------------------
-rem -- Fichier     : ScriptSuppression
+rem -- Fichier     : run_peuplement.bat
 rem -- Date        : 17/02/2014
 rem -- Version     : 2.0
 rem -- Auteur      : Jean-Luc Amitousa Mankoy
