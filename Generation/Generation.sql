@@ -25,7 +25,7 @@ RECONFIGURE;
 GO
 
 BEGIN TRY
-	CREATE ASSEMBLY RegExFunc FROM 'C:\Users\allan.STARWARS\Desktop\SQLServerCLR\SQLServerCLR\bin\Debug\SQLServerCLR.dll';
+	CREATE ASSEMBLY RegExFunc FROM 'C:\Users\boris\Documents\IBDR\Repository\Generation\SQLServerCLR.dll';
 	PRINT('Assembly RegExFunc créée.')
 END TRY
 BEGIN CATCH
@@ -77,7 +77,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Categorie(
 	nom					nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',nom) = 1),
-	description 		nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
+	description 		nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',description) = 1),
 	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')), --c'est un enum
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 ); 
@@ -207,11 +207,12 @@ CREATE TABLE CompteAbonne(
 	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^([A-Z]{2}[0-9]{25})$',iban) = 1),
-	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
+	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9\._-]+@[a-z0-9\._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( telephone='' or dbo.clrRegex('^([0-9]{10})$',telephone) = 1),
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
+
 PRINT('Table CompteAbonne créée');
 END
 ELSE PRINT('La table CompteAbonne existe déja');
@@ -345,9 +346,9 @@ BEGIN
 CREATE TABLE Infraction(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',nom) = 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',nom) = 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.\/]|\s)+)$',description) = 1),
+	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
