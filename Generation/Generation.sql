@@ -15,7 +15,7 @@ USE TAuto_IBDR;
 PRINT('Script de génération de la base')
 PRINT('===============================');
 
-/*
+
 PRINT('
 Configuration et création de l''assembly')
 PRINT('===============================');
@@ -50,7 +50,7 @@ GO
 
 PRINT('Fonction dbo.clrRegex créée.')
 GO
-*/
+
 
 ---------------------------------
 -- Création des tables-entités --
@@ -184,7 +184,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Abonnement(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(), CHECK( GETDATE() <= date_debut ),
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(), --CHECK( GETDATE() <= date_debut ),
 	duree 				int 							NOT NULL 	DEFAULT 1,
 	renouvellement_auto bit 										DEFAULT 'false',
 	nom_typeabonnement 	nvarchar(50),
