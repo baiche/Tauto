@@ -1,10 +1,10 @@
 @echo off
 rem ------------------------------------------------------------
-rem -- Fichier     : run_peuplement.bat
+rem -- Fichier     : genarate_base.bat
 rem -- Date        : 17/02/2014
 rem -- Version     : 2.0
-rem -- Auteur      : Jean-Luc Amitousa Mankoy
-rem -- Correcteurs  : Allan Mottier
+rem -- Auteur      : Boris de Finance
+rem -- Correcteurs  : 
 rem -- Testeurs     : 
 rem -- Integrateur : 
 rem -- Commentaire : 
