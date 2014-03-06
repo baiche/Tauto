@@ -15,7 +15,7 @@ USE TAuto_IBDR;
 PRINT('Script de génération de la base')
 PRINT('===============================');
 
-
+/*
 PRINT('
 Configuration et création de l''assembly')
 PRINT('===============================');
@@ -50,7 +50,7 @@ GO
 
 PRINT('Fonction dbo.clrRegex créée.')
 GO
-
+*/
 
 ---------------------------------
 -- Création des tables-entités --
@@ -63,8 +63,8 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
  CREATE TABLE  Catalogue(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^((\p{L}|[0-9''-]|\s)+)$',nom) = 1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),		CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
-	date_fin 			date,																
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),		--CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
+	date_fin 			date,																--CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Catalogue créée');
@@ -94,7 +94,7 @@ CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
 	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
 	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
-	annee 				int,																CHECK(annee <= YEAR(GETDATE())), --A voir si on a besoin de rajouter des modeles qui ne sont pas encor sorti
+	annee 				int,																--CHECK(annee <= YEAR(GETDATE())), --A voir si on a besoin de rajouter des modeles qui ne sont pas encor sorti
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
@@ -113,8 +113,8 @@ BEGIN
 CREATE TABLE SousPermis(
 	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
 	numero_permis 		nvarchar(50),							 
-	date_obtention 		date 							NOT NULL, CHECK(date_obtention < date_expiration),
-	date_expiration 	date 							NOT NULL, CHECK(date_obtention < date_expiration),
+	date_obtention 		date 							NOT NULL, --CHECK(date_obtention < date_expiration),
+	date_expiration 	date 							NOT NULL, --CHECK(date_obtention < date_expiration),
 	periode_probatoire 	tinyint 						NOT NULL 	DEFAULT 3,
 	PRIMARY KEY(nom_typepermis, numero_permis)
 );
@@ -168,7 +168,7 @@ BEGIN
 CREATE TABLE Reservation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	date_creation 		date 							NOT NULL,
-	date_debut datetime 								NOT NULL, CHECK(date_debut < date_fin),
+	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 									  DEFAULT 'false',
 	matricule_vehicule 	nvarchar(50),
@@ -271,7 +271,7 @@ CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	matricule_vehicule 	nvarchar(50),
 	id_facturation 		int,
-	date_etat_avant 	datetime,	CHECK( date_etat_avant <= date_etat_apres ),
+	date_etat_avant 	datetime,	--CHECK( date_etat_avant <= date_etat_apres ),
 	date_etat_apres 	datetime,
 	id_contratLocation 	int
 );
@@ -285,7 +285,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
+	date_creation 		date 							NOT NULL 	--DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
@@ -315,9 +315,9 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE ContratLocation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			datetime 						NOT NULL, CHECK( date_debut <= date_fin),
+	date_debut 			datetime 						NOT NULL, --CHECK( date_debut <= date_fin),
 	date_fin 			datetime 						NOT NULL,
-	date_fin_effective 	datetime,								  CHECK( date_debut <= date_fin_effective),
+	date_fin_effective 	datetime,								  --CHECK( date_debut <= date_fin_effective),
 	extension 			int,
 	id_abonnement 		int
 );
