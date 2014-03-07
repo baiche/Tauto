@@ -318,7 +318,7 @@ CREATE TABLE ContratLocation(
 	date_debut 			datetime 						NOT NULL, --CHECK( date_debut <= date_fin),
 	date_fin 			datetime 						NOT NULL,
 	date_fin_effective 	datetime,								  --CHECK( date_debut <= date_fin_effective),
-	extension 			int,
+	extension 			int																	CHECK ( extension >= 0 ),
 	id_abonnement 		int
 );
 PRINT('Table ContratLocation créée');
