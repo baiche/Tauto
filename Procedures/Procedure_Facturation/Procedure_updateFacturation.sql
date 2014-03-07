@@ -22,6 +22,7 @@ CREATE PROCEDURE dbo.updateFacturation
 	@date_reception					date
 	
 AS
+	BEGIN TRANSACTION update_facturation
 	BEGIN TRY
 		DECLARE @id_facturation int;
 		
@@ -35,9 +36,11 @@ AS
 		SET montant = @montant,
 		date_reception = @date_reception
 		WHERE id = @id_facturation;
+		COMMIT TRANSACTION update_facturation
 		RETURN 1
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION update_facturation
 		RETURN -1
 	END CATCH
 GO

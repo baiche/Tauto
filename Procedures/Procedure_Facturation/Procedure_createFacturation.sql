@@ -19,9 +19,10 @@ GO
 CREATE PROCEDURE dbo.createFacturation
 	@id_location 					int
 AS
+	BEGIN TRANSACTION create_facturation
 	BEGIN TRY
 		CREATE TABLE #Temp1 (id int );
-
+		
 		INSERT INTO Facturation(
 			date_reception
 		)
@@ -33,10 +34,11 @@ AS
 		UPDATE Location
 		SET id_facturation = (SELECT id FROM #Temp1)
 		WHERE id = @id_location
-		
+		COMMIT TRANSACTION create_facturation
 		RETURN (SELECT id FROM #Temp1)
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION create_facturation
 		RETURN -1;
 	END CATCH
 GO
