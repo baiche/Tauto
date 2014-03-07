@@ -19,17 +19,24 @@ GO
 CREATE PROCEDURE dbo.createFacturation
 	@id_location 					int
 AS
-	CREATE TABLE #Temp1 (id int );
+	BEGIN TRY
+		CREATE TABLE #Temp1 (id int );
 
-	INSERT INTO Facturation(
-		date_reception
-	)
-	OUTPUT inserted.id INTO #Temp1(id)
-	VALUES (
-		null
-	);
-	
-	UPDATE Location
-	SET id_facturation = (SELECT id FROM #Temp1)
-	WHERE id = @id_location
+		INSERT INTO Facturation(
+			date_reception
+		)
+		OUTPUT inserted.id INTO #Temp1(id)
+		VALUES (
+			null
+		);
+		
+		UPDATE Location
+		SET id_facturation = (SELECT id FROM #Temp1)
+		WHERE id = @id_location
+		
+		RETURN (SELECT id FROM #Temp1)
+	END TRY
+	BEGIN CATCH
+		RETURN -1;
+	END CATCH
 GO
