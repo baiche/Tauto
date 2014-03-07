@@ -20,10 +20,15 @@ CREATE PROCEDURE dbo.updateCatalogue
 	@date_debut 			date,
 	@date_fin				date
 AS
-	UPDATE Catalogue
-	SET nom = @nom,
-		date_debut = @date_debut,
-		date_fin = @date_fin	
-	WHERE 	nom = @nom;
-
+	BEGIN TRY
+		UPDATE Catalogue
+		SET nom = @nom,
+			date_debut = @date_debut,
+			date_fin = @date_fin	
+		WHERE 	nom = @nom;
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

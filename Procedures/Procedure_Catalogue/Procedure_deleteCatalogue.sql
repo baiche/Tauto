@@ -18,6 +18,12 @@ GO
 CREATE PROCEDURE dbo.deleteCatalogue
 	@nom 					nvarchar(50)
 AS
-	DELETE FROM Catalogue
-	WHERE 	nom = @nom;
+	BEGIN TRY
+		DELETE FROM Catalogue
+		WHERE 	nom = @nom;
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO
