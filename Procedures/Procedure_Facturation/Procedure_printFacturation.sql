@@ -21,13 +21,17 @@ CREATE PROCEDURE dbo.printFacturation
 AS
 DECLARE @matricule  nvarchar(50);
 DECLARE @id_facture int;
+DECLARE @montant money;
+DECLARE @tva money;
 SET @matricule =(SELECT matricule_vehicule FROM Location WHERE Location.id = @id_location);
 SET @id_facture = (SELECT id_facturation FROM Location WHERE Location.id = @id_location);
+SET @montant = (SELECT montant FROM Facturation WHERE Facturation.id = @id_facture);
+SET @tva = @montant - (@montant / 1.196) ;
 
-
-PRINT '___________________________________________________________';
+PRINT '__________________________________________________________________';
 PRINT 'FACTURE numero : ' + convert(varchar(10),@id_facture);
-PRINT 'Location du vehicule : ' + @matricule;
-PRINT '___________________________________________________________';
+PRINT 'Location du vehicule ' + @matricule +' montant : ' + convert(varchar(10),@montant) + ' dont TVA : ' + convert(varchar(10),@tva) ;
+PRINT '__________________________________________________________________';
+
 
 GO
