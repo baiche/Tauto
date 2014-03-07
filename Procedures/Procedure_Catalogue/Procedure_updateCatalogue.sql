@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
