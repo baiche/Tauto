@@ -19,12 +19,19 @@ CREATE PROCEDURE dbo.addCategorieToCatalogue
 	@nom_catalogue 					nvarchar(50),
 	@nom_categorie 					nvarchar(50)
 AS
-	INSERT INTO CatalogueCategorie(
-		nom_catalogue,
-		nom_categorie
-	)
-	VALUES (
-		@nom_catalogue,
-		@nom_categorie
-	)
+	BEGIN TRY
+		INSERT INTO CatalogueCategorie(
+			nom_catalogue,
+			nom_categorie
+		)
+		VALUES (
+			@nom_catalogue,
+			@nom_categorie
+		)
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
+	 
 GO

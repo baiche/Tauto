@@ -19,7 +19,13 @@ CREATE PROCEDURE dbo.removeCategorieFromCatalogue
 	@nom_catalogue 					nvarchar(50),
 	@nom_categorie 					nvarchar(50)
 AS
-	DELETE FROM CatalogueCategorie
-	WHERE nom_catalogue = @nom_catalogue
-	AND nom_categorie = @nom_categorie
+	BEGIN TRY
+		DELETE FROM CatalogueCategorie
+		WHERE nom_catalogue = @nom_catalogue
+		AND nom_categorie = @nom_categorie
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO
