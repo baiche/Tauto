@@ -20,15 +20,20 @@ CREATE PROCEDURE dbo.createListeNoire
 	@nom					nvarchar(50),
 	@prenom					nvarchar(50)
 AS
-	INSERT INTO ListeNoire(
-		date_naissance,
-		nom,
-		prenom
-	)
-	VALUES (
-		@date_naissance,
-		@nom,
-		@prenom
-	);
-
+	BEGIN TRY
+		INSERT INTO ListeNoire(
+			date_naissance,
+			nom,
+			prenom
+		)
+		VALUES (
+			@date_naissance,
+			@nom,
+			@prenom
+		);
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

@@ -20,8 +20,14 @@ CREATE PROCEDURE dbo.deleteListeNoire
 	@nom					nvarchar(50),
 	@prenom					nvarchar(50)
 AS
-	DELETE FROM ListeNoire
-	WHERE 	date_naissance = @date_naissance
-	AND	nom = @nom
-	AND	prenom = @prenom;
+	BEGIN TRY
+		DELETE FROM ListeNoire
+		WHERE 	date_naissance = @date_naissance
+		AND	nom = @nom
+		AND	prenom = @prenom;
+		RETURN -1
+	END TRY
+	BEGIN CATCH
+		RETURN 1
+	END CATCH
 GO
