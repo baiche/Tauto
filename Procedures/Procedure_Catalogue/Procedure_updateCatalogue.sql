@@ -11,8 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateCatalogue', 'P') IS NOT NULL
+DROP PROCEDURE dbo.updateCatalogue;
 GO
-CREATE PROCEDURE TAuto.updateCatalogue
+
+CREATE PROCEDURE dbo.updateCatalogue
 	@nom 					nvarchar(50),
 	@date_debut 			date,
 	@date_fin				date
