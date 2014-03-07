@@ -20,15 +20,20 @@ CREATE PROCEDURE dbo.createCatalogue
 	@date_debut 			date,
 	@date_fin				date
 AS
-	INSERT INTO Catalogue(
-		nom,
-		date_debut,
-		date_fin
-	)
-	VALUES (
-		@nom,
-		@date_debut,
-		@date_fin
-	);
-
+	BEGIN TRY
+		INSERT INTO Catalogue(
+			nom,
+			date_debut,
+			date_fin
+		)
+		VALUES (
+			@nom,
+			@date_debut,
+			@date_fin
+		);
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

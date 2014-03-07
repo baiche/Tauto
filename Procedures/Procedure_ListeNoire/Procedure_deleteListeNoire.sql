@@ -8,7 +8,6 @@
 -- Integrateur : 
 -- Commentaire :
 ------------------------------------------------------------
-
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.deleteListeNoire', 'P') IS NOT NULL
