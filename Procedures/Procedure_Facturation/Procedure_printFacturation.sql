@@ -28,10 +28,10 @@ SET @id_facture = (SELECT id_facturation FROM Location WHERE Location.id = @id_l
 SET @montant = (SELECT montant FROM Facturation WHERE Facturation.id = @id_facture);
 SET @tva = @montant - (@montant / 1.196) ;
 
-PRINT '__________________________________________________________________';
+PRINT '_________________________________________________________________________';
 PRINT 'FACTURE numero : ' + convert(varchar(10),@id_facture);
-PRINT 'Location du vehicule ' + @matricule +' montant : ' + convert(varchar(10),@montant) + ' dont TVA : ' + convert(varchar(10),@tva) ;
-PRINT '__________________________________________________________________';
+PRINT 'Location du vehicule ' + @matricule +' montant : ' + convert(varchar(10),@montant) + 'euros dont TVA : ' + convert(varchar(10),@tva) + ' euros' ;
+PRINT '_________________________________________________________________________';
 
 
 GO
