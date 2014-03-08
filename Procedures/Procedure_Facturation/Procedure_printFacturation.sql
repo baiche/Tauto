@@ -1,12 +1,13 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_updateFacturation
+-- Fichier     : Procedure_printFacturation
 -- Date        : 06/03/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : affiche la partie d'une facture concernant 
+--				 1 location.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -15,7 +16,7 @@ IF OBJECT_ID ('dbo.printFacturation', 'P') IS NOT NULL
 DROP PROCEDURE dbo.printFacturation;
 GO
 
---affiche la partie d'une facture concernant 1 location.
+
 CREATE PROCEDURE dbo.printFacturation
 	@id_location 					int
 AS
