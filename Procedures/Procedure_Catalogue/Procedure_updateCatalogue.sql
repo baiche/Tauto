@@ -22,8 +22,7 @@ CREATE PROCEDURE dbo.updateCatalogue
 AS
 	BEGIN TRY
 		UPDATE Catalogue
-		SET nom = @nom,
-			date_debut = @date_debut,
+		SET date_debut = @date_debut,
 			date_fin = @date_fin	
 		WHERE 	nom = @nom;
 		RETURN 1
