@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : ajoute une facture a la location
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -22,7 +22,7 @@ AS
 	BEGIN TRANSACTION create_facturation
 	BEGIN TRY
 		CREATE TABLE #Temp1 (id int );
-		
+		--creation de la ligne  
 		INSERT INTO Facturation(
 			date_reception
 		)
@@ -31,6 +31,7 @@ AS
 			null
 		);
 		
+		-- creation de la reference de la location vers la facturation.
 		UPDATE Location
 		SET id_facturation = (SELECT id FROM #Temp1)
 		WHERE id = @id_location

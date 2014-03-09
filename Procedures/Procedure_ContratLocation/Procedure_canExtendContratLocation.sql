@@ -20,6 +20,9 @@ CREATE PROCEDURE dbo.canExtendContratLocation
 	@id_contrat_location	int,
 	@nb_jours				int
 AS
+	-- si il n'existe pas de contrat portant sur un des vehicules lié au contrat location 
+	-- de base commencant nb_jours + 1 apres la fin du contrat location de base, on peut
+	-- étendre la location, sinon on ne peut pas.
 	IF 	
 	(SELECT COUNT(*)
 	FROM Vehicule v, Location l1,Location l2, ContratLocation cl1 , ContratLocation cl2
@@ -28,6 +31,7 @@ AS
 	AND l1.matricule_vehicule = v.matricule
 	AND	l2.matricule_vehicule = v.matricule
 	AND l2.id_contratLocation = cl2.id
+	AND cl1.date_fin < cl2.date_debut
 	AND DATEDIFF(DAY, cl1.date_fin, cl2.date_debut) < (@nb_jours + 1)) = 0
 	RETURN 1
 	ELSE
