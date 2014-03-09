@@ -167,10 +167,10 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Reservation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL	DEFAULT GETDATE(),
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
 	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
-	annule 				bit 									  DEFAULT 'false',
+	annule 				bit 							NOT NULL 	DEFAULT 'false',
 	matricule_vehicule 	nvarchar(50),
 	id_abonnement 		int
 );
