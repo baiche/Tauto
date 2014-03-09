@@ -12,7 +12,7 @@
 
 USE Tauto_IBDR;
 
--- preparation
+-- preparation : un type abonnement, un compte abonne
 
 DELETE FROM TypeAbonnement
 DELETE FROM Particulier
