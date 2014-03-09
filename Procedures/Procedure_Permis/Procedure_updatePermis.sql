@@ -6,12 +6,16 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Modification d'un permis
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updatePermis', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updatePermis
 GO
+
+
 CREATE PROCEDURE dbo.updatePermis
 	@numero 				nvarchar(50),
 	@valide 				bit,
