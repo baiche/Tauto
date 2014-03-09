@@ -6,12 +6,15 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : ajoute un conducteur
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createConducteur', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createConducteur
 GO
+
 CREATE PROCEDURE dbo.createConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50),

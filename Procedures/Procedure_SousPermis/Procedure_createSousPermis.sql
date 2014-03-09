@@ -6,12 +6,16 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Insertion d'un nouveu sous permis
 ------------------------------------------------------------
 
-USE TAuto_IBDR;
+USE TAuto_IBDR
+GO
 
--- Insertion d'un nouveu sous permis
+
+IF OBJECT_ID ('dbo.createSousPermis', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createSousPermis
+GO
 
 CREATE PROCEDURE dbo.createSousPermis
 	@nom_typepermis			nvarchar(50),
