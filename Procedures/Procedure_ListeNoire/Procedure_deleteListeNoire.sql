@@ -6,7 +6,7 @@
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : supprime une personne de la liste noire.
 ------------------------------------------------------------
 USE TAuto_IBDR;
 

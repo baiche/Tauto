@@ -6,7 +6,8 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Procedure permettant de supprimer une 
+--				 categorie d'un catalogue.	
 ------------------------------------------------------------
 
 USE TAuto_IBDR;

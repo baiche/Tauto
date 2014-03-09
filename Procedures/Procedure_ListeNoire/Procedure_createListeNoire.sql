@@ -6,7 +6,9 @@
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Ajoute une personne a la liste noire 
+-- (attention elle ne supprime pas la personne des comptes 
+-- abonnés).
 ------------------------------------------------------------
 
 USE TAuto_IBDR;

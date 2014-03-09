@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Procedure ajoutant une catagorie à un catalogue
 ------------------------------------------------------------
 
 USE TAuto_IBDR;

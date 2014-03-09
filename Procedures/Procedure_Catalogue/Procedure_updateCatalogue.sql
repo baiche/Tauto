@@ -6,7 +6,7 @@
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Procedure permettant de modifier un catalogue
 ------------------------------------------------------------
 
 USE TAuto_IBDR;

@@ -6,7 +6,7 @@
 -- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Procédure permettant de créer un catalogue. 
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
