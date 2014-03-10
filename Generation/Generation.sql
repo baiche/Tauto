@@ -271,8 +271,7 @@ CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	matricule_vehicule 	nvarchar(50),
 	id_facturation 		int,
-	date_etat_avant 	datetime,	--CHECK( date_etat_avant <= date_etat_apres ),
-	date_etat_apres 	datetime,
+	id_etat			 	int,
 	id_contratLocation 	int
 );
 PRINT('Table Location créée');
@@ -298,12 +297,14 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Etat')
 BEGIN
 CREATE TABLE Etat(
-	date_creation 		datetime 									DEFAULT GETDATE(),
-	id_location 		int,
-	km 					int 							NOT NULL 	DEFAULT 0,
-	degat 				bit 							NOT NULL,
-	fiche 				nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',fiche) = 1),
-	PRIMARY KEY(date_creation, id_location)
+	id 					int 			PRIMARY KEY IDENTITY(1,1),
+	date_avant	 		datetime 						NOT NULL	DEFAULT GETDATE(),
+	date_apres	 		datetime, 															CHECK( date_apres >= date_avant ),
+	km_avant 			int 							NOT NULL 	DEFAULT 0				CHECK( km_avant >= 0 ),
+	km_apres			int,									 							CHECK( km_apres >= km_avant ),
+	degat 				bit,
+	fiche_avant			nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_avant) = 1),
+	fiche_apres			nvarchar(50) 														CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_apres) = 1)
 );
 PRINT('Table Etat créée');
 END
@@ -550,15 +551,13 @@ PRINT('Table Abonnement modifiée');
 GO
 ALTER TABLE Location
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule),
+			REFERENCES Vehicule(matricule),
 		FOREIGN KEY(id_facturation)
-		REFERENCES Facturation(id),
-		FOREIGN KEY(date_etat_avant,id)
-		REFERENCES Etat(date_creation,id_location),
-		FOREIGN KEY(date_etat_apres,id)
-		REFERENCES Etat(date_creation,id_location),
+			REFERENCES Facturation(id),
+		FOREIGN KEY(id_etat)
+			REFERENCES Etat(id),
 		FOREIGN KEY(id_contratLocation)
-		REFERENCES  ContratLocation(id);
+			REFERENCES  ContratLocation(id);
 PRINT('Table Location modifiée');
 
 GO
