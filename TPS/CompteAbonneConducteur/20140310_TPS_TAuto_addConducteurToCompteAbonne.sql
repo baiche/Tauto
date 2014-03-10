@@ -29,7 +29,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 1 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'PIndustrie' AND
 			prenom_compteabonne = 'PIndustrie' AND
 			date_naissance_compteabonne = '2014-02-17' AND
@@ -67,7 +67,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 2 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'Lecoconier' AND
 			prenom_compteabonne = 'PIndustrie' AND
 			date_naissance_compteabonne = '2014-02-17' AND
@@ -105,7 +105,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 3 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'PIndustrie' AND
 			prenom_compteabonne = 'David' AND
 			date_naissance_compteabonne = '2014-02-17' AND
@@ -143,7 +143,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 4 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'PIndustrie' AND
 			prenom_compteabonne = 'PIndustrie' AND
 			date_naissance_compteabonne = '1990-02-02' AND
@@ -181,7 +181,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 5 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'PIndustrie' AND
 			prenom_compteabonne = 'PIndustrie' AND
 			date_naissance_compteabonne = '2014-02-17' AND
@@ -219,7 +219,7 @@ BEGIN TRY
 		PRINT('------------------------------Test 6 - Tuple non inséré');
 	END
 	
-	IF (  (SELECT COUNT (*) FROM ConducteurLocation WHERE
+	IF (  (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = 'TASociety' AND
 			prenom_compteabonne = 'TASociety' AND
 			date_naissance_compteabonne = '2014-02-24' AND
