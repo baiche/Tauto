@@ -17,15 +17,13 @@ IF OBJECT_ID ('dbo.removeConducteurFromCompteAbonne', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.removeConducteurFromCompteAbonne
+	@nom_compteabonne 					nvarchar(50),
+	@prenom_compteabonne 				nvarchar(50),
+	@date_naissance_compteabonne 		date,
+	@piece_identite_conducteur 			nvarchar(50),
+	@nationalite_conducteur 			nvarchar(50)
 AS
-	DECLARE	@nom_compteabonne 					nvarchar(50),
-	DECLARE	@prenom_compteabonne 				nvarchar(50),
-	DECLARE	@date_naissance_compteabonne 		date,
-	DECLARE	@piece_identite_conducteur 			nvarchar(50),
-	DECLARE	@nationalite_conducteur 			nvarchar(50)
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = @nom_compteabonne AND
 			prenom_compteabonne = @prenom_compteabonne AND
@@ -35,7 +33,7 @@ BEGIN
 			) = 1)
 		BEGIN
 			DELETE
-			FROM ConducteurLocation
+			FROM CompteAbonneConducteur
 			WHERE
 				nom_compteabonne = @nom_compteabonne AND
 				prenom_compteabonne = @prenom_compteabonne AND
@@ -51,11 +49,9 @@ BEGIN
 			PRINT('removeConducteurFromCompteAbonne: ERROR, tuple inexistant');
 			RETURN -1;
 		END
-	END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('removeConducteurFromCompteAbonne: ERROR, clef primaire');
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

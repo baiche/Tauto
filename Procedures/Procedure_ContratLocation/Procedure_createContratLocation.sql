@@ -16,13 +16,11 @@ IF OBJECT_ID ('dbo.createContratLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.createContratLocation
+	@date_debut 			datetime,
+	@date_fin 				datetime,
+	@id_abonnement 			int
 AS
-	DECLARE	@date_debut 			datetime,
-	DECLARE	@date_fin 				datetime,
-	DECLARE	@id_abonnement 			int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
 		INSERT INTO ContratLocation (
 			date_debut,
 			date_fin,
@@ -37,11 +35,9 @@ BEGIN
 		);
 		PRINT('createContratLocation créé' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
 		RETURN SCOPE_IDENTITY();
-	END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('createContratLocation: ERROR');
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

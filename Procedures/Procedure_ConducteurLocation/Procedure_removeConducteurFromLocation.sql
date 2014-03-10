@@ -17,13 +17,11 @@ IF OBJECT_ID ('dbo.removeConducteurFromLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.removeConducteurFromLocation
+	@id_location 						int,
+	@piece_identite_conducteur 			nvarchar(50),
+	@nationalite_conducteur 			nvarchar(50)
 AS
-	DECLARE	@id_location 						int,
-	DECLARE	@piece_identite_conducteur 			nvarchar(50),
-	DECLARE	@nationalite_conducteur 			nvarchar(50)
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			id_location = @id_location AND
 			piece_identite_conducteur = @piece_identite_conducteur AND
@@ -45,11 +43,9 @@ BEGIN
 			PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
 			RETURN -1;
 		END
-		END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('removeConducteurFromLocation: ERROR, clef primaire');
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

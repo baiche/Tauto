@@ -16,13 +16,11 @@ IF OBJECT_ID ('dbo.extendContratLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.extendContratLocation
+	@id						int,
+	@date_fin_effective 	datetime,
+	@extension 				int
 AS
-	DECLARE	@id						int,
-	DECLARE	@date_fin_effective 	datetime,
-	DECLARE	@extension 				int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
 			UPDATE ContratLocation
@@ -37,11 +35,9 @@ BEGIN
 			PRINT('extendContratLocation: ERROR, introuvable');
 			RETURN -1;
 		END
-	CATCH
-	BEGIN
+	END TRY	
+	BEGIN CATCH
 		PRINT('extendContratLocation: ERROR');
 		RETURN -1;
-	END
-	
-END
+	END CATCH
 GO
