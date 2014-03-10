@@ -184,7 +184,3 @@ AS
 		END CATCH
 	COMMIT TRANSACTION create_location;
 GO
-
-EXEC dbo.createLocation @matricule_vehicule='0775896wr', 
-						@id_contratLocation=1, 
-						@fiche_etat_avant='0300';
