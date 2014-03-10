@@ -22,6 +22,10 @@ CREATE PROCEDURE dbo.createLocation
 	--------------------------------------------------------------------------
 	------------------------- RESUME DE LA PROCEDURE -------------------------
 	--------------------------------------------------------------------------
+	-- Hypotheses: 
+	---- 1: La table des locations ne subit jamais de suppression
+	--------------------------------------------------------------------------
+	--------------------------------------------------------------------------
 	-- PARTIE.A: Verification de coherence 
 	---- DESCRIPTION: Dans cette partie, nous allons verifier que la base est 
 	----------------- dans un etat valide pour effectuer cette operation.
@@ -29,7 +33,8 @@ CREATE PROCEDURE dbo.createLocation
 	---- ETAPE.A.02: Vehicule reserve
 	------- DESCRIPTION: Nous verifierons que la location fait suite a
 	-------------------- une reservation valide.
-	------- ETAPE.A.02.i:  Une reservation existe
+	------- ETAPE.A.02.i:  Une reservation existe par rapport à un abonnement
+	---------------------- valide.
 	------- ETAPE.A.02.ii: Cette reservation n'est pas expire
 	------- ETAPE.A.02.iii: Cette reservation concerne bien ce vehicule
 	------- ETAPE.A.02.iv:  Cette reservation se realise dans le cadre du bon
@@ -71,15 +76,36 @@ AS
 			
 			
 			
-			-------------------------------
-			-- ETAPE.A.02: Vehicule reserve
-			-------------------------------
+			------------------------------------------------------------------
+			-- ETAPE.A.02:  Une reservation existe par rapport à un abonnement
+			----------------- valide.
+			------------------------------------------------------------------
+
+			DECLARE @nbMatchingReservation int;
 			
-			-- ETAPE.A.02.i:  Une reservation existe
-			-- ETAPE.A.02.ii: Cette reservation n'est pas expire
-			-- ETAPE.A.02.iii: Cette reservation concerne bien ce vehicule
-			-- ETAPE.A.02.iv:  Cette reservation se realise dans le cadre du bon
-			------------------ abonnement
+			SELECT @nbMatchingReservation=COUNT(r.id) 
+			FROM Reservation r, 
+				 ReservationVehicule rv,
+				 ContratLocation cl, 
+				 Abonnement a	
+			 WHERE r.id = rv.id_reservation 
+			   AND rv.matricule_vehicule = @matricule_vehicule
+			   AND cl.id = @id_contratLocation
+			   AND cl.id_abonnement = a.id
+			   AND GETDATE() <= DATEADD(day,a.duree,a.date_debut)
+
+			IF (@nbMatchingReservation=0)
+				RAISERROR (
+						N'Vous essayez de louer une voiture que vous n avez 
+						  pas reserve', 
+						10, 
+						-1); 
+			ELSE IF (@nbMatchingReservation > 1)
+				RAISERROR (
+						N'Incohérence, vehicule reserve plusieurs fois', 
+						10, 
+						-1); 
+
 			
 			
 			
@@ -93,7 +119,7 @@ AS
 			------------------------------------------------------------------
 			
 			CREATE TABLE #TempLocationId (id int );
-			CREATE TABLE #TempEtatDateCreation(date_creation datetime);
+			CREATE TABLE #TempEtatId(id int);
 			CREATE TABLE #TempVehiculeDegat(degat bit);
 			
 			
@@ -105,14 +131,12 @@ AS
 			INSERT INTO Location(
 				matricule_vehicule,
 				id_facturation,
-				date_etat_avant,
-				date_etat_apres,
+				id_etat,
 				id_contratLocation
 			)
 			OUTPUT inserted.id INTO #TempLocationId(id)
 			VALUES (
 				@matricule_vehicule,
-				NULL,
 				NULL,
 				NULL,
 				@id_contratLocation
@@ -128,8 +152,8 @@ AS
 			SELECT TOP(1) e.degat
 			FROM Etat e, Location l
 			WHERE l.matricule_vehicule = @matricule_vehicule 
-			  AND l.id = id_location
-			ORDER BY e.date_creation DESC
+			  AND l.id_etat = e.id
+			ORDER BY e.date_apres DESC
 			
 			IF (SELECT COUNT(*) FROM #TempVehiculeDegat) = 0 
 				-- C'est la premiere fois que ce vehicule est utilise.
@@ -142,19 +166,23 @@ AS
 			----------------------------------------------------
 
 			INSERT INTO Etat(
-				date_creation,
-				id_location, 
-				km, 
-				degat, 
-				fiche
+				date_avant,
+				date_apres,
+				km_avant,
+				km_apres,
+				degat,
+				fiche_avant,
+				fiche_apres
 			) 
-			OUTPUT inserted.date_creation INTO #TempEtatDateCreation(date_creation)
+			OUTPUT inserted.id INTO #TempEtatId(id)
 			VALUES (
 				GETDATE(),
-			    (SELECT id FROM #TempLocationId),
+				NULL,
 			    (SELECT kilometrage FROM Vehicule WHERE matricule = @matricule_vehicule),
+			    NULL,
 				(SELECT degat FROM #TempVehiculeDegat),
-				@fiche_etat_avant
+				@fiche_etat_avant,
+				NULL
 			);
 			
 			
@@ -169,8 +197,7 @@ AS
 			WHERE matricule=@matricule_vehicule
 			
 			UPDATE Location 
-				SET date_etat_avant=(SELECT date_creation 
-									 FROM #TempEtatDateCreation)
+			SET id_etat=(SELECT id FROM #TempEtatId)
 			WHERE id=(SELECT id FROM #TempLocationId)
 			
 			
@@ -184,3 +211,7 @@ AS
 		END CATCH
 	COMMIT TRANSACTION create_location;
 GO
+
+EXEC dbo.createLocation @matricule_vehicule = '0775896wr',
+						@id_contratLocation = 1,
+						@fiche_etat_avant = '0300';
