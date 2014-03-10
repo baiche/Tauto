@@ -35,7 +35,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-02-17' AND
 			piece_identite_conducteur = 200000002 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 1 OK');
 	END
@@ -73,7 +73,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-02-24' AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END
@@ -111,7 +111,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-02-24' AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 3 OK');
 	END
@@ -149,7 +149,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-07-24' AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 4 OK');
 	END
@@ -187,7 +187,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-02-24' AND
 			piece_identite_conducteur = 987652222 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 5 OK');
 	END
@@ -225,7 +225,7 @@ BEGIN TRY
 			date_naissance_compteabonne = '2014-02-24' AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Anglais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 6 OK');
 	END

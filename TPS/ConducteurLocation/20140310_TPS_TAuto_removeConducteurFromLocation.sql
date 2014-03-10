@@ -31,7 +31,7 @@ BEGIN TRY
 			id_location = 1 AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 1 OK');
 	END
@@ -65,7 +65,7 @@ BEGIN TRY
 			id_location = 2 AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END
@@ -99,7 +99,7 @@ BEGIN TRY
 			id_location = 2 AND
 			piece_identite_conducteur = 987622222 AND
 			nationalite_conducteur = 'Francais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 3 OK');
 	END
@@ -133,7 +133,7 @@ BEGIN TRY
 			id_location = 2 AND
 			piece_identite_conducteur = 987654321 AND
 			nationalite_conducteur = 'Anglais'
-		) = 1)
+		) = 0)
 	BEGIN
 		PRINT('------------------------------Test 4 OK');
 	END

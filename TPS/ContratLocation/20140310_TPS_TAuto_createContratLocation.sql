@@ -15,10 +15,11 @@ USE TAuto_IBDR;
 BEGIN TRY
 	DECLARE @ReturnValue int
 	EXEC @ReturnValue = dbo.createContratLocation 
-			@date_debut 			datetime,
-			@date_fin 				datetime,
-			@id_abonnement 			int
-	IF ( @ReturnValue = SELECT COUNT(*) FROM ContratLocation)
+			@date_debut = '2014-02-21T00:00:00',
+			@date_fin = '2014-02-25T00:00:00',
+			@id_abonnement = 11
+			
+	IF ( @ReturnValue = (SELECT COUNT(*) FROM ContratLocation) )
 	BEGIN
 		PRINT('------------------------------Test 1 - Tuple inséré');
 	END
@@ -28,8 +29,8 @@ BEGIN TRY
 	END
 	
 	IF (  (SELECT COUNT (*) FROM ContratLocation WHERE
-			date_debut = '2014-02-21' AND
-			date_fin = '2014-02-25' AND
+			date_debut = '2014-02-21T00:00:00' AND
+			date_fin = '2014-02-25T00:00:00' AND
 			id_abonnement = 11
 		) = 1)
 	BEGIN
@@ -41,7 +42,7 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 1 NOT -- OK');
+	PRINT('------------------------------Test 1 NOT - - OK');
 END CATCH
 GO
 
@@ -49,9 +50,9 @@ GO
 BEGIN TRY
 	DECLARE @ReturnValue int
 	EXEC @ReturnValue = dbo.createContratLocation 
-			@date_debut 			datetime,
-			@date_fin 				datetime,
-			@id_abonnement 			int
+			@date_debut = '2014-02-21T00:00:00',
+			@date_fin = '2014-02-25T00:00:00',
+			@id_abonnement = 25
 	IF ( @ReturnValue = -1)
 	BEGIN
 		PRINT('------------------------------Test 2 - Tuple non inséré');
@@ -62,8 +63,8 @@ BEGIN TRY
 	END
 	
 	IF (  (SELECT COUNT (*) FROM ContratLocation WHERE
-			date_debut = '2014-02-21' AND
-			date_fin = '2014-02-25' AND
+			date_debut = '2014-02-21T00:00:00' AND
+			date_fin = '2014-02-25T00:00:00' AND
 			id_abonnement = 25
 		) = 0)
 	BEGIN
@@ -75,7 +76,7 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 2 NOT -- OK');
+	PRINT('------------------------------Test 2 NOT - - OK');
 END CATCH
 GO
 
@@ -83,9 +84,9 @@ GO
 BEGIN TRY
 	DECLARE @ReturnValue int
 	EXEC @ReturnValue = dbo.createContratLocation 
-			@date_debut 			datetime,
-			@date_fin 				datetime,
-			@id_abonnement 			int
+			@date_debut = '2014-02-25T00:00:00',
+			@date_fin = '2014-03-26T00:00:00',
+			@id_abonnement = 11
 	IF ( @ReturnValue = -1)
 	BEGIN
 		PRINT('------------------------------Test 3 - Tuple non inséré');
@@ -96,8 +97,8 @@ BEGIN TRY
 	END
 	
 	IF (  (SELECT COUNT (*) FROM ContratLocation WHERE
-			date_debut = '2014-02-25' AND
-			date_fin = '2014-03-26' AND
+			date_debut = '2014-02-25T00:00:00' AND
+			date_fin = '2014-03-26T00:00:00' AND
 			id_abonnement = 11
 		) = 0)
 	BEGIN
@@ -109,7 +110,7 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 3 NOT -- OK');
+	PRINT('------------------------------Test 3 NOT - - OK');
 END CATCH
 GO
 
@@ -117,9 +118,9 @@ GO
 BEGIN TRY
 	DECLARE @ReturnValue int
 	EXEC @ReturnValue = dbo.createContratLocation 
-			@date_debut 			datetime,
-			@date_fin 				datetime,
-			@id_abonnement 			int
+			@date_debut = '2014-02-17T00:00:00',
+			@date_fin = '2014-02-25T00:00:00',
+			@id_abonnement = 11
 	IF ( @ReturnValue = -1)
 	BEGIN
 		PRINT('------------------------------Test 4 - Tuple non inséré');
@@ -130,8 +131,8 @@ BEGIN TRY
 	END
 	
 	IF (  (SELECT COUNT (*) FROM ContratLocation WHERE
-			date_debut = '2014-02-17' AND
-			date_fin = '2014-02-25' AND
+			date_debut = '2014-02-17T00:00:00' AND
+			date_fin = '2014-02-25T00:00:00' AND
 			id_abonnement = 11
 		) = 0)
 	BEGIN
@@ -143,6 +144,6 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 4 NOT -- OK');
+	PRINT('------------------------------Test 4 NOT - - OK');
 END CATCH
 GO
