@@ -505,6 +505,24 @@ END
 ELSE PRINT('La table CompteAbonneConducteur existe déja');
 GO
 
+GO
+IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='ReservationVehicule')
+BEGIN
+CREATE TABLE ReservationVehicule(
+	id_reservation 					int,
+	matricule_vehicule 			nvarchar(50)
+	PRIMARY KEY(id_reservation, matricule_vehicule),
+	
+	FOREIGN KEY (id_reservation)
+		REFERENCES Reservation(id),
+	FOREIGN KEY (matricule_vehicule) 
+		REFERENCES Vehicule(matricule)
+);
+PRINT('Table ReservationVehicule créée');
+END
+ELSE PRINT('La table ReservationVehicule existe déja');
+GO
+
 PRINT('
 Ajout des clés étrangéres');
 PRINT('=========================');
@@ -535,17 +553,17 @@ PRINT('Table Vehicule modifiée');
 GO
 ALTER TABLE Reservation
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule),
+			REFERENCES Vehicule(matricule),
 		FOREIGN KEY (id_abonnement)
-		REFERENCES Abonnement(id);
+			REFERENCES Abonnement(id);
 PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance),
+			REFERENCES CompteAbonne(nom,prenom,date_naissance),
 		FOREIGN KEY(nom_typeabonnement)
-		REFERENCES TypeAbonnement(nom);
+			REFERENCES TypeAbonnement(nom);
 PRINT('Table Abonnement modifiée');
 
 GO
