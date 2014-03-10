@@ -14,19 +14,12 @@ USE Tauto_IBDR;
 
 -- preparation : un vehicule, un abonnement
 
+DELETE FROM Reservation
 DELETE FROM Abonnement
 DELETE FROM TypeAbonnement
 DELETE FROM Particulier
 DELETE FROM CompteAbonne
 DELETE FROM Vehicule
-DELETE FROM Modele
-
-
-INSERT INTO Modele (marque,serie,type_carburant,annee,prix,reduction,portieres)
-VALUES ('Peugeot', '406', 'Essence', 2006, 45, 0, 5);
-
-INSERT INTO Vehicule (matricule,kilometrage,couleur,statut,num_serie,marque_modele,serie_modele,portieres_modele,type_carburant_modele)
-VALUES ('0775896we', '14000', 'Bleu', 'Disponible', 'VF3 8C4HXF 81100000', 'Peugeot', '406', 5, 'Essence');
 
 
 INSERT INTO TypeAbonnement (nom, prix, nb_max_vehicules)
@@ -51,9 +44,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_debut, date_fin, id_abonnement)
 	VALUES
-		('20130317 08:00:00', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		('20130317 08:00:00', '20130324 08:00:00', @IdAbonnement);
 	
 	-- verification
     IF
@@ -84,9 +77,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_creation, date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_creation, date_debut, date_fin, id_abonnement)
 	VALUES
-		('2013-03-10', '20130317 08:00:00', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		('2013-03-10', '20130317 08:00:00', '20130324 08:00:00', @IdAbonnement);
 	
 	-- verification
     IF
@@ -111,9 +104,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_creation, date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_creation, date_debut, date_fin, id_abonnement)
 	VALUES
-		(NULL, '20130317 08:00:00', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		(NULL, '20130317 08:00:00', '20130324 08:00:00', @IdAbonnement);
 	
 	-- verification
 	PRINT('------------------------------Test A.3 NOT OK')
@@ -131,9 +124,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_creation, date_fin, matricule_vehicule, id_abonnement)
+		(date_creation, date_fin, id_abonnement)
 	VALUES
-		('2013-03-10', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		('2013-03-10', '20130324 08:00:00', @IdAbonnement);
 	
 	-- verification
 	PRINT('------------------------------Test A.4 NOT OK')
@@ -151,9 +144,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_creation, date_debut, matricule_vehicule, id_abonnement)
+		(date_creation, date_debut, id_abonnement)
 	VALUES
-		('2013-03-10', '20130317 08:00:00', '0775896we', @IdAbonnement);
+		('2013-03-10', '20130317 08:00:00', @IdAbonnement);
 	
 	-- verification
 	PRINT('------------------------------Test A.5 NOT OK')
@@ -171,9 +164,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(id, date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(id, date_debut, date_fin, id_abonnement)
 	VALUES
-		(11, '20130317 08:00:00', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		(11, '20130317 08:00:00', '20130324 08:00:00', @IdAbonnement);
 	
 	-- verification
 	PRINT('------------------------------Test B.1 NOT OK')
@@ -189,18 +182,18 @@ BEGIN TRY
 	-- preparation
 	DELETE FROM Reservation
 	INSERT INTO Reservation
-		(date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_debut, date_fin, id_abonnement)
 	VALUES
-		('20130317 08:00:00', '20130324 08:00:00', '0775896we', @IdAbonnement);
+		('20130317 08:00:00', '20130324 08:00:00', @IdAbonnement);
 
 	DECLARE @IdPredecesseur int;
 	SET @IdPredecesseur = SCOPE_IDENTITY();
 
 	-- test
 	INSERT INTO Reservation
-		(date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_debut, date_fin, id_abonnement)
 	VALUES
-		('20130325 08:00:00', '20130326 18:00:00', '0775896we', @IdAbonnement);
+		('20130325 08:00:00', '20130326 18:00:00', @IdAbonnement);
 	
 	-- verification
     IF SCOPE_IDENTITY() = @IdPredecesseur + 1
@@ -221,9 +214,9 @@ BEGIN TRY
 
 	-- test
 	INSERT INTO Reservation
-		(date_debut, date_fin, matricule_vehicule, id_abonnement)
+		(date_debut, date_fin, id_abonnement)
 	VALUES
-		('20130325 08:00:00', '20130326 18:00:00', '0775896we', @IdAbonnement + 1);
+		('20130325 08:00:00', '20130326 18:00:00', @IdAbonnement + 1);
 	
 	-- verification
 	PRINT('------------------------------Test C.1 NOT OK')
@@ -231,33 +224,4 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.1 OK')
-END CATCH 
-
-
---Test C.2
-BEGIN TRY
-	-- preparation
-	DELETE FROM Reservation
-
-	-- test
-	INSERT INTO Reservation
-		(date_debut, date_fin, matricule_vehicule, id_abonnement)
-	VALUES
-		('20130325 08:00:00', '20130326 18:00:00', 'xxxxxxxxx', @IdAbonnement);
-	
-	-- verification
-	PRINT('------------------------------Test C.2 NOT OK')
-		
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test C.2 OK')
-END CATCH 
-
-
-DELETE FROM Reservation
-DELETE FROM Abonnement
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
-DELETE FROM Vehicule
-DELETE FROM Modele
+END CATCH
