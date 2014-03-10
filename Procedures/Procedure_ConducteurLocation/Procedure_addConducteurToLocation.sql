@@ -17,17 +17,15 @@ IF OBJECT_ID ('dbo.addConducteurToLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.addConducteurToLocation
+	@id_location 						int,
+	@piece_identite_conducteur 			nvarchar(50),
+	@nationalite_conducteur 			nvarchar(50)
 AS
-	DECLARE	@id_location 						int,
-	DECLARE	@piece_identite_conducteur 			nvarchar(50),
-	DECLARE	@nationalite_conducteur 			nvarchar(50)
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
-			id_location = @id_location AND
-			piece_identite_conducteur = @piece_identite_conducteur AND
-			nationalite_conducteur = @nationalite_conducteur
+			@id_location = id_location AND
+			@piece_identite_conducteur = piece_identite_conducteur AND
+			@nationalite_conducteur = nationalite_conducteur
 		) = 0)
 		BEGIN
 			INSERT INTO ConducteurLocation (
@@ -48,11 +46,9 @@ BEGIN
 			PRINT('addConducteurToLocation: ERROR, tuple existant');
 			RETURN -1;
 		END
-	END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('addConducteurToLocation: ERROR, clef primaire');
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

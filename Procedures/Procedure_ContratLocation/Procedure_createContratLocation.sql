@@ -6,7 +6,8 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Crée un contrat de location et renvoie l'id de ce contrat
+-- Commentaire : Crée un contrat de location et renvoie l'id de ce contrat, -1 en cas d'erreur
+--				 Vérifie que le contrat puisse être créé pendant la période de validité de l'abonnement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -16,13 +17,51 @@ IF OBJECT_ID ('dbo.createContratLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.createContratLocation
+	@date_debut 			datetime,
+	@date_fin 				datetime,
+	@id_abonnement 			int
 AS
-	DECLARE	@date_debut 			datetime,
-	DECLARE	@date_fin 				datetime,
-	DECLARE	@id_abonnement 			int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRY
+		CREATE TABLE #TEMP (
+			date_debut 					datetime,
+			duree						int,
+			renouvellement_auto			bit
+		)
+		DECLARE @date_debut_curseur datetime, @duree_curseur int, @renouvellement_auto_curseur bit;
+		
+		SELECT date_debut, duree, renouvellement_auto_curseur
+		INTO #TEMP
+		FROM Abonnement 
+		WHERE id = @id_abonnement;
+		
+		IF ( (SELECT COUNT(*) FROM #TEMP) = 0 )
+		BEGIN
+			Print('createContratLocation: aucun abonnement correspondant');
+			RETURN -1;
+		END
+			
+		DECLARE abonne_cursor CURSOR
+			FOR SELECT * FROM #TEMP
+			
+		OPEN abonne_cursor
+		FETCH NEXT FROM abonne_cursor
+			INTO @date_debut_curseur, @duree_curseur, @renouvellement_auto_curseur;
+		CLOSE abonne_cursor;
+		DEALLOCATE abonne_cursor;
+		
+		IF ( @date_debut_curseur > @date_debut )
+		BEGIN
+			Print('createContratLocation: Date de début inférieur à celle de l''abonnement');
+			RETURN -1;
+		END
+		
+		
+		IF ( DATEADD(day, @duree_curseur, @date_debut_curseur) > @date_fin && @renouvellement_auto_curseur = 'false')
+		BEGIN
+			Print('createContratLocation: Date de fin supérieure à celle de l''abonnement');
+			RETURN -1;
+		END
+		
 		INSERT INTO ContratLocation (
 			date_debut,
 			date_fin,
@@ -37,11 +76,9 @@ BEGIN
 		);
 		PRINT('createContratLocation créé' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
 		RETURN SCOPE_IDENTITY();
-	END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('createContratLocation: ERROR');
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

@@ -16,11 +16,10 @@ IF OBJECT_ID ('dbo.deleteContratLocation', 'P') IS NOT NULL
 	
 GO
 CREATE PROCEDURE dbo.deleteContratLocation
+	@id						int
 AS
-	DECLARE	@id						int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRANSACTION deleteContratLocation
+	BEGIN TRY
 		DECLARE @Output TABLE (
 			id INT
 		);
@@ -34,26 +33,26 @@ BEGIN
 			RETURN -1;
 		END
 		
-		DELETE 
+		DELETE ContratLocation
 		OUTPUT DELETED.id INTO @Output
-		FROM ContratLocation
 		WHERE id = @id;
 		
 		IF ( (SELECT COUNT(*) FROM @Output) = 1)
 		BEGIN
 			PRINT('ContratLocation supprimé');
+			COMMIT TRANSACTION deleteContratLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('deleteContratLocation: ERROR, pas supprimé');
+			ROLLBACK TRANSACTION deleteContratLocation
 			RETURN -1;
 		END
-	END
-	CATCH
-	BEGIN
+	END TRY	
+	BEGIN CATCH
 		PRINT('deleteContratLocation: ERROR');
+		ROLLBACK TRANSACTION deleteContratLocation
 		RETURN -1;
-	END
-END
+	END CATCH
 GO
