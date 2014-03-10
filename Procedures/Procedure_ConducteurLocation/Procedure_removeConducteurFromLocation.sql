@@ -21,6 +21,7 @@ CREATE PROCEDURE dbo.removeConducteurFromLocation
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
+	BEGIN TRANSACTION removeConducteurFromLocation
 	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			id_location = @id_location AND
@@ -36,16 +37,19 @@ AS
 				nationalite_conducteur = @nationalite_conducteur;
 			
 			PRINT('Conducteur supprimé de la location');
+			COMMIT TRANSACTION removeConducteurFromLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
+			ROLLBACK TRANSACTION removeConducteurFromLocation
 			RETURN -1;
 		END
 	END TRY
 	BEGIN CATCH
 		PRINT('removeConducteurFromLocation: ERROR, clef primaire');
+		ROLLBACK TRANSACTION removeConducteurFromLocation
 		RETURN -1;
 	END CATCH
 GO

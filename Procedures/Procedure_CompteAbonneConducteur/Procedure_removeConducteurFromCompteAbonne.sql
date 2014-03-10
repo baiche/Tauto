@@ -23,6 +23,7 @@ CREATE PROCEDURE dbo.removeConducteurFromCompteAbonne
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
+	BEGIN TRANSACTION removeConducteurFromCompteAbonne
 	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = @nom_compteabonne AND
@@ -42,16 +43,19 @@ AS
 				nationalite_conducteur = @nationalite_conducteur;
 			
 			PRINT('Conducteur supprimé du compte abonné');
+			COMMIT TRANSACTION removeConducteurFromCompteAbonne
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('removeConducteurFromCompteAbonne: ERROR, tuple inexistant');
+			ROLLBACK TRANSACTION removeConducteurFromCompteAbonne
 			RETURN -1;
 		END
 	END TRY
 	BEGIN CATCH
 		PRINT('removeConducteurFromCompteAbonne: ERROR, clef primaire');
+		ROLLBACK TRANSACTION removeConducteurFromCompteAbonne
 		RETURN -1;
 	END CATCH
 GO

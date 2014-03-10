@@ -20,6 +20,7 @@ GO
 CREATE PROCEDURE dbo.endContratLocation
 	@id						int
 AS
+	BEGIN TRANSACTION endContratLocation
 	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
@@ -28,16 +29,19 @@ AS
 				date_fin_effective = GETDATE()
 			WHERE id = @id;
 			PRINT('ContratLocation terminé');
+			COMMIT TRANSACTION endContratLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('endContratLocation: ERROR, impossible à terminer car pas trouvé');
+			ROLLBACK TRANSACTION endContratLocation
 			RETURN -1;
 		END
 	END TRY
 	BEGIN CATCH
 		PRINT('endContratLocation: ERROR');
+		ROLLBACK TRANSACTION endContratLocation
 		RETURN -1;
 	END CATCH
 GO

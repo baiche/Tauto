@@ -20,6 +20,7 @@ CREATE PROCEDURE dbo.extendContratLocation
 	@date_fin_effective 	datetime,
 	@extension 				int
 AS
+	BEGIN TRANSACTION extendContratLocation
 	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
@@ -28,16 +29,19 @@ AS
 				extension = @extension
 			WHERE id = @id;
 			PRINT('ContratLocation étendu');
+			COMMIT TRANSACTION extendContratLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('extendContratLocation: ERROR, introuvable');
+			ROLLBACK TRANSACTION extendContratLocation
 			RETURN -1;
 		END
 	END TRY	
 	BEGIN CATCH
 		PRINT('extendContratLocation: ERROR');
+		ROLLBACK TRANSACTION extendContratLocation
 		RETURN -1;
 	END CATCH
 GO

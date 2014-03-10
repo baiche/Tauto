@@ -20,6 +20,7 @@ CREATE PROCEDURE dbo.updateContratLocation
 	@date_fin_effective 	datetime,
 	@extension 				int
 AS
+	BEGIN TRANSACTION updateContratLocation
 	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
@@ -34,11 +35,13 @@ AS
 		ELSE
 		BEGIN
 			PRINT('updateContratLocation: ERROR, introuvable');
+			COMMIT TRANSACTION updateContratLocation
 			RETURN -1;
 		END
 	END TRY
 	BEGIN CATCH
 		PRINT('updateContratLocation: ERROR');
+		ROLLBACK TRANSACTION updateContratLocation
 		RETURN -1;
 	END CATCH
 GO
