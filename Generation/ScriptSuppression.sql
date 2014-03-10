@@ -22,7 +22,16 @@ END
 ELSE PRINT('La table CatalogueCategorie n''existe pas ');
  GO
  
+GO
+IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='ReservationVehicule') 
+BEGIN
+DROP TABLE ReservationVehicule;
+PRINT('Table ReservationVehicule supprimée');
+END
+ELSE PRINT('La table ReservationVehicule n''existe pas ');
+ GO
  
+
  GO
 IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CategorieModele') 
 BEGIN
