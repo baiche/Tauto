@@ -96,8 +96,7 @@ AS
 
 			IF (@nbMatchingReservation=0)
 				RAISERROR (
-						N'Vous essayez de louer une voiture que vous n avez 
-						  pas reserve', 
+						N'Vous essayez de louer une voiture que vous n avez pas reserve', 
 						10, 
 						-1); 
 			ELSE IF (@nbMatchingReservation > 1)
