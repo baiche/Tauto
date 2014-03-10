@@ -39,4 +39,5 @@ sqlcmd -S %mssqlInstanceName% -i .\20_Peuplement_RelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i .\21_Peuplement_CatalogueCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i .\22_Peuplement_CompteAbonneConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i .\23_Peuplement_ConducteurLocation.sql
+sqlcmd -S %mssqlInstanceName% -i .\24_Peuplement_ReservationVehicule.sql
 pause
