@@ -330,12 +330,72 @@ BEGIN TRY
 	INSERT INTO ConducteurLocation
 		(id_location, piece_identite_conducteur, nationalite_conducteur)
 	VALUES
-		(@IdLocation1, NULL, NULL);
+		(@IdLocation1, NULL, 'Francais');
 	
 	-- verification
 	PRINT('------------------------------Test C.2 NOT OK')
-		
+
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.2 OK')
+END CATCH 
+
+
+--Test C.3
+BEGIN TRY
+	-- preparation
+	DELETE FROM ConducteurLocation
+
+	-- test
+	INSERT INTO ConducteurLocation
+		(id_location, piece_identite_conducteur, nationalite_conducteur)
+	VALUES
+		(@IdLocation1, '123456789', NULL);
+	
+	-- verification
+	PRINT('------------------------------Test C.3 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test C.3 OK')
+END CATCH 
+
+
+--Test C.4
+BEGIN TRY
+	-- preparation
+	DELETE FROM ConducteurLocation
+
+	-- test
+	INSERT INTO ConducteurLocation
+		(id_location, piece_identite_conducteur, nationalite_conducteur)
+	VALUES
+		(@IdLocation2 + 5, '123456789', 'Francais');
+	
+	-- verification
+	PRINT('------------------------------Test C.4 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test C.4 OK')
+END CATCH 
+
+
+--Test C.5
+BEGIN TRY
+	-- preparation
+	DELETE FROM ConducteurLocation
+
+	-- test
+	INSERT INTO ConducteurLocation
+		(id_location, piece_identite_conducteur, nationalite_conducteur)
+	VALUES
+		(@IdLocation1, '999999999', 'Francais');
+	
+	-- verification
+	PRINT('------------------------------Test C.5 NOT OK')
+		
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test C.5 OK')
 END CATCH 
