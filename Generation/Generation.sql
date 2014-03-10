@@ -172,7 +172,7 @@ CREATE TABLE Reservation(
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 							NOT NULL 	DEFAULT 'false',
 	matricule_vehicule 	nvarchar(50),
-	id_abonnement 		int
+	id_abonnement 		int								NOT NULL
 );
 PRINT('Table Reservation créée');
 END
