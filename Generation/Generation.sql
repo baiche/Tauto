@@ -171,7 +171,6 @@ CREATE TABLE Reservation(
 	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 							NOT NULL 	DEFAULT 'false',
-	matricule_vehicule 	nvarchar(50),
 	id_abonnement 		int								NOT NULL
 );
 PRINT('Table Reservation créée');
@@ -257,7 +256,8 @@ CREATE TABLE TypeAbonnement(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',nom) = 1),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1,
-	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
+	km					int											DEFAULT 0				CHECK( km >= 0 )
 );
 PRINT('Table TypeAbonnement créée');
 END
@@ -272,7 +272,8 @@ CREATE TABLE Location(
 	matricule_vehicule 	nvarchar(50),
 	id_facturation 		int,
 	id_etat			 	int,
-	id_contratLocation 	int
+	id_contratLocation 	int,
+	km					int																	CHECK( km >= 0 )
 );
 PRINT('Table Location créée');
 END
@@ -552,9 +553,7 @@ PRINT('Table Vehicule modifiée');
 
 GO
 ALTER TABLE Reservation
-	ADD FOREIGN KEY(matricule_vehicule)
-			REFERENCES Vehicule(matricule),
-		FOREIGN KEY (id_abonnement)
+	ADD FOREIGN KEY (id_abonnement)
 			REFERENCES Abonnement(id);
 PRINT('Table Reservation modifiée');
 
