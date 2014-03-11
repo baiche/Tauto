@@ -6,11 +6,13 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Suppression d'un conducteur
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteConducteur', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteConducteur
 GO
 CREATE PROCEDURE dbo.deleteConducteur
 	@piece_identite 	nvarchar(50),

@@ -16,13 +16,12 @@ IF OBJECT_ID ('dbo.extendContratLocation', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.extendContratLocation
+	@id						int,
+	@date_fin_effective 	datetime,
+	@extension 				int
 AS
-	DECLARE	@id						int,
-	DECLARE	@date_fin_effective 	datetime,
-	DECLARE	@extension 				int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRANSACTION extendContratLocation
+	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
 			UPDATE ContratLocation
@@ -30,18 +29,19 @@ BEGIN
 				extension = @extension
 			WHERE id = @id;
 			PRINT('ContratLocation étendu');
+			COMMIT TRANSACTION extendContratLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('extendContratLocation: ERROR, introuvable');
+			ROLLBACK TRANSACTION extendContratLocation
 			RETURN -1;
 		END
-	CATCH
-	BEGIN
+	END TRY	
+	BEGIN CATCH
 		PRINT('extendContratLocation: ERROR');
+		ROLLBACK TRANSACTION extendContratLocation
 		RETURN -1;
-	END
-	
-END
+	END CATCH
 GO

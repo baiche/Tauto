@@ -18,11 +18,10 @@ IF OBJECT_ID ('dbo.endContratLocation', 'P') IS NOT NULL
 	
 GO
 CREATE PROCEDURE dbo.endContratLocation
+	@id						int
 AS
-	DECLARE	@id						int
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRANSACTION endContratLocation
+	BEGIN TRY
 		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
 		BEGIN
 			UPDATE ContratLocation
@@ -30,17 +29,19 @@ BEGIN
 				date_fin_effective = GETDATE()
 			WHERE id = @id;
 			PRINT('ContratLocation terminé');
+			COMMIT TRANSACTION endContratLocation
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('endContratLocation: ERROR, impossible à terminer car pas trouvé');
+			ROLLBACK TRANSACTION endContratLocation
 			RETURN -1;
 		END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('endContratLocation: ERROR');
+		ROLLBACK TRANSACTION endContratLocation
 		RETURN -1;
-	END
-END
+	END CATCH
 GO

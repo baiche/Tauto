@@ -3,24 +3,31 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : Boris de Finance
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Procedure permettant de modifier un catalogue
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateCatalogue', 'P') IS NOT NULL
+DROP PROCEDURE dbo.updateCatalogue;
 GO
-CREATE PROCEDURE TAuto.updateCatalogue
+
+CREATE PROCEDURE dbo.updateCatalogue
 	@nom 					nvarchar(50),
 	@date_debut 			date,
 	@date_fin				date
 AS
-	UPDATE Catalogue
-	SET nom = @nom,
-		date_debut = @date_debut,
-		date_fin = @date_fin	
-	WHERE 	nom = @nom;
-
+	BEGIN TRY
+		UPDATE Catalogue
+		SET date_debut = @date_debut,
+			date_fin = @date_fin	
+		WHERE 	nom = @nom;
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

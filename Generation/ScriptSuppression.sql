@@ -3,8 +3,8 @@
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteurs  : Seyyid Ahmed Ouir , Baiche
--- Testeurs     : Baiche
+-- Correcteurs  : Seyyid Ouir , Baiche
+-- Testeurs     : Baiche, Seyyid Ouir
 -- Integrateur : 
 -- Commentaire : Supprimer toutes les tables si elle existent
 ------------------------------------------------------------
@@ -22,7 +22,16 @@ END
 ELSE PRINT('La table CatalogueCategorie n''existe pas ');
  GO
  
+GO
+IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='ReservationVehicule') 
+BEGIN
+DROP TABLE ReservationVehicule;
+PRINT('Table ReservationVehicule supprimée');
+END
+ELSE PRINT('La table ReservationVehicule n''existe pas ');
+ GO
  
+
  GO
 IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CategorieModele') 
 BEGIN
@@ -84,17 +93,6 @@ PRINT('Table SousPermis supprimée');
 END
 ELSE PRINT('La table SousPermis n''existe pas ');
  GO
-
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypePermis') 
-BEGIN
-DROP TABLE TypePermis;
-PRINT('Table TypePermis supprimée');
-END
-ELSE PRINT('La table TypePermis n''existe pas ');
- GO
-
 
 
  GO
@@ -298,49 +296,6 @@ ELSE PRINT('La table ListeNoire n''existe pas ');
  GO
  
 
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CouleurVehicule') 
-BEGIN
-DROP TABLE CouleurVehicule;
-PRINT('Table CouleurVehicule supprimée');
-END
-ELSE PRINT('La table CouleurVehicule n''existe pas ');
- GO
- 
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Nationalite') 
-BEGIN
-DROP TABLE Nationalite;
-PRINT('Table Nationalite supprimée');
-END
-ELSE PRINT('La table Nationalite n''existe pas ');
- GO
- 
-
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='StatutVehicule') 
-BEGIN
-DROP TABLE StatutVehicule;
-PRINT('Table StatutVehicule supprimée');
-END
-ELSE PRINT('La table StatutVehicule n''existe pas ');
- GO
- 
-
-
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypeCarburant') 
-BEGIN
-DROP TABLE TypeCarburant;
-PRINT('Table TypeCarburant supprimée');
-END
-ELSE PRINT('La table TypeCarburant n''existe pas ');
- GO
- 
 PRINT('
 Suppression de l''assembly ');
 PRINT('=======================');

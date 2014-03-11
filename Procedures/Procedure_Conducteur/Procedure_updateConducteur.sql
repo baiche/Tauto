@@ -6,12 +6,16 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Modification d'un conducteur
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+
+IF OBJECT_ID ('dbo.updateConducteur', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateConducteur
 GO
+
 CREATE PROCEDURE dbo.updateConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50),

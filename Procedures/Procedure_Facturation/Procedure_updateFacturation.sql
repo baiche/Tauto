@@ -22,18 +22,25 @@ CREATE PROCEDURE dbo.updateFacturation
 	@date_reception					date
 	
 AS
-	DECLARE @id_facturation int;
-	
-	SET @id_facturation =(
-	SELECT id_facturation
-	FROM Facturation, Location
-	WHERE Location.id = @id_location
-	AND Facturation.id = Location.id_facturation);
+	BEGIN TRANSACTION update_facturation
+	BEGIN TRY
+		DECLARE @id_facturation int;
+		
+		SET @id_facturation =(
+		SELECT id_facturation
+		FROM Facturation, Location
+		WHERE Location.id = @id_location
+		AND Facturation.id = Location.id_facturation);
 
-	UPDATE Facturation
-	SET montant = @montant,
-	date_reception = @date_reception
-	WHERE id = @id_facturation;
-	
-	CREATE TABLE #Temp1 (id int );
+		UPDATE Facturation
+		SET montant = @montant,
+		date_reception = @date_reception
+		WHERE id = @id_facturation;
+		COMMIT TRANSACTION update_facturation
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION update_facturation
+		RETURN -1
+	END CATCH
 GO

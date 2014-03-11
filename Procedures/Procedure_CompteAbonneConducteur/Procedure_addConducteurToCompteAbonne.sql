@@ -17,15 +17,14 @@ IF OBJECT_ID ('dbo.addConducteurToCompteAbonne', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.addConducteurToCompteAbonne
+	@nom_compteabonne 					nvarchar(50),
+	@prenom_compteabonne 				nvarchar(50),
+	@date_naissance_compteabonne 		date,
+	@piece_identite_conducteur 			nvarchar(50),
+	@nationalite_conducteur 			nvarchar(50)
 AS
-	DECLARE	@nom_compteabonne 					nvarchar(50),
-	DECLARE	@prenom_compteabonne 				nvarchar(50),
-	DECLARE	@date_naissance_compteabonne 		date,
-	DECLARE	@piece_identite_conducteur 			nvarchar(50),
-	DECLARE	@nationalite_conducteur 			nvarchar(50)
-BEGIN
-	TRY
-	BEGIN
+	BEGIN TRANSACTION addConducteurToCompteAbonne
+	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = @nom_compteabonne AND
 			prenom_compteabonne = @prenom_compteabonne AND
@@ -49,18 +48,19 @@ BEGIN
 				@nationalite_conducteur
 			);
 			PRINT('Conducteur ajouté au compte abonné');
+			COMMIT TRANSACTION addConducteurToCompteAbonne
 			RETURN 1;
 		END
 		ELSE
 		BEGIN
 			PRINT('addConducteurToCompteAbonne: ERROR, tuple existant');
+			ROLLBACK TRANSACTION addConducteurToCompteAbonne
 			RETURN -1;
 		END
-	END
-	CATCH
-	BEGIN
+	END TRY
+	BEGIN CATCH
 		PRINT('addConducteurToCompteAbonne: ERROR, clef primaire');
+		ROLLBACK TRANSACTION addConducteurToCompteAbonne
 		RETURN -1;
-	END
-END
+	END CATCH
 GO
