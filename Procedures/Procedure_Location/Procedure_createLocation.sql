@@ -56,11 +56,11 @@ AS
 	BEGIN TRANSACTION create_location
 		BEGIN TRY
 		
-			-------------------------------------------------------------------
-			-------------------------------------------------------------------
-			--------------- PARTIE.A: Verification de coherence ---------------
-			-------------------------------------------------------------------
-			-------------------------------------------------------------------
+			------------------------------------------------------------------
+			------------------------------------------------------------------
+			------------- PARTIE.A: Verification de la coherence -------------
+			------------------------------------------------------------------
+			------------------------------------------------------------------
 			
 			----------------------------------
 			-- ETAPE.A.01: Vehicule disponible
@@ -96,12 +96,12 @@ AS
 
 			IF (@nbMatchingReservation=0)
 				RAISERROR (
-						N'Vous essayez de louer une voiture que vous n avez pas reserve', 
+						N'Vous essayez de louer une voiture que vous n avez pas reservees', 
 						10, 
 						-1); 
 			ELSE IF (@nbMatchingReservation > 1)
 				RAISERROR (
-						N'Incohérence, vehicule reserve plusieurs fois', 
+						N'Incoherence, vehicule reserve plusieurs fois', 
 						10, 
 						-1); 
 
@@ -210,7 +210,3 @@ AS
 		END CATCH
 	COMMIT TRANSACTION create_location;
 GO
-
-EXEC dbo.createLocation @matricule_vehicule = '0775896wr',
-						@id_contratLocation = 1,
-						@fiche_etat_avant = '0300';

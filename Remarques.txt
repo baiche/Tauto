@@ -15,3 +15,19 @@ remarque réunion du 26 / 02 / 2014
 	- se préparer pour la partie centralisée le 15 mars ( loool ) 
 	- faire le réparti pendant les deux dernieres semaines.
 	- choix libre sur les tables à centraliser , et les paprties a répartir. 
+
+
+
+
+Utiliser le sprocedure dans les autres tables (insertion d'un etat, d'un
+
+
+update vehicule
+insert etat.
+
+
+
+clean creatELocation :!!!!!!!!!!!!!!!!!!!!!!!
+
+
+-utilisation de procedure dans des procedures.
