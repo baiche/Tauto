@@ -400,6 +400,7 @@ CREATE TABLE RelanceDecouvert(
 	prenom_compteabonne nvarchar(50),
 	date_naissance_compteabonne date,
 	niveau 				tinyint 						NOT NULL 	DEFAULT 0				CHECK(niveau >= 0 AND niveau <= 5),
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
 );
 PRINT('Table RelanceDecouvert créée');
