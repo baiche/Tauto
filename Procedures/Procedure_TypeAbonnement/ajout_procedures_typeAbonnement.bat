@@ -1,7 +1,7 @@
 @echo off
 rem ------------------------------------------------------------
-rem -- Fichier     : genarate_base.bat
-rem -- Date        : 17/02/2014
+rem -- Fichier     : ajout_procedures_typeAbonnement.bat
+rem -- Date        : 12/03/2014
 rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
@@ -13,7 +13,8 @@ rem ------------------------------------------------------------
 SET mssqlInstanceName=".\SQLEXPRESS"
 
 @echo on
-sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
-sqlcmd -S %mssqlInstanceName% -i Generation.sql -v Param1="%cd%"
-sqlcmd -S %mssqlInstanceName% -i ProcedureAnnexe.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_canDeleteTypeAbonnement.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_createTypeAbonnement.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_deleteTypeAbonnement.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_updateTypeAbonnement.sql
 pause
