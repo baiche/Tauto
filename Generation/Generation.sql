@@ -148,7 +148,8 @@ CREATE TABLE Vehicule(
 	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
-  		nvarchar(50) 					NOT NULL,
+  	marque_modele 		nvarchar(50) 					NOT NULL,
+	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
 	date_entree			date							NOT NULL	DEFAULT GETDATE(), 
 	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
