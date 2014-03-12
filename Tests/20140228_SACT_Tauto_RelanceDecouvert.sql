@@ -14,7 +14,7 @@ USE Tauto_IBDR;
 
 --Mise en place du CompteAbonne
 INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
-('de Finance','Boris','1990-09-08','true','false','FR14 2004 1010 0505 0001 3M02 606','boris.de.finance@mail.com','0647817920');
+('de Finance','Boris','1990-09-08','true','false','FR7845163892548761329457816','boris.de.finance@mail.com','0647817920');
 
 --Test A1
 
@@ -154,6 +154,28 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test A.9 OK')
+END CATCH 
+
+DELETE FROM RelanceDecouvert;
+
+--Test A10
+BEGIN TRY
+	INSERT INTO RelanceDecouvert(date, nom_compteabonne, prenom_compteabonne,date_naissance_compteabonne,niveau) VALUES
+	('20140302 10:00:00','de Finance','Boris','1990-09-08',0);
+	IF((SELECT a_supprimer 
+	   FROM RelanceDecouvert
+	   WHERE date_naissance_compteabonne='1990-09-08' 
+			 AND nom_compteabonne='de Finance'
+			 AND prenom_compteabonne='Boris'
+			 AND date = '20140302 10:00:00'
+			 AND niveau = 0) = 0)
+	
+		PRINT('------------------------------Test A.10 OK')
+	ELSE
+		PRINT('------------------------------Test A.10 NOT OK');	
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test A.10 NOT OK')
 END CATCH 
 
 DELETE FROM RelanceDecouvert;
