@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Modifie une facturation
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -15,7 +15,7 @@ IF OBJECT_ID ('dbo.updateFacturation', 'P') IS NOT NULL
 DROP PROCEDURE dbo.updateFacturation;
 GO
 
---modifie le montant et la date recption du paiment d'une facturation lié à une location.
+--modifie le montant et la date reception du paiment d'une facturation lié à une location.
 CREATE PROCEDURE dbo.updateFacturation
 	@id_location 					int,
 	@montant						money,

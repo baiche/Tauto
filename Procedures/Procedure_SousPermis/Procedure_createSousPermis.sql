@@ -29,15 +29,15 @@ AS
 		numero_permis, 
 		date_obtention,
 		date_expiration,
-		periode_probatoire,
-		actif
+		periode_probatoire
+		--actif
 	)
 	VALUES (
 		@nom_typepermis,
 		@numero_permis,
 		@date_obtention,
 		@date_expiration,
-		@periode_probatoire,
-		DEFAULT
+		@periode_probatoire
+		--DEFAULT
 	);
 GO

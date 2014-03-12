@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
--- Correcteur  : 
+-- Correcteur  : Alexis Deluze
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Ajout d'un permis
@@ -21,15 +21,20 @@ CREATE PROCEDURE dbo.createPermis
 	@valide 				bit,
 	@points_estimes 		tinyint
 AS
-	INSERT INTO Permis (
-		numero,
-		valide,
-		points_estimes
-	)
-	VALUES (
-		@numero,
-		@valide,
-		@points_estimes
-	);
-	
+	BEGIN TRY
+		INSERT INTO Permis (
+			numero,
+			valide,
+			points_estimes
+		)
+		VALUES (
+			@numero,
+			@valide,
+			@points_estimes
+		);
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

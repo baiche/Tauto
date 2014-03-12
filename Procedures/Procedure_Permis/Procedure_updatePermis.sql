@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
--- Correcteur  : 
+-- Correcteur  : Alexis Deluze
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Modification d'un permis
