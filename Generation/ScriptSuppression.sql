@@ -3,8 +3,8 @@
 -- Date        : 17/02/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteurs  : Seyyid Ahmed Ouir , Baiche
--- Testeurs     : Baiche
+-- Correcteurs  : Seyyid Ouir , Baiche
+-- Testeurs     : Baiche, Seyyid Ouir
 -- Integrateur : 
 -- Commentaire : Supprimer toutes les tables si elle existent
 ------------------------------------------------------------
@@ -22,7 +22,16 @@ END
 ELSE PRINT('La table CatalogueCategorie n''existe pas ');
  GO
  
+GO
+IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='ReservationVehicule') 
+BEGIN
+DROP TABLE ReservationVehicule;
+PRINT('Table ReservationVehicule supprimée');
+END
+ELSE PRINT('La table ReservationVehicule n''existe pas ');
+ GO
  
+
  GO
 IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CategorieModele') 
 BEGIN
@@ -84,17 +93,6 @@ PRINT('Table SousPermis supprimée');
 END
 ELSE PRINT('La table SousPermis n''existe pas ');
  GO
-
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypePermis') 
-BEGIN
-DROP TABLE TypePermis;
-PRINT('Table TypePermis supprimée');
-END
-ELSE PRINT('La table TypePermis n''existe pas ');
- GO
-
 
 
  GO
@@ -298,45 +296,33 @@ ELSE PRINT('La table ListeNoire n''existe pas ');
  GO
  
 
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CouleurVehicule') 
-BEGIN
-DROP TABLE CouleurVehicule;
-PRINT('Table CouleurVehicule supprimée');
-END
-ELSE PRINT('La table CouleurVehicule n''existe pas ');
- GO
+PRINT('
+Suppression de l''assembly ');
+PRINT('=======================');
+GO
  
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Nationalite') 
+ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[clrRegex]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
 BEGIN
-DROP TABLE Nationalite;
-PRINT('Table Nationalite supprimée');
+DROP FUNCTION [dbo].[clrRegex];
+PRINT('Function clrRegex supprimée');
 END
-ELSE PRINT('La table Nationalite n''existe pas ');
- GO
- 
+ELSE PRINT('La function clrRegex n''existe pas ');
+GO
 
 
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='StatutVehicule') 
+IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'RegExFunc' and is_user_defined = 1)
 BEGIN
-DROP TABLE StatutVehicule;
-PRINT('Table StatutVehicule supprimée');
+DROP ASSEMBLY [RegExFunc]
+PRINT('Assembly RegExFunc supprimée');
 END
-ELSE PRINT('La table StatutVehicule n''existe pas ');
- GO
- 
+ELSE PRINT('L''assembly RegExFunc n''existe pas ');
+GO
 
 
-
- GO
-IF  EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='TypeCarburant') 
+IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
 BEGIN
-DROP TABLE TypeCarburant;
-PRINT('Table TypeCarburant supprimée');
+    DROP PROCEDURE dbo.videTables
+	PRINT('Procédure videTables supprimée');
 END
-ELSE PRINT('La table TypeCarburant n''existe pas ');
- GO
+ELSE PRINT('La Procédure videTables n''existe pas ');
+GO

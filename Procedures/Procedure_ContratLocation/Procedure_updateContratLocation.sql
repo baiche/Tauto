@@ -6,24 +6,42 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Modifie un contrat de location. Renvoie 1 en cas de succès, -1 autrement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateContratLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateContratLocation
+
 GO
 CREATE PROCEDURE dbo.updateContratLocation
 	@id						int,
-	@date_debut 			datetime,
-	@date_fin 				datetime,
 	@date_fin_effective 	datetime,
-	@extension 				int,
-	@id_abonnement 			int
+	@extension 				int
 AS
-	UPDATE ContratLocation
-	SET
-		date_fin_effective = @date_fin_effective,
-		extension = @extension
-	WHERE id = @id;
-
+	BEGIN TRANSACTION updateContratLocation
+	BEGIN TRY
+		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
+		BEGIN
+			UPDATE ContratLocation
+			SET
+				date_fin_effective = @date_fin_effective,
+				extension = @extension
+			WHERE id = @id;
+			PRINT('ContratLocation mis à jour');
+			RETURN 1;
+		END
+		ELSE
+		BEGIN
+			PRINT('updateContratLocation: ERROR, introuvable');
+			COMMIT TRANSACTION updateContratLocation
+			RETURN -1;
+		END
+	END TRY
+	BEGIN CATCH
+		PRINT('updateContratLocation: ERROR');
+		ROLLBACK TRANSACTION updateContratLocation
+		RETURN -1;
+	END CATCH
 GO

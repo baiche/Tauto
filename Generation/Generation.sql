@@ -15,18 +15,56 @@ USE TAuto_IBDR;
 PRINT('Script de génération de la base')
 PRINT('===============================');
 
+
+PRINT('
+Configuration et création de l''assembly')
+PRINT('===============================');
+GO
+
+sp_configure 'clr enabled', 1;
+RECONFIGURE;
+GO
+
+BEGIN TRY
+	CREATE ASSEMBLY RegExFunc FROM '$(Param1)\..\Generation\SQLServerCLR.dll';
+	PRINT('Assembly RegExFunc créée.')
+END TRY
+BEGIN CATCH
+	PRINT('Assembly RegExFunc déjà existante.')
+END CATCH 
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[clrRegex]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
+DROP FUNCTION [dbo].[clrRegex]
+GO
+
+CREATE FUNCTION dbo.clrRegex  
+(  
+ @pattern as nvarchar(200),
+ @matchString as nvarchar(200)  
+)   
+RETURNS bit 
+AS EXTERNAL NAME RegExFunc.[SQLServerCLR.RegExCompiled].RegExCompiledMatch
+GO
+
+PRINT('Fonction dbo.clrRegex créée.')
+GO
+
+
 ---------------------------------
 -- Création des tables-entités --
 --------------------------------- 
-PRINT('Création des tables');
+PRINT('
+Création des tables');
 PRINT('===================');
 GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Catalogue') 
 BEGIN
  CREATE TABLE  Catalogue(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^((\p{L}|[0-9''-]|\s)+)$',nom) = 1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
-	date_fin 			date,
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),		--CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
+	date_fin 			date,																--CHECK(date_debut <= date_fin and date_debut >= GETDATE() ), 
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Catalogue créée');
@@ -40,7 +78,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Categorie(
 	nom					nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',nom) = 1),
-	description 		nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
+	description 		nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',description) = 1),
 	nom_typepermis 		nvarchar(10) 					NOT NULL							CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')), --c'est un enum
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 ); 
@@ -55,8 +93,8 @@ BEGIN
 CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
 	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
-	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel','GPL','Ethanol','Electrique')), --c'est un enum
-	annee 				int,
+	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
+	annee 				int,																--CHECK(annee <= YEAR(GETDATE())), --A voir si on a besoin de rajouter des modeles qui ne sont pas encor sorti
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
 	portieres 			tinyint 						NOT NULL 	DEFAULT 5,
@@ -74,9 +112,9 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE SousPermis(
 	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
-	numero_permis 		nvarchar(50),
-	date_obtention 		date 							NOT NULL,
-	date_expiration 	date 							NOT NULL,
+	numero_permis 		nvarchar(50),							 
+	date_obtention 		date 							NOT NULL, --CHECK(date_obtention < date_expiration),
+	date_expiration 	date 							NOT NULL, --CHECK(date_obtention < date_expiration),
 	periode_probatoire 	tinyint 						NOT NULL 	DEFAULT 3,
 	PRIMARY KEY(nom_typepermis, numero_permis)
 );
@@ -90,9 +128,9 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Permis')
 BEGIN
 CREATE TABLE Permis(
-	numero 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('[a-zA-Z0-9]+',numero) = 1),
+	numero 				nvarchar(50) 	PRIMARY KEY		/*voir regex sur format numero permis*/	 CHECK( dbo.clrRegex('[a-zA-Z0-9]+',numero) = 1),
 	valide 				bit 										DEFAULT 'true',
-	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12
+	points_estimes 		tinyint 						NOT NULL 	DEFAULT 12, CHECK(points_estimes > 0 and points_estimes <= 12),
 );
 
 PRINT('Table Permis créée');
@@ -105,14 +143,14 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Vehicule')
 BEGIN
 CREATE TABLE Vehicule(
-	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1),
+	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
 	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
+	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
   		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
-	date_entree			date							NOT NULL	DEFAULT GETDATE(),
+	date_entree			date							NOT NULL	DEFAULT GETDATE(), 
 	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
@@ -128,12 +166,11 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Reservation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL,
-	date_debut datetime 								NOT NULL,
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
+	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
-	annule 				bit 										DEFAULT 'false',
-	matricule_vehicule 	nvarchar(50),
-	id_abonnement 		int
+	annule 				bit 							NOT NULL 	DEFAULT 'false',
+	id_abonnement 		int								NOT NULL
 );
 PRINT('Table Reservation créée');
 END
@@ -145,13 +182,13 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Abonnement(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(),
+	date_debut 			date 							NOT NULL 	DEFAULT GETDATE(), --CHECK( GETDATE() <= date_debut ),
 	duree 				int 							NOT NULL 	DEFAULT 1,
 	renouvellement_auto bit 										DEFAULT 'false',
 	nom_typeabonnement 	nvarchar(50),
 	nom_compteabonne 	nvarchar(50),
 	prenom_compteabonne nvarchar(50),
-	date_naissance_compteabonne date,
+	date_naissance_compteabonne date,				
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Abonnement créée');
@@ -166,13 +203,16 @@ CREATE TABLE CompteAbonne(
 	nom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	prenom 				nvarchar(50)														CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',prenom) = 1),
 	date_naissance 		date,
+	actif				bit 							NOT NULL 	DEFAULT 'true',
 	liste_grise 		bit 							NOT NULL 	DEFAULT 'false',
 	iban 				nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^([A-Z]{2}[0-9]{25})$',iban) = 1),
-	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
+	courriel 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( courriel='' or dbo.clrRegex('^([a-zA-Z0-9\._-]+@[a-z0-9\._-]{2,}\.[a-z]{2,4})$',courriel) = 1),
+
 	telephone 			nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( telephone='' or dbo.clrRegex('^([0-9]{10})$',telephone) = 1),
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(nom, prenom, date_naissance)
 );
+
 PRINT('Table CompteAbonne créée');
 END
 ELSE PRINT('La table CompteAbonne existe déja');
@@ -215,7 +255,8 @@ CREATE TABLE TypeAbonnement(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',nom) = 1),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1,
-	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
+	km					int											DEFAULT 1000			CHECK( km >= 0 )
 );
 PRINT('Table TypeAbonnement créée');
 END
@@ -229,9 +270,9 @@ CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
 	matricule_vehicule 	nvarchar(50),
 	id_facturation 		int,
-	date_etat_avant 	datetime,
-	date_etat_apres 	datetime,
-	id_contratLocation 	int
+	id_etat			 	int,
+	id_contratLocation 	int,
+	km					int																	CHECK( km >= 0 )
 );
 PRINT('Table Location créée');
 END
@@ -243,7 +284,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),
+	date_creation 		date 							NOT NULL ,	--DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
@@ -256,12 +297,14 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Etat')
 BEGIN
 CREATE TABLE Etat(
-	date_creation 		datetime 									DEFAULT GETDATE(),
-	id_location 		int,
-	km 					int 							NOT NULL 	DEFAULT 0,
-	degat 				bit 							NOT NULL,
-	fiche 				nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',fiche) = 1),
-	PRIMARY KEY(date_creation, id_location)
+	id 					int 			PRIMARY KEY IDENTITY(1,1),
+	date_avant	 		datetime 						NOT NULL	DEFAULT GETDATE(),
+	date_apres	 		datetime, 															CHECK( date_apres >= date_avant ),
+	km_avant 			int 							NOT NULL 	DEFAULT 0				CHECK( km_avant >= 0 ),
+	km_apres			int,									 							CHECK( km_apres >= km_avant ),
+	degat 				bit,
+	fiche_avant			nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_avant) = 1),
+	fiche_apres			nvarchar(50) 														CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_apres) = 1)
 );
 PRINT('Table Etat créée');
 END
@@ -273,10 +316,10 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE ContratLocation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_debut 			datetime 						NOT NULL,
+	date_debut 			datetime 						NOT NULL, --CHECK( date_debut <= date_fin),
 	date_fin 			datetime 						NOT NULL,
-	date_fin_effective 	datetime,
-	extension 			int,
+	date_fin_effective 	datetime,								  --CHECK( date_debut <= date_fin_effective),
+	extension 			int											DEFAULT 0			CHECK ( extension >= 0 ),
 	id_abonnement 		int
 );
 PRINT('Table ContratLocation créée');
@@ -306,9 +349,9 @@ BEGIN
 CREATE TABLE Infraction(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',nom) = 1),
+	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',nom) = 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.\/]|\s)+)$',description) = 1),
+	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -462,6 +505,24 @@ END
 ELSE PRINT('La table CompteAbonneConducteur existe déja');
 GO
 
+GO
+IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='ReservationVehicule')
+BEGIN
+CREATE TABLE ReservationVehicule(
+	id_reservation 					int,
+	matricule_vehicule 			nvarchar(50)
+	PRIMARY KEY(id_reservation, matricule_vehicule),
+	
+	FOREIGN KEY (id_reservation)
+		REFERENCES Reservation(id),
+	FOREIGN KEY (matricule_vehicule) 
+		REFERENCES Vehicule(matricule)
+);
+PRINT('Table ReservationVehicule créée');
+END
+ELSE PRINT('La table ReservationVehicule existe déja');
+GO
+
 PRINT('
 Ajout des clés étrangéres');
 PRINT('=========================');
@@ -491,30 +552,28 @@ PRINT('Table Vehicule modifiée');
 
 GO
 ALTER TABLE Reservation
-	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule),
-		FOREIGN KEY (id_abonnement)
-		REFERENCES Abonnement(id);
+	ADD FOREIGN KEY (id_abonnement)
+			REFERENCES Abonnement(id);
 PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+			REFERENCES CompteAbonne(nom,prenom,date_naissance),
+		FOREIGN KEY(nom_typeabonnement)
+			REFERENCES TypeAbonnement(nom);
 PRINT('Table Abonnement modifiée');
 
 GO
 ALTER TABLE Location
 	ADD FOREIGN KEY(matricule_vehicule)
-		REFERENCES Vehicule(matricule),
+			REFERENCES Vehicule(matricule),
 		FOREIGN KEY(id_facturation)
-		REFERENCES Facturation(id),
-		FOREIGN KEY(date_etat_avant,id)
-		REFERENCES Etat(date_creation,id_location),
-		FOREIGN KEY(date_etat_apres,id)
-		REFERENCES Etat(date_creation,id_location),
+			REFERENCES Facturation(id),
+		FOREIGN KEY(id_etat)
+			REFERENCES Etat(id),
 		FOREIGN KEY(id_contratLocation)
-		REFERENCES  ContratLocation(id);
+			REFERENCES  ContratLocation(id);
 PRINT('Table Location modifiée');
 
 GO
@@ -553,4 +612,58 @@ ALTER TABLE RelanceDecouvert
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table RelanceDecouvert modifiée');
 
+GO
+
+
+-----------------------------------------
+-- PROCEDURE - Vider toutes les tables --
+-----------------------------------------
+
+IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
+BEGIN
+    DROP PROCEDURE dbo.videTables
+	PRINT('Procédure dbo.videTables supprimée');
+END
+GO
+
+CREATE PROCEDURE dbo.videTables
+AS
+BEGIN
+	PRINT('Vider toutes les tables - Debut');
+	PRINT('===============================');
+
+	DELETE FROM ReservationVehicule
+	DELETE FROM CatalogueCategorie
+	DELETE FROM CategorieModele
+	DELETE FROM ConducteurLocation
+	DELETE FROM CompteAbonneConducteur
+	DELETE FROM Catalogue
+	DELETE FROM Categorie
+	DELETE FROM SousPermis
+	DELETE FROM Conducteur
+	DELETE FROM Permis
+	DELETE FROM Reservation
+	DELETE FROM Infraction
+	DELETE FROM Incident
+	DELETE FROM Retard
+	DELETE FROM Location
+	DELETE FROM Vehicule
+	DELETE FROM Modele
+	DELETE FROM ContratLocation
+	DELETE FROM Abonnement
+	DELETE FROM TypeAbonnement
+	DELETE FROM RelanceDecouvert
+	DELETE FROM Particulier
+	DELETE FROM Entreprise
+	DELETE FROM CompteAbonne
+	DELETE FROM Facturation
+	DELETE FROM Etat
+	DELETE FROM ListeNoire
+	
+	PRINT('Vider toutes les tables - Fin');
+	PRINT('=============================');
+END
+GO
+
+PRINT('Procédure dbo.videTables créée.')
 GO

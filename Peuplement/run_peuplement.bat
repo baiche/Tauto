@@ -1,7 +1,21 @@
+@echo off
+rem ------------------------------------------------------------
+rem -- Fichier     : run_peuplement.bat
+rem -- Date        : 17/02/2014
+rem -- Version     : 2.0
+rem -- Auteur      : Jean-Luc Amitousa Mankoy
+rem -- Correcteurs  : Allan Mottier
+rem -- Testeurs     : 
+rem -- Integrateur : 
+rem -- Commentaire : 
+rem ------------------------------------------------------------
+
 SET mssqlInstanceName=".\SQLEXPRESS"
 
+@echo on
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
-sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
+sqlcmd -S %mssqlInstanceName% -i .\00_Peuplement_TypeAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i .\01_Peuplement_Permis.sql
 sqlcmd -S %mssqlInstanceName% -i .\02_Peuplement_SousPermis.sql
 sqlcmd -S %mssqlInstanceName% -i .\03_Peuplement_Conducteur.sql
@@ -25,4 +39,5 @@ sqlcmd -S %mssqlInstanceName% -i .\20_Peuplement_RelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i .\21_Peuplement_CatalogueCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i .\22_Peuplement_CompteAbonneConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i .\23_Peuplement_ConducteurLocation.sql
+sqlcmd -S %mssqlInstanceName% -i .\24_Peuplement_ReservationVehicule.sql
 pause

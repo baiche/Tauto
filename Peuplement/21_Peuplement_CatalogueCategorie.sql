@@ -25,10 +25,10 @@ VALUES
 	('printemps 2014', 'Camion'),
 	('printemps 2014', '4x4'),
 	
-	('été 2014', 'Vehicule simple'),
-	('été 2014', 'Camion'),
-	('été 2014', '4x4'),
-	('été 2014', 'Bus'),
+	('ete 2014', 'Vehicule simple'),
+	('ete 2014', 'Camion'),
+	('ete 2014', '4x4'),
+	('ete 2014', 'Bus'),
 
 	('automne 2014', 'Vehicule simple'),
 	('automne 2014', 'Camion'),
