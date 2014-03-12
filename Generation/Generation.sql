@@ -55,7 +55,7 @@ BEGIN
 CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
 	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
-	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
+	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel','GPL','Ethanol','Electrique')), --c'est un enum
 	annee 				int,
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
@@ -110,8 +110,7 @@ CREATE TABLE Vehicule(
 	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
-	marque_modele 		nvarchar(50) 					NOT NULL,
-	serie_modele 		nvarchar(50) 					NOT NULL,
+  		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
 	date_entree			date							NOT NULL	DEFAULT GETDATE(),
 	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
