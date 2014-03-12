@@ -13,17 +13,8 @@
 USE Tauto_IBDR;
 
 -- preparation :
-
-DELETE FROM ReservationVehicule
-
-DELETE FROM Vehicule
-DELETE FROM Modele
-
-DELETE FROM Reservation
-DELETE FROM Abonnement
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
+EXEC dbo.videTables;
+GO
 
 DECLARE @IdAbonnement int, @IdReservation1 int, @IdReservation2 int;
 
@@ -354,3 +345,7 @@ END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.4 OK')
 END CATCH 
+
+
+EXEC dbo.videTables;
+GO

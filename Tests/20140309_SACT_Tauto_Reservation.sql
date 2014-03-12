@@ -14,13 +14,8 @@ USE Tauto_IBDR;
 
 -- preparation : un vehicule, un abonnement
 
-DELETE FROM Reservation
-DELETE FROM Abonnement
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
-DELETE FROM Vehicule
-
+EXEC dbo.videTables;
+GO
 
 INSERT INTO TypeAbonnement (nom, prix, nb_max_vehicules)
 VALUES ('bronze', 8, 20);
@@ -225,3 +220,7 @@ END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.1 OK')
 END CATCH
+
+
+EXEC dbo.videTables;
+GO

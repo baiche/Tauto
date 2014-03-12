@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
--- Correcteur  : 
+-- Correcteur  : Alexis Deluze
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : ajoute un conducteur
@@ -22,19 +22,24 @@ CREATE PROCEDURE dbo.createConducteur
 	@prenom 			nvarchar(50),
 	@id_permis 			nvarchar(50)
 AS
-	INSERT INTO Conducteur (
-		piece_identite,
-		nationalite,
-		nom,
-		prenom,
-		id_permis
-	)
-	VALUES (
-		@piece_identite,
-		@nationalite,
-		@nom,
-		@prenom,
-		@id_permis
-	);
-
+	BEGIN TRY
+		INSERT INTO Conducteur (
+			piece_identite,
+			nationalite,
+			nom,
+			prenom,
+			id_permis
+		)
+		VALUES (
+			@piece_identite,
+			@nationalite,
+			@nom,
+			@prenom,
+			@id_permis
+		);
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

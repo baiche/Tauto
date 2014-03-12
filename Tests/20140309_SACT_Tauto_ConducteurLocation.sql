@@ -14,19 +14,8 @@ USE Tauto_IBDR;
 
 -- preparation :
 
-DELETE FROM ConducteurLocation
-
-DELETE FROM Conducteur;
-DELETE FROM Permis;
-
-DELETE FROM Location
-DELETE FROM ContratLocation
-DELETE FROM Abonnement
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
-DELETE FROM Vehicule
-DELETE FROM Modele
+EXEC dbo.videTables;
+GO
 
 -- preparation : 3 conducteurs
 
@@ -399,3 +388,7 @@ END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.5 OK')
 END CATCH 
+
+
+EXEC dbo.videTables;
+GO

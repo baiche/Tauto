@@ -93,7 +93,7 @@ BEGIN
 CREATE TABLE Modele(
 	marque 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-]|\s)+)$',marque) = 1),
 	serie 				nvarchar(50)														CHECK( dbo.clrRegex('^(([a-zA-Z0-9''-\.]|\s)+)$',serie) = 1),
-	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel')), --c'est un enum
+	type_carburant 		nvarchar(50) 					NOT NULL 							CHECK(type_carburant IN('Essence', 'Diesel','GPL','Ethanol','Electrique')), --c'est un enum
 	annee 				int,																--CHECK(annee <= YEAR(GETDATE())), --A voir si on a besoin de rajouter des modeles qui ne sont pas encor sorti
 	prix 				money 							NOT NULL,
 	reduction 			tinyint										DEFAULT 0				CHECK(reduction >= 0 AND reduction < 100),
@@ -148,7 +148,7 @@ CREATE TABLE Vehicule(
 	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
-	marque_modele 		nvarchar(50) 					NOT NULL,
+  	marque_modele 		nvarchar(50) 					NOT NULL,
 	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
 	date_entree			date							NOT NULL	DEFAULT GETDATE(), 
@@ -223,7 +223,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Entreprise')
 BEGIN
 CREATE TABLE Entreprise(
-	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
+	siret 				char(14) 						NOT NULL 							CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
 	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
@@ -257,7 +257,7 @@ CREATE TABLE TypeAbonnement(
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1,
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
-	km					int											DEFAULT 0				CHECK( km >= 0 )
+	km					int											DEFAULT 1000			CHECK( km >= 0 )
 );
 PRINT('Table TypeAbonnement créée');
 END
@@ -400,6 +400,7 @@ CREATE TABLE RelanceDecouvert(
 	prenom_compteabonne nvarchar(50),
 	date_naissance_compteabonne date,
 	niveau 				tinyint 						NOT NULL 	DEFAULT 0				CHECK(niveau >= 0 AND niveau <= 5),
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne)
 );
 PRINT('Table RelanceDecouvert créée');
@@ -613,4 +614,58 @@ ALTER TABLE RelanceDecouvert
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table RelanceDecouvert modifiée');
 
+GO
+
+
+-----------------------------------------
+-- PROCEDURE - Vider toutes les tables --
+-----------------------------------------
+
+IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
+BEGIN
+    DROP PROCEDURE dbo.videTables
+	PRINT('Procédure dbo.videTables supprimée');
+END
+GO
+
+CREATE PROCEDURE dbo.videTables
+AS
+BEGIN
+	PRINT('Vider toutes les tables - Debut');
+	PRINT('===============================');
+
+	DELETE FROM ReservationVehicule
+	DELETE FROM CatalogueCategorie
+	DELETE FROM CategorieModele
+	DELETE FROM ConducteurLocation
+	DELETE FROM CompteAbonneConducteur
+	DELETE FROM Catalogue
+	DELETE FROM Categorie
+	DELETE FROM SousPermis
+	DELETE FROM Conducteur
+	DELETE FROM Permis
+	DELETE FROM Reservation
+	DELETE FROM Infraction
+	DELETE FROM Incident
+	DELETE FROM Retard
+	DELETE FROM Location
+	DELETE FROM Vehicule
+	DELETE FROM Modele
+	DELETE FROM ContratLocation
+	DELETE FROM Abonnement
+	DELETE FROM TypeAbonnement
+	DELETE FROM RelanceDecouvert
+	DELETE FROM Particulier
+	DELETE FROM Entreprise
+	DELETE FROM CompteAbonne
+	DELETE FROM Facturation
+	DELETE FROM Etat
+	DELETE FROM ListeNoire
+	
+	PRINT('Vider toutes les tables - Fin');
+	PRINT('=============================');
+END
+GO
+
+PRINT('Procédure dbo.videTables créée.')
 GO

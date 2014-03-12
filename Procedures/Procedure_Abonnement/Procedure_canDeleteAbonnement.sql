@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Affiche la facture d'un contrat_location
+-- Commentaire : Indique si un abonnement peut être supprimé.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -19,3 +19,11 @@ GO
 CREATE PROCEDURE dbo.canDeleteAbonnement
 	@id_contrat_location	int
 AS
+	BEGIN TRY
+		RETURN SELECT a_supprimer FROM Abonnement
+		WHERE id = @id_contrat_location
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
+GO

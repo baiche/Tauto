@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Désactive le sous permis (pas de supression)
+-- Commentaire : Supprime le sous permis
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -19,7 +19,15 @@ CREATE PROCEDURE dbo.deleteSousPermis
 	@nom_typepermis			nvarchar(50),
 	@numero_permis 			nvarchar(50)
 AS
-	UPDATE SousPermis
-	SET actif = 'false'
-	WHERE nom_typepermis = @nom_typepermis AND numero_permis = @numero_permis;
+	BEGIN TRY
+		DELETE FROM SousPermis
+		WHERE nom_typepermis = @nom_typepermis AND numero_permis = @numero_permis;
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
+	--UPDATE SousPermis
+	--SET actif = 'false'
+	--WHERE nom_typepermis = @nom_typepermis AND numero_permis = @numero_permis;
 GO
