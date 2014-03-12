@@ -171,7 +171,8 @@ CREATE TABLE Reservation(
 	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 							NOT NULL 	DEFAULT 'false',
-	id_abonnement 		int								NOT NULL
+	id_abonnement 		int								NOT NULL,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Reservation créée');
 END
