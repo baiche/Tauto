@@ -269,7 +269,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	matricule_vehicule 	nvarchar(50),
+	matricule_vehicule 	nvarchar(50)					NOT NULL,
 	id_facturation 		int,
 	id_etat			 	int,
 	id_contratLocation 	int,
