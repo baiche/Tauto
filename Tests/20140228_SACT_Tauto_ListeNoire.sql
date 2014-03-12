@@ -10,8 +10,10 @@
 --	Test des contraintes sur liste noire
 ------------------------------------------------------------
 
-USE Tauto_IBDR;
+SET NOCOUNT ON
 
+USE Tauto_IBDR;
+ 
 --Test A1
 
 BEGIN TRY
@@ -232,3 +234,5 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM ListeNoire;
+
+SET NOCOUNT OFF

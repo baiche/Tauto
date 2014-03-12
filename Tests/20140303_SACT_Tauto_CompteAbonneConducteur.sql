@@ -9,6 +9,7 @@
 -- Commentaire : test de la table CompteAbonneConducteur
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -175,3 +176,5 @@ DELETE FROM Entreprise;
 DELETE FROM CompteAbonne;
 DELETE FROM Conducteur;
 DELETE FROM Permis;
+
+SET NOCOUNT OFF

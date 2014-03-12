@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table TypeAbonnement.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -178,3 +179,5 @@ END CATCH
 
 EXEC dbo.videTables;
 GO
+
+SET NOCOUNT OFF

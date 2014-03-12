@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table Entreprise.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -347,3 +348,6 @@ END CATCH
 
 DELETE FROM Entreprise WHERE nom_compte='TautoNotExistingLastName' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'
 DELETE FROM CompteAbonne WHERE nom='Tauto' AND prenom='Tauto' AND date_naissance='1992-05-7'
+
+
+SET NOCOUNT OFF

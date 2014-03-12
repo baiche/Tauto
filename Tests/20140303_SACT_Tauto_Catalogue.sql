@@ -9,6 +9,7 @@
 -- Commentaire : test de la table Catalogue
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -158,3 +159,5 @@ BEGIN CATCH
 	PRINT('------------------------------Test C.2 OK')
 END CATCH
 DELETE FROM Catalogue;
+
+SET NOCOUNT OFF

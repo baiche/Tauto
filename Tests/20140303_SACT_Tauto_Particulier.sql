@@ -9,10 +9,9 @@
 -- Commentaire : Test des contraintes de la table Particulier.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
-
-
 
 --Test A.1
 BEGIN TRY
@@ -111,3 +110,5 @@ END CATCH
 
 DELETE FROM Particulier WHERE nom_compte='Dupont' AND prenom_compte='André' AND date_naissance_compte='1992-05-7'
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7'
+
+SET NOCOUNT OFF
