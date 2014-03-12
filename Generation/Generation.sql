@@ -257,7 +257,7 @@ CREATE TABLE TypeAbonnement(
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
 	nb_max_vehicules 	int 										DEFAULT 1,
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
-	km					int											DEFAULT 0				CHECK( km >= 0 )
+	km					int											DEFAULT 1000			CHECK( km >= 0 )
 );
 PRINT('Table TypeAbonnement créée');
 END
@@ -613,4 +613,58 @@ ALTER TABLE RelanceDecouvert
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table RelanceDecouvert modifiée');
 
+GO
+
+
+-----------------------------------------
+-- PROCEDURE - Vider toutes les tables --
+-----------------------------------------
+
+IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
+BEGIN
+    DROP PROCEDURE dbo.videTables
+	PRINT('Procédure dbo.videTables supprimée');
+END
+GO
+
+CREATE PROCEDURE dbo.videTables
+AS
+BEGIN
+	PRINT('Vider toutes les tables - Debut');
+	PRINT('===============================');
+
+	DELETE FROM ReservationVehicule
+	DELETE FROM CatalogueCategorie
+	DELETE FROM CategorieModele
+	DELETE FROM ConducteurLocation
+	DELETE FROM CompteAbonneConducteur
+	DELETE FROM Catalogue
+	DELETE FROM Categorie
+	DELETE FROM SousPermis
+	DELETE FROM Conducteur
+	DELETE FROM Permis
+	DELETE FROM Reservation
+	DELETE FROM Infraction
+	DELETE FROM Incident
+	DELETE FROM Retard
+	DELETE FROM Location
+	DELETE FROM Vehicule
+	DELETE FROM Modele
+	DELETE FROM ContratLocation
+	DELETE FROM Abonnement
+	DELETE FROM TypeAbonnement
+	DELETE FROM RelanceDecouvert
+	DELETE FROM Particulier
+	DELETE FROM Entreprise
+	DELETE FROM CompteAbonne
+	DELETE FROM Facturation
+	DELETE FROM Etat
+	DELETE FROM ListeNoire
+	
+	PRINT('Vider toutes les tables - Fin');
+	PRINT('=============================');
+END
+GO
+
+PRINT('Procédure dbo.videTables créée.')
 GO

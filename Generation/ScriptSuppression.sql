@@ -317,3 +317,12 @@ PRINT('Assembly RegExFunc supprimée');
 END
 ELSE PRINT('L''assembly RegExFunc n''existe pas ');
 GO
+
+
+IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
+BEGIN
+    DROP PROCEDURE dbo.videTables
+	PRINT('Procédure videTables supprimée');
+END
+ELSE PRINT('La Procédure videTables n''existe pas ');
+GO

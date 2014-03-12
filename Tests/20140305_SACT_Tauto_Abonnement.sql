@@ -14,9 +14,8 @@ USE Tauto_IBDR;
 
 -- preparation : un type abonnement, un compte abonne
 
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
+EXEC dbo.videTables;
+GO
 
 INSERT INTO TypeAbonnement (nom, prix, nb_max_vehicules)
 VALUES ('bronze', 8, 20);
@@ -202,7 +201,5 @@ BEGIN CATCH
 END CATCH 
 
 
-DELETE FROM Abonnement
-DELETE FROM TypeAbonnement
-DELETE FROM Particulier
-DELETE FROM CompteAbonne
+EXEC dbo.videTables;
+GO

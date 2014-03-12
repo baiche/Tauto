@@ -12,6 +12,9 @@
 
 USE Tauto_IBDR;
 
+-- preparation
+EXEC dbo.videTables;
+GO
 
 --Test A.1
 BEGIN TRY
@@ -40,6 +43,12 @@ BEGIN TRY
 	   FROM TypeAbonnement 
 	   WHERE nom='1vehicule') = 'false'
 	   
+	   AND 
+	   
+	  (SELECT km
+	   FROM TypeAbonnement 
+	   WHERE nom='1vehicule') = 1000
+	   
 		PRINT('------------------------------Test A.1 OK')
 	ELSE
 		PRINT('------------------------------Test A.1 NOT OK')
@@ -56,8 +65,8 @@ BEGIN TRY
 	DELETE FROM TypeAbonnement
 	
 	-- test
-	INSERT INTO TypeAbonnement (nom, prix, nb_max_vehicules)
-	VALUES ('bronze', 8, 20);
+	INSERT INTO TypeAbonnement (nom, prix, nb_max_vehicules, km)
+	VALUES ('bronze', 8, 20, 500);
     
     -- verification
     IF
@@ -76,6 +85,12 @@ BEGIN TRY
 	  (SELECT a_supprimer 
 	   FROM TypeAbonnement 
 	   WHERE nom='bronze') = 'false'
+	   
+	   AND 
+	   
+	  (SELECT km 
+	   FROM TypeAbonnement 
+	   WHERE nom='bronze') = 500
 	   
 		PRINT('------------------------------Test A.2 OK')
 	ELSE
@@ -161,4 +176,5 @@ BEGIN CATCH
 END CATCH 
 
 
-DELETE FROM TypeAbonnement
+EXEC dbo.videTables;
+GO
