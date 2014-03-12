@@ -36,7 +36,7 @@ INSERT INTO ContratLocation(date_debut,date_fin,date_fin_effective,extension,id_
 	   
 INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 		('2060-12-09','2060-12-11',200);
-INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		('1885896wx', 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
 		 NULL,
