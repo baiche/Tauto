@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : I
+-- Commentaire : Indique si un abonnement peut être supprimé.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
