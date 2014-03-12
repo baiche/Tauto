@@ -16,4 +16,6 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReservation.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_disableReservation.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_cancelReservation.sql
 pause
