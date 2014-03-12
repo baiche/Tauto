@@ -223,8 +223,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='Entreprise')
 BEGIN
 CREATE TABLE Entreprise(
-	siret 				char(14) 						NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
+	siret 				char(14) 						NOT NULL 							CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
+	nom 				nvarchar(50) 					NOT NULL 							CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
 	date_naissance_compte date,
