@@ -9,6 +9,7 @@
 -- Commentaire : test de la table Facturation
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -137,3 +138,5 @@ BEGIN CATCH
 	PRINT('------------------------------Test C.3 NOT OK')
 END CATCH
 DELETE FROM Facturation;
+
+SET NOCOUNT OFF

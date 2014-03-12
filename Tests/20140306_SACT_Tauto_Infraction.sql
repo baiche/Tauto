@@ -9,6 +9,8 @@
 -- Commentaire : Test des contraintes sur la table Infraction
 ------------------------------------------------------------
 
+SET NOCOUNT ON
+
 USE Tauto_IBDR;
 
 INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
@@ -341,3 +343,5 @@ END CATCH
 DELETE FROM Infraction;
 
 DELETE FROM Location;
+
+SET NOCOUNT OFF

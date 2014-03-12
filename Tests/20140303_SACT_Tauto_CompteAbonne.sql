@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table CompteAbonne.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -881,3 +882,5 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jean' AND date_naissance='1992-05-7';
+
+SET NOCOUNT OFF

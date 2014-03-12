@@ -8,7 +8,7 @@
 -- Integrateur : 
 -- Commentaire : test de la table CatalogueCategorie
 ------------------------------------------------------------
-
+SET NOCOUNT ON
 
 DELETE FROM CatalogueCategorie;
 DELETE FROM Catalogue;
@@ -69,3 +69,5 @@ END CATCH
 DELETE FROM CatalogueCategorie;
 DELETE FROM Catalogue;
 DELETE FROM Categorie;
+
+SET NOCOUNT OFF
