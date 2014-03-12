@@ -20,6 +20,8 @@ AS
 BEGIN
 	PRINT('Vider toutes les tables - Debut');
 	PRINT('===============================');
+	
+	SET NOCOUNT  ON  
 
 	DELETE FROM ReservationVehicule
 	DELETE FROM CatalogueCategorie
@@ -48,6 +50,8 @@ BEGIN
 	DELETE FROM Facturation
 	DELETE FROM Etat
 	DELETE FROM ListeNoire
+	
+	SET NOCOUNT OFF  
 	
 	PRINT('Vider toutes les tables - Fin');
 	PRINT('=============================');
