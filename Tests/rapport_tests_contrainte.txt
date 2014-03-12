@@ -20,9 +20,6 @@ Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
 Test RelanceDecouvert 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 2627, niveau 14, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 18
-Violation de la contrainte PRIMARY KEY ®ÿPK__CompteAb__E6021BE109C4DAF3ÿ¯. Impossible d'ins‚rer une cl‚ en double dans l'objet ®ÿdbo.CompteAbonneÿ¯. La valeur de cl‚ dupliqu‚e est (de Finance, Boris, 1990-09-08).
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 OK
 ------------------------------Test A.2 OK
 ------------------------------Test A.3 OK
@@ -36,79 +33,28 @@ L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
 ------------------------------Test C.1 OK
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 226
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__CompteAbonneCond__04CB1BAC". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CompteAbonneConducteur".
-L'instruction a ‚t‚ arrˆt‚e.
  
 Test Catalogue 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 28
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 39
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.3 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 50
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.4 OK.1
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 61
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.4 OK.2
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 71
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.4 OK.3
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 81
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.4 OK.4
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 92
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.1 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 111
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.2 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 127
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test C.1 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 145
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 161
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Catalogue__nom_c__73A08FAA". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CatalogueCategorie", column 'nom_catalogue'.
-L'instruction a ‚t‚ arrˆt‚e.
  
 Test CategorieModele 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 17
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Categorie__nom_c__7A4D8D39". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CategorieModele", column 'nom_categorie'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test A.1 et B.1 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 38
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Categorie__nom_c__7A4D8D39". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CategorieModele", column 'nom_categorie'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test A.1 et B.1 OK
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 55
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Categorie__nom_c__7A4D8D39". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CategorieModele", column 'nom_categorie'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 73
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Categorie__nom_c__7A4D8D39". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.CategorieModele", column 'nom_categorie'.
-L'instruction a ‚t‚ arrˆt‚e.
  
 Test CompteAbonne 
  
@@ -164,148 +110,31 @@ Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
 Test CompteAbonneConducteur 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 19
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 20
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 21
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 NOT -- OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 56
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 57
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 58
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 80
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 81
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 82
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 104
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 105
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 106
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 128
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 129
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 130
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 152
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 153
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 154
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 176
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Particulier__0D6061AD". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Particulier".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 177
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 178
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__SousPermi__numer__0E5485E6". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.SousPermis", column 'numero_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
  
 Test Conducteur 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 2627, niveau 14, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
-Violation de la contrainte PRIMARY KEY ®ÿPK__Permis__FC77F2106863E728ÿ¯. Impossible d'ins‚rer une cl‚ en double dans l'objet ®ÿdbo.Permisÿ¯. La valeur de cl‚ dupliqu‚e est (0000000001).
-L'instruction a ‚t‚ arrˆt‚e.
-Message 2627, niveau 14, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 18
-Violation de la contrainte PRIMARY KEY ®ÿPK__SousPerm__840045DA62AB0DD2ÿ¯. Impossible d'ins‚rer une cl‚ en double dans l'objet ®ÿdbo.SousPermisÿ¯. La valeur de cl‚ dupliqu‚e est (B, 0000000001).
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test A.1 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 33
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test A.1 OK
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 47
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.3 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 61
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.4 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 75
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.5 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 89
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test A.6 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 103
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test A.6 OK
 ------------------------------Test A.7 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 117
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 134
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.2 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 151
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.3 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 168
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
 ------------------------------Test C.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 182
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 196
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.3 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 210
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.4 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 224
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.5 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 238
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__ConducteurLocati__0006668F". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.ConducteurLocation".
-L'instruction a ‚t‚ arrˆt‚e.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 242
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
  
 Test Entreprise 
  
@@ -331,41 +160,14 @@ Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
 Test Facturation 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 32
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 48
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 65
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.2 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 81
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.3 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 97
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
 ------------------------------Test C.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 111
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 124
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test C.3 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 140
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Location__id_fac__140D5F3C". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Location", column 'id_facturation'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test C.3 OK
 Test Particulier 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
@@ -379,46 +181,19 @@ Test Permis
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
 ------------------------------Test A.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 28
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.2 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 42
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.3 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 56
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test A.4 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 70
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test A.4 OK
 ------------------------------Test A.5 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 84
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 101
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
-------------------------------Test B.2 NOT OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 118
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test B.2 OK
 ------------------------------Test C.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 132
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 Test SousPermis 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
-Message 2627, niveau 14, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
-Violation de la contrainte PRIMARY KEY ®ÿPK__Permis__FC77F2106863E728ÿ¯. Impossible d'ins‚rer une cl‚ en double dans l'objet ®ÿdbo.Permisÿ¯. La valeur de cl‚ dupliqu‚e est (0000000001).
-L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 OK
 ------------------------------Test A.2 OK
-------------------------------Test A.3 NOT OK
+------------------------------Test A.3 OK
 ------------------------------Test A.4 OK
 ------------------------------Test A.5 OK
 ------------------------------Test A.6 OK
@@ -431,17 +206,50 @@ L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
 ------------------------------Test B.2 OK
 ------------------------------Test C.1 OK
-Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 236
-L'instruction DELETE est en conflit avec la contrainte REFERENCE "FK__Conducteu__id_pe__17DDF020". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Conducteur", column 'id_permis'.
-L'instruction a ‚t‚ arrˆt‚e.
 Test Location 
  
 Le contexte de la base de donn‚es a chang‚ÿ; il est maintenant 'TAuto_IBDR'.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 19
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 26
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.1 OK
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 77
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 84
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test A.2 OK
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 134
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 141
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test B.1 OK
-------------------------------Test B.2 OK
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 191
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 198
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
+------------------------------Test B.2 NOT OK
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 248
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 255
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.1 OK
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 305
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.Modele".
+L'instruction a ‚t‚ arrˆt‚e.
+Message 547, niveau 16, ‚tat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 312
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donn‚es "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+L'instruction a ‚t‚ arrˆt‚e.
 ------------------------------Test C.2 OK
  
 Test Abonnement 

@@ -285,7 +285,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL ,	--DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),-- CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
