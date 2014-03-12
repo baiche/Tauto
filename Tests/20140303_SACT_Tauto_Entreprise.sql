@@ -80,19 +80,11 @@ BEGIN TRY
 	INSERT INTO Entreprise(nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
 	('TAautomobile', 'Tauto', 'Tauto','1992-05-7');
 	
-	IF(SELECT siret
-	   FROM Entreprise
-	   WHERE nom_compte='Tauto'
-		 AND prenom_compte='Tauto'
-		 AND date_naissance_compte='1992-05-7')=''
-	
-		PRINT('------------------------------Test A.4 OK')
-	ELSE
-		PRINT('------------------------------Test A.4 NOT OK')
+	PRINT('------------------------------Test A.4 NOT OK')
 	
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test A.4 NOT OK')
+	PRINT('------------------------------Test A.4 OK')
 END CATCH
 
 DELETE FROM Entreprise WHERE nom_compte='Tauto' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'
@@ -148,19 +140,11 @@ BEGIN TRY
 	INSERT INTO Entreprise(siret,nom_compte,prenom_compte,date_naissance_compte) VALUES
 	('73282932000074','Tauto', 'Tauto','1992-05-7');
 	
-	IF(SELECT nom
-	   FROM Entreprise
-	   WHERE nom_compte='Tauto'
-		 AND prenom_compte='Tauto'
-		 AND date_naissance_compte='1992-05-7')=''
-	
-		PRINT('------------------------------Test B.1 OK')
-	ELSE
-		PRINT('------------------------------Test B.1 NOT OK')
+	PRINT('------------------------------Test B.1 NOT OK')
 	
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test B.1 NOT OK')
+	PRINT('------------------------------Test B.1 OK')
 END CATCH
 
 DELETE FROM Entreprise WHERE nom_compte='Tauto' AND prenom_compte='Tauto' AND date_naissance_compte='1992-05-7'

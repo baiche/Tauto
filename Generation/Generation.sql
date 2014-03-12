@@ -272,7 +272,7 @@ CREATE TABLE Location(
 	matricule_vehicule 	nvarchar(50)					NOT NULL,
 	id_facturation 		int,
 	id_etat			 	int,
-	id_contratLocation 	int,
+	id_contratLocation 	int								NOT NULL,
 	km					int																	CHECK( km >= 0 )
 );
 PRINT('Table Location créée');
