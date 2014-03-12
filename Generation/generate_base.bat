@@ -15,4 +15,5 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 @echo on
 sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i Generation.sql -v Param1="%cd%"
+sqlcmd -S %mssqlInstanceName% -i ProcedureAnnexe.sql
 pause
