@@ -12,13 +12,13 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-sqlcmd -S %mssqlInstanceName% -i Procedure_backListCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_getCompteAbonneReservations.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_greyListCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateCompteAbonne.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_blackListCompteAbonne.sql
 
 if "%1"=="nopause" goto start
 pause
