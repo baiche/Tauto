@@ -11,7 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.disableCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableCompteAbonne
 GO
+
+
 CREATE PROCEDURE dbo.disableCompteAbonne
 
 	@nom 					nvarchar(50),

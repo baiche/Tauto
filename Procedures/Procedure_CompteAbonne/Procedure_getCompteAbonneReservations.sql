@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.getCompteAbonneReservations', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.getCompteAbonneReservations
 GO
+
 CREATE PROCEDURE dbo.getCompteAbonneReservations
 
 	@nom_abonne 				nvarchar(50),
@@ -21,7 +24,7 @@ CREATE PROCEDURE dbo.getCompteAbonneReservations
 AS
 		RETURN 
 		(
-		SELECT r 
+		SELECT r.id
 		FROM Reservation r, CompteAbonne ca
 		WHERE ca.nom=@nom_abonne
 		  AND ca.prenom=@prenom_abonne

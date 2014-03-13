@@ -11,14 +11,17 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteCompteAbonne
 GO
+
 CREATE PROCEDURE dbo.deleteCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
 	@date_naissance 		date
 AS
 	DELETE FROM CompteAbonne
-	WHERE 	nom = @nom,
-			prenom = @prenom,
-			date_naissance = @date_naissance;
+	WHERE 	nom = @nom
+	AND		prenom = @prenom
+	AND		date_naissance = @date_naissance;
 GO
