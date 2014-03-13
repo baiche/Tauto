@@ -15,4 +15,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 @echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteLocation.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

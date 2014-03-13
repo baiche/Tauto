@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createListeNoire.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteListeNoire.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateListeNoire.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

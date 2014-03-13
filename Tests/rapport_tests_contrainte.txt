@@ -110,7 +110,7 @@ Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
 Test CompteAbonneConducteur 
  
 Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
-------------------------------Test A.1 NOT -- OK
+------------------------------Test A.1 OK
 ------------------------------Test A.2 OK
 ------------------------------Test B.2 OK
 ------------------------------Test C.2 OK
@@ -160,6 +160,9 @@ Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
 Test Facturation 
  
 Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
+Message 515, niveau 16, Çtat 2, serveur TIBO\SQLEXPRESS, ligne 20
+Impossible d'insÇrer la valeur NULL dans la colonne 'date_creation', table 'TAuto_IBDR.dbo.Facturation'. Cette colonne n'accepte pas les valeurs NULL. êchec de INSERT.
+L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test A.1 NOT OK
 ------------------------------Test A.2 OK
 ------------------------------Test B.1 OK
@@ -209,46 +212,46 @@ Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
 Test Location 
  
 Le contexte de la base de donnÇes a changÇˇ; il est maintenant 'TAuto_IBDR'.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 19
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 19
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 26
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 26
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test A.1 OK
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 77
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 77
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 84
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 84
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test A.2 OK
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 134
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 134
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 141
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 141
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test B.1 OK
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 191
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 191
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 198
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 198
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test B.2 NOT OK
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 248
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 248
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 255
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 255
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test C.1 OK
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 305
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__1B99726B". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 305
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Vehicule__219B992D". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.Modele".
 L'instruction a ÇtÇ arràtÇe.
-Message 547, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 312
-L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__1E75DF16". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+Message 547, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 312
+L'instruction INSERT est en conflit avec la contrainte FOREIGN KEY "FK__Abonnemen__nom_t__247805D8". Le conflit s'est produit dans la base de donnÇes "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
 L'instruction a ÇtÇ arràtÇe.
 ------------------------------Test C.2 OK
  
@@ -272,9 +275,9 @@ Vider toutes les tables - Fin
  
 Test Retard 
  
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_avant'.
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_apres'.
  
 Test TypeAbonnement 
@@ -297,21 +300,21 @@ Vider toutes les tables - Fin
  
 Test Etat 
  
-Message 110, niveau 15, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 39
+Message 110, niveau 15, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 39
 Il y a moins de colonnes dans l'instruction INSERT que de valeurs spÇcifiÇes dans la clause VALUES. Le nombre de valeurs de la clause VALUES doit àtre le màme que le nombre de colonnes de l'instruction INSERT.
  
 Test Incident 
  
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_avant'.
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_apres'.
  
 Test Infraction 
  
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_avant'.
-Message 207, niveau 16, Çtat 1, serveur EUCALYPTUS\SQLEXPRESS, ligne 16
+Message 207, niveau 16, Çtat 1, serveur TIBO\SQLEXPRESS, ligne 16
 Nom de colonne non valideˇ: 'date_etat_apres'.
  
 Test ConducteurLocation 

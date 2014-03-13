@@ -17,4 +17,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_canDeleteAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_createAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateAbonnement.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

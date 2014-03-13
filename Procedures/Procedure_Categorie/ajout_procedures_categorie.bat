@@ -17,4 +17,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_createCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateCategorie.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

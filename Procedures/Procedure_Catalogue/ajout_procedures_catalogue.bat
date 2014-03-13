@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCatalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCatalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateCatalogue.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

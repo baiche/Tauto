@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateConducteur.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

@@ -20,4 +20,6 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_setKilometrageVehicule.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_setStatutVehicule.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateVehicule.sql
 
+if "%1"=="nopause" goto start
 pause
+:start

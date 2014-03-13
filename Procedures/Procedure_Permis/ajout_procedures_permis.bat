@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createPermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deletePermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updatePermis.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

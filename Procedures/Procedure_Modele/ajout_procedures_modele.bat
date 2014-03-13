@@ -18,4 +18,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_deleteModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disablePrixModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updatePrixModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReductionModele.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

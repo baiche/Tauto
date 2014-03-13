@@ -18,4 +18,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_deleteReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_cancelReservation.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

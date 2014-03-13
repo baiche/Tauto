@@ -18,4 +18,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_deleteRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_relanceRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateNiveauRelanceDecouvert.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

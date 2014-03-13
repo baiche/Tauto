@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createFacturation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_printFacturation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateFacturation.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

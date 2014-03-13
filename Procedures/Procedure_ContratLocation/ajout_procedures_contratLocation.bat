@@ -20,4 +20,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_endContratLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_extendContratLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_printContratLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateContratLocation.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

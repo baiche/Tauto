@@ -20,4 +20,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_disableCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_getCompteAbonneReservations.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_greyListCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateCompteAbonne.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

@@ -14,4 +14,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 
 @echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createIncident.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

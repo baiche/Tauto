@@ -16,4 +16,7 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_addConducteurToLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_removeConducteurFromLocation.sql
+
+if "%1"=="nopause" goto start
 pause
+:start
