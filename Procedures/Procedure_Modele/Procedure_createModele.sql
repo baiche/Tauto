@@ -42,8 +42,7 @@ AS
 		@annee,
 		@prix,
 		@reduction,
-		@portieres,
-		DEFAULT
+		@portieres
 	);
 	
 GO
