@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disablePrixModele.sql

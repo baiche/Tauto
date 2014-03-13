@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createEtat.sql
 
 if "%1"=="nopause" goto start

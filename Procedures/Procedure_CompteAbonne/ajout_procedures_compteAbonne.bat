@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_backListCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCompteAbonne.sql

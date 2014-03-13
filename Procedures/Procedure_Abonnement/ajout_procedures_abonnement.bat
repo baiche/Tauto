@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_canDeleteAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_createAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteAbonnement.sql

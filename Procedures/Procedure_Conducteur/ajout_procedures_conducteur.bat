@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateConducteur.sql

@@ -12,6 +12,6 @@
 USE TAuto_IBDR;
 
 GO
-CREATE PROCEDURE dbo.updateAbonnement
-
-GO
+--CREATE PROCEDURE dbo.updateAbonnement
+--
+--GO

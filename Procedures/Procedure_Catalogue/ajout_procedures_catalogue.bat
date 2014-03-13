@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCatalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCatalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateCatalogue.sql

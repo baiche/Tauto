@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteLocation.sql
 

@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createPermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deletePermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updatePermis.sql

@@ -11,6 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createAbonnement
+GO
+
 GO
 CREATE PROCEDURE dbo.createAbonnement
 	@date_debut 					date,

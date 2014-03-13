@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableRelanceDecouvert.sql

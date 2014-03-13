@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCategorie.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableCategorie.sql

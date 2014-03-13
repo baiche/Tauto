@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReservation.sql

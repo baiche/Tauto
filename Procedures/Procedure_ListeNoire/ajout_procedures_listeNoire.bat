@@ -12,7 +12,6 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
 sqlcmd -S %mssqlInstanceName% -i Procedure_createListeNoire.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteListeNoire.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateListeNoire.sql

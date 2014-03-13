@@ -11,6 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteAbonnement
+GO
+
 GO
 CREATE PROCEDURE dbo.deleteAbonnement
 	@id 							int

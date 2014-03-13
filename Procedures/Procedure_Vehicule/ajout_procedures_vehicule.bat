@@ -12,7 +12,7 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLEXPRESS"
 
-@echo on
+
 sqlcmd -S %mssqlInstanceName% -i Procedure_createVehicule.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteVehicule.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableVehicule.sql
