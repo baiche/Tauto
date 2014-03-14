@@ -11,6 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateTypeAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateTypeAbonnement
+GO
+
 -- Update le prix et le nombre max de véhicules
 
 CREATE PROCEDURE dbo.updateTypeAbonnement

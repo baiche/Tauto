@@ -11,8 +11,12 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateReservation
 GO
-CREATE PROCEDURE TAuto.updateReservation
+
+
+CREATE PROCEDURE dbo.updateReservation
 	@id	 					int,
 	@date_creation			date,
 	@date_debut				datetime,
@@ -22,12 +26,10 @@ CREATE PROCEDURE TAuto.updateReservation
 	@id_abonnement			int
 AS
 	UPDATE Reservation
-	SET id = @id
-		date_creation = @date_creation,
+	SET date_creation = @date_creation,
 		date_debut = @date_debut,
 		date_fin = @date_fin,
 		annule = @annule,
-		matricule_vehicule = @matricule_vehicule,
 		id_abonnement = @id_abonnement
 	WHERE 	id = @id;
 

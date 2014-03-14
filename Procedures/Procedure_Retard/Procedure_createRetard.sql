@@ -11,8 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createRetard', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createRetard
 GO
-CREATE PROCEDURE TAuto.createRetard
+
+CREATE PROCEDURE dbo.createRetard
 	@date			 		datetime,
 	@id_location			int,
 	@regle					bit,

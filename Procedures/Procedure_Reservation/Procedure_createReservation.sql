@@ -11,14 +11,16 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createReservation
 GO
-CREATE PROCEDURE TAuto.createReservation
+
+CREATE PROCEDURE dbo.createReservation
 	@id	 					int,
 	@date_creation			date,
 	@date_debut				datetime,
 	@date_fin				datetime,
 	@annule					bit,
-	@matricule_vehicule		nvarchar(50),
 	@id_abonnement			int
 AS
 	INSERT INTO Reservation(
@@ -27,7 +29,6 @@ AS
 		date_debut,
 		date_fin,
 		annule,
-		matricule_vehicule,
 		id_abonnement
 	)
 	VALUES (
@@ -36,7 +37,6 @@ AS
 		@date_debut,
 		@date_fin,
 		@annule,
-		@matricule_vehicule,
 		@id_abonnement
 	);
 
