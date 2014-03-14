@@ -13,8 +13,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateContratLocation
-
 GO
+
 CREATE PROCEDURE dbo.updateContratLocation
 	@id						int,
 	@date_fin_effective 	datetime,

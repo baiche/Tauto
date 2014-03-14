@@ -14,8 +14,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.removeConducteurFromCompteAbonne', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.removeConducteurFromCompteAbonne
-
 GO
+
 CREATE PROCEDURE dbo.removeConducteurFromCompteAbonne
 	@nom_compteabonne 					nvarchar(50),
 	@prenom_compteabonne 				nvarchar(50),

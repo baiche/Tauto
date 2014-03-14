@@ -14,8 +14,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.createContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.createContratLocation
-
 GO
+
 CREATE PROCEDURE dbo.createContratLocation
 	@date_debut 			datetime,
 	@date_fin 				datetime,
