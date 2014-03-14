@@ -10,6 +10,9 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.cancelReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.cancelReservation
 GO
 
 CREATE PROCEDURE dbo.cancelReservation

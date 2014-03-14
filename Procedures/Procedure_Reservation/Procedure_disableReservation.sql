@@ -10,13 +10,16 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.disableReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableReservation
 GO
 
 CREATE PROCEDURE dbo.disableReservation
 	@id	 					int
 AS
 	UPDATE Reservation
-	SET a_spprimer='true'
+	SET a_supprimer='true'
 	WHERE id = @id;
 
 GO

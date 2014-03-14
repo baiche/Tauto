@@ -11,8 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createVehicule
 GO
-CREATE PROCEDURE TAuto.createVehicule
+
+CREATE PROCEDURE dbo.createVehicule
 	@matricule 				nvarchar(50),
 	@kilometrage 			int,
 	@couleur				nvarchar(50),
