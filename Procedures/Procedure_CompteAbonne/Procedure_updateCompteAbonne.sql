@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateCompteAbonne
 GO
+
 CREATE PROCEDURE dbo.updateCompteAbonne
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
@@ -31,8 +34,8 @@ AS
 		iban = @iban,
 		courriel = @courriel,
 		telephone = @telephone		
-	WHERE 	nom = @nom,
-			prenom = @prenom,
-			date_naissance = @date_naissance;
+	WHERE 	nom = @nom
+	AND		prenom = @prenom
+	AND		date_naissance = @date_naissance;
 
 GO

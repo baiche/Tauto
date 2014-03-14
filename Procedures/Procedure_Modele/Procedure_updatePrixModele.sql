@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updatePrixModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updatePrixModele
 GO
+
 
 -- Cette procedure permet de modifier le prix d'un modele
 

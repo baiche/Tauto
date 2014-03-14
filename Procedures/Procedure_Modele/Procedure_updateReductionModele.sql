@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateReductionModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateReductionModele
 GO
 
 -- Cette procedure permet de modifier le pourcentage de reduction du prix du modele

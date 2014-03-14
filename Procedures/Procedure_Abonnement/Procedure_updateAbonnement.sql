@@ -56,4 +56,9 @@ AS
 		PRINT('updateAbonnement: ERROR');
 		RETURN -1;
 	END CATCH
+=======
+GO
+
+CREATE PROCEDURE dbo.updateAbonnement
+AS
 GO

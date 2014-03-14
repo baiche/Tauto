@@ -12,7 +12,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createLocation
 GO
+
 CREATE PROCEDURE dbo.createLocation
 
 	@matricule_vehicule 	nvarchar(50),

@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.backListCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.backListCompteAbonne
 GO
+
 CREATE PROCEDURE dbo.backListCompteAbonne
 
 	@nom_abonne 				nvarchar(50),
