@@ -26,7 +26,7 @@ CREATE PROCEDURE dbo.createAbonnement
 	@date_naissance_compteabonne 	date
 AS
 	BEGIN TRY
-		IF (date_debut < GETDATE())
+		IF (@date_debut < GETDATE())
 		BEGIN
 			PRINT('createAbonnement: Date de début inférieure à la date d''aujourd''hui');
 			RETURN -1;
