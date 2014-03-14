@@ -14,8 +14,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateAbonnement', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateAbonnement
-
 GO
+
 CREATE PROCEDURE dbo.updateAbonnement
 	@id 							int,
 	@renouvellement_auto			bit,
