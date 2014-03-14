@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.addCategorieToCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.addCategorieToCatalogue;
+	DROP PROCEDURE dbo.addCategorieToCatalogue;
 GO
 
 CREATE PROCEDURE dbo.addCategorieToCatalogue

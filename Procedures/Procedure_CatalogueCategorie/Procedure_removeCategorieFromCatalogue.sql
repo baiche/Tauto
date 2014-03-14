@@ -13,7 +13,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.removeCategorieFromCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.removeCategorieFromCatalogue;
+	DROP PROCEDURE dbo.removeCategorieFromCatalogue;
 GO
 
 CREATE PROCEDURE dbo.removeCategorieFromCatalogue
