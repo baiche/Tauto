@@ -63,6 +63,7 @@ AS
 				ROLLBACK TRANSACTION deleteContratLocation;
 				RETURN -1;
 			END
+			FETCH NEXT FROM contratLoc INTO @idLoc;
 		END
 		
 		CLOSE contratLoc;
