@@ -9,6 +9,7 @@
 -- Commentaire : test de la table CompteAbonneConducteur
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -22,15 +23,15 @@ DELETE FROM Permis;
 --Test A.1, B.1, C.1, D.1, E.1
 BEGIN TRY
 	INSERT INTO Permis(numero, valide, points_estimes) VALUES
-	('0000000002', 'true', 12);
+		('0000000002', 'true', 12);
 	INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALUES
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 		
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-			'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+			'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'Francais', '987654321');
@@ -62,9 +63,9 @@ BEGIN TRY
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-		'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+		'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASoety', 'TASociety', '2014-02-24', 'Francais', '987654321');
@@ -86,9 +87,9 @@ BEGIN TRY
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-		'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+		'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASociety', 'TSoety', '2014-02-24', 'Francais', '987654321');
@@ -110,9 +111,9 @@ BEGIN TRY
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-		'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+		'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASociety', 'TASociety', '2014-12-24', 'Francais', '987654321');
@@ -134,9 +135,9 @@ BEGIN TRY
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-		'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+		'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'Britannique', '987654321');
@@ -158,9 +159,9 @@ BEGIN TRY
 		('987654321', 'Francais', 'le Coco', 'David', '0000000002');
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,a_supprimer,liste_grise,iban,courriel,telephone) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'true', 
-		'false', 'AL47 2121 1009 0000 0002 3569 8741', 'ta_society@hotmail.fr', '0506038405');
+		'false', 'LU2800194006447545001234567', 'ta_society@hotmail.fr', '0506038405');
 	INSERT INTO Entreprise(siret,nom,nom_compte,prenom_compte,date_naissance_compte) VALUES
-		('843 930 431', 'TASociety','TASociety','TASociety','2014-02-24');
+		('84393043114586', 'TASociety','TASociety','TASociety','2014-02-24');
 		
 	INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne, nationalite_conducteur, piece_identite_conducteur) VALUES
 		('TASociety', 'TASociety', '2014-02-24', 'Francais', '123456789');
@@ -175,3 +176,5 @@ DELETE FROM Entreprise;
 DELETE FROM CompteAbonne;
 DELETE FROM Conducteur;
 DELETE FROM Permis;
+
+SET NOCOUNT OFF

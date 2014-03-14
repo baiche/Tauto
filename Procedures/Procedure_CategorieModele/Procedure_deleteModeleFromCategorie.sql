@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteModeleFromCategorie', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteModeleFromCategorie
 GO
 
 -- Cette procedure permet d'ajouter un modele a une categorie
@@ -23,13 +25,7 @@ CREATE PROCEDURE dbo.deleteModeleFromCategorie
 	@nom_categorie				nvarchar(50)
 	
 AS
-	DELETE FROM CategorieModele(
-		marque_modele,
-		serie_modele,
-		type_carburant_modele,
-		portieres_modele,
-		nom_categorie
-	)
+	DELETE FROM CategorieModele
 	WHERE 
 		marque_modele=@marque_modele AND
 		serie_modele=@serie_modele AND

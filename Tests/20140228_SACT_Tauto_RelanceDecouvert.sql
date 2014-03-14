@@ -10,6 +10,8 @@
 --	Test des contraintes sur RelanceDecouvert
 ------------------------------------------------------------
 
+SET NOCOUNT ON
+
 USE Tauto_IBDR;
 
 --Mise en place du CompteAbonne
@@ -222,4 +224,6 @@ END CATCH
 DELETE FROM RelanceDecouvert;
 --Suppression du CompteAbonne de test
 DELETE FROM CompteAbonne;
+
+SET NOCOUNT OFF
 

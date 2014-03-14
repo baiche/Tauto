@@ -9,6 +9,8 @@
 -- Commentaire : Test des contraintes sur la table Retard
 ------------------------------------------------------------
 
+SET NOCOUNT ON
+
 USE TAuto_IBDR;
 
 INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
@@ -199,3 +201,5 @@ END CATCH
 DELETE FROM Retard;
 
 DELETE FROM Location;
+
+SET NOCOUNT OFF

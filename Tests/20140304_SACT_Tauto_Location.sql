@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table Location.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -349,3 +350,5 @@ DELETE FROM Abonnement WHERE date_debut='2060-12-01 00:00:00';
 DELETE FROM Particulier WHERE nom_compte='Dupont' AND prenom_compte='Jacques' AND date_naissance_compte='1992-05-7';
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jacques' AND date_naissance='1992-05-7';
 DELETE FROM Vehicule WHERE matricule='1885896wx';
+
+SET NOCOUNT OFF

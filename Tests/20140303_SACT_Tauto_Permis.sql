@@ -9,6 +9,8 @@
 -- Commentaire : Test des contraintes sur la table Permis
 ------------------------------------------------------------
 
+SET NOCOUNT ON
+
 USE Tauto_IBDR;
 
 --Test A1
@@ -128,3 +130,5 @@ BEGIN CATCH
 	PRINT('------------------------------Test C.1 OK')
 END CATCH 
 DELETE FROM Permis;
+
+SET NOCOUNT OFF

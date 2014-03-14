@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.deleteCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.deleteCatalogue;
+	DROP PROCEDURE dbo.deleteCatalogue;
 GO
 
 CREATE PROCEDURE dbo.deleteCatalogue

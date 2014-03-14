@@ -11,8 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteVehicule
 GO
-CREATE PROCEDURE TAuto.deleteVehicule
+
+CREATE PROCEDURE dbo.deleteVehicule
 	@matricule 					nvarchar(50)
 AS
 	DELETE FROM Vehicule

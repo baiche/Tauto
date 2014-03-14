@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.updateCatalogue;
+	DROP PROCEDURE dbo.updateCatalogue;
 GO
 
 CREATE PROCEDURE dbo.updateCatalogue

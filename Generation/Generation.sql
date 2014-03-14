@@ -171,7 +171,8 @@ CREATE TABLE Reservation(
 	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 							NOT NULL 	DEFAULT 'false',
-	id_abonnement 		int								NOT NULL
+	id_abonnement 		int								NOT NULL,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Reservation créée');
 END
@@ -285,7 +286,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL ,	--DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),-- CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
