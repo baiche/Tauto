@@ -13,8 +13,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.extendContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.extendContratLocation
-
 GO
+
 CREATE PROCEDURE dbo.extendContratLocation
 	@id						int,
 	@extension 				int
