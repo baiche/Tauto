@@ -22,33 +22,17 @@ CREATE PROCEDURE dbo.createLocation
 	--------------------------------------------------------------------------
 	------------------------- RESUME DE LA PROCEDURE -------------------------
 	--------------------------------------------------------------------------
-	-- Hypotheses: 
-	---- 1: La table des locations ne subit jamais de suppression
 	--------------------------------------------------------------------------
-	--------------------------------------------------------------------------
-	-- PARTIE.A: Verification de coherence 
-	---- DESCRIPTION: Dans cette partie, nous allons verifier que la base est 
-	----------------- dans un etat valide pour effectuer cette operation.
-	---- ETAPE.A.01: Vehicule disponible
-	---- ETAPE.A.02: Vehicule reserve
-	------- DESCRIPTION: Nous verifierons que la location fait suite a
-	-------------------- une reservation valide.
-	------- ETAPE.A.02.i:  Une reservation existe par rapport à un abonnement
-	---------------------- valide.
-	------- ETAPE.A.02.ii: Cette reservation n'est pas expire
-	------- ETAPE.A.02.iii: Cette reservation concerne bien ce vehicule
-	------- ETAPE.A.02.iv:  Cette reservation se realise dans le cadre du bon
-	----------------------- abonnement.
+	-- PARTIE.A: Delegation de la verification de la coherence 
 	--------------------------------------------------------------------------
 	--------------------------------------------------------------------------
 	-- PARTIE.B: Realisation effective de l'operation 
 	---- ETAPE.B.01: Insertion d'une location imcomplete.
 	----- DESCRIPTION: Nous commencerons par inserer une location imcomplete
 	------------------ pour eviter les probleme de references mutuelle. 
-	---- ETAPE.B.02: Recuperation du degat du vehicule.
-	---- ETAPE.B.03: Insertion de l'etat d'avant location.
-	---- ETAPE.B.04: Mise a jour du statut du vehicule et finalisation de 
-	---------------- la location .
+	---- ETAPE.B.02: Insertion de l'etat d'avant location.
+	---- ETAPE.B.03: Mise a jour du statut du vehicule 
+	---- ETAPE.B.04: Finalisation de la location.
 	--------------------------------------------------------------------------
 	
 	
@@ -62,78 +46,39 @@ AS
 			------------------------------------------------------------------
 			------------------------------------------------------------------
 			
-			----------------------------------
-			-- ETAPE.A.01: Vehicule disponible
-			----------------------------------
-			
-			IF (SELECT statut 
-				FROM Vehicule 
-				WHERE matricule=@matricule_vehicule) != 'Disponible'
-					RAISERROR (
-						N'Vous essayez de louer une voiture non disponible', 
-						10, 
-						-1); 
-			
-			
-			
-			------------------------------------------------------------------
-			-- ETAPE.A.02:  Une reservation existe par rapport à un abonnement
-			----------------- valide.
-			------------------------------------------------------------------
+			EXEC dbo.checkIsValidLocation @matricule_vehicule,
+										  @id_contratLocation,
+										  @fiche_etat_avant
+				
 
-			DECLARE @nbMatchingReservation int;
-			
-			SELECT @nbMatchingReservation=COUNT(r.id) 
-			FROM Reservation r, 
-				 ReservationVehicule rv,
-				 ContratLocation cl, 
-				 Abonnement a	
-			 WHERE r.id = rv.id_reservation 
-			   AND rv.matricule_vehicule = @matricule_vehicule
-			   AND cl.id = @id_contratLocation
-			   AND cl.id_abonnement = a.id
-			   AND GETDATE() <= DATEADD(day,a.duree,a.date_debut)
-
-			IF (@nbMatchingReservation=0)
-				RAISERROR (
-						N'Vous essayez de louer une voiture que vous n avez pas reservees', 
-						10, 
-						-1); 
-			ELSE IF (@nbMatchingReservation > 1)
-				RAISERROR (
-						N'Incoherence, vehicule reserve plusieurs fois', 
-						10, 
-						-1); 
-
-			
-			
-			
-			
-			
-			
+				
+										  
+										  
+										  
 			------------------------------------------------------------------
 			------------------------------------------------------------------
 			--------- PARTIE.B: Realisation effective de l'operation ---------
 			------------------------------------------------------------------
 			------------------------------------------------------------------
 			
-			CREATE TABLE #TempLocationId (id int );
-			CREATE TABLE #TempEtatId(id int);
-			CREATE TABLE #TempVehiculeDegat(degat bit);
+			CREATE TABLE #TempTableLocationId (id int);
 			
+			DECLARE		 @the_id_location	 int;
+			DECLARE		 @the_etat_id 	     int;
 			
-			
+
+
 			--------------------------------------------------
 			-- ETAPE.B.01: Insertion d'une location imcomplete
-			--------------------------------------------------
-			
+			-------------------------------------------------
+	
 			INSERT INTO Location(
 				matricule_vehicule,
 				id_facturation,
 				id_etat,
 				id_contratLocation
 			)
-			OUTPUT inserted.id INTO #TempLocationId(id)
+			OUTPUT inserted.id INTO #TempTableLocationId(id)
 			VALUES (
 				@matricule_vehicule,
 				NULL,
@@ -141,62 +86,63 @@ AS
 				@id_contratLocation
 			);
 
+			SELECT @LocationId=id FROM #TempTableLocationId;
+
+
+			----------------------------------------------------
+			-- ETAPE.B.02: Insertion de l'etat d'avant location.
+			----------------------------------------------------
+		
+			--@TempEtatId=
+				EXEC dbo.createEtat 
+						@id_location=(SELECT id FROM #TempLocationId),
+						@km=(SELECT kilometrage FROM Vehicule WHERE matricule = @matricule_vehicule),
+					    @degat=0,
+					    @fiche=@fiche_avant;
 			
 			
 			------------------------------------------------
-			-- ETAPE.B.02: Recuperation du degat du vehicule
+			-- ETAPE.B.03: Mise a jour du statut du vehicule
 			------------------------------------------------
 			
-			INSERT INTO #TempVehiculeDegat(degat)
-			SELECT TOP(1) e.degat
-			FROM Etat e, Location l
-			WHERE l.matricule_vehicule = @matricule_vehicule 
-			  AND l.id_etat = e.id
-			ORDER BY e.date_apres DESC
-			
-			IF (SELECT COUNT(*) FROM #TempVehiculeDegat) = 0 
-				-- C'est la premiere fois que ce vehicule est utilise.
-				INSERT INTO #TempVehiculeDegat(degat) VALUES (0);
-
-				
-				
-			----------------------------------------------------
-			-- ETAPE.B.03: Insertion de l'etat d'avant location.
-			----------------------------------------------------
-
-			INSERT INTO Etat(
-				date_avant,
-				date_apres,
-				km_avant,
-				km_apres,
-				degat,
-				fiche_avant,
-				fiche_apres
-			) 
-			OUTPUT inserted.id INTO #TempEtatId(id)
-			VALUES (
-				GETDATE(),
-				NULL,
-			    (SELECT kilometrage FROM Vehicule WHERE matricule = @matricule_vehicule),
-			    NULL,
-				(SELECT degat FROM #TempVehiculeDegat),
-				@fiche_etat_avant,
-				NULL
-			);
-			
-			
-			
-			------------------------------------------------------------------
-			-- ETAPE.B.04: Mise a jour du statut du vehicule et finalisation
-			-------------- de la location.
-			------------------------------------------------------------------
-			
-			UPDATE Vehicule
-			SET statut='Louee'
+			DECLARE  @kilometrage_before_update 			int,
+					 @couleur_before_update					nvarchar(50),
+					 @statut_before_update					nvarchar(50),
+					 @num_serie_before_update				nvarchar(50),
+					 @marque_modele_before_update			nvarchar(50),
+					 @serie_modele_before_update			nvarchar(50),
+					 @portieres_modele_before_update		tinyint,
+					 @type_carburant_modele_before_update	nvarchar(50);
+					 
+			SELECT @kilometrage_before_update=kilometrage,
+				   @couleur_before_update=couleur,
+				   @statut_before_update='Louee',
+				   @num_serie_before_update=num_serie,
+				   @marque_modele_before_update=marque_modele,
+				   @serie_modele_before_update=serie_modele,
+				   @portieres_modele_before_update=portieres_modele,
+				   @type_carburant_modele_before_update=type_carburant_modele
+			FROM Vehicule
 			WHERE matricule=@matricule_vehicule
+
+			dbo.updateVehicule   @matricule,
+				    			 @kilometrage_before_update,
+								 @couleur_before_update,
+								 @statut_before_update,
+								 @num_serie_before_update,
+								 @marque_modele_before_update,
+								 @serie_modele_before_update,
+								 @portieres_modele_before_update,
+								 @type_carburant_modele_before_update
+
+								 
+								 
+			-------------------------------------------
+			-- ETAPE.B.04: Finalisation de la location.
+			-------------------------------------------
 			
 			UPDATE Location 
-			SET id_etat=(SELECT id FROM #TempEtatId)
+			SET id_etat=@TempEtatId
 			WHERE id=(SELECT id FROM #TempLocationId)
 			
 			
