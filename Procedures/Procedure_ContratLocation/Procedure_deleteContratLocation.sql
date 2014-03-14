@@ -13,8 +13,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.deleteContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.deleteContratLocation
-	
 GO
+
 CREATE PROCEDURE dbo.deleteContratLocation
 	@id						int
 AS
