@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.disableModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableModele
 GO
 
 -- Cette procedure permet de desactiver un modele
