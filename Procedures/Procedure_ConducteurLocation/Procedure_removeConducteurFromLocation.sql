@@ -14,8 +14,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.removeConducteurFromLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.removeConducteurFromLocation
-
 GO
+
 CREATE PROCEDURE dbo.removeConducteurFromLocation
 	@id_location 						int,
 	@piece_identite_conducteur 			nvarchar(50),

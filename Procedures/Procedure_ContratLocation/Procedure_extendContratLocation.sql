@@ -6,28 +6,40 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Etend un contrat de location. Renvoie 1 en cas de succès, -1 aurtement
+-- Commentaire : Etend un contrat de location. Renvoie 1 en cas de succès, -1 autrement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.extendContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.extendContratLocation
-
 GO
+
 CREATE PROCEDURE dbo.extendContratLocation
 	@id						int,
-	@date_fin_effective 	datetime,
 	@extension 				int
 AS
 	BEGIN TRANSACTION extendContratLocation
 	BEGIN TRY
-		if ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
+		DECLARE @res int;
+		
+		IF ( (SELECT date_fin_effective FROM ContratLocation WHERE id = @id) IS NOT NULL)
 		BEGIN
-			UPDATE ContratLocation
-			SET
-				extension = @extension
-			WHERE id = @id;
+			PRINT('extendContratLocation: ERROR, impossible à étendre, date de fin réelle insérée');
+			ROLLBACK TRANSACTION extendContratLocation
+			RETURN -1;
+		END
+		
+		EXEC @res = dbo.canExtendContratLocation
+			@id_contrat_location = @id,
+			@nb_jours = @extension
+			
+		IF ( @res = 1)
+		BEGIN
+			EXEC dbo.updateContratLocation
+				@id = @id,
+				@date_fin_effective = null,
+				@extension = @extension
 			PRINT('ContratLocation étendu');
 			COMMIT TRANSACTION extendContratLocation
 			RETURN 1;

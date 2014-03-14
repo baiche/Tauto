@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table Reservation.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -223,4 +224,6 @@ END CATCH
 
 
 EXEC dbo.videTables;
+
+SET NOCOUNT OFF
 GO

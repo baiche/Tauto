@@ -11,6 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createTypeAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createTypeAbonnement
+GO
+
 -- Insertion d'un nouveu type d'abonnement
 
 CREATE PROCEDURE dbo.createTypeAbonnement
@@ -21,13 +25,11 @@ AS
 	INSERT INTO TypeAbonnement(
 		nom, 
 		prix, 
-		nb_max_vehicules,
-		actif
+		nb_max_vehicules
 	)
 	VALUES (
 		@nom,
 		@prix,
-		@nb_max_vehicules,
-		DEFAULT
+		@nb_max_vehicules
 	);
 GO

@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createEtat', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createEtat
 GO
 
 -- Cette procedure permet de creer un nouvel etat

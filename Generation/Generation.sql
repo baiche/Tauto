@@ -171,7 +171,8 @@ CREATE TABLE Reservation(
 	date_debut datetime 								NOT NULL, --CHECK(date_debut < date_fin),
 	date_fin datetime 									NOT NULL, 
 	annule 				bit 							NOT NULL 	DEFAULT 'false',
-	id_abonnement 		int								NOT NULL
+	id_abonnement 		int								NOT NULL,
+	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
 );
 PRINT('Table Reservation créée');
 END
@@ -224,7 +225,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Entreprise(
 	siret 				char(14) 						NOT NULL 							CHECK( dbo.clrRegex('^([0-9]{14})$',siret) = 1),
-	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
+	nom 				nvarchar(50) 					NOT NULL 							CHECK( dbo.clrRegex('^((\p{L}|[''-]|\s)+)$',nom) = 1),
 	nom_compte 			nvarchar(50),
 	prenom_compte 		nvarchar(50),
 	date_naissance_compte date,
@@ -269,10 +270,10 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Location(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	matricule_vehicule 	nvarchar(50),
+	matricule_vehicule 	nvarchar(50)					NOT NULL,
 	id_facturation 		int,
 	id_etat			 	int,
-	id_contratLocation 	int,
+	id_contratLocation 	int								NOT NULL,
 	km					int																	CHECK( km >= 0 )
 );
 PRINT('Table Location créée');
@@ -285,7 +286,7 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Facturation(
 	id 					int 			PRIMARY KEY IDENTITY(1,1),
-	date_creation 		date 							NOT NULL ,	--DEFAULT GETDATE(), CHECK( date_creation <= date_reception ),
+	date_creation 		date 							NOT NULL 	DEFAULT GETDATE(),-- CHECK( date_creation <= date_reception ),
 	date_reception 		date,
 	montant money 										NOT NULL							CHECK ( montant > 0)
 );
@@ -614,58 +615,4 @@ ALTER TABLE RelanceDecouvert
 		REFERENCES CompteAbonne(nom,prenom,date_naissance);
 PRINT('Table RelanceDecouvert modifiée');
 
-GO
-
-
------------------------------------------
--- PROCEDURE - Vider toutes les tables --
------------------------------------------
-
-IF EXISTS (SELECT name FROM  sysobjects WHERE name = 'videTables' AND type = 'P')
-BEGIN
-    DROP PROCEDURE dbo.videTables
-	PRINT('Procédure dbo.videTables supprimée');
-END
-GO
-
-CREATE PROCEDURE dbo.videTables
-AS
-BEGIN
-	PRINT('Vider toutes les tables - Debut');
-	PRINT('===============================');
-
-	DELETE FROM ReservationVehicule
-	DELETE FROM CatalogueCategorie
-	DELETE FROM CategorieModele
-	DELETE FROM ConducteurLocation
-	DELETE FROM CompteAbonneConducteur
-	DELETE FROM Catalogue
-	DELETE FROM Categorie
-	DELETE FROM SousPermis
-	DELETE FROM Conducteur
-	DELETE FROM Permis
-	DELETE FROM Reservation
-	DELETE FROM Infraction
-	DELETE FROM Incident
-	DELETE FROM Retard
-	DELETE FROM Location
-	DELETE FROM Vehicule
-	DELETE FROM Modele
-	DELETE FROM ContratLocation
-	DELETE FROM Abonnement
-	DELETE FROM TypeAbonnement
-	DELETE FROM RelanceDecouvert
-	DELETE FROM Particulier
-	DELETE FROM Entreprise
-	DELETE FROM CompteAbonne
-	DELETE FROM Facturation
-	DELETE FROM Etat
-	DELETE FROM ListeNoire
-	
-	PRINT('Vider toutes les tables - Fin');
-	PRINT('=============================');
-END
-GO
-
-PRINT('Procédure dbo.videTables créée.')
 GO

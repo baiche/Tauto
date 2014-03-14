@@ -147,3 +147,37 @@ BEGIN CATCH
 	PRINT('------------------------------Test 4 NOT - - OK');
 END CATCH
 GO
+
+--Test 5
+BEGIN TRY
+	DECLARE @ReturnValue int
+	EXEC @ReturnValue = dbo.createContratLocation 
+			@date_debut = '2013-12-26T00:00:00',
+			@date_fin = '2014-01-30T00:00:00',
+			@id_abonnement = 4
+	IF ( @ReturnValue = (SELECT COUNT(*) FROM ContratLocation))
+	BEGIN
+		PRINT('------------------------------Test 5 - Tuple inséré');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 5 - Tuple non inséré');
+	END
+	
+	IF (  (SELECT COUNT (*) FROM ContratLocation WHERE
+			date_debut = '2013-12-26T00:00:00' AND
+			date_fin = '2014-01-30T00:00:00' AND
+			id_abonnement = 4
+		) = 1)
+	BEGIN
+		PRINT('------------------------------Test 5 OK');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 5 NOT -- OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 5 NOT - - OK');
+END CATCH
+GO

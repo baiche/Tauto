@@ -24,20 +24,26 @@ CREATE PROCEDURE dbo.createSousPermis
 	@date_expiration		date,
 	@periode_probatoire		tinyint
 AS
-	INSERT INTO SousPermis(
-		nom_typepermis, 
-		numero_permis, 
-		date_obtention,
-		date_expiration,
-		periode_probatoire
-		--actif
-	)
-	VALUES (
-		@nom_typepermis,
-		@numero_permis,
-		@date_obtention,
-		@date_expiration,
-		@periode_probatoire
-		--DEFAULT
-	);
+	BEGIN TRY
+		INSERT INTO SousPermis(
+			nom_typepermis, 
+			numero_permis, 
+			date_obtention,
+			date_expiration,
+			periode_probatoire
+			--actif
+		)
+		VALUES (
+			@nom_typepermis,
+			@numero_permis,
+			@date_obtention,
+			@date_expiration,
+			@periode_probatoire
+			--DEFAULT
+		);
+		RETURN 1
+	END TRY
+	BEGIN CATCH
+		RETURN -1
+	END CATCH
 GO

@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table Location.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -40,10 +41,10 @@ INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 --REALIZATION OF Test A.1
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) 
+	VALUES
 		('1885896aa', 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
-		 NULL,
 		 NULL,
 		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00')); 
 		 
@@ -93,15 +94,14 @@ INSERT INTO ContratLocation(date_debut,date_fin,date_fin_effective,extension,id_
 	   
 INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 		('2060-12-09','2060-12-11',200);
-		
+
 ------------------------------
 --REALIZATION OF Test A.2
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		(NULL, 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
-		 NULL,
 		 NULL,
 		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00')); 
 		 
@@ -156,10 +156,9 @@ INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 --REALIZATION OF Test B.1
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		('1885896wx', 
 		 -1,
-		 NULL,
 		 NULL,
 		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00')); 
 		 
@@ -214,18 +213,17 @@ INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 --REALIZATION OF Test B.2
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		('1885896wx', 
-		 NULL,
 		 NULL,
 		 NULL,
 		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00')); 
 		 
-	PRINT('------------------------------Test B.2 NOT OK');
+	PRINT('------------------------------Test B.2 OK');
 		 
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test B.2 OK');
+	PRINT('------------------------------Test B.2 NOT OK');
 END CATCH 
 
 ------------------------------
@@ -272,10 +270,9 @@ INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 --REALIZATION OF Test C.1
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		('1885896wx', 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
-		 NULL,
 		 NULL,
 		 -1); 
 		 
@@ -289,7 +286,6 @@ END CATCH
 ------------------------------
 --CLEAN FOR Test C.1
 ------------------------------
-DELETE FROM Etat WHERE date_creation='25-11-2060' OR date_creation='09-12-2060';
 DELETE FROM Location WHERE matricule_vehicule='1885896wx';
 DELETE FROM Facturation WHERE date_creation='2060-12-09';
 DELETE FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00';
@@ -331,10 +327,9 @@ INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 --REALIZATION OF Test C.2
 ------------------------------
 BEGIN TRY
-	INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+	INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation) VALUES
 		('1885896wx', 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
-		 NULL,
 		 NULL,
 		 NULL); 
 		 
@@ -348,7 +343,6 @@ END CATCH
 ------------------------------
 --CLEAN FOR Test C.2
 ------------------------------
-DELETE FROM Etat WHERE date_creation='25-11-2060' OR date_creation='09-12-2060';
 DELETE FROM Location WHERE matricule_vehicule='1885896wx';
 DELETE FROM Facturation WHERE date_creation='2060-12-09';
 DELETE FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00';
@@ -356,3 +350,5 @@ DELETE FROM Abonnement WHERE date_debut='2060-12-01 00:00:00';
 DELETE FROM Particulier WHERE nom_compte='Dupont' AND prenom_compte='Jacques' AND date_naissance_compte='1992-05-7';
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jacques' AND date_naissance='1992-05-7';
 DELETE FROM Vehicule WHERE matricule='1885896wx';
+
+SET NOCOUNT OFF

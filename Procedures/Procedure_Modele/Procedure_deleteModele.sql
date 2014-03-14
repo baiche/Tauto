@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteModele
 GO
 
 -- Cette procedure rend le modele inactif sans reellement le delete pour eviter la perte d'information

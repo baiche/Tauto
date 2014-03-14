@@ -9,13 +9,14 @@
 -- Commentaire : test de la table Facturation
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
 DELETE FROM Facturation;
 
 --Test A.1
-BEGIN TRY
+--BEGIN TRY
 	INSERT INTO Facturation(date_reception, montant) VALUES
 	('2014-01-12', 175.25);
 	IF (( SELECT COUNT(*)
@@ -24,10 +25,10 @@ BEGIN TRY
 		PRINT('------------------------------Test A.1 OK')
 	ELSE
 		PRINT('------------------------------Test A.1 NOT OK')
-END TRY
+/*END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test A.1 NOT OK')
-END CATCH
+END CATCH*/
 DELETE FROM Facturation;
 
 --Test A.2
@@ -137,3 +138,5 @@ BEGIN CATCH
 	PRINT('------------------------------Test C.3 NOT OK')
 END CATCH
 DELETE FROM Facturation;
+
+SET NOCOUNT OFF

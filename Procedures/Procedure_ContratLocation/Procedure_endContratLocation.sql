@@ -14,9 +14,9 @@ USE TAuto_IBDR;
 
 
 IF OBJECT_ID ('dbo.endContratLocation', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.endContratLocation
-	
+	DROP PROCEDURE dbo.endContratLocation	
 GO
+
 CREATE PROCEDURE dbo.endContratLocation
 	@id						int
 AS

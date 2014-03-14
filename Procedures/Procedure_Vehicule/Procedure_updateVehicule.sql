@@ -11,8 +11,11 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateVehicule
 GO
-CREATE PROCEDURE TAuto.updateVehicule
+
+CREATE PROCEDURE dbo.updateVehicule
 	@matricule 				nvarchar(50),
 	@kilometrage 			int,
 	@couleur				nvarchar(50),

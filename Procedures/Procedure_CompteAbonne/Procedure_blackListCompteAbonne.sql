@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_backListCompteAbonne
+-- Fichier     : Procedure_blackListCompteAbonne
 -- Date        : 11/03/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
@@ -11,15 +11,18 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.blackListCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.blackListCompteAbonne
 GO
-CREATE PROCEDURE dbo.backListCompteAbonne
+
+CREATE PROCEDURE dbo.blackListCompteAbonne
 
 	@nom_abonne 				nvarchar(50),
 	@prenom_abonne 				nvarchar(50),
 	@date_naissance_abonne 		date
 
 AS
-	BEGIN TRANSACTION backList_compte_abonne
+	BEGIN TRANSACTION blackList_compte_abonne
 		BEGIN TRY
 
 			DECLARE @actif_abonne				bit;
@@ -55,5 +58,5 @@ AS
 			ROLLBACK TRANSACTION backList_compte_abonne;
 			RETURN -1;
 		END CATCH
-	COMMIT TRANSACTION backList_compte_abonne;
+	COMMIT TRANSACTION blackList_compte_abonne;
 GO

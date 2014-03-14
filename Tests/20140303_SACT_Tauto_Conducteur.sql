@@ -9,6 +9,8 @@
 -- Commentaire : Test des contraintes sur la table Conducteur
 ------------------------------------------------------------
 
+SET NOCOUNT ON
+
 USE Tauto_IBDR;
 
 INSERT INTO Permis(numero, valide, points_estimes) VALUES
@@ -238,3 +240,5 @@ DELETE FROM Conducteur;
 -- Fin des tests
 DELETE FROM SousPermis;
 DELETE FROM Permis;
+
+SET NOCOUNT OFF

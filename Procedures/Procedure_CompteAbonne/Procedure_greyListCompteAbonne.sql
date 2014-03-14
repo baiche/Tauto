@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.greyListCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.greyListCompteAbonne
 GO
+
 CREATE PROCEDURE dbo.greyListCompteAbonne
 
 	@nom_abonne 				nvarchar(50),
