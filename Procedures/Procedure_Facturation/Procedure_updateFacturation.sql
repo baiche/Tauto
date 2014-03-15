@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateFacturation', 'P') IS NOT NULL
-DROP PROCEDURE dbo.updateFacturation;
+	DROP PROCEDURE dbo.updateFacturation;
 GO
 
 --modifie le montant et la date reception du paiment d'une facturation lié à une location.

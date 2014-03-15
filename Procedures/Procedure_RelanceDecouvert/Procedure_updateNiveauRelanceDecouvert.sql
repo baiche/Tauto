@@ -10,6 +10,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
 IF OBJECT_ID ('dbo.updateNiveauRelanceDecouvert', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateNiveauRelanceDecouvert
 GO

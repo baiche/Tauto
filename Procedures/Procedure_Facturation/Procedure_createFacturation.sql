@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.createFacturation', 'P') IS NOT NULL
-DROP PROCEDURE dbo.createFacturation;
+	DROP PROCEDURE dbo.createFacturation;
 GO
 
 --crée une nouvelle facturation lié à la location avec le montant non encore calculé et le paiement 

@@ -10,6 +10,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
 IF OBJECT_ID ('dbo.deleteRelanceDecouvert', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.deleteRelanceDecouvert
 GO
