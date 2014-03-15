@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : makeVehicule.sql
+-- Fichier     : makeModele.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : 
@@ -11,11 +11,11 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.makeVehicule', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.makeVehicule	
+IF OBJECT_ID ('dbo.makeModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeModele	
 GO
 
-CREATE PROCEDURE dbo.makeVehicule
+CREATE PROCEDURE dbo.makeModele
 	@nom_catalogue			nvarchar(50), -- FK
 	@nom_categorie			nvarchar(50), -- FK
 	@marque 				nvarchar(50), -- PK
@@ -26,15 +26,15 @@ CREATE PROCEDURE dbo.makeVehicule
 	@prix 					money,
 	@reduction 				tinyint	-- nullable
 AS
-	BEGIN TRANSACTION makeVehicule
+	BEGIN TRANSACTION makeModele
 	BEGIN TRY
-		COMMIT TRANSACTION makeVehicule
-		PRINT('makeVehicule OK');
+		COMMIT TRANSACTION makeModele
+		PRINT('makeModele OK');
 		RETURN 1;
 	END TRY
 	BEGIN CATCH
-		PRINT('makeVehicule: ERROR');
-		ROLLBACK TRANSACTION makeVehicule
+		PRINT('makeModele: ERROR');
+		ROLLBACK TRANSACTION makeModele
 		RETURN -1;
 	END CATCH
 GO
