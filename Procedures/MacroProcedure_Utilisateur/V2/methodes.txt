@@ -1,0 +1,33 @@
+----
+Location.km redondance avec Etat.km_avant et Etat.km_apres !!
+----
+--makeTypeAbonnement
+--makeEtat
+--endEtat
+--endContratLocation -> frais supplémentaires ? = nouvelle facture ou complément, véhicule réutilisable, état de fin fait
+
+--extendContratLocation -> vérifier la date de fin avec la fin de l'abonnement s'il n'est pas renouvelable
+
+--closeVehicule !! réservation en cours et contratLoc
+
+--findOtherVehicule 
+
+--extendReservation
+------
+
+deleteTrigger -> méthode utilisé par le trigger pour supprimer les éléments demandés
+checkContratLocationTrigger ->
+checkReservationTrigger ->
+checkImpayeTrigger -> vérifie que les factures des contrats de loc sont payés au bout d'une semaine et reagarde aussi les retards non réglés. liste grise si besoin
+
+modifyTypeAbonnement -> attentio à la modif souhaité, elle peut être refusé si on résuit le nombre de véhicule maximum par exemple (nombre atteint dans une location ou réservation)
+closeTypeAbonnement -> vérifier les abonnements en cours
+
+makeInfraction -> impacte les points des conducteurs associés
+makeIncident -> impacte la facture et les réservations suivantes
+makeRetard -> impacte la facture et les réservations suivantes
+findOtherVehiculeWithElevation
+
+closeCatalogue
+closeCategorie
+closeModele

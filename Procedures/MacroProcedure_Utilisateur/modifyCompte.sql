@@ -16,15 +16,16 @@ IF OBJECT_ID ('dbo.modifyCompte', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.modifyCompte
-	@nom 				nvarchar(50), -- PK
-	@prenom 			nvarchar(50), -- PK
-	@date_naissance 	date, -- PK
-	@iban 				nvarchar(50), -- nullable
-	@courriel 			nvarchar(50), -- nullable
-	@telephone 			nvarchar(50), -- nullable
-	@siret 				char(14),	  -- nullable
-	@nom 				nvarchar(50), -- nullable
-	@greyList			bit 		  -- nullable
+	@nom 					nvarchar(50), -- PK
+	@prenom 				nvarchar(50), -- PK
+	@date_naissance 		date, -- PK
+	@iban 					nvarchar(50), -- nullable
+	@courriel 				nvarchar(50), -- nullable
+	@telephone 				nvarchar(50), -- nullable
+	@siret 					char(14),	  -- nullable
+	@nom 					nvarchar(50), -- nullable
+	@greyList				bit, 		  -- nullable
+	@renouvellement_auto	bit 		  -- nullable
 AS
 	BEGIN TRANSACTION modifyCompte
 	BEGIN TRY
