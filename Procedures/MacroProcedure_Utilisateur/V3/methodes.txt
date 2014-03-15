@@ -15,19 +15,25 @@ Location.km redondance avec Etat.km_avant et Etat.km_apres !!
 --extendReservation
 ------
 
-deleteTrigger -> méthode utilisé par le trigger pour supprimer les éléments demandés
-checkContratLocationTrigger ->
-checkReservationTrigger ->
-checkImpayeTrigger -> vérifie que les factures des contrats de loc sont payés au bout d'une semaine et reagarde aussi les retards non réglés. liste grise si besoin
+--deleteTrigger -> méthode utilisé par le trigger pour supprimer les éléments demandés
+--checkContratLocationTrigger ->
+--checkReservationTrigger ->
+--checkImpayeTrigger -> vérifie que les factures des contrats de loc sont payés au bout d'une semaine et regarde aussi les retards non réglés. liste grise si besoin
 
-modifyTypeAbonnement -> attention à la modif souhaité, elle peut être refusé si on résuit le nombre de véhicule maximum par exemple (nombre atteint dans une location ou réservation)
-closeTypeAbonnement -> vérifier les abonnements en cours
+--modifyTypeAbonnement -> attention à la modif souhaité, elle peut être refusé si on résuit le nombre de véhicule maximum par exemple (nombre atteint dans une location ou réservation)
+--closeTypeAbonnement -> vérifier les abonnements en cours
 
-makeInfraction -> impacte les points des conducteurs associés
-makeIncident -> impacte la facture et les réservations suivantes
-makeRetard -> impacte la facture et les réservations suivantes
+--makeInfraction -> impacte les points des conducteurs associés
+--makeIncident -> impacte la facture et les réservations suivantes
+--makeRetard -> impacte la facture et les réservations suivantes
 --findOtherVehiculeWithElevation
 
-closeCatalogue
-closeCategorie
-closeModele
+--fixVehicule
+--fixRetard
+
+--closeCatalogue
+--closeCategorie
+--closeModele
+
+--fixInfraction
+--showInfraction
