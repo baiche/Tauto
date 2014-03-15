@@ -17,7 +17,7 @@ GO
 DECLARE @idReservation int;
 
 -- reservations annulees -----------------------------------
-
+/*
 SELECT @idReservation = id FROM Reservation
 WHERE date_debut = '20130502 08:00:00' AND date_fin = '20130531 18:00:00';
 
@@ -64,7 +64,7 @@ INSERT INTO ReservationVehicule
 VALUES
 	(@idReservation, '0775896wy'); -- '206',3,'Essence'
 	
-
+*/
 --------------------
 
 SELECT @idReservation = id FROM Reservation
@@ -87,7 +87,7 @@ VALUES
 
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140304 10:00:00' AND date_fin = '20140324 18:00:00';
+WHERE date_debut = '20140407 10:00:00' AND date_fin = '20140424 18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -104,7 +104,7 @@ INSERT INTO ReservationVehicule
 VALUES
 	(@idReservation, '0775896wt'); -- '206',5,'Diesel'
 
-
+/*
 SELECT @idReservation = id FROM Reservation
 WHERE date_debut = '20140601 09:00:00' AND date_fin = '20140613 17:00:00'; -- annulee
 
@@ -112,7 +112,7 @@ INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
 VALUES
 	(@idReservation, '0775896wy'); -- '206',3,'Essence'
-
+*/
 
 SELECT @idReservation = id FROM Reservation
 WHERE date_debut = '20140711 09:00:00' AND date_fin = '20140922 17:00:00';
