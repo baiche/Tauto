@@ -15,8 +15,8 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_disableRelanceDecouvert.sql
-sqlcmd -S %mssqlInstanceName% -i Procedure_relanceRelanceDecouvert.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateNiveauRelanceDecouvert.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_relanceRelanceDecouvert.sql
 
 if "%1"=="nopause" goto start
 pause
