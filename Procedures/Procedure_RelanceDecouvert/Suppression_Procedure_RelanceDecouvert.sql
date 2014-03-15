@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : Suppression_Procedure_Permis
+-- Fichier     : Suppression_Procedure_RelanceDecouvert
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : de Finance Boris
@@ -7,7 +7,7 @@
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Supprime les procedures concernant les 
---				permis
+--				relance decouverts
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
