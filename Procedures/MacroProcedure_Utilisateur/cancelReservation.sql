@@ -16,7 +16,7 @@ IF OBJECT_ID ('dbo.cancelReservation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.cancelReservation
-	@id_reservation 		int
+	@id_reservation 		int -- PK
 AS
 	BEGIN TRANSACTION cancelReservation
 	BEGIN TRY

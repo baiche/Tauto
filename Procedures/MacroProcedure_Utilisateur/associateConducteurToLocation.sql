@@ -16,9 +16,9 @@ IF OBJECT_ID ('dbo.associateConducteurToLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.associateConducteurToLocation
-	id_location 					int,
-	piece_identite_conducteur 		nvarchar(50),
-	nationalite_conducteur 			nvarchar(50)
+	id_location 					int, -- FK
+	piece_identite_conducteur 		nvarchar(50), -- FK
+	nationalite_conducteur 			nvarchar(50) -- FK
 AS
 	BEGIN TRANSACTION associateConducteurToLocation
 	BEGIN TRY

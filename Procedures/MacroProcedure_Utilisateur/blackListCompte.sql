@@ -16,9 +16,9 @@ IF OBJECT_ID ('dbo.blackListCompte', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.blackListCompte
-	@nom 				nvarchar(50),
-	@prenom 			nvarchar(50),
-	@date_naissance 	date
+	@nom 				nvarchar(50), -- PK
+	@prenom 			nvarchar(50), -- PK
+	@date_naissance 	date -- PK
 AS
 	BEGIN TRANSACTION blackListCompte
 	BEGIN TRY

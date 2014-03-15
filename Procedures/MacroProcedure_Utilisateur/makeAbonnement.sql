@@ -16,13 +16,13 @@ IF OBJECT_ID ('dbo.makeAbonnement', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.makeAbonnement
-	@nom 					nvarchar(50),
-	@prenom 				nvarchar(50),
-	@date_naissance 		date,
+	@nom 					nvarchar(50), -- PK
+	@prenom 				nvarchar(50), -- PK
+	@date_naissance 		date, -- PK
 	@date_debut 			date,
 	@duree 					int,
 	@renouvellement_auto 	bit,
-	@nom_typeabonnement 	nvarchar(50)
+	@nom_typeabonnement 	nvarchar(50) -- FK
 AS
 	BEGIN TRANSACTION makeAbonnement
 	BEGIN TRY

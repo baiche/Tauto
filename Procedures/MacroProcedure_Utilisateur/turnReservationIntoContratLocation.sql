@@ -16,7 +16,7 @@ IF OBJECT_ID ('dbo.turnReservationIntoContratLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.turnReservationIntoContratLocation
-	@id_reservation 		int
+	@id_reservation 		int -- PK
 AS
 	BEGIN TRANSACTION turnReservationIntoContratLocation
 	BEGIN TRY

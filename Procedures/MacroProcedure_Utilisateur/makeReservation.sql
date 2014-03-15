@@ -16,11 +16,11 @@ IF OBJECT_ID ('dbo.makeReservation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.makeReservation
-	@id_abonnement			int,
-	@marque 				nvarchar(50),
-	@serie 					nvarchar(50),
-	@type_carburant 		nvarchar(50),
-	@portieres 				tinyint
+	@id_abonnement			int, -- FK
+	@marque 				nvarchar(50), -- PK
+	@serie 					nvarchar(50), -- PK
+	@type_carburant 		nvarchar(50), -- PK
+	@portieres 				tinyint -- PK
 AS
 	BEGIN TRANSACTION makeReservation
 	BEGIN TRY
