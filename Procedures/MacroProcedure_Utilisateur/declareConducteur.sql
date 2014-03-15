@@ -16,11 +16,11 @@ IF OBJECT_ID ('dbo.declareConducteur', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.declareConducteur
-	@nom 				nvarchar(50),
-	@prenom 			nvarchar(50),
-	@date_naissance 	date,
-	@piece_identite 	nvarchar(50),
-	@nationalite 		nvarchar(50),
+	@nom 				nvarchar(50), -- PK
+	@prenom 			nvarchar(50), -- PK
+	@date_naissance 	date, -- PK
+	@piece_identite 	nvarchar(50), -- PK
+	@nationalite 		nvarchar(50), -- PK
 	@numero_permi		nvarchar(50), 	-- nullable
 	@nom_typepermis 	nvarchar(10), 	-- nullable
 	@date_obtention 	date,			-- nullable

@@ -16,9 +16,9 @@ IF OBJECT_ID ('dbo.modifyCompte', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.modifyCompte
-	@nom 				nvarchar(50),
-	@prenom 			nvarchar(50),
-	@date_naissance 	date,
+	@nom 				nvarchar(50), -- PK
+	@prenom 			nvarchar(50), -- PK
+	@date_naissance 	date, -- PK
 	@iban 				nvarchar(50), -- nullable
 	@courriel 			nvarchar(50), -- nullable
 	@telephone 			nvarchar(50), -- nullable

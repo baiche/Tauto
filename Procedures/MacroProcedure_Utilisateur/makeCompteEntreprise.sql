@@ -16,14 +16,14 @@ IF OBJECT_ID ('dbo.makeCompteEntreprise', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.makeCompteEntreprise
-	@nom 				nvarchar(50),
-	@prenom 			nvarchar(50),
-	@date_naissance 	date,
+	@nom 				nvarchar(50), -- PK
+	@prenom 			nvarchar(50), -- PK
+	@date_naissance 	date, -- PK
 	@iban 				nvarchar(50),
 	@courriel 			nvarchar(50),
 	@telephone 			nvarchar(50),
 	@siret 				char(14),
-	@nom 				nvarchar(50)
+	@nom_entreprise		nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteEntreprise
 	BEGIN TRY
