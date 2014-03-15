@@ -6,7 +6,8 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Indique si un vehicule n'est pas déjà réservé 
+--               entre une date de début et une date de fin
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
