@@ -21,11 +21,11 @@ CREATE PROCEDURE dbo.declareConducteur
 	@date_naissance 	date, -- PK
 	@piece_identite 	nvarchar(50), -- PK
 	@nationalite 		nvarchar(50), -- PK
-	@numero_permi		nvarchar(50), 	-- nullable
+	@numero_permis		nvarchar(50), 	-- nullable
 	@nom_typepermis 	nvarchar(10), 	-- nullable
-	@date_obtention 	date,			-- nullable
-	@date_expiration 	date,			-- nullable
-	@periode_probatoire tinyint 		-- nullable
+	@date_obtention 	date,			-- nullable, si null ne pas prendre en compte la suite des arguments
+	@periode_probatoire tinyint, -- nullable, csq sur le nombre de points de base
+	@date_expiration 	date, -- nullable, null signifiant pas de limite
 AS
 	BEGIN TRANSACTION declareConducteur
 	BEGIN TRY

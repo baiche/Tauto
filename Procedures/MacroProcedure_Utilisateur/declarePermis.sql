@@ -18,10 +18,11 @@ GO
 CREATE PROCEDURE dbo.modifyConducteur
 	@piece_identite 	nvarchar(50), -- PK
 	@nationalite 		nvarchar(50), -- PK
-	@points_estimes 	tinyint, -- nullable
-	@nom 				nvarchar(50), -- nullable
-	@prenom 			nvarchar(50), -- nullable
-	@nom_typepermis		nvarchar(10)  -- nullable
+	@numero				nvarchar(50), -- nullable, pas besoin de resaisir le permis s'il existe déjà en base
+	@nom_typepermis		nvarchar(10)  -- PK
+	@date_obtention 	date,
+	@periode_probatoire tinyint, -- csq sur le nombre de points de base
+	@date_expiration 	date, -- nullable, null signifiant pas de limite
 AS
 	BEGIN TRANSACTION modifyConducteur
 	BEGIN TRY
