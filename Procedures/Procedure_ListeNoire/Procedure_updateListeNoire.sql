@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateListeNoire', 'P') IS NOT NULL
-DROP PROCEDURE dbo.updateListeNoire;
+	DROP PROCEDURE dbo.updateListeNoire;
 GO
 
 CREATE PROCEDURE dbo.updateListeNoire

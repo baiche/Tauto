@@ -13,7 +13,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.printFacturation', 'P') IS NOT NULL
-DROP PROCEDURE dbo.printFacturation;
+	DROP PROCEDURE dbo.printFacturation;
 GO
 
 

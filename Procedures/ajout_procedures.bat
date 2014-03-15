@@ -64,12 +64,6 @@ cd ..\Procedure_ConducteurLocation
 call .\ajout_procedures_conducteurLocation.bat nopause
 echo.
 
-echo ajout des Procedure_ContratLocation
-echo.
-cd ..\Procedure_ContratLocation 
-call .\ajout_procedures_contratLocation.bat nopause
-echo.
-
 echo ajout des Procedure_Etat
 echo.
 cd ..\Procedure_Etat 
@@ -103,6 +97,12 @@ echo ajout des Procedure_Location
 echo.
 cd ..\Procedure_Location 
 call .\ajout_procedures_location.bat nopause
+echo.
+
+echo ajout des Procedure_ContratLocation
+echo.
+cd ..\Procedure_ContratLocation 
+call .\ajout_procedures_contratLocation.bat nopause
 echo.
 
 echo ajout des Procedure_Modele

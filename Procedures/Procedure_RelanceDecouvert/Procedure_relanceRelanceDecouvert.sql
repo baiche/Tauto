@@ -10,6 +10,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
+
 IF OBJECT_ID ('dbo.relanceRelanceDecouvert', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.relanceRelanceDecouvert
 GO
@@ -31,7 +32,7 @@ AS
 					ELSE
 						BEGIN
 						Select * from CompteAbonne;
-						EXEC dbo.backListCompteAbonne @nom_compteabonne=@nom_compteabonne, @prenom_compteabonne=@prenom_compteabonne, @date_naissance_compteabonne=@date_naissance_compteabonne;
+						EXEC dbo.blackListCompteAbonne @nom_compteabonne=@nom_compteabonne, @prenom_compteabonne=@prenom_compteabonne, @date_naissance_compteabonne=@date_naissance_compteabonne;
 						EXEC dbo.disableRelanceDecouvert @nom_compteabonne=@nom_compteabonne, @prenom_compteabonne=@prenom_compteabonne, @date_naissance_compteabonne=@date_naissance_compteabonne
 						END
 		END TRY
