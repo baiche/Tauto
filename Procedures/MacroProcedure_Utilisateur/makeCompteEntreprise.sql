@@ -22,6 +22,8 @@ CREATE PROCEDURE dbo.makeCompteEntreprise
 	@iban 				nvarchar(50),
 	@courriel 			nvarchar(50),
 	@telephone 			nvarchar(50),
+	@siret 				char(14),
+	@nom 				nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteEntreprise
 	BEGIN TRY
