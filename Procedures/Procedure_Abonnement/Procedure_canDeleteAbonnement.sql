@@ -24,6 +24,6 @@ AS
 		WHERE id = @id_contrat_location
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.canDeleteAbonnement',10,1)
 	END CATCH
 GO

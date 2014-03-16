@@ -56,5 +56,6 @@ AS
 		PRINT 'total : ' + CONVERT(varchar(10),@total) + ' dont TVA : ' + CONVERT(varchar(10), @total_tva)
 	END TRY
 	BEGIN CATCH
+		RAISERROR('Erreur dans la fonction dbo.printContratLocation',10,1)
 	END CATCH	
 GO
