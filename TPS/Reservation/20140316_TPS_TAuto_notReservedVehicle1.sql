@@ -164,3 +164,28 @@ BEGIN CATCH
 	PRINT('------------------------------Test 6 - - NOT OK');
 END CATCH
 GO
+
+
+--Test 7
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.notReservedVehicle1 
+			@matricule = '0775896we',
+			@dateDebut = '2014-04-01T08:00:00',
+			@dateFin =   '2014-04-26T08:00:00'
+	IF ( @ReturnValue = 1 )
+	BEGIN
+		PRINT('------------------------------Test 7 -- NOT OK');
+	END
+	
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 7 -- OK');
+		PRINT('Test 7 : "2014-04-01" -> "2014-04-26" réservation impossible'+char(13));
+	END
+
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 7 - - NOT OK');
+END CATCH
+GO
