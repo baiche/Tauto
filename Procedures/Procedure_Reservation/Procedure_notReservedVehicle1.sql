@@ -48,7 +48,7 @@ AS
 		END
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la procedure dbo.notReservedVehicle1',10,1)
 	END CATCH
 GO
 
