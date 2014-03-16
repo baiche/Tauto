@@ -19,7 +19,7 @@ DECLARE @idReservation int;
 -- reservations annulees -----------------------------------
 /*
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20130502 08:00:00' AND date_fin = '20130531 18:00:00';
+WHERE date_debut = '2013-05-02T08:00:00' AND date_fin = '2013-05-31T18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -30,7 +30,7 @@ VALUES
 	
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20130615 10:00:00' AND date_fin = '20130625 18:00:00';
+WHERE date_debut = '2013-06-15T10:00:00' AND date_fin = '2013-06-25T18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -39,7 +39,7 @@ VALUES
 	
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20130701 09:00:00' AND date_fin = '20130715 17:00:00';
+WHERE date_debut = '2013-07-01T09:00:00' AND date_fin = '2013-07-15T17:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -48,7 +48,7 @@ VALUES
 	
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140114 08:00:00' AND date_fin = '20140121 08:00:00';
+WHERE date_debut = '2014-01-14T08:00:00' AND date_fin = '2014-01-21T08:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -57,7 +57,7 @@ VALUES
 
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140121 08:00:00' AND date_fin = '20140123 12:00:00';
+WHERE date_debut = '2014-01-21T08:00:00' AND date_fin = '2014-01-23T12:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -68,16 +68,7 @@ VALUES
 --------------------
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140325 08:00:00' AND date_fin = '20140404 17:00:00';
-
-INSERT INTO ReservationVehicule
-	(id_reservation,matricule_vehicule)
-VALUES
-	(@idReservation, '0775896we'); -- '406',5,'Essence'
-
-
-SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140406 13:00:00' AND date_fin = '20140410 18:00:00';
+WHERE date_debut = '2014-04-06T13:00:00' AND date_fin = '2014-04-10T18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -87,7 +78,16 @@ VALUES
 
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140407 10:00:00' AND date_fin = '20140424 18:00:00';
+WHERE date_debut = '2014-04-28T08:00:00' AND date_fin = '2014-05-05T17:00:00';
+
+INSERT INTO ReservationVehicule
+	(id_reservation,matricule_vehicule)
+VALUES
+	(@idReservation, '0775896we'); -- '406',5,'Essence'
+
+
+SELECT @idReservation = id FROM Reservation
+WHERE date_debut = '2014-04-07T10:00:00' AND date_fin = '2014-04-24T18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -97,7 +97,7 @@ VALUES
 
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140506 10:00:00' AND date_fin = '20140508 18:00:00';
+WHERE date_debut = '2014-05-06T10:00:00' AND date_fin = '2014-05-08T18:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -106,7 +106,7 @@ VALUES
 
 /*
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140601 09:00:00' AND date_fin = '20140613 17:00:00'; -- annulee
+WHERE date_debut = '2014-06-01T09:00:00' AND date_fin = '2014-06-13T17:00:00'; -- annulee
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -115,7 +115,7 @@ VALUES
 */
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20140711 09:00:00' AND date_fin = '20140922 17:00:00';
+WHERE date_debut = '2014-07-11T09:00:00' AND date_fin = '2014-09-22T17:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
@@ -124,7 +124,7 @@ VALUES
 
 
 SELECT @idReservation = id FROM Reservation
-WHERE date_debut = '20141105 08:00:00' AND date_fin = '20141105 16:00:00';
+WHERE date_debut = '2014-11-05T08:00:00' AND date_fin = '2014-11-05T16:00:00';
 
 INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
