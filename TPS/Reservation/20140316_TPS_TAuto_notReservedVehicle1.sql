@@ -13,8 +13,8 @@ USE TAuto_IBDR;
 
 -- Contexte
 PRINT('Le vehicule "0775896we" est reservé pour les dates suivantes :');
-PRINT('Réservation1 : 2014-03-25 08:00" -> "2014-04-04 17:00"');
-PRINT('Réservation2 : 2014-04-06 13:00" -> "2014-04-10 17:00"'+char(13));
+PRINT('Réservation1 : "2014-03-25 08:00" -> "2014-04-04 17:00"');
+PRINT('Réservation2 : "2014-04-06 13:00" -> "2014-04-10 17:00"'+char(13));
 
 --Test 1
 BEGIN TRY
