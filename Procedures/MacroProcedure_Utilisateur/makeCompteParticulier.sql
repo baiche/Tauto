@@ -21,7 +21,7 @@ CREATE PROCEDURE dbo.makeCompteParticulier
 	@date_naissance 	date, -- PK
 	@iban 				nvarchar(50),
 	@courriel 			nvarchar(50),
-	@telephone 			nvarchar(50),
+	@telephone 			nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteParticulier
 	BEGIN TRY
