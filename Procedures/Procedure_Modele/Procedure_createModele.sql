@@ -33,13 +33,8 @@ AS
 		annee,
 		prix,
 		reduction,
-<<<<<<< HEAD
 		portieres,
-		a_supprimer
-=======
-		portieres
->>>>>>> 40b334c4f066b4dcc2ed0e9590974cd10a6cf120
-	)
+		a_supprimer)
 	VALUES (
 		@marque,
 		@serie,
@@ -47,7 +42,8 @@ AS
 		@annee,
 		@prix,
 		@reduction,
-		@portieres
+		@portieres,
+		DEFAULT
 	);
 	
 GO

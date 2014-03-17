@@ -24,7 +24,7 @@ BEGIN TRY
 		PRINT('------------------------------Test A.1   OK')
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test A.1 NOT OK')
+	PRINT('---------------CATCH---------Test A.1 OK')
 END CATCH
 
 DELETE FROM Categorie;
@@ -33,7 +33,7 @@ DELETE FROM Categorie;
 BEGIN TRY
 	INSERT INTO Categorie(nom,description,nom_typepermis,a_supprimer) VALUES
 		('4x4','description de la categorie 4x4', 'B','');
-		IF((SELECT c.a_suurpimer FROM Categorie c WHERE c.nom='4x4')='false')
+		IF((SELECT c.a_supprimer FROM Categorie c WHERE c.nom='4x4')='false')
 			PRINT('------------------------------Test A.2  OK')
 		ELSE 
 			PRINT('------------------------------Test A.2 NOT OK');
