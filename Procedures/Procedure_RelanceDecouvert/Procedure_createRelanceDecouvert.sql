@@ -6,34 +6,29 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Crée une nouvelle RelanceDecouvert à la date actuelle et au niveau 0.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createRelanceDecouvert
 GO
-
--- Cette procedure permet de creer une nouvelle relance de decouvert
 
 CREATE PROCEDURE dbo.createRelanceDecouvert
 	@nom_compteabonne 				nvarchar(50),
 	@prenom_compteabonne			nvarchar(50),
-	@date_naissance_compteabonne	date,
-	@niveau 						tinyint
+	@date_naissance_compteabonne	date
 AS
 	INSERT INTO RelanceDecouvert(
-		date,
 		nom_compteabonne,
 		prenom_compteabonne,
-		date_naissance_compteabonne,
-		niveau 
+		date_naissance_compteabonne
 	)
 	VALUES (
-		DEFAULT,
 		@nom_compteabonne,
 		@prenom_compteabonne,
-		@date_naissance_compteabonne,
-		@niveau
+		@date_naissance_compteabonne
 	);
 	
 GO

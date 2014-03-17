@@ -14,7 +14,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.createListeNoire', 'P') IS NOT NULL
-DROP PROCEDURE dbo.createListeNoire;
+	DROP PROCEDURE dbo.createListeNoire;
 GO
 
 CREATE PROCEDURE dbo.createListeNoire
@@ -36,6 +36,6 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.createListeNoire',10,1)
 	END CATCH
 GO

@@ -24,6 +24,6 @@ AS
 		WHERE nom = @nom_type_abonnement
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.canDeleteTypeAbonnement',10,1)
 	END CATCH
 GO

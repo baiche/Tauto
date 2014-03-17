@@ -10,8 +10,10 @@
 --	Test des contraintes sur liste noire
 ------------------------------------------------------------
 
-USE Tauto_IBDR;
+SET NOCOUNT ON
 
+USE Tauto_IBDR;
+ 
 --Test A1
 
 BEGIN TRY
@@ -207,7 +209,7 @@ DELETE FROM ListeNoire;
 
 BEGIN TRY
 	INSERT INTO ListeNoire(nom,prenom,date_naissance) VALUES
-	('de Finance','B', '1990-09-08');
+	('de Finance','', '1990-09-08');
     	
 	PRINT('------------------------------Test C.1 NOT OK')
 		
@@ -222,7 +224,7 @@ DELETE FROM ListeNoire;
 
 BEGIN TRY
 	INSERT INTO ListeNoire(nom,prenom,date_naissance) VALUES
-	('F','Boris', '1990-09-08');
+	('','Boris', '1990-09-08');
     	
 	PRINT('------------------------------Test C.2 NOT OK')
 		
@@ -232,3 +234,5 @@ BEGIN CATCH
 END CATCH 
 
 DELETE FROM ListeNoire;
+
+SET NOCOUNT OFF

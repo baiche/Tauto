@@ -6,20 +6,22 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Augmente le niveau d'une RelanceDecouvert et remet la date à jour.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateNiveauRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateNiveauRelanceDecouvert
 GO
 
--- Cette procedure permet d'incrémenter le niveau d'une relance de decouvert
-
 CREATE PROCEDURE dbo.updateNiveauRelanceDecouvert
-	@id		int
+	@nom_compteabonne 				nvarchar(50),
+	@prenom_compteabonne			nvarchar(50),
+	@date_naissance_compteabonne	date
 AS
 	UPDATE RelanceDecouvert
-	SET niveau = niveau+1, date = GETDATE()
-	WHERE id = @id;
+	SET niveau = niveau+1
+	WHERE nom_compteabonne=@nom_compteabonne AND prenom_compteabonne=@prenom_compteabonne AND date_naissance_compteabonne=@date_naissance_compteabonne;
 
 GO

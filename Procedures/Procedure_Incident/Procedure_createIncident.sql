@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createIncident', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createIncident
 GO
+
 CREATE PROCEDURE dbo.createIncident 
 	@date_creation datetime,
 	@id_location int,

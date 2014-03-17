@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.updateCategorie', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateCategorie
 GO
+
 CREATE PROCEDURE dbo.updateCategorie
 	@nom					nvarchar(50),
 	@description 			nvarchar(50),

@@ -13,7 +13,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.canExtendContratLocation', 'P') IS NOT NULL
-DROP PROCEDURE dbo.canExtendContratLocation;
+	DROP PROCEDURE dbo.canExtendContratLocation;
 GO
 
 CREATE PROCEDURE dbo.canExtendContratLocation
@@ -27,6 +27,8 @@ AS
 	(SELECT COUNT(*)
 	FROM Vehicule v, Location l1,Location l2, ContratLocation cl1 , ContratLocation cl2
 	WHERE cl1.id = @id_contrat_location
+	AND l1.id <> l2.id
+	AND cl1.id <> cl2.id
 	AND cl1.id = l1.id_contratLocation
 	AND l1.matricule_vehicule = v.matricule
 	AND	l2.matricule_vehicule = v.matricule

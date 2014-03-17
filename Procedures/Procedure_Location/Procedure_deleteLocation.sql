@@ -3,16 +3,19 @@
 -- Date        : 10/03/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
--- Correcteur  : 
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Supprime la location, renvoie 0 en cas de succès, -1 autrement
 ------------------------------------------------------------
 
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteLocation
 GO
+
 CREATE PROCEDURE dbo.deleteLocation
 
 	@id_location		int

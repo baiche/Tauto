@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.updateCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.updateCatalogue;
+	DROP PROCEDURE dbo.updateCatalogue;
 GO
 
 CREATE PROCEDURE dbo.updateCatalogue
@@ -28,6 +28,6 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.updateCatalogue',10,1)
 	END CATCH
 GO

@@ -9,6 +9,7 @@
 -- Commentaire : Test des contraintes de la table Etat.
 ------------------------------------------------------------
 
+SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
@@ -35,68 +36,77 @@ INSERT INTO ContratLocation(date_debut,date_fin,date_fin_effective,extension,id_
 	   
 INSERT INTO Facturation(date_creation,date_reception,montant) VALUES
 		('2060-12-09','2060-12-11',200);
-INSERT INTO Location(matricule_vehicule,id_facturation,date_etat_avant,date_etat_apres,id_contratLocation) VALUES
+INSERT INTO Location(matricule_vehicule,id_facturation,id_etat,id_contratLocation,km) VALUES
 		('1885896wx', 
 		 (SELECT id FROM Facturation WHERE date_creation='2060-12-09'),
 		 NULL,
-		 NULL,
-		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00')); 		
+		 (SELECT id FROM ContratLocation WHERE date_debut='2060-12-02 00:00:00'),
+		 0); 		
 
 --Test A.1
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'0100');
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test A.1 OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test A.1 NOT OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 
 --Test A.2
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 -1,0,'0100');
+			 NULL,
+			 -1,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test A.2 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test A.2 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test A.3
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 NULL,0,'0100');
+			 NULL,
+			 NULL,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test A.3 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test A.3 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test A.4
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 0,'0100');
-	IF (SELECT km FROM Etat WHERE date_creation='25-11-2060' 
-							  AND id_location=(SELECT id 
-											   FROM Location 
-											   WHERE matricule_vehicule='1885896wx')) = 0
+			 NULL,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
+	IF (SELECT km_avant FROM Etat WHERE date_avant='25-11-2060') = 0
 		PRINT('------------------------------Test A.4 OK');
 	ELSE
 		PRINT('------------------------------Test A.4 NOT OK');
@@ -105,48 +115,53 @@ BEGIN CATCH
 	PRINT('------------------------------Test A.4 NOT OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
-				  
+DELETE FROM Etat WHERE date_avant='25-11-2060';
+
 --Test B.1
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,'0100');
+			 NULL,
+			 10,
+			 NULL,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test B.1 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test B.1 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test B.2
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,NULL,'0100');
+			 NULL,
+			 10,
+			 NULL,
+			 NULL,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test B.2 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test B.2 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test C.1
 BEGIN TRY
-INSERT INTO Etat(id_location,km,degat,fiche) VALUES
-			((SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'0100');
-	IF (SELECT km FROM Etat WHERE date_creation='25-11-2060' 
-							  AND id_location=(SELECT id 
-											   FROM Location 
-											   WHERE matricule_vehicule='1885896wx')) = NULL
+INSERT INTO Etat(date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
+			(NULL,
+			 10,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
+	IF (SELECT date_avant FROM Etat WHERE date_avant='25-11-2060') = NULL
 		PRINT('------------------------------Test C.1 NOT OK');
 	ELSE
 		PRINT('------------------------------Test C.1 OK');
@@ -155,162 +170,183 @@ BEGIN CATCH
 	PRINT('------------------------------Test C.1 NOT OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test C.2
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			(NULL, 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'0100');
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 '0100',
+			 NULL);
 	PRINT('------------------------------Test C.2 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test C.2 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test D.1
-BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
-			('25-11-2060', 
-			 -11,
-			 10,0,'0100');
-	PRINT('------------------------------Test D.1 NOT OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test D.1 OK');
-END CATCH
+--BEGIN TRY
+--INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+--			('25-11-2060', 
+--			 -11,
+--			 10,0,'0100');
+--	PRINT('------------------------------Test D.1 NOT OK');
+--END TRY
+--BEGIN CATCH
+--	PRINT('------------------------------Test D.1 OK');
+--END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+--DELETE FROM Etat WHERE date_creation='25-11-2060' 
+--				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
 				  
 --Test D.2
-BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
-			('25-11-2060',NULL,10,0,'0100');
-	PRINT('------------------------------Test D.2 NOT OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test D.2 OK');
-END CATCH
+--BEGIN TRY
+--INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+--			('25-11-2060',NULL,10,0,'0100');
+--	PRINT('------------------------------Test D.2 NOT OK');
+--END TRY
+--BEGIN CATCH
+--	PRINT('------------------------------Test D.2 OK');
+--END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+--DELETE FROM Etat WHERE date_creation='25-11-2060' 
+--				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
 --Test D.3
-BEGIN TRY
-INSERT INTO Etat(date_creation,km,degat,fiche) VALUES
-			('25-11-2060',10,0,'0100');
-	PRINT('------------------------------Test D.3 NOT OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test D.3 OK');
-END CATCH
+--BEGIN TRY
+--INSERT INTO Etat(date_creation,km,degat,fiche) VALUES
+--			('25-11-2060',10,0,'0100');
+--	PRINT('------------------------------Test D.3 NOT OK');
+--END TRY
+--BEGIN CATCH
+--	PRINT('------------------------------Test D.3 OK');
+--END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+--DELETE FROM Etat WHERE date_creation='25-11-2060' 
+--				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
 				  
 --Test E.1
 ----------Part 1
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'');
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 '',
+			 NULL);
 	PRINT('------------------------------Test E.1 NOT OK.1');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test E.1 OK.1');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 
 ----------Part 2		  
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,' ');
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 ' ',
+			 NULL);
 	PRINT('------------------------------Test E.1 NOT OK.2');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test E.1 OK.2');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 
 ----------Part 3
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'m@Fiche');
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 'm@Fiche',
+			 NULL);
 	PRINT('------------------------------Test E.1 NOT OK.3');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test E.1 OK.3');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 				  
 --Test E.2
-
 BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
 			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,NULL);
+			 NULL,
+			 10,
+			 NULL,
+			 0,
+			 NULL,
+			 NULL);
 	PRINT('------------------------------Test E.2 NOT OK');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test E.2 OK');
 END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+DELETE FROM Etat WHERE date_avant='25-11-2060';
 
 
 --Test F.1
-BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
-			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'0100'),
-			 ('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 11,1,'0200');
-	PRINT('------------------------------Test E.1 NOT OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test E.1 OK');
-END CATCH
+--BEGIN TRY
+--INSERT INTO Etat(date_avant,date_apres,km_avant,km_apres,degat,fiche_avant,fiche_apres) VALUES
+--			('25-11-2060', 
+--			 NULL,
+--			 10,
+--			 NULL,
+--			 0,
+--			 '0100',
+--			 NULL),
+--			 ('25-11-2060', 
+--			 NULL,
+--			 10,
+--			 NULL,
+--			 0,
+--			 '0100',
+--			 NULL);
+--	PRINT('------------------------------Test E.1 NOT OK');
+--END TRY
+--BEGIN CATCH
+--	PRINT('------------------------------Test E.1 OK');
+--END CATCH
 
-DELETE FROM Etat WHERE date_creation='25-11-2060' 
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+--DELETE FROM Etat WHERE date_creation='25-11-2060' 
+--				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
 				  
 --Test F.2
-BEGIN TRY
-INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
-			('25-11-2060', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 10,0,'0100'),
-			 ('25-11-2061', 
-			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
-			 11,1,'0200');
-	PRINT('------------------------------Test F.2 OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test F.2 NOT OK');
-END CATCH
+--BEGIN TRY
+--INSERT INTO Etat(date_creation,id_location,km,degat,fiche) VALUES
+--			('25-11-2060', 
+--			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
+--			 10,0,'0100'),
+--			 ('25-11-2061', 
+--			 (SELECT id FROM Location WHERE matricule_vehicule='1885896wx'),
+--			 11,1,'0200');
+--	PRINT('------------------------------Test F.2 OK');
+--END TRY
+--BEGIN CATCH
+--	PRINT('------------------------------Test F.2 NOT OK');
+--END CATCH
 
-DELETE FROM Etat WHERE (date_creation='25-11-2060' OR date_creation='25-11-2061')
-				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
+--DELETE FROM Etat WHERE (date_creation='25-11-2060' OR date_creation='25-11-2061')
+--				  AND id_location=(SELECT id FROM Location WHERE matricule_vehicule='1885896wx');
 
 ------------------------------
 --CLEAN FOR ALL TESTS
@@ -322,3 +358,5 @@ DELETE FROM Abonnement WHERE date_debut='2060-12-01 00:00:00';
 DELETE FROM Particulier WHERE nom_compte='Dupont' AND prenom_compte='Jacques' AND date_naissance_compte='1992-05-7';
 DELETE FROM CompteAbonne WHERE nom='Dupont' AND prenom='Jacques' AND date_naissance='1992-05-7';
 DELETE FROM Vehicule WHERE matricule='1885896wx';
+
+SET NOCOUNT OFF

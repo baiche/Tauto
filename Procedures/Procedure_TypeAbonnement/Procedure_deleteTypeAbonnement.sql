@@ -11,12 +11,16 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteTypeAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteTypeAbonnement
+GO
+
 -- Désactive le type d'abonnement (pas de supression)
 
 CREATE PROCEDURE dbo.deleteTypeAbonnement
-	@nom					nvarchar(50),
+	@nom					nvarchar(50)
 AS
 	UPDATE TypeAbonnement
-	SET actif = 'false'
+	SET a_supprimer = 'true'
 	WHERE nom = @nom;
 GO

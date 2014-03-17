@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.disableCategorie', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableCategorie
 GO
+
 CREATE PROCEDURE dbo.disableCategorie
 	@nom					nvarchar(50)
 AS

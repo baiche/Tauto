@@ -14,14 +14,14 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.createContratLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.createContratLocation
-
 GO
+
 CREATE PROCEDURE dbo.createContratLocation
 	@date_debut 			datetime,
 	@date_fin 				datetime,
 	@id_abonnement 			int
 AS
-	BEGIN TRY
+	/*BEGIN TRY
 		DECLARE @ABONNEMENT_T TABLE(
 			date_debut 					datetime,
 			duree						int,
@@ -59,7 +59,7 @@ AS
 		BEGIN
 			Print('createContratLocation: Date de fin supérieure à celle de l''abonnement');
 			RETURN -1;
-		END
+		END*/
 		
 		INSERT INTO ContratLocation (
 			date_debut,
@@ -73,11 +73,11 @@ AS
 			0,
 			@id_abonnement
 		);
-		PRINT('createContratLocation créé ' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
+		--PRINT('createContratLocation créé ' + CAST(SCOPE_IDENTITY() AS CHAR(5)) );
 		RETURN SCOPE_IDENTITY();
-	END TRY
+	/*END TRY
 	BEGIN CATCH
 		PRINT('createContratLocation: ERROR');
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO

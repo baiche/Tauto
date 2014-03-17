@@ -8,7 +8,9 @@
 -- Integrateur : 
 -- Commentaire : test de la table CatalogueCategorie
 ------------------------------------------------------------
+SET NOCOUNT ON
 
+USE TAuto_IBDR;
 
 DELETE FROM CatalogueCategorie;
 DELETE FROM Catalogue;
@@ -19,7 +21,7 @@ BEGIN TRY
 	INSERT INTO Catalogue(nom,date_debut,date_fin) VALUES
 		('printemps 2014','2014-03-20', '2014-06-20');
 	INSERT INTO Categorie(nom,description,nom_typepermis) VALUES
-		('Vehicule simple','tout type de véhicule simple a 4 roues','B');
+		('Vehicule simple','tout type de vehicule simple a 4 roues','B');
 	INSERT INTO CatalogueCategorie(nom_catalogue, nom_categorie) VALUES
 		('printemps 2014', 'Vehicule simple');
 	IF (( SELECT COUNT(*)
@@ -69,3 +71,5 @@ END CATCH
 DELETE FROM CatalogueCategorie;
 DELETE FROM Catalogue;
 DELETE FROM Categorie;
+
+SET NOCOUNT OFF

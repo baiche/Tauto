@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.deleteCatalogue', 'P') IS NOT NULL
-DROP PROCEDURE dbo.deleteCatalogue;
+	DROP PROCEDURE dbo.deleteCatalogue;
 GO
 
 CREATE PROCEDURE dbo.deleteCatalogue
@@ -24,6 +24,6 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.deleteCatalogue',10,1)
 	END CATCH
 GO

@@ -11,13 +11,18 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.deleteRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteRelanceDecouvert
 GO
 
--- Cette procedure permet de supprimer une relance de decouvert
-
 CREATE PROCEDURE dbo.deleteRelanceDecouvert
-	@id		int
+	@nom_compteabonne 				nvarchar(50),
+	@prenom_compteabonne			nvarchar(50),
+	@date_naissance_compteabonne	date
 AS
-	DELETE FROM RelanceDecouvert
-	WHERE id = @id;
+	IF(SELECT a_supprimer FROM RelanceDecouvert
+			WHERE nom_compteabonne=@nom_compteabonne AND prenom_compteabonne=@prenom_compteabonne AND date_naissance_compteabonne=@date_naissance_compteabonne ) = 'true'
+		DELETE FROM RelanceDecouvert
+		WHERE nom_compteabonne=@nom_compteabonne AND prenom_compteabonne=@prenom_compteabonne AND date_naissance_compteabonne=@date_naissance_compteabonne;
+	
 GO

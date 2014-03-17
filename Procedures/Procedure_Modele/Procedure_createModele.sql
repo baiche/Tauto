@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.createModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createModele
 GO
 
 -- Cette procedure permet de creer un nouveau modele
@@ -31,8 +33,12 @@ AS
 		annee,
 		prix,
 		reduction,
+<<<<<<< HEAD
 		portieres,
 		a_supprimer
+=======
+		portieres
+>>>>>>> 40b334c4f066b4dcc2ed0e9590974cd10a6cf120
 	)
 	VALUES (
 		@marque,
@@ -41,8 +47,7 @@ AS
 		@annee,
 		@prix,
 		@reduction,
-		@portieres,
-		DEFAULT
+		@portieres
 	);
 	
 GO

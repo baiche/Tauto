@@ -14,21 +14,20 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.removeConducteurFromLocation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.removeConducteurFromLocation
-
 GO
+
 CREATE PROCEDURE dbo.removeConducteurFromLocation
 	@id_location 						int,
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
-	BEGIN TRANSACTION removeConducteurFromLocation
-	BEGIN TRY
+	/*BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			id_location = @id_location AND
 			piece_identite_conducteur = @piece_identite_conducteur AND
 			nationalite_conducteur = @nationalite_conducteur
 		) = 1)
-		BEGIN
+		BEGIN*/
 			DELETE
 			FROM ConducteurLocation
 			WHERE
@@ -36,10 +35,11 @@ AS
 				piece_identite_conducteur = @piece_identite_conducteur AND
 				nationalite_conducteur = @nationalite_conducteur;
 			
-			PRINT('Conducteur supprimé de la location');
-			COMMIT TRANSACTION removeConducteurFromLocation
+			--RAISERROR('Suppression de la jointure ConducteurLocation impossible', 10, 1);
+			--PRINT('Conducteur supprimé de la location');
+			--COMMIT TRANSACTION removeConducteurFromLocation
 			RETURN 1;
-		END
+		/*END
 		ELSE
 		BEGIN
 			PRINT('removeConducteurFromLocation: ERROR, tuple inexistant');
@@ -51,5 +51,5 @@ AS
 		PRINT('removeConducteurFromLocation: ERROR, clef primaire');
 		ROLLBACK TRANSACTION removeConducteurFromLocation
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO

@@ -14,8 +14,8 @@ USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.addConducteurToCompteAbonne', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.addConducteurToCompteAbonne
-
 GO
+
 CREATE PROCEDURE dbo.addConducteurToCompteAbonne
 	@nom_compteabonne 					nvarchar(50),
 	@prenom_compteabonne 				nvarchar(50),
@@ -23,7 +23,7 @@ CREATE PROCEDURE dbo.addConducteurToCompteAbonne
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
-	BEGIN TRANSACTION addConducteurToCompteAbonne
+	/*BEGIN TRANSACTION addConducteurToCompteAbonne
 	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = @nom_compteabonne AND
@@ -32,7 +32,7 @@ AS
 			piece_identite_conducteur = @piece_identite_conducteur AND
 			nationalite_conducteur = @nationalite_conducteur
 			) = 0)
-		BEGIN
+		BEGIN*/
 			INSERT INTO CompteAbonneConducteur (
 				nom_compteabonne,
 				prenom_compteabonne,
@@ -47,10 +47,11 @@ AS
 				@piece_identite_conducteur,
 				@nationalite_conducteur
 			);
-			PRINT('Conducteur ajouté au compte abonné');
-			COMMIT TRANSACTION addConducteurToCompteAbonne
+			--RAISERROR('Creation de la jointure CompteAbonneConducteur impossible', 10, 1);
+			/*PRINT('Conducteur ajouté au compte abonné');
+			COMMIT TRANSACTION addConducteurToCompteAbonne*/
 			RETURN 1;
-		END
+		/*END
 		ELSE
 		BEGIN
 			PRINT('addConducteurToCompteAbonne: ERROR, tuple existant');
@@ -62,5 +63,5 @@ AS
 		PRINT('addConducteurToCompteAbonne: ERROR, clef primaire');
 		ROLLBACK TRANSACTION addConducteurToCompteAbonne
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO

@@ -14,6 +14,7 @@ USE TAuto_IBDR;
 IF OBJECT_ID ('dbo.deleteConducteur', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.deleteConducteur
 GO
+
 CREATE PROCEDURE dbo.deleteConducteur
 	@piece_identite 	nvarchar(50),
 	@nationalite 		nvarchar(50)
@@ -24,6 +25,6 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.deleteConducteur',10,1)
 	END CATCH
 GO

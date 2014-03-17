@@ -11,6 +11,8 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.addModeleToCategorie', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.addModeleToCategorie
 GO
 
 -- Cette procedure permet d'ajouter un modele a une categorie

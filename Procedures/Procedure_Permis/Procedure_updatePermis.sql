@@ -21,7 +21,12 @@ CREATE PROCEDURE dbo.updatePermis
 	@valide 				bit,
 	@points_estimes 		tinyint
 AS
-	UPDATE Permis
-	SET valide = @valide, points_estimes = @points_estimes
-	WHERE numero = @numero;
+	BEGIN TRY
+		UPDATE Permis
+		SET valide = @valide, points_estimes = @points_estimes
+		WHERE numero = @numero;
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Erreur dans la fonction dbo.deletePermis',10,1)
+	END CATCH
 GO
