@@ -144,15 +144,16 @@ IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_
 BEGIN
 CREATE TABLE Vehicule(
 	matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
-	kilometrage 		int 							NOT NULL 	DEFAULT 0,
-	couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
-	statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
+	kilometrage 		int 							DEFAULT 0,
+	couleur 			nvarchar(50) 					DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
+	statut 				nvarchar(50) 					DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
 	num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
-  	marque_modele		nvarchar(50) 					NOT NULL,
+  	marque_modele 		nvarchar(50) 					NOT NULL,
+	serie_modele 		nvarchar(50) 					NOT NULL,
 	portieres_modele 	tinyint 						NOT NULL,
-	date_entree			date							NOT NULL	DEFAULT GETDATE(), 
+	date_entree			date							DEFAULT GETDATE(), 
 	type_carburant_modele nvarchar(50) 					NOT NULL, --c'est un enum
-	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false'
+	a_supprimer 		bit 						 	DEFAULT 'false'
 );
 
 PRINT('Table Vehicule créée');

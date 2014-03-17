@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad ( ajout de la colone a_supprimer )
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -33,7 +33,8 @@ AS
 		marque_modele,
 		serie_modele,
 		portieres_modele,
-		type_carburant_modele
+		type_carburant_modele,
+		a_supprimer
 	)
 	VALUES (
 		@matricule,
@@ -44,7 +45,8 @@ AS
 		@marque_modele,
 		@serie_modele,
 		@portieres_modele,
-		@type_carburant_modele
+		@type_carburant_modele,
+		'false'
 	);
 
 GO

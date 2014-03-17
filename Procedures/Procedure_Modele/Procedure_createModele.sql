@@ -32,7 +32,7 @@ AS
 		prix,
 		reduction,
 		portieres,
-		actif
+		a_supprimer
 	)
 	VALUES (
 		@marque,

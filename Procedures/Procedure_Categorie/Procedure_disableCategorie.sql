@@ -3,7 +3,7 @@
 -- Date        : 04/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -16,7 +16,7 @@ CREATE PROCEDURE dbo.disableCategorie
 	@nom					nvarchar(50)
 AS
 	UPDATE Categorie
-	SET a_spprimer='true'
+	SET a_supprimer='true'
 	WHERE nom = @nom;
 	
 GO
