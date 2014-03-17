@@ -18,39 +18,39 @@ GO
 CREATE PROCEDURE dbo.deleteAbonnement
 	@id 				int
 AS
-	DELETE FROM Infraction
-		WHERE id_location IN ( SELECT id FROM Location
-									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
-																	WHERE id_abonnement=@id));
+	-- DELETE FROM Infraction
+		-- WHERE id_location IN ( SELECT id FROM Location
+									-- WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	-- WHERE id_abonnement=@id));
 																				
-	DELETE FROM Incident
-		WHERE id_location IN ( SELECT id FROM Location
-									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
-																	WHERE id_abonnement=@id));
+	-- DELETE FROM Incident
+		-- WHERE id_location IN ( SELECT id FROM Location
+									-- WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	-- WHERE id_abonnement=@id));
 																				
-	DELETE FROM Retard
-		WHERE id_location IN ( SELECT id FROM Location
-									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
-																	WHERE id_abonnement=@id));
+	-- DELETE FROM Retard
+		-- WHERE id_location IN ( SELECT id FROM Location
+									-- WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	-- WHERE id_abonnement=@id));
 								
-	DELETE FROM ConducteurLocation
-		WHERE id_location IN (SELECT id FROM Location
-									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
-																	WHERE id_abonnement=@id));
+	-- DELETE FROM ConducteurLocation
+		-- WHERE id_location IN (SELECT id FROM Location
+									-- WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	-- WHERE id_abonnement=@id));
 			
-	DELETE FROM Location
-		WHERE id_contratLocation IN (SELECT id FROM ContratLocation
-										WHERE id_abonnement=@id);																						
+	-- DELETE FROM Location
+		-- WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+										-- WHERE id_abonnement=@id);																						
 															
-	DELETE FROM ContratLocation
-		WHERE id_abonnement=@id;
+	-- DELETE FROM ContratLocation
+		-- WHERE id_abonnement=@id;
 				
-	DELETE FROM ReservationVehicule
-		WHERE id_reservation IN (SELECT id FROM Reservation 
-									WHERE id_abonnement = @id);
+	-- DELETE FROM ReservationVehicule
+		-- WHERE id_reservation IN (SELECT id FROM Reservation 
+									-- WHERE id_abonnement = @id);
 														
-	DELETE FROM Reservation
-		WHERE id_abonnement=@id;
+	-- DELETE FROM Reservation
+		-- WHERE id_abonnement=@id;
 				
 	DELETE FROM Abonnement
 		WHERE id=@id;

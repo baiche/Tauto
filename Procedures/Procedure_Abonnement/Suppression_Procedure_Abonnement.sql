@@ -3,11 +3,10 @@
 -- Date        : 14/03/2014
 -- Version     : 1.0
 -- Auteur      : de Finance Boris
--- Correcteur  : 
+-- Correcteur  : Mohamed Neti
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Supprime les procedures concernant les 
---				abonnements de la base.
+-- Commentaire : Supprime les procedures concernant les abonnements de la base.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
