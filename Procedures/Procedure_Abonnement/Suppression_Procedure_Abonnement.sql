@@ -31,3 +31,4 @@ GO
 IF OBJECT_ID ('dbo.updateTypeAbonnementForAbonnement', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateTypeAbonnementForAbonnement
 GO
+
