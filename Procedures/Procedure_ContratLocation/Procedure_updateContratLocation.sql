@@ -20,17 +20,18 @@ CREATE PROCEDURE dbo.updateContratLocation
 	@date_fin_effective 	datetime,
 	@extension 				int
 AS
-	BEGIN TRANSACTION updateContratLocation
+	/*BEGIN TRANSACTION updateContratLocation
 	BEGIN TRY		
 		IF ( (SELECT COUNT(*) FROM ContratLocation WHERE id = @id) = 1)
-		BEGIN
+		BEGIN*/
 			IF (@date_fin_effective IS NOT NULL)
 			BEGIN
 				IF ( (SELECT date_debut FROM ContratLocation WHERE id = @id) > @date_fin_effective)
 				BEGIN
-					PRINT('updateContratLocation: ERROR, date de fin réelle inférieure à la date de début');
+					/*PRINT('updateContratLocation: ERROR, date de fin réelle inférieure à la date de début');
 					ROLLBACK TRANSACTION updateContratLocation
-					RETURN -1;
+					RETURN -1;*/
+					RAISERROR('Modification de des dates impossibles, debut > fin', 10, 1);
 				END
 				UPDATE ContratLocation
 				SET
@@ -46,7 +47,8 @@ AS
 				WHERE id = @id;
 			END
 			
-			PRINT('ContratLocation mis à jour');
+			RETURN 1;
+			/*PRINT('ContratLocation mis à jour');
 			COMMIT TRANSACTION updateContratLocation
 			RETURN 1;
 		END
@@ -61,5 +63,5 @@ AS
 		PRINT('updateContratLocation: ERROR');
 		ROLLBACK TRANSACTION updateContratLocation
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO

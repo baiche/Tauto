@@ -33,8 +33,8 @@ AS
 		annee,
 		prix,
 		reduction,
-		portieres
-	)
+		portieres,
+		a_supprimer)
 	VALUES (
 		@marque,
 		@serie,
@@ -42,7 +42,8 @@ AS
 		@annee,
 		@prix,
 		@reduction,
-		@portieres
+		@portieres,
+		DEFAULT
 	);
 	
 GO

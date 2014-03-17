@@ -23,7 +23,7 @@ CREATE PROCEDURE dbo.removeConducteurFromCompteAbonne
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
-	BEGIN TRANSACTION removeConducteurFromCompteAbonne
+	/*BEGIN TRANSACTION removeConducteurFromCompteAbonne
 	BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM CompteAbonneConducteur WHERE
 			nom_compteabonne = @nom_compteabonne AND
@@ -32,7 +32,7 @@ AS
 			piece_identite_conducteur = @piece_identite_conducteur AND
 			nationalite_conducteur = @nationalite_conducteur
 			) = 1)
-		BEGIN
+		BEGIN*/
 			DELETE
 			FROM CompteAbonneConducteur
 			WHERE
@@ -42,10 +42,11 @@ AS
 				piece_identite_conducteur = @piece_identite_conducteur AND
 				nationalite_conducteur = @nationalite_conducteur;
 			
-			PRINT('Conducteur supprimé du compte abonné');
-			COMMIT TRANSACTION removeConducteurFromCompteAbonne
+			--RAISERROR('Suppression de la jointure CompteAbonneConducteur impossible', 10, 1);
+			/*PRINT('Conducteur supprimé du compte abonné');
+			COMMIT TRANSACTION removeConducteurFromCompteAbonne*/
 			RETURN 1;
-		END
+		/*END
 		ELSE
 		BEGIN
 			PRINT('removeConducteurFromCompteAbonne: ERROR, tuple inexistant');
@@ -57,5 +58,5 @@ AS
 		PRINT('removeConducteurFromCompteAbonne: ERROR, clef primaire');
 		ROLLBACK TRANSACTION removeConducteurFromCompteAbonne
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO
