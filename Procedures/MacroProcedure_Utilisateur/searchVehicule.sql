@@ -274,7 +274,69 @@ AS
 			)
 		END
 	
-	
+		-- affichage de la table
+		DECLARE @matricule_courant			nvarchar(50)
+		DECLARE @kilometrage_courant				int
+		DECLARE @couleur_courante			nvarchar(50)
+		DECLARE @statut_courant				nvarchar(50)
+		DECLARE @num_serie_courant			nvarchar(50)
+		DECLARE @marque_modele_courant		nvarchar(50)
+		DECLARE @serie_modele_courant		nvarchar(50)
+		DECLARE @portieres_modele_courant	tinyint
+		DECLARE @date_entree				date
+		DECLARE @type_carburant_modele		nvarchar(50)
+
+		--iteration sur le resultat
+		DECLARE Curseur_vehicule CURSOR LOCAL FOR 
+			SELECT	matricule, 
+					kilometrage, 
+					couleur, 
+					statut, 
+					num_serie, 
+					marque_modele, 
+					serie_modele, 
+					portieres_modele, 
+					date_entree, 
+					type_carburant_modele
+			FROM dbo.#in 
+
+		OPEN  Curseur_vehicule
+		
+		FETCH NEXT FROM Curseur_location 
+			INTO	@matricule_courant,
+					@kilometrage_courant,
+					@couleur_courante,
+					@statut_courant,
+					@num_serie_courant,
+					@marque_modele_courant,
+					@serie_modele_courant,
+					@portieres_modele_courant,
+					@date_entree,
+					@type_carburant_modele		
+						
+		WHILE	@@FETCH_STATUS=0
+		BEGIN	
+			EXEC dbo.printFacturation @id_location;
+			SET @total += (SELECT  f.montant 
+							FROM Facturation f, Location l
+							WHERE l.id = @id_location
+							AND l.id_facturation = f.id)
+							
+			FETCH NEXT FROM Curseur_location 
+			INTO	@matricule_courant,
+					@kilometrage_courant,
+					@couleur_courante,
+					@statut_courant,
+					@num_serie_courant,
+					@marque_modele_courant,
+					@serie_modele_courant,
+					@portieres_modele_courant,
+					@date_entree,
+					@type_carburant_modele			
+		END
+		CLOSE Curseur_Location
+		
+		
 		COMMIT TRANSACTION searchVehicule
 		PRINT('searchVehicule OK');
 		RETURN 1;
