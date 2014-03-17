@@ -306,7 +306,7 @@ CREATE TABLE Etat(
 	km_apres			int,									 							CHECK( km_apres >= km_avant ),
 	degat 				bit,
 	fiche_avant			nvarchar(50) 					NOT NULL							CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_avant) = 1),
-	fiche_apres			nvarchar(50) 														CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$', fiche_apres) = 1)
+	fiche_apres			nvarchar(50) 								DEFAULT ''				CHECK( dbo.clrRegex('^([a-zA-Z0-9]*)$', fiche_apres) = 1)
 );
 PRINT('Table Etat créée');
 END
