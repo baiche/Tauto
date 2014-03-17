@@ -3,7 +3,7 @@
 -- Date        : 09/03/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteur  : 
+-- Correcteur  : Mohamed Neti
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : modifier le type d'abonnement d'un abonnement, returne 1 ou erreur

@@ -45,3 +45,4 @@ AS
 	);
 	RETURN SCOPE_IDENTITY();
 GO
+

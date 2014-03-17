@@ -7,7 +7,7 @@
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Modifie un abonnement, les valeurs que l'on ne souhaite pas changer peuvent être nulle
---				 Renvoie 1 en cas de succès (pas d'erreur détectée), -1 autrement
+--				 Renvoie 1 en cas de succès, erreur autrement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
