@@ -3,7 +3,7 @@
 -- Date        : 04/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :

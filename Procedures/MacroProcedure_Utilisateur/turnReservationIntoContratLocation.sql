@@ -16,7 +16,8 @@ IF OBJECT_ID ('dbo.turnReservationIntoContratLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.turnReservationIntoContratLocation
-	@id_reservation 		int -- PK
+	@id_reservation 		int, -- PK
+	@km_reservation			int -- nombre de kilomètres autorisés pendant la location
 AS
 	BEGIN TRANSACTION turnReservationIntoContratLocation
 	BEGIN TRY
