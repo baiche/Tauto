@@ -6,7 +6,7 @@
 -- Correcteur  : Mohamed Neti
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Supprime un abonnement. Renvoie 1 en cas de succès, -1 autrement.
+-- Commentaire : Supprime un abonnement. Renvoie 1 en cas de succès, erreur autrement.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -16,51 +16,45 @@ IF OBJECT_ID ('dbo.deleteAbonnement', 'P') IS NOT NULL
 
 GO
 CREATE PROCEDURE dbo.deleteAbonnement
-	@id 							int
+	@id 				int
 AS
-	BEGIN TRANSACTION deleteAbonnement
-		BEGIN TRY
-			DECLARE @Output TABLE (
-				id INT
-			);
-			
-			DECLARE @date_debut			date,
-					@duree				int;
-					
-			SET @date_debut =(SELECT date_debut FROM Abonnement
-								WHERE id=@id);
+	DELETE FROM Infraction
+		WHERE id_location IN ( SELECT id FROM Location
+									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	WHERE id_abonnement=@id));
+																				
+	DELETE FROM Incident
+		WHERE id_location IN ( SELECT id FROM Location
+									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	WHERE id_abonnement=@id));
+																				
+	DELETE FROM Retard
+		WHERE id_location IN ( SELECT id FROM Location
+									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	WHERE id_abonnement=@id));
 								
-			SET @duree =(SELECT duree FROM Abonnement
-								WHERE id=@id);
-
+	DELETE FROM ConducteurLocation
+		WHERE id_location IN (SELECT id FROM Location
+									WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+																	WHERE id_abonnement=@id));
 			
-			IF ( DATEADD(day, @duree, @date_debut ) < GETDATE() )
-			BEGIN
-				--Print('deleteAbonnement: L abonnement n est pas encor fini');
-				--RETURN -1;
-				RAISERROR ('deleteAbonnement: L abonnement n est pas encor fini', 10, -1); 
-			END
-			
-			DELETE Abonnement
-			OUTPUT DELETED.id INTO @Output
-			WHERE id = @id;
-			
-			IF ( (SELECT COUNT(*) FROM @Output) = 1)
-			BEGIN
-				PRINT('Abonnement supprimé');
-				COMMIT TRANSACTION deleteAbonnement
-				RETURN 1;
-			END
-			ELSE
-			BEGIN
-				RAISERROR ('deleteAbonnement: ERROR, pas supprimé', 10, -1); 
-			END
-		END TRY	
-		BEGIN CATCH
-			PRINT('deleteAbonnement: ERROR');
-			ROLLBACK TRANSACTION deleteContratLocation
-			RETURN -1;
-		END CATCH
-	COMMIT TRANSACTION deleteAbonnement
+	DELETE FROM Location
+		WHERE id_contratLocation IN (SELECT id FROM ContratLocation
+										WHERE id_abonnement=@id);																						
+															
+	DELETE FROM ContratLocation
+		WHERE id_abonnement=@id;
+				
+	DELETE FROM ReservationVehicule
+		WHERE id_reservation IN (SELECT id FROM Reservation 
+									WHERE id_abonnement = @id);
+														
+	DELETE FROM Reservation
+		WHERE id_abonnement=@id;
+				
+	DELETE FROM Abonnement
+		WHERE id=@id;
+		
+	RETURN 1;
 GO
 			
