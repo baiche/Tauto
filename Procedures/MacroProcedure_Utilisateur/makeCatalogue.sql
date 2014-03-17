@@ -2,8 +2,8 @@
 -- Fichier     : makeCatalogue.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
--- Auteur      : 
--- Correcteur  : 
+-- Auteur      : David Lecoconnier
+-- Correcteur  : Jean-Luc Amitousa Mankoy
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : 
@@ -22,9 +22,30 @@ CREATE PROCEDURE dbo.makeCatalogue
 AS
 	BEGIN TRANSACTION makeCatalogue
 	BEGIN TRY
-		COMMIT TRANSACTION makeCatalogue
-		PRINT('makeCatalogue OK');
-		RETURN 1;
+		IF ( (SELECT COUNT(*) FROM Catalogue WHERE nom = @nom) = 1)
+		BEGIN
+			PRINT('makeCatalogue: nom pris');
+			RETURN -1;
+		END
+		
+		IF ( @date_debut IS NULL)
+		BEGIN
+			SET @date_debut = GETDATE();
+		END
+		
+		IF (@date_debut < @date_fin)
+		BEGIN
+			EXEC dbo.createCatalogue @nom, @date_debut, @date_fin;
+			COMMIT TRANSACTION makeCatalogue
+			PRINT('makeCatalogue OK');
+			RETURN 1;
+		END
+		ELSE
+		BEGIN
+			PRINT('makeCatalogue: ERROR, date de fin anterieure');
+			ROLLBACK TRANSACTION makeCatalogue
+			RETURN -1;
+		END
 	END TRY
 	BEGIN CATCH
 		PRINT('makeCatalogue: ERROR');
