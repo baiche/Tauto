@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Allan Mottier
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -23,7 +23,6 @@ CREATE PROCEDURE dbo.deleteModele
 	@type_carburant 		nvarchar(50),
 	@portieres 				tinyint
 AS
-	UPDATE Modele
-	SET actif = 'false'
+	DELETE FROM Modele
 	WHERE marque = @marque AND serie = @serie AND type_carburant = @type_carburant AND portieres = @portieres;
 GO

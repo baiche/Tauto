@@ -23,3 +23,7 @@ GO
 IF OBJECT_ID ('dbo.updateListeNoire', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateListeNoire;
 GO
+
+IF OBJECT_ID ('dbo.isInListeNoire', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.isInListeNoire;
+GO

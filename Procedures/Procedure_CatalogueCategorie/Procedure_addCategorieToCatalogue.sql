@@ -31,7 +31,7 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.addCategorieToCatalogue',10,1)
 	END CATCH
 	 
 GO

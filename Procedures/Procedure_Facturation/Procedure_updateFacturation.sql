@@ -22,7 +22,6 @@ CREATE PROCEDURE dbo.updateFacturation
 	@date_reception					date
 	
 AS
-	BEGIN TRANSACTION update_facturation
 	BEGIN TRY
 		DECLARE @id_facturation int;
 		
@@ -40,7 +39,6 @@ AS
 		RETURN 1
 	END TRY
 	BEGIN CATCH
-		ROLLBACK TRANSACTION update_facturation
-		RETURN -1
+		RAISERROR('Erreur dans la fonction dbo.updateFacturation',10,1)
 	END CATCH
 GO

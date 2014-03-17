@@ -31,3 +31,11 @@ GO
 IF OBJECT_ID ('dbo.updateReservation', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateReservation
 GO
+
+IF OBJECT_ID ('dbo.notReservedVehicle1', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateReservation
+GO
+
+IF OBJECT_ID ('dbo.isDisponible1', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateReservation
+GO

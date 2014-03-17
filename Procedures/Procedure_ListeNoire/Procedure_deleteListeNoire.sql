@@ -24,9 +24,9 @@ AS
 		WHERE 	date_naissance = @date_naissance
 		AND	nom = @nom
 		AND	prenom = @prenom;
-		RETURN -1
+		RETURN 1
 	END TRY
 	BEGIN CATCH
-		RETURN 1
+		RAISERROR('Erreur dans la fonction dbo.deleteListeNoire',10,1)
 	END CATCH
 GO
