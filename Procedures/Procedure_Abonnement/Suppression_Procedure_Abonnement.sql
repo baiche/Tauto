@@ -12,10 +12,6 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.canDeleteAbonnement', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.canDeleteAbonnement
-GO
-
 IF OBJECT_ID ('dbo.createAbonnement', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.createAbonnement
 GO
@@ -26,4 +22,12 @@ GO
 
 IF OBJECT_ID ('dbo.updateAbonnement', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.updateAbonnement
+GO
+
+IF OBJECT_ID ('dbo.disableAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableAbonnement
+GO
+
+IF OBJECT_ID ('dbo.updateTypeAbonnementForAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateTypeAbonnementForAbonnement
 GO
