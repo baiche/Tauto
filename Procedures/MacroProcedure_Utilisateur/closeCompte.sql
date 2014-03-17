@@ -1,12 +1,12 @@
 ------------------------------------------------------------
 -- Fichier     : closeCompte.sql
--- Date        : 15/03/2014
+-- Date        : 17/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Boris de Finance
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : 
+-- Commentaire : Fermeture d'un compte
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -22,6 +22,13 @@ CREATE PROCEDURE dbo.closeCompte
 AS
 	BEGIN TRANSACTION closeCompte
 	BEGIN TRY
+		
+		UPDATE CompteAbonne 
+		SET actif = 'false'
+		WHERE nom = @nom
+		AND prenom = @prenom
+		AND date_naissance = @date_naissance
+		
 		COMMIT TRANSACTION closeCompte
 		PRINT('closeCompte OK');
 		RETURN 1;
