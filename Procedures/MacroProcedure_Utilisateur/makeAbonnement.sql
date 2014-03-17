@@ -1,8 +1,8 @@
 ------------------------------------------------------------
 -- Fichier     : makeAbonnement.sql
--- Date        : 15/03/2014
+-- Date        : 17/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
@@ -26,6 +26,56 @@ CREATE PROCEDURE dbo.makeAbonnement
 AS
 	BEGIN TRANSACTION makeAbonnement
 	BEGIN TRY
+		IF(@nom = NULL)
+		BEGIN
+			PRINT('makeAbonnement: le nom doit etre renseigne');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@prenom = NULL)
+		BEGIN
+			PRINT('makeAbonnement: le prenom doit etre renseigne');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@date_naissance = NULL)
+		BEGIN
+			PRINT('makeAbonnement: la date de naissance doit etre renseignee');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@date_debut = NULL)
+		BEGIN
+			PRINT('makeAbonnement: la date de debut doit etre renseignee');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@duree = NULL)
+		BEGIN
+			PRINT('makeAbonnement: la duree doit etre renseignee');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@renouvellement_auto = NULL)
+		BEGIN
+			PRINT('makeAbonnement: il faut préciser si l''abonnement est renouvelable automatiquement');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@nom_typeabonnement = NULL)
+		BEGIN
+			PRINT('makeAbonnement: la type de l''abonnement doit etre renseignee');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		EXEC dbo.makeAbonnement @nom, @prenom, @date_naissance,@date_debut,@duree,@renouvellement_auto, @nom_typeabonnement
 		COMMIT TRANSACTION makeAbonnement
 		PRINT('makeAbonnement OK');
 		RETURN 1;
