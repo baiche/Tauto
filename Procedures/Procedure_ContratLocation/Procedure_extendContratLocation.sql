@@ -19,15 +19,16 @@ CREATE PROCEDURE dbo.extendContratLocation
 	@id						int,
 	@extension 				int
 AS
-	BEGIN TRANSACTION extendContratLocation
-	BEGIN TRY
+	/*BEGIN TRANSACTION extendContratLocation
+	BEGIN TRY*/
 		DECLARE @res int;
 		
 		IF ( (SELECT date_fin_effective FROM ContratLocation WHERE id = @id) IS NOT NULL)
 		BEGIN
-			PRINT('extendContratLocation: ERROR, impossible à étendre, date de fin réelle insérée');
-			ROLLBACK TRANSACTION extendContratLocation
-			RETURN -1;
+			RAISERROR('Modification de des dates impossibles, debut > fin', 10, 1);
+			--PRINT('extendContratLocation: ERROR, impossible à étendre, date de fin réelle insérée');
+			--ROLLBACK TRANSACTION extendContratLocation
+			--RETURN -1;
 		END
 		
 		EXEC @res = dbo.canExtendContratLocation
@@ -40,11 +41,13 @@ AS
 				@id = @id,
 				@date_fin_effective = null,
 				@extension = @extension
-			PRINT('ContratLocation étendu');
-			COMMIT TRANSACTION extendContratLocation
+			--PRINT('ContratLocation étendu');
+			--COMMIT TRANSACTION extendContratLocation
 			RETURN 1;
 		END
-		ELSE
+		
+		RAISERROR('Contrat non etendu', 10, 1);
+		/*ELSE
 		BEGIN
 			PRINT('extendContratLocation: ERROR, introuvable');
 			ROLLBACK TRANSACTION extendContratLocation
@@ -55,5 +58,5 @@ AS
 		PRINT('extendContratLocation: ERROR');
 		ROLLBACK TRANSACTION extendContratLocation
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO

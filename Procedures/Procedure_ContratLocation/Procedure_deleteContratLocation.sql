@@ -18,7 +18,7 @@ GO
 CREATE PROCEDURE dbo.deleteContratLocation
 	@id						int
 AS
-	BEGIN TRANSACTION deleteContratLocation
+	/*BEGIN TRANSACTION deleteContratLocation
 	BEGIN TRY
 		DECLARE @Output TABLE (
 			id INT
@@ -67,13 +67,15 @@ AS
 		END
 		
 		CLOSE contratLoc;
-		DEALLOCATE contratLoc; 
+		DEALLOCATE contratLoc; */
 		
 		DELETE ContratLocation
-		OUTPUT DELETED.id INTO @Output
+		--OUTPUT DELETED.id INTO @Output
 		WHERE id = @id;
+		RETURN 1;
+		--RAISERROR('Suppression du ContratLocation impossible', 10, 1);
 		
-		IF ( (SELECT COUNT(*) FROM @Output) = 1)
+		/*IF ( (SELECT COUNT(*) FROM @Output) = 1)
 		BEGIN
 			PRINT('ContratLocation supprimé');
 			COMMIT TRANSACTION deleteContratLocation
@@ -90,5 +92,5 @@ AS
 		PRINT('deleteContratLocation: ERROR');
 		ROLLBACK TRANSACTION deleteContratLocation
 		RETURN -1;
-	END CATCH
+	END CATCH*/
 GO
