@@ -4,10 +4,10 @@ rem -- Fichier     : ajout_procedures_etat.bat
 rem -- Date        : 12/03/2014
 rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
-rem -- Correcteurs  : 
-rem -- Testeurs     : 
+rem -- Correcteurs : Mohamed Neti
+rem -- Testeurs    : 
 rem -- Integrateur : 
-rem -- Commentaire : 
+rem -- Commentaire : Ajouter les procedures concernant les etats
 rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\"

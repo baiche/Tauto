@@ -3,10 +3,10 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Alexis Deluze
--- Correcteur  : 
+-- Correcteur  : Mohamed Neti
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Supprime un typeAbonnement. Renvoie 1 en cas de succès, erreur autrement.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -15,12 +15,11 @@ IF OBJECT_ID ('dbo.deleteTypeAbonnement', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.deleteTypeAbonnement
 GO
 
--- Désactive le type d'abonnement (pas de supression)
-
 CREATE PROCEDURE dbo.deleteTypeAbonnement
 	@nom					nvarchar(50)
 AS
-	UPDATE TypeAbonnement
-	SET a_supprimer = 'true'
-	WHERE nom = @nom;
+	DELETE FROM TypeAbonnement
+		WHERE nom=@nom;
+		
+	RETURN 1;
 GO
