@@ -2,7 +2,7 @@
 -- Fichier     : makeVehicule.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Baiche Mourad
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
@@ -29,6 +29,37 @@ CREATE PROCEDURE dbo.makeVehicule
 AS
 	BEGIN TRANSACTION makeVehicule
 	BEGIN TRY
+	
+	IF(SELECT count(*) FROM Catalogue c WHERE c.nom=@nom_catalogue)=0
+			BEGIN 
+			PRINT ('Le Catalogue n''existe pas ')
+			return -1 ;
+			END
+		ELSE
+		
+		BEGIN
+			IF(SELECT count(*) FROM CatalogueCategorie cc WHERE cc.nom_categorie=@nom_categorie AND cc.nom_catalogue=@nom_catalogue)=0
+			BEGIN 
+			PRINT ('Cette categorie n''existe pas dans ce catalogue ')
+			return -1 ;
+			END
+		
+			ELSE
+			BEGIN
+				IF (SELECT count(*) FROM CategorieModele cm WHERE cm.nom_categorie=@nom_categorie AND cm.marque_modele=@marque AND cm.portieres_modele=@portieres AND cm.serie_modele = @serie
+				  AND cm.type_carburant_modele=@type_carburant )= 0
+				  BEGIN
+					PRINT ('Cette modele n''existe pas dans cette categorie ')
+					return -1 ;
+				  END
+				  
+				ELSE 
+				EXEC createVehicule @matricule ,@kilometrage,@couleur,'Disponible',@num_serie,@marque,@serie,@portieres,@type_carburant ;
+				   
+			END
+	
+	END
+	
 		COMMIT TRANSACTION makeVehicule
 		PRINT('makeVehicule OK');
 		RETURN 1;

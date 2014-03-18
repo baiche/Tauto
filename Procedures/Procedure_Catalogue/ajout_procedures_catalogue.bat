@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+SET mssqlInstanceName=".\"
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createCatalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteCatalogue.sql

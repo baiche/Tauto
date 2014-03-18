@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+SET mssqlInstanceName=".\"
 sqlcmd -S %mssqlInstanceName% -i Procedure_Abonnement\Suppression_Procedure_Abonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_Catalogue\Suppression_Procedure_Catalogue.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_CatalogueCategorie\Suppression_Procedure_CatalogueCategorie.sql

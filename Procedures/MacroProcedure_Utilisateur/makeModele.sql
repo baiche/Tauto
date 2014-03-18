@@ -21,13 +21,36 @@ CREATE PROCEDURE dbo.makeModele
 	@marque 				nvarchar(50), -- PK
 	@serie 					nvarchar(50), -- PK
 	@type_carburant 		nvarchar(50), -- PK
-	@portieres 				tinyint  -- PK
+	@portieres 				tinyint,  -- PK
 	@annee 					int,
 	@prix 					money,
 	@reduction 				tinyint	-- nullable
 AS
 	BEGIN TRANSACTION makeModele
 	BEGIN TRY
+	
+	IF(SELECT count(*) FROM Catalogue c WHERE c.nom=@nom_catalogue)=0
+			BEGIN 
+			PRINT ('Le Catalogue n''existe pas ')
+			return -1 ;
+			END
+		ELSE
+		
+		BEGIN
+			IF(SELECT count(*) FROM CatalogueCategorie cc WHERE cc.nom_categorie=@nom_categorie AND cc.nom_catalogue=@nom_catalogue)=0
+			BEGIN 
+			PRINT ('Cette categorie n''existe pas dans ce catalogue ')
+			return -1 ;
+			END
+		
+			ELSE
+				BEGIN
+				EXEC createModele @marque,@serie,@type_carburant,@annee,@prix,@reduction,@portieres;
+				EXEC addModeleToCategorie @marque,@serie,@type_carburant,@portieres,@nom_categorie;
+				END
+		END
+			
+	
 		COMMIT TRANSACTION makeModele
 		PRINT('makeModele OK');
 		RETURN 1;

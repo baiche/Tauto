@@ -21,7 +21,6 @@ CREATE PROCEDURE dbo.createCategorie
 	@description 			nvarchar(50),
 	@nom_typepermis 		nvarchar(10)
 AS
-<<<<<<< HEAD
 
 	BEGIN TRY
 		BEGIN
@@ -42,18 +41,6 @@ AS
 		return @nom;
 		
 	END TRY
-=======
-	INSERT INTO Categorie(
-		nom, 
-		description, 
-		nom_typepermis
-	)
-	VALUES (
-		@nom,
-		@description,
-		@nom_typepermis
-	);
->>>>>>> 40b334c4f066b4dcc2ed0e9590974cd10a6cf120
 	
 	BEGIN CATCH
 		return -1	;

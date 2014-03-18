@@ -10,8 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
-
+SET mssqlInstanceName=".\"
 sqlcmd -S %mssqlInstanceName% -i Procedure_createConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteConducteur.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateConducteur.sql
