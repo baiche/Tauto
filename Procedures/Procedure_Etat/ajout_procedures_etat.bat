@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : Ajouter les procedures concernant les etats
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\"
+SET mssqlInstanceName=".\SQLexpress"
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createEtat.sql
 
