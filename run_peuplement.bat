@@ -12,7 +12,7 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLexpress"
 
-@echo on
+cd Peuplement
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ProcedureAnnexe.sql

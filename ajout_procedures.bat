@@ -10,6 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
+cd Procedures
 echo ajout des Procedure_Abonnement
 echo.
 cd Procedure_Abonnement
