@@ -1,12 +1,12 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_createLocation
--- Date        : 09/03/2014
+-- Fichier     : Procedure_updateLocation
+-- Date        : 17/03/2014
 -- Version     : 1.0
--- Auteur      : Jean-Luc Amitousa Mankoy
--- Correcteur  : David Lecoconnier
+-- Auteur      : David Lecoconnier
+-- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Crée une location
+-- Commentaire : Modifie une location
 ------------------------------------------------------------
 
 
@@ -17,21 +17,26 @@ IF OBJECT_ID ('dbo.createLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.createLocation
-	@matricule_vehicule 	nvarchar(50),
-	@id_contratLocation 	int,
-	@km 					int
+	@id 					int,
+	@id_facturation 		int, -- nullable
+	@id_etat			 	int  -- nullable
 AS
-	INSERT INTO Location(
-		matricule_vehicule,
-		id_contratLocation,
-		km
-	)
-	VALUES (
-		@matricule_vehicule,
-		@id_contratLocation,
-		@km
-	);
-	RETURN SCOPE_IDENTITY();
+	IF (@id IS NULL)
+		RAISERROR('Mauvais id', 10, -1);
+		
+	IF ( @id_facturation IS NOT NULL)
+	BEGIN
+		UPDATE Location
+		SET id_facturation = @id_facturation
+		WHERE id = @id;
+	END
+	IF ( @id_etat IS NOT NULL)
+	BEGIN
+		UPDATE Location
+		SET id_etat = @id_etat
+		WHERE id = @id;
+	END
+	
 GO
 
 /*CREATE PROCEDURE dbo.createLocation
