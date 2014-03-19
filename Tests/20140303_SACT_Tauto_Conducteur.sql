@@ -13,6 +13,8 @@ SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
+EXEC dbo.videTables
+
 INSERT INTO Permis(numero, valide, points_estimes) VALUES
 		('0000000001', DEFAULT, DEFAULT);
 INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expiration, periode_probatoire) VALUES

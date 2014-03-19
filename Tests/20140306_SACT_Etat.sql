@@ -13,6 +13,8 @@ SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
+EXEC dbo.videTables
+
 ------------------------------
 --INITIALISATIONS FOR All TESTS
 ------------------------------

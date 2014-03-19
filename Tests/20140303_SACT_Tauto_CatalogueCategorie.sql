@@ -8,7 +8,7 @@
 -- Integrateur : 
 -- Commentaire : test de la table CatalogueCategorie
 ------------------------------------------------------------
-
+USE Tauto_IBDR;
 
 DELETE FROM CatalogueCategorie;
 DELETE FROM Catalogue;
