@@ -56,9 +56,9 @@ AS
 		END
 		
 		SET @asCompteAbonne = (SELECT COUNT(*) FROM CompteAbonne 
-										WHERE nom_compteabonne = @nom_compteabonne 
-										AND   prenom_compteabonne = @prenom_compteabonne
-										AND   date_naissance_compteabonne = @date_naissance_compteabonne);
+										WHERE nom = @nom_compteabonne 
+										AND   prenom = @prenom_compteabonne
+										AND   date_naissance = @date_naissance_compteabonne);
 										
 		IF ( @asCompteAbonne = 0)
 		BEGIN

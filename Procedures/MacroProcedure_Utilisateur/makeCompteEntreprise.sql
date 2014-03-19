@@ -27,6 +27,63 @@ CREATE PROCEDURE dbo.makeCompteEntreprise
 AS
 	BEGIN TRANSACTION makeCompteEntreprise
 	
+		--On s'assure que  les champs ne sont pas NULL 
+	IF (@nom = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le nom doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@prenom = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le prenom doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@date_naissance = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: La date_naissance doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@iban = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le numero IBAN doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@courriel = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le courriel doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@telephone = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le numero de telephone doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@siret = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le numero de siret doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	
+	IF (@nom_entreprise = NULL)
+	BEGIN
+			PRINT('makeCompteEntreprise: Le nom de l''entreprise doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
 	--On veut s'assurer que l'on peut ajouter le CompteAbonne
 	
 	--Gestion de la liste noire
