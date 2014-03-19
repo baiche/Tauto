@@ -84,6 +84,7 @@ AS
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
+	
 	--On veut s'assurer que l'on peut ajouter le CompteAbonne
 	
 	--Gestion de la liste noire

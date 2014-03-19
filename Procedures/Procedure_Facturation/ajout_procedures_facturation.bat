@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\"
+SET mssqlInstanceName=".\SQLexpress"
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createFacturation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_printFacturation.sql
