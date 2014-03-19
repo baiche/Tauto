@@ -41,9 +41,9 @@ AS
 		@telephone
 	);
 	INSERT INTO Particulier(
-		nom,
-		prenom,
-		date_naissance
+		nom_compte,
+		prenom_compte,
+		date_naissance_compte
 	)
 	VALUES (
 		@nom,
@@ -88,7 +88,7 @@ AS
 		nom,
 		nom_compte,
 		prenom_compte,
-		date_naissance_compte
+		date_naissance_compte)
 	VALUES (
 		@siret,
 		@nom_entreprise,

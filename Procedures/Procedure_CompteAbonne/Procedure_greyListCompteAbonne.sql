@@ -22,5 +22,7 @@ CREATE PROCEDURE dbo.greyListCompteAbonne
 AS
 	UPDATE CompteAbonne 
 	SET liste_grise = 'true' 
-	WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance;
+	WHERE nom = @nom_abonne
+	AND prenom = @prenom_abonne 
+	AND date_naissance = @date_naissance_abonne;
 GO
