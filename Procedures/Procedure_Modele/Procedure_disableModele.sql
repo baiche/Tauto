@@ -11,8 +11,8 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.deleteModele', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.deleteModele
+IF OBJECT_ID ('dbo.disableModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableModele
 GO
 
 
