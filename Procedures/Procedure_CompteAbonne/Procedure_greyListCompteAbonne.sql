@@ -16,47 +16,11 @@ IF OBJECT_ID ('dbo.greyListCompteAbonne', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.greyListCompteAbonne
-
 	@nom_abonne 				nvarchar(50),
 	@prenom_abonne 				nvarchar(50),
 	@date_naissance_abonne 		date
-
 AS
-	BEGIN TRANSACTION greyList_compte_abonne
-		BEGIN TRY
-
-			DECLARE @actif_abonne				bit;
-			DECLARE @iban_abonne				char(25);
-			DECLARE @courriel_abonne			nvarchar(50);
-			DECLARE @telephone_abonne			nvarchar(50);
-			
-			SELECT @actif_abonne=actif,
-				   @iban_abonne=iban,
-				   @courriel_abonne=courriel,
-				   @telephone_abonne=telephone
-			FROM CompteAbonne 
-			WHERE nom=@nom_abonne
-			  AND prenom=@prenom_abonne
-			  AND date_naissance=@date_naissance_abonne
-			
-			EXEC dbo.updateCompteAbonne 
-				@nom=@nom_abonne,
-				@prenom=@prenom_abonne,
-				@date_naissance=@date_naissance_abonne,
-				@actif=@actif_abonne,
-				@liste_grise=1,
-				@iban=@iban_abonne,
-				@courriel=@courriel_abonne,
-				@telephone=@telephone_abonne;
-		
-					
-					
-				RETURN 0;
-			
-		END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION greyList_compte_abonne;
-			RETURN -1;
-		END CATCH
-	COMMIT TRANSACTION greyList_compte_abonne;
+	UPDATE CompteAbonne 
+	SET liste_grise = 'true' 
+	WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance;
 GO
