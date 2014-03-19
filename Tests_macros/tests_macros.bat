@@ -19,16 +19,19 @@ echo. >> rapport_tests_macros.txt
 
 echo Test makeCatalogue >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
+call ..\Peuplement\run_peuplement.bat nopause
 sqlcmd -S %mssqlInstanceName% -i 20140310_TPS_TAuto_makeCatalogue.sql >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
 
 echo Test makeParticulier >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
+call ..\Peuplement\run_peuplement.bat nopause
 sqlcmd -S %mssqlInstanceName% -i 20140310_TPS_TAuto_makeCompteParticulier.sql >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
 
 echo Test turnReservationIntoContratLocation >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
+call ..\Peuplement\run_peuplement.bat nopause
 sqlcmd -S %mssqlInstanceName% -i 20140310_TPS_TAuto_turnReservationIntoContratLocation.sql >> rapport_tests_macros.txt
 echo. >> rapport_tests_macros.txt
 

@@ -14,6 +14,7 @@ SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
+EXEC dbo.videTables
 --Mise en place du CompteAbonne
 INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
 ('de Finance','Boris','1990-09-08','true','false','FR7845163892548761329457816','boris.de.finance@mail.com','0647817920');

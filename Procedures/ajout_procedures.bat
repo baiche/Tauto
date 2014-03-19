@@ -153,4 +153,6 @@ cd ..\Procedure_Vehicule
 call .\ajout_procedures_vehicule.bat nopause
 echo.
 
+if "%1"=="nopause" goto start
 pause
+:start
