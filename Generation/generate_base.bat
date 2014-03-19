@@ -1,6 +1,6 @@
 @echo off
 rem ------------------------------------------------------------
-rem -- Fichier     : genarate_base.bat
+rem -- Fichier     : generate_base.bat
 rem -- Date        : 17/02/2014
 rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\"
+SET mssqlInstanceName=".\SQLexpress"
 
 @echo on
 sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
