@@ -47,6 +47,9 @@ AS
 			RETURN -1
 	END CATCH
 	
+	--Je n'ai pas à gérer le cas ou a_supprimer est vrai car cela veut dire que le 
+	-- compte_abonne est sur liste noire
+	
 	--Si la personne n'existe pas déjà
 	
 	IF((
@@ -94,8 +97,6 @@ AS
 			PRINT('makeCompteEntreprise OK');
 			RETURN 1 	
 		END	
-	
-	
 	
 	BEGIN TRY
 		COMMIT TRANSACTION makeCompteEntreprise

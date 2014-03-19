@@ -6,7 +6,8 @@
 -- Correcteur  : Mohamed Neti
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Crée un abonnement correspondant à un compte abonne et à un type d'abonnement
+-- Commentaire : Crée un abonnement correspondant à un 
+--				compte abonne et à un type d'abonnement
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
