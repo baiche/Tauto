@@ -22,6 +22,29 @@ CREATE PROCEDURE dbo.closeCompte
 AS
 	BEGIN TRANSACTION closeCompte
 	BEGIN TRY
+	
+		-- on regarde si le compte existe
+		
+		IF((SELECT COUNT(*) FROM CompteAbonne
+			WHERE nom = @nom
+			AND prenom = @prenom
+			AND date_naissance = @date_naissance) = 0)
+		BEGIN
+			PRINT('closeCompte: Le compte n''existe pas');
+			ROLLBACK TRANSACTION closeCompte
+			RETURN -1;
+		END 
+	
+		-- on regarde si le compte n'est pas déjà inactif
+		IF((SELECT actif FROM CompteAbonne
+			WHERE nom = @nom
+			AND prenom = @prenom
+			AND date_naissance = @date_naissance) = 'false')
+		BEGIN
+			PRINT('closeCompte: Le compte est deja inactif');
+			ROLLBACK TRANSACTION closeCompte
+			RETURN -1;
+		END 
 		
 		UPDATE CompteAbonne 
 		SET actif = 'false'
