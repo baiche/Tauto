@@ -25,6 +25,7 @@ AS
 	BEGIN TRY
 	
 		EXEC createCategorie @nom,@description,@nom_typepermis;
+		PRINT ('la categorie a été crée ');
 		
 		IF(SELECT count(*) FROM Catalogue c WHERE c.nom=@nom_catalogue)=0
 			BEGIN 
@@ -32,8 +33,10 @@ AS
 			return -1 ;
 			END
 		ELSE
+			BEGIN
+			PRINT ('je suis laaaa');
 			EXEC addCategorieToCatalogue @nom_catalogue,@nom;
-	
+			END
 			
 			
 		COMMIT TRANSACTION makeCategorie
