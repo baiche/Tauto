@@ -44,7 +44,8 @@ Contenue du projet  :
 	
 	- le "Readme.txt" : explique la structure du projet.
 	
-
 Pour lancer le projet :
-	1- pour avoir la base vide : 
-	2- lancer le fichier run_peuplement.bat qui génére les tables et les remplies 
+	1- pour avoir la base vide : "generate_base.bat"
+	2- pour avoir la base peuplée : "run_peuplement.bat"
+	3- pour executer les tests des contraintes de la base de donnée : tests_contrainte.bat
+	4- pour executer les tests  des macro-procédures : test_macros.bat 
