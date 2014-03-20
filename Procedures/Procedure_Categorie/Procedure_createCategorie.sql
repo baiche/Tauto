@@ -24,6 +24,7 @@ AS
 
 	BEGIN TRY
 		BEGIN
+	
 			INSERT INTO Categorie(
 			nom, 
 			description, 
@@ -38,12 +39,11 @@ AS
 			);
 		END
 		
-		return @nom;
-		
+		return 1;
 	END TRY
 	
 	BEGIN CATCH
-		return -1	;
+		RAISERROR('probleme lors de la creation de la categorie',10,1);
 	END CATCH
 
 GO

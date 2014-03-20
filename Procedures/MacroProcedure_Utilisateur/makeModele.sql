@@ -2,7 +2,7 @@
 -- Fichier     : makeModele.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Baiche
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
