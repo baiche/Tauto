@@ -256,9 +256,9 @@ BEGIN
 CREATE TABLE TypeAbonnement(
 	nom 				nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9]+)$',nom) = 1),
 	prix 				money 							NOT NULL 	DEFAULT 0, --j'ai changé le type, dans le dictionnaire c'est un entier
-	nb_max_vehicules 	int 										DEFAULT 1,
+	nb_max_vehicules 	int 							NOT NULL	DEFAULT 1				CHECK( nb_max_vehicules > 0),
 	a_supprimer 		bit 							NOT NULL 	DEFAULT 'false',
-	km					int											DEFAULT 1000			CHECK( km >= 0 )
+	km					int								NOT NULL	DEFAULT 1000			CHECK( km >= 0 )
 );
 PRINT('Table TypeAbonnement créée');
 END

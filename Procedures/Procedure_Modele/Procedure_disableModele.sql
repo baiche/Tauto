@@ -1,6 +1,6 @@
 ------------------------------------------------------------
 -- Fichier     : Procedure_disableModele
--- Date        : 04/04/2014
+-- Date        : 19/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
 -- Correcteur  : 
@@ -11,7 +11,10 @@
 
 USE TAuto_IBDR;
 
+IF OBJECT_ID ('dbo.disableModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableModele
 GO
+
 
 -- Cette procedure permet de desactiver un modele
 

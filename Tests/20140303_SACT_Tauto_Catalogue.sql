@@ -13,6 +13,8 @@ SET NOCOUNT ON
 
 USE Tauto_IBDR;
 
+EXEC dbo.videTables
+
 DELETE FROM Catalogue;
 
 --Test A.1

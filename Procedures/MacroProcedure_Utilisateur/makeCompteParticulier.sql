@@ -26,8 +26,50 @@ CREATE PROCEDURE dbo.makeCompteParticulier
 AS
 	BEGIN TRANSACTION makeCompteParticulier
 	
-	--On veut s'assurer que l'on peut ajouter le CompteAbonne
+	--On s'assure que  les champs ne sont pas NULL 
+	IF (@nom = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: Le nom doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
 	
+	IF (@prenom = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: Le prenom doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@date_naissance = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: La date_naissance doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@iban = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: Le numero IBAN doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@courriel = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: Le courriel doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	IF (@telephone = NULL)
+	BEGIN
+			PRINT('makeCompteParticulier: Le numero de telephone doit etre renseigne');
+			ROLLBACK TRANSACTION makeCompteParticulier
+			RETURN -1
+	END
+	
+	--On veut s'assurer que l'on peut ajouter le CompteAbonne
 	--Gestion de la liste noire
 	DECLARE @isInListeNoire		INT
 	BEGIN TRY
@@ -45,6 +87,9 @@ AS
 		ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END CATCH
+	
+	--Je n'ai pas à gérer le cas ou a_supprimer est vrai car cela veut dire que le 
+	-- compte_abonne est sur liste noire
 	
 	--Si la personne n'existe pas déjà
 	

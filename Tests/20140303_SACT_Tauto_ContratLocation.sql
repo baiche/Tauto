@@ -9,6 +9,7 @@
 -- Commentaire : test de la table ContratLocation
 ------------------------------------------------------------
 
+USE Tauto_IBDR;
 
 DELETE FROM ContratLocation;
 DELETE FROM Abonnement;
