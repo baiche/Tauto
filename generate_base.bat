@@ -12,11 +12,11 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=".\SQLexpress"
 
-
-sqlcmd -S %mssqlInstanceName% -i Generation\ScriptSuppression.sql
-sqlcmd -S %mssqlInstanceName% -i Generation\Generation.sql -v Param1="%cd%"
-sqlcmd -S %mssqlInstanceName% -i Generation\ProcedureAnnexe.sql
-
+cd Generation
+sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
+sqlcmd -S %mssqlInstanceName% -i Generation.sql -v Param1="%cd%"
+sqlcmd -S %mssqlInstanceName% -i ProcedureAnnexe.sql
+cd ..
 
 call .\ajout_procedures.bat nopause
 
