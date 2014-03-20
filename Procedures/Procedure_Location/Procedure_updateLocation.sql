@@ -2,8 +2,8 @@
 -- Fichier     : Procedure_updateLocation
 -- Date        : 17/03/2014
 -- Version     : 1.0
--- Auteur      : David Lecoconnier
--- Correcteur  : 
+-- Auteur      : Jean-Luc Amitousa Mankoy
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Modifie une location
@@ -12,11 +12,11 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.createLocation', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.createLocation
+IF OBJECT_ID ('dbo.updateLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateLocation
 GO
 
-CREATE PROCEDURE dbo.createLocation
+CREATE PROCEDURE dbo.updateLocation
 	@id 					int,
 	@id_facturation 		int, -- nullable
 	@id_etat			 	int  -- nullable
@@ -39,7 +39,7 @@ AS
 	
 GO
 
-/*CREATE PROCEDURE dbo.createLocation
+/*CREATE PROCEDURE dbo.updateLocation
 
 	@matricule_vehicule 	nvarchar(50),
 	@id_contratLocation 	int,
