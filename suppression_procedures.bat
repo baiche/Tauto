@@ -37,4 +37,7 @@ sqlcmd -S %mssqlInstanceName% -i Procedure_Retard\Suppression_Procedure_Retard.s
 sqlcmd -S %mssqlInstanceName% -i Procedure_SousPermis\Suppression_Procedure_SousPermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_TypeAbonnement\Suppression_Procedure_TypeAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_Vehicule\Suppression_Procedure_Vehicule.sql
+
+if "%1"=="nopause" goto start
 pause
+:start

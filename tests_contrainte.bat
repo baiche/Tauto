@@ -14,6 +14,10 @@ SET mssqlInstanceName=".\SQLEXPRESS"
 
 cd Tests
 
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
+sqlcmd -S %mssqlInstanceName% -i ..\Generation\ProcedureAnnexe.sql
+
 echo Debut des tests > ..\rapport_tests_contrainte.txt
 echo. >> ..\rapport_tests_contrainte.txt
 
@@ -124,4 +128,12 @@ echo. >> ..\rapport_tests_contrainte.txt
 sqlcmd -S %mssqlInstanceName% -i 20140310_SACT_Tauto_ReservationVehicule.sql >> ..\rapport_tests_contrainte.txt
 echo. >> ..\rapport_tests_contrainte.txt
 
+echo.
+echo _____________________________________________
+echo Rapport genere : rapport_tests_contrainte.txt
+echo _____________________________________________
+
+cd ..
+if "%1"=="nopause" goto start
 pause
+:start
