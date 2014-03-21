@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : 
+-- Commentaire : Renvoie 1 si l'action a pu être faite, une exception en cas d'erreur
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -17,8 +17,9 @@ GO
 
 CREATE PROCEDURE dbo.findOtherVehicule
 	@matricule 			nvarchar(50), -- PK
-	@itMustBeDone		bit, -- true si c'est obligatoire, dans le cas d'une détérioration du véhicule, false si c'est pour étendre un contrat
-	@date_fin			date
+	@itMustBeDone		bit, -- true si c'est obligatoire (dans le cas d'une détérioration du véhicule), il faut modifier les réservations concernées
+							 -- false si c'est pour étendre un contrat utiliser l'argument suivant
+	@date_fin			date -- permet de déterminer s'il est possible d'étendre la location jusqu'à cette date
 AS
 	BEGIN TRY
 		PRINT('findOtherVehicule OK');

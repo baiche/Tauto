@@ -41,7 +41,7 @@ AS
 		END
 		
 		IF @date_avant IS NULL
-			SET @date_avant = CONVERT(date, GETDATE());
+			SET @date_avant = GETDATE();
 			
 		IF @km_avant IS NULL
 			SELECT @km_avant = kilometrage FROM Vehicule WHERE matricule = @matricule;

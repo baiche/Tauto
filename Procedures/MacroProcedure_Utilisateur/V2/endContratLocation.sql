@@ -11,23 +11,23 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.makeEtat', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.makeEtat	
+IF OBJECT_ID ('dbo.endContratLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.endContratLocation	
 GO
 
-CREATE PROCEDURE dbo.makeEtat
+CREATE PROCEDURE dbo.endContratLocation
 	@idContratLocation	int, -- PK
 	@date_fin_effective date, -- nullable, en pratique, cet argument ne devrait pas apparaître. Il est présent pour faire le peuplement. Prendre la valeur du jour si nul
 AS
-	BEGIN TRANSACTION makeEtat
+	BEGIN TRANSACTION endContratLocation
 	BEGIN TRY
-		COMMIT TRANSACTION makeEtat
-		PRINT('makeEtat OK');
+		COMMIT TRANSACTION endContratLocation
+		PRINT('endContratLocation OK');
 		RETURN 1;
 	END TRY
 	BEGIN CATCH
-		PRINT('makeEtat: ERROR');
-		ROLLBACK TRANSACTION makeEtat
+		PRINT('endContratLocation: ERROR');
+		ROLLBACK TRANSACTION endContratLocation
 		RETURN -1;
 	END CATCH
 GO
