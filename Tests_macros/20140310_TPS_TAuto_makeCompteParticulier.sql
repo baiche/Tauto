@@ -29,10 +29,9 @@ BEGIN TRY
 			@nom = 'Bon',
 			@prenom = 'Jean', 		
 			@date_naissance = '1951-05-21',
-			@iban = 'LU2800193006447500001234567',
+			@iban = 'LU2800194006447500001234567',
 			@courriel = 'blabla@mail.com',
 			@telephone = '0324858889'
-	PRINT('Apres l''utilisation de makeCompteParticulier ')	
 			
 	IF ( @ReturnValue = 1)
 	BEGIN
@@ -41,7 +40,7 @@ BEGIN TRY
 			WHERE nom = 'Bon'
 			AND	prenom = 'Jean'
 			AND date_naissance = '1951-05-21'
-			AND iban = 'LU2800193006447500001234567'
+			AND iban = 'LU2800194006447500001234567'
 			AND courriel = 'blabla@mail.com'
 			AND	telephone = '0324858889') = 1)
 		BEGIN
@@ -69,7 +68,6 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
-	SELECT ERROR_MESSAGE() AS msg
 	PRINT('------------------------------Test 1 - Exception leve - KO');
 END CATCH
 GO
