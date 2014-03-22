@@ -33,14 +33,19 @@ BEGIN TRY
 		@fiche_apres = 'fichetest1',
 		@degat = 'false',
 		@vehicule_statut = 'Disponible';
-	
-	IF (  (SELECT COUNT (*) FROM Etat WHERE
+		
+	DECLARE @nbEtat int, @factVal money;
+	SELECT @nbEtat = COUNT (*) FROM Etat WHERE
 			id = @ReturnValue AND
 			date_apres = '2014-03-25T10:00:00' AND
 			km_apres = 15000 AND
 			fiche_apres = 'fichetest1' AND
 			degat = 'false'
-		) = 1)
+			
+	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
+	
+	
+	IF ( @nbEtat = 1 AND @factVal = 90.00 )
 	BEGIN
 		PRINT('------------------------------Test 1 OK');
 	END
@@ -67,7 +72,7 @@ BEGIN TRY
 		@degat = NULL,
 		@vehicule_statut = NULL;
 		
-	DECLARE @nbEtat int, @nbVeh int;
+	DECLARE @nbEtat int, @nbVeh int, @factVal money;
 	SELECT @nbEtat = COUNT (*) FROM Etat WHERE
 			id = @ReturnValue AND
 			date_apres IS NOT NULL AND
@@ -75,7 +80,9 @@ BEGIN TRY
 			fiche_apres = 'fichetest2' AND
 			degat = 'false';
 	SELECT @nbVeh = COUNT(*) FROM Vehicule WHERE matricule = '0775896wi' AND statut LIKE 'Disponible';
-	IF ( @nbEtat = 1 AND @nbVeh = 1 )
+	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
+	
+	IF ( @nbEtat = 1 AND @nbVeh = 1 AND @factVal = 60.00 )
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END
@@ -83,6 +90,7 @@ BEGIN TRY
 	BEGIN
 		PRINT('------------------------------Test 2 NOT -- OK');
 	END
+	
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test 2 NOT - - OK');
@@ -90,31 +98,30 @@ END CATCH
 GO
 
 --Test 3
--- Insertion en mettant une date de fin < date de début
+-- Calcul de la facture de la location avec un incident non pénalisable
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.endEtat
 		@idContratLocation = 8,
-		@matricule = '0775896wi',
-		@date_apres = NULL,
-		@km_apres = 130000,
-		@fiche_apres = 'fichetest2',
-		@degat = NULL,
-		@vehicule_statut = NULL;
-
-	/*IF ( @ReturnValue = -1)
-	BEGIN
-		PRINT('------------------------------Test 3 - Tuple non inséré');
-	END
-	ELSE
-	BEGIN
-		PRINT('------------------------------Test 3 - Tuple inséré');
-	END*/
-
-	IF (  (SELECT COUNT (*) FROM Etat WHERE
-			id = 9 AND
-			date_avant = GETDATE()
-		) = 1)
+		@matricule = '0775896wy',
+		@date_apres = '2014-03-25T12:00:00',
+		@km_apres = 30075,
+		@fiche_apres = 'fichetest3',
+		@degat = 'false',
+		@vehicule_statut = 'Disponible';
+		
+	DECLARE @nbEtat int, @factVal money;
+	SELECT @nbEtat = COUNT (*) FROM Etat WHERE
+			id = @ReturnValue AND
+			date_apres = '2014-03-25T12:00:00' AND
+			km_apres = 30075 AND
+			fiche_apres = 'fichetest3' AND
+			degat = 'false'
+			
+	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
+	
+	
+	IF ( @nbEtat = 1 AND @factVal = 90.00 )
 	BEGIN
 		PRINT('------------------------------Test 3 OK');
 	END
@@ -129,20 +136,30 @@ END CATCH
 GO
 
 --Test 4
--- Insertion en mettant une date de fin < date du jour
+-- Calcul de la facture de la location avec un incident pénalisable
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.endEtat
-		@idContratLocation = 7,
-		@matricule = '0775896wy',
-		@date_avant = NULL,
-		@km_avant = NULL,
-		@fiche_avant = 'fichetest4';
-			
-	IF (  (SELECT COUNT (*) FROM Etat WHERE
+		@idContratLocation = 8,
+		@matricule = '0775896wr',
+		@date_apres = '2014-03-25T12:00:00',
+		@km_apres = 30075,
+		@fiche_apres = 'fichetest4',
+		@degat = 'false',
+		@vehicule_statut = 'Disponible';
+		
+	DECLARE @nbEtat int, @factVal money;
+	SELECT @nbEtat = COUNT (*) FROM Etat WHERE
 			id = @ReturnValue AND
-			km_avant = 30000
-		) = 1)
+			date_apres = '2014-03-25T12:00:00' AND
+			km_apres = 30075 AND
+			fiche_apres = 'fichetest4' AND
+			degat = 'false'
+			
+	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
+	
+	
+	IF ( @nbEtat = 1 AND @factVal = 140.00 )
 	BEGIN
 		PRINT('------------------------------Test 4 OK');
 	END
@@ -153,5 +170,43 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test 4 NOT - - OK');
+END CATCH
+GO
+
+--Test 5
+-- Calcul de la facture de la location avec une infraction de 100€ non regle
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.endEtat
+		@idContratLocation = 8,
+		@matricule = '0775896wt',
+		@date_apres = '2014-03-25T10:00:00',
+		@km_apres = 35050,
+		@fiche_apres = 'fichetest5',
+		@degat = 'false',
+		@vehicule_statut = 'Disponible';
+		
+	DECLARE @nbEtat int, @factVal money;
+	SELECT @nbEtat = COUNT (*) FROM Etat WHERE
+			id = @ReturnValue AND
+			date_apres = '2014-03-25T10:00:00' AND
+			km_apres = 35050 AND
+			fiche_apres = 'fichetest5' AND
+			degat = 'false'
+			
+	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
+	
+	
+	IF ( @nbEtat = 1 AND @factVal = 190.00 )
+	BEGIN
+		PRINT('------------------------------Test 5 OK');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 5 NOT -- OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 5 NOT - - OK');
 END CATCH
 GO

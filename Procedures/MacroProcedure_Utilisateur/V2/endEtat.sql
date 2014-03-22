@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Met fin à état non terminé
+-- Commentaire : Met fin à un état non terminé
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -26,7 +26,7 @@ CREATE PROCEDURE dbo.endEtat
 AS
 	BEGIN TRANSACTION endEtat
 	BEGIN TRY
-		DECLARE @id_Loc int, @idEtat int, @date_ap datetime, @km_ap int, @fiche_ap nvarchar(50);
+		DECLARE @id_Loc int, @idEtat int, @date_av datetime, @date_ap datetime, @km_ap int, @fiche_ap nvarchar(50), @diffDay int, @prix money, @idFac int, @nbIntePenal int, @sumInfra int;
 		
 		SELECT @id_Loc = id, @idEtat = id_etat FROM Location WHERE matricule_vehicule = @matricule AND id_contratLocation = @idContratLocation;
 				
@@ -42,7 +42,7 @@ AS
 			RETURN -1;
 		END		
 		
-		SELECT @date_ap = date_apres, @km_ap = km_apres, @fiche_ap = fiche_apres FROM Etat WHERE id = @idEtat;
+		SELECT @date_ap = date_apres, @km_ap = km_apres, @fiche_ap = fiche_apres, @date_av = date_avant FROM Etat WHERE id = @idEtat;
 		
 		IF @date_ap IS NOT NULL OR @km_ap IS NOT NULL OR @fiche_ap NOT LIKE ''
 		BEGIN
@@ -85,6 +85,27 @@ AS
 		EXEC dbo.setStatutVehicule
 			@matricule = @matricule,
 			@statut = @vehicule_statut;
+			
+		SELECT @diffDay = DATEDIFF(day, @date_av, @date_apres);
+		SET @prix = @diffDay * (SELECT prix FROM TypeAbonnement WHERE nom = 
+			(SELECT nom_typeabonnement FROM Abonnement WHERE id =
+				(SELECT id_abonnement FROM ContratLocation WHERE id = @idContratLocation)))
+
+		SET @sumInfra = 0;
+		SELECT @sumInfra = SUM(montant) FROM Infraction WHERE id_location = @id_Loc AND regle = 'false';
+		SELECT @nbIntePenal = COUNT(*) FROM Incident WHERE id_location = @id_Loc AND penalisable = 'true';
+		
+		IF @sumInfra IS NULL
+			SET @sumInfra = 0;
+		
+		SET @prix += (50.0*@nbIntePenal) + @sumInfra;
+		
+		EXEC @idFac = dbo.createFacturation
+			@montant = @prix;
+		
+		UPDATE Location
+		SET id_facturation = @idFac
+		WHERE id = @id_Loc;
 			
 		COMMIT TRANSACTION endEtat
 		PRINT('endEtat OK');

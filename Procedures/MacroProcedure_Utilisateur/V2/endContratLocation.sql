@@ -17,10 +17,27 @@ GO
 
 CREATE PROCEDURE dbo.endContratLocation
 	@idContratLocation	int, -- PK
-	@date_fin_effective date, -- nullable, en pratique, cet argument ne devrait pas apparaître. Il est présent pour faire le peuplement. Prendre la valeur du jour si nul
+	@date_fin_effective datetime, -- nullable, en pratique, cet argument ne devrait pas apparaître. Il est présent pour faire le peuplement. Prendre la valeur du jour si nul
 AS
 	BEGIN TRANSACTION endContratLocation
 	BEGIN TRY
+		DECLARE @Location_T TABLE(
+			id int,
+			id_facturation int,
+			id_etat int
+		);
+		IF @date_fin_effective IS NULL
+			@date_fin_effective = GETDATE();
+			
+		DECLARE @Locat_cursor CURSOR
+			FOR SELECT * FROM @Location_T;
+		OPEN @Locat_cursor;
+		FETCH NEXT FROM
+			INTO ;
+		CLOSE @Locat_cursor;
+		DEALLOCATE @Locat_cursor;
+			
+			
 		COMMIT TRANSACTION endContratLocation
 		PRINT('endContratLocation OK');
 		RETURN 1;

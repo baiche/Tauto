@@ -353,7 +353,7 @@ CREATE TABLE Infraction(
 	id_location 		int,
 	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',nom) = 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
+	description 		nvarchar(150)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -368,7 +368,7 @@ BEGIN
 CREATE TABLE Incident(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
+	description 		nvarchar(150) 					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
 	penalisable 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
