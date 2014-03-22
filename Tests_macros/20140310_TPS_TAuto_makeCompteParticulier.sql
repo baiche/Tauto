@@ -32,7 +32,7 @@ BEGIN TRY
 			@iban = 'LU2800193006447500001234567',
 			@courriel = 'blabla@mail.com',
 			@telephone = '0324858889'
-			
+	PRINT('Apres l''utilisation de makeCompteParticulier ')	
 			
 	IF ( @ReturnValue = 1)
 	BEGIN
@@ -69,6 +69,7 @@ BEGIN TRY
 	END
 END TRY
 BEGIN CATCH
+	SELECT ERROR_MESSAGE() AS msg
 	PRINT('------------------------------Test 1 - Exception leve - KO');
 END CATCH
 GO

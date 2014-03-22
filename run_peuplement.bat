@@ -17,7 +17,9 @@ sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\Generation.sql -v Param1="%cd%"
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ProcedureAnnexe.sql
 
-
+cd..
+call .\ajout_procedures.bat nopause
+cd Peuplement
 sqlcmd -S %mssqlInstanceName% -i .\00_Peuplement_TypeAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i .\01_Peuplement_Permis.sql
 sqlcmd -S %mssqlInstanceName% -i .\02_Peuplement_SousPermis.sql

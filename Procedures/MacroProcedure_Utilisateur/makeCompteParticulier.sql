@@ -74,7 +74,6 @@ AS
 	DECLARE @isInListeNoire		INT
 	BEGIN TRY
 		EXEC @isInListeNoire = dbo.isInListeNoire @nom,@prenom,@date_naissance;
-
 		IF(@isInListeNoire = 1)
 		BEGIN
 			PRINT('makeCompteParticulier: La personne est sur liste noire');
@@ -87,12 +86,11 @@ AS
 		ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END CATCH
-	
+
 	--Je n'ai pas à gérer le cas ou a_supprimer est vrai car cela veut dire que le 
 	-- compte_abonne est sur liste noire
 	
 	--Si la personne n'existe pas déjà
-	
 	IF((
 		SELECT COUNT(*) 
 		FROM CompteAbonne
@@ -101,8 +99,8 @@ AS
 		AND date_naissance = @date_naissance) = 0)
 		BEGIN 
 			--ajout du compte abonne
-			EXEC dbo.createCompteAbonne @nom, @prenom, @date_naissance, 1, 0, @iban,@telephone, @courriel;
-			 
+			EXEC dbo.createParticulier @nom, @prenom, @date_naissance, @iban,@courriel, @telephone;
+			
 			--ajout dans la table particulier
 			INSERT INTO Particulier (nom_compte, prenom_compte, date_naissance_compte)
 			VALUES (@nom,@prenom,@date_naissance)
@@ -112,6 +110,7 @@ AS
 		END
 		
 	ELSE
+	BEGIN
 	-- Si la personne existe déjà
 		--On regarde si le compte est actif
 		IF((
@@ -139,4 +138,5 @@ AS
 			PRINT('makeCompteParticulier OK');
 			RETURN 1 	
 		END
+	END
 GO

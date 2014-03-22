@@ -14,3 +14,7 @@ USE TAuto_IBDR;
 IF OBJECT_ID ('dbo.createEtat', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.createEtat
 GO
+
+IF OBJECT_ID ('dbo.updateEtat', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateEtat
+GO
