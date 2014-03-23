@@ -101,6 +101,9 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT('makeCompteEntreprise: ERROR');
+		DECLARE @msg varchar(4000)
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
 		ROLLBACK TRANSACTION makeCompteEntreprise
 			RETURN -1
 	END CATCH
@@ -156,6 +159,9 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT('makeCompteEntreprise: ERROR');
+		DECLARE @msg varchar(4000)
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
 		ROLLBACK TRANSACTION makeCompteEntreprise
 		RETURN -1;
 	END CATCH

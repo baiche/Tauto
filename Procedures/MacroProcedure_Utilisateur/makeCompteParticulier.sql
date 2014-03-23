@@ -86,6 +86,9 @@ AS
 		END TRY
 		BEGIN CATCH
 			PRINT('makeCompteParticulier: ERROR');
+			DECLARE @msg varchar(4000)
+			SET @msg = ERROR_MESSAGE()
+			PRINT(@msg)
 			ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END CATCH
