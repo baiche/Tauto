@@ -316,11 +316,8 @@ AS
 						
 		WHILE	@@FETCH_STATUS=0
 		BEGIN	
-			EXEC dbo.printFacturation @id_location;
-			SET @total += (SELECT  f.montant 
-							FROM Facturation f, Location l
-							WHERE l.id = @id_location
-							AND l.id_facturation = f.id)
+			-- affichage du resultat
+			PRINT @matricule_courant + @couleur_courante + @marque_modele_courant + @serie_modele_courant + @type_carburant_modele +  @portieres_modele_courant + @statut_courant
 							
 			FETCH NEXT FROM Curseur_location 
 			INTO	@matricule_courant,

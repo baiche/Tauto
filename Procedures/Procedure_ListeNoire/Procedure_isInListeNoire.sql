@@ -22,19 +22,17 @@ CREATE PROCEDURE dbo.isInListeNoire
 AS
 	BEGIN TRY
 		DECLARE @present			INT	
-		
 		SET @present = 
 		(SELECT COUNT(*) FROM ListeNoire
 		WHERE nom = @nom
 		AND prenom = @prenom
 		AND date_naissance = @date_naissance)
-		
 		IF (@present = 0)
 			RETURN 0
 		ELSE
 			RETURN 1
 	END TRY
 	BEGIN CATCH
-	RAISERROR('Erreur dans la fonction dbo.isInListeNoire',10,1)
+		RAISERROR('Erreur dans la fonction dbo.isInListeNoire',10,1)
 	END CATCH
 GO

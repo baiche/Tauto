@@ -6,7 +6,7 @@
 -- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Supprime la location, renvoie 0 en cas de succès, -1 autrement
+-- Commentaire : Supprime la locatio
 ------------------------------------------------------------
 
 
@@ -17,6 +17,14 @@ IF OBJECT_ID ('dbo.deleteLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.deleteLocation
+	@id_location		int
+AS
+	DELETE FROM Location
+	WHERE id = @id_location
+GO
+
+
+/*CREATE PROCEDURE dbo.deleteLocation
 
 	@id_location		int
 		
@@ -92,4 +100,4 @@ AS
 			RETURN -1;
 		END CATCH
 	COMMIT TRANSACTION delete_location;
-GO
+GO*/

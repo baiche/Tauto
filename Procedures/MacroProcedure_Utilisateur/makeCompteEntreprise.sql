@@ -22,16 +22,82 @@ CREATE PROCEDURE dbo.makeCompteEntreprise
 	@iban 				nvarchar(50),
 	@courriel 			nvarchar(50),
 	@telephone 			nvarchar(50),
-	@siret 				char(14),
+	@siret 				nvarchar(50),
 	@nom_entreprise		nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteEntreprise
-	
-	--On veut s'assurer que l'on peut ajouter le CompteAbonne
-	
-	--Gestion de la liste noire
-	DECLARE @isInListeNoire		INT
+	DECLARE @msg varchar(4000)
 	BEGIN TRY
+		--On s'assure que  les champs ne sont pas NULL 
+		IF (@nom IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le nom doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@prenom IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le prenom doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@date_naissance IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: La date_naissance doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@iban IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le numero IBAN doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@courriel IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le courriel doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@telephone IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le numero de telephone doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		IF (@siret IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le numero de siret doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		
+		IF (@nom_entreprise IS NULL)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le nom de l''entreprise doit etre renseigne');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		
+		--On ne veut pas que le siret que l'on veut inserer soit trop long
+		IF (LEN(@siret) > 14)
+		BEGIN
+				PRINT('makeCompteEntreprise: Le numero de siret est trop long');
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1
+		END
+		--On veut s'assurer que l'on peut ajouter le CompteAbonne
+		
+		--Gestion de la liste noire
+		DECLARE @isInListeNoire		INT
+
 		EXEC @isInListeNoire = dbo.isInListeNoire @nom,@prenom,@date_naissance;
 
 		IF(@isInListeNoire = 1)
@@ -40,70 +106,59 @@ AS
 			ROLLBACK TRANSACTION makeCompteEntreprise
 			RETURN -1
 		END
-	END TRY
-	BEGIN CATCH
-		PRINT('makeCompteEntreprise: ERROR');
-		ROLLBACK TRANSACTION makeCompteEntreprise
-			RETURN -1
-	END CATCH
-	
-	--Si la personne n'existe pas déjà
-	
-	IF((
-		SELECT COUNT(*) 
-		FROM CompteAbonne
-		WHERE nom = @nom
-		AND prenom = @prenom
-		AND date_naissance = @date_naissance) = 0)
-		BEGIN 
-			--ajout du compte abonne
-			EXEC dbo.createCompteAbonne @nom, @prenom, @date_naissance, 1, 0, @iban,@telephone, @courriel;
-			 
-			--ajout dans la table particulier
-			INSERT INTO Entreprise(nom_compte, prenom_compte, date_naissance_compte, siret, nom)
-			VALUES (@nom,@prenom,@date_naissance, @siret,@nom_entreprise)
-			COMMIT TRANSACTION makeCompteEntreprise
-			PRINT('makeCompteEntreprise OK');
-			RETURN 1;
-		END
-	ELSE
-	-- Si la personne existe déjà
-		--On regarde si le compte est actif
+
+		--Je n'ai pas à gérer le cas ou a_supprimer est vrai car cela veut dire que le 
+		-- compte_abonne est sur liste noire
+		
+		--Si la personne n'existe pas déjà
+		
 		IF((
-			SELECT actif 
+			SELECT COUNT(*) 
 			FROM CompteAbonne
 			WHERE nom = @nom
 			AND prenom = @prenom
-			AND date_naissance = @date_naissance) =  1
-		)
-		-- s'il l'est on le signale
-		BEGIN 
-			PRINT 'makeCompteEntreprise : Le compte existe déjà'
-			ROLLBACK TRANSACTION makeCompteEntreprise
-			RETURN -1;
-		END
+			AND date_naissance = @date_naissance) = 0)
+			BEGIN 
+				--ajout du compte abonne
+				EXEC dbo.createEntreprise @nom, @prenom, @date_naissance, @iban, @courriel, @telephone, @siret, @nom_entreprise;
+			END
 		ELSE
-		-- s'il ne l'est pas on le rend actif
-		BEGIN
-			UPDATE CompteAbonne
-			SET actif = 1
-			WHERE nom = @nom
-			AND prenom = @prenom
-			AND date_naissance = @date_naissance
+		-- Si la personne existe déjà
+			--On regarde si le compte est actif
+			IF((
+				SELECT actif 
+				FROM CompteAbonne
+				WHERE nom = @nom
+				AND prenom = @prenom
+				AND date_naissance = @date_naissance) =  1
+			)
+			-- s'il l'est on le signale
+			BEGIN 
+				PRINT 'makeCompteEntreprise : Le compte existe déjà'
+				ROLLBACK TRANSACTION makeCompteEntreprise
+				RETURN -1;
+			END
+			ELSE
+			-- s'il ne l'est pas on le rend actif
+			BEGIN
+				UPDATE CompteAbonne
+				SET actif = 1
+				WHERE nom = @nom
+				AND prenom = @prenom
+				AND date_naissance = @date_naissance
+				COMMIT TRANSACTION makeCompteEntreprise
+				PRINT('makeCompteEntreprise OK');
+				RETURN 1 	
+			END	
+		
 			COMMIT TRANSACTION makeCompteEntreprise
 			PRINT('makeCompteEntreprise OK');
-			RETURN 1 	
-		END	
-	
-	
-	
-	BEGIN TRY
-		COMMIT TRANSACTION makeCompteEntreprise
-		PRINT('makeCompteEntreprise OK');
-		RETURN 1;
-	END TRY
+			RETURN 1;
+		END TRY
 	BEGIN CATCH
 		PRINT('makeCompteEntreprise: ERROR');
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
 		ROLLBACK TRANSACTION makeCompteEntreprise
 		RETURN -1;
 	END CATCH

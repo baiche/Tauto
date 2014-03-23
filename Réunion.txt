@@ -1,0 +1,41 @@
+Dans le répertoire racine !
+Un script de création
+Un script de peuplement
+Un script pour les tests
+Un script pour les procédures
+
+---
+Répartie
+-> fragmentation verticale ou horizontale ou les 2
+ex: de A à M, N à Z pour l'horizontale
+verticale = on casse la table en deux morceaux au niveau des colonnes
+DISTRIBUE = 
+une modif au niveau du siège doit être propagé dans toutes les agences (réplication instantanée, transactionnelle)
+siège social = publicateur et agences = abonnés
+
+transaction répartie
+répartie pur et dur, tout le monde est égal
+
+----
+Démonstrateur parfait et répartie commencé
+
+
+v1 réservé au même moment
+v2 réservé après
+v3 réservé avant
+v4 réservé prendant
+v5 ok !
+
+Au moment de la transformation :
+numéro de réservation, nom du compte abonne, nom du conducteur
+
+trigger
+
+sophie dupont -> sophie durand
+
+
+power point, manip sur le démonstrateur à préparer
+
+rapport papier et le zip
+rapport = concaténation des livrables + tirages papier du pptx
+annexe: liste inverse des réalisations de chaque membre

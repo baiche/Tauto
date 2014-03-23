@@ -10,11 +10,10 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+SET mssqlInstanceName=".\SQLexpress"
 
-sqlcmd -S %mssqlInstanceName% -i Procedure_createModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteModele.sql
-sqlcmd -S %mssqlInstanceName% -i Procedure_disablePrixModele.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_disableModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updatePrixModele.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReductionModele.sql
 

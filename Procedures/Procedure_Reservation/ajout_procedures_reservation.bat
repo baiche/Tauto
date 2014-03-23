@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+SET mssqlInstanceName=".\SQLexpress"
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteReservation.sql

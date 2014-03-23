@@ -118,4 +118,3 @@ BEGIN CATCH
 	PRINT('------------------------------Test A.5 OK')
 END CATCH
 
-DELETE FROM Categorie;

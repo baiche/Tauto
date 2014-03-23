@@ -13,6 +13,8 @@
 
 USE Tauto_IBDR;
 
+EXEC dbo.videTables
+
 --(ERASEME: les commentaires suivant correspond au 1er test de la contrainte A 
 -- répertorié dans le document 20140228_ACT_ImcompleteExample_Particulier.docx. 
 -- Les autres commentaires correspondent chacun à un test dans le documents 

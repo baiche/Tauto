@@ -3,10 +3,10 @@
 -- Date        : 09/03/2014
 -- Version     : 1.0
 -- Auteur      : Jean-Luc Amitousa Mankoy
--- Correcteur  : 
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire :
+-- Commentaire : Crée une location
 ------------------------------------------------------------
 
 
@@ -17,10 +17,29 @@ IF OBJECT_ID ('dbo.createLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.createLocation
+	@matricule_vehicule 	nvarchar(50),
+	@id_contratLocation 	int,
+	@km 					int
+AS
+	INSERT INTO Location(
+		matricule_vehicule,
+		id_contratLocation,
+		km
+	)
+	VALUES (
+		@matricule_vehicule,
+		@id_contratLocation,
+		@km
+	);
+	RETURN SCOPE_IDENTITY();
+GO
+
+/*CREATE PROCEDURE dbo.createLocation
 
 	@matricule_vehicule 	nvarchar(50),
 	@id_contratLocation 	int,
-	@fiche_etat_avant		nvarchar(50)
+	@fiche_etat_avant		nvarchar(50),
+	@km 					int
 
 	--------------------------------------------------------------------------
 	------------------------- RESUME DE LA PROCEDURE -------------------------
@@ -158,4 +177,4 @@ AS
 			RETURN -1;
 		END CATCH
 	COMMIT TRANSACTION create_location;
-GO
+GO*/

@@ -16,8 +16,12 @@ IF OBJECT_ID ('dbo.blackListCompteAbonne', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.blackListCompteAbonne
 GO
 
-IF OBJECT_ID ('dbo.createCompteAbonne', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.createCompteAbonne
+IF OBJECT_ID ('dbo.createParticulier', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createParticulier
+GO
+
+IF OBJECT_ID ('dbo.createEntreprise', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createEntreprise
 GO
 
 IF OBJECT_ID ('dbo.deleteCompteAbonne', 'P') IS NOT NULL
