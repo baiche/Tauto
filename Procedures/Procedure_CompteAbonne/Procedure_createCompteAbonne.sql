@@ -61,7 +61,7 @@ CREATE PROCEDURE dbo.createEntreprise
 	@nom					nvarchar(50),
 	@prenom 				nvarchar(50),
 	@date_naissance 		date,
-	@iban					char(25),
+	@iban					nvarchar(50),
 	@courriel				nvarchar(50),
 	@telephone				nvarchar(50),
 	@siret 					char(14),

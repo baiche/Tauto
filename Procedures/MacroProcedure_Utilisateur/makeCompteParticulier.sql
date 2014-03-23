@@ -27,43 +27,45 @@ AS
 	BEGIN TRANSACTION makeCompteParticulier
 	
 	BEGIN TRY
+	
+		
 		--On s'assure que  les champs ne sont pas NULL 
-		IF (@nom = NULL)
+		IF (@nom IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: Le nom doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END
 		
-		IF (@prenom = NULL)
+		IF (@prenom IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: Le prenom doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END
 		
-		IF (@date_naissance = NULL)
+		IF (@date_naissance IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: La date_naissance doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END
 		
-		IF (@iban = NULL)
+		IF (@iban IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: Le numero IBAN doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END
 		
-		IF (@courriel = NULL)
+		IF (@courriel IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: Le courriel doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
 				RETURN -1
 		END
 		
-		IF (@telephone = NULL)
+		IF (@telephone IS NULL)
 		BEGIN
 				PRINT('makeCompteParticulier: Le numero de telephone doit etre renseigne');
 				ROLLBACK TRANSACTION makeCompteParticulier
@@ -141,10 +143,10 @@ AS
 		END
 	END TRY
 	BEGIN CATCH
+		PRINT 'makeCompteParticulier : Exception recue'
 		DECLARE @msg varchar(4000)
 		SET @msg = ERROR_MESSAGE()
 		PRINT(@msg)
-		PRINT 'makeCompteParticulier : Exception recue'
 		ROLLBACK TRANSACTION makeCompteParticulier
 		RETURN -1;
 	END CATCH

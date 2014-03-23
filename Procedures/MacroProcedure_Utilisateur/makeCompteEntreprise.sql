@@ -22,55 +22,55 @@ CREATE PROCEDURE dbo.makeCompteEntreprise
 	@iban 				nvarchar(50),
 	@courriel 			nvarchar(50),
 	@telephone 			nvarchar(50),
-	@siret 				char(14),
+	@siret 				nvarchar(50),
 	@nom_entreprise		nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteEntreprise
 	
 		--On s'assure que  les champs ne sont pas NULL 
-	IF (@nom = NULL)
+	IF (@nom IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le nom doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@prenom = NULL)
+	IF (@prenom IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le prenom doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@date_naissance = NULL)
+	IF (@date_naissance IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: La date_naissance doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@iban = NULL)
+	IF (@iban IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le numero IBAN doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@courriel = NULL)
+	IF (@courriel IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le courriel doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@telephone = NULL)
+	IF (@telephone IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le numero de telephone doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
 			RETURN -1
 	END
 	
-	IF (@siret = NULL)
+	IF (@siret IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le numero de siret doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
@@ -78,7 +78,7 @@ AS
 	END
 	
 	
-	IF (@nom_entreprise = NULL)
+	IF (@nom_entreprise IS NULL)
 	BEGIN
 			PRINT('makeCompteEntreprise: Le nom de l''entreprise doit etre renseigne');
 			ROLLBACK TRANSACTION makeCompteParticulier
@@ -118,14 +118,7 @@ AS
 		AND date_naissance = @date_naissance) = 0)
 		BEGIN 
 			--ajout du compte abonne
-			EXEC dbo.createCompteAbonne @nom, @prenom, @date_naissance, 1, 0, @iban,@telephone, @courriel;
-			 
-			--ajout dans la table particulier
-			INSERT INTO Entreprise(nom_compte, prenom_compte, date_naissance_compte, siret, nom)
-			VALUES (@nom,@prenom,@date_naissance, @siret,@nom_entreprise)
-			COMMIT TRANSACTION makeCompteEntreprise
-			PRINT('makeCompteEntreprise OK');
-			RETURN 1;
+			EXEC dbo.createEntreprise @nom, @prenom, @date_naissance, @iban, @courriel, @telephone, @siret, @nom_entreprise;
 		END
 	ELSE
 	-- Si la personne existe déjà
