@@ -25,7 +25,7 @@ CREATE PROCEDURE dbo.makeCompteParticulier
 	@telephone 			nvarchar(50)
 AS
 	BEGIN TRANSACTION makeCompteParticulier
-	
+	DECLARE @msg varchar(4000)
 	BEGIN TRY
 	
 		
@@ -86,7 +86,6 @@ AS
 		END TRY
 		BEGIN CATCH
 			PRINT('makeCompteParticulier: ERROR');
-			DECLARE @msg varchar(4000)
 			SET @msg = ERROR_MESSAGE()
 			PRINT(@msg)
 			ROLLBACK TRANSACTION makeCompteParticulier
@@ -147,7 +146,6 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT 'makeCompteParticulier : Exception recue'
-		DECLARE @msg varchar(4000)
 		SET @msg = ERROR_MESSAGE()
 		PRINT(@msg)
 		ROLLBACK TRANSACTION makeCompteParticulier

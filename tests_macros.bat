@@ -26,12 +26,20 @@ cd Tests_macros
 sqlcmd -S %mssqlInstanceName% -i 20140310_TPS_TAuto_makeCatalogue.sql >> ..\rapport_tests_macros.txt
 echo. >> ..\rapport_tests_macros.txt
 
-echo Test makeParticulier >> ..\rapport_tests_macros.txt
+echo Test makeCompteParticulier >> ..\rapport_tests_macros.txt
 echo. >> ..\rapport_tests_macros.txt
 cd ..
 call .\run_peuplement.bat nopause
 cd Tests_macros
 sqlcmd -S %mssqlInstanceName% -i 20140310_TPS_TAuto_makeCompteParticulier.sql >> ..\rapport_tests_macros.txt
+echo. >> ..\rapport_tests_macros.txt
+
+echo Test makeCompteEntreprise >> ..\rapport_tests_macros.txt
+echo. >> ..\rapport_tests_macros.txt
+cd ..
+call .\run_peuplement.bat nopause
+cd Tests_macros
+sqlcmd -S %mssqlInstanceName% -i 20140323_TPS_TAuto_makeCompteEntreprise.sql >> ..\rapport_tests_macros.txt
 echo. >> ..\rapport_tests_macros.txt
 
 echo Test turnReservationIntoContratLocation >> ..\rapport_tests_macros.txt
