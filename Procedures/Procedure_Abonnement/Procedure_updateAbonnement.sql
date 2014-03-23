@@ -22,8 +22,7 @@ CREATE PROCEDURE dbo.updateAbonnement
 	@duree 							int,
 	@renouvellement_auto			bit
 AS
-	IF ( @date_debut IS NOT NULL)
-	BEGIN
+ 	BEGIN
 		UPDATE Abonnement
 		SET date_debut = @date_debut
 		WHERE id = @id;
