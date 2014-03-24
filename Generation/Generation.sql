@@ -499,7 +499,8 @@ CREATE TABLE CompteAbonneConducteur(
 	PRIMARY KEY(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne,nationalite_conducteur,piece_identite_conducteur),
 	
 	FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance),
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE,
 	FOREIGN KEY(piece_identite_conducteur,nationalite_conducteur) 
 		REFERENCES Conducteur(piece_identite,nationalite)
 );
@@ -532,13 +533,15 @@ PRINT('=========================');
 GO
 ALTER TABLE Entreprise
 	ADD FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table Entreprise modifiée');
 
 GO
 ALTER TABLE Particulier
 	ADD FOREIGN KEY(nom_compte, prenom_compte, date_naissance_compte)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table Particulier modifiée');
 
 GO
@@ -562,7 +565,8 @@ PRINT('Table Reservation modifiée');
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-			REFERENCES CompteAbonne(nom,prenom,date_naissance),
+			REFERENCES CompteAbonne(nom,prenom,date_naissance)
+			ON UPDATE CASCADE,
 		FOREIGN KEY(nom_typeabonnement)
 			REFERENCES TypeAbonnement(nom);
 PRINT('Table Abonnement modifiée');
@@ -612,7 +616,8 @@ PRINT('Table Retard modifiée');
 GO
 ALTER TABLE RelanceDecouvert
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table RelanceDecouvert modifiée');
 
 GO

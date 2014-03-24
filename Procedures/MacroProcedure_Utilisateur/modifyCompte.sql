@@ -34,24 +34,6 @@ AS
 	DECLARE @msg varchar(4000)
 	BEGIN TRY
 		
-		IF (@nouveau_nom IS NOT NULL)
-		BEGIN
-			PRINT('avant')
-			UPDATE CompteAbonne
-			SET CompteAbonne.nom = @nouveau_nom
-			WHERE CompteAbonne.nom = @nom
-			AND	CompteAbonne.prenom = @prenom
-			AND CompteAbonne.date_naissance = @date_naissance
-			PRINT('apres')
-		END
-		
-		IF (@nouveau_prenom IS NOT NULL)
-			UPDATE CompteAbonne
-			SET prenom = @nouveau_prenom
-			WHERE nom = @nom
-			AND	prenom = @prenom
-			AND date_naissance = @date_naissance
-		
 		IF (@iban IS NOT NULL)
 			UPDATE CompteAbonne
 			SET iban = @iban
@@ -93,6 +75,34 @@ AS
 			WHERE nom = @nom
 			AND	prenom = @prenom
 			AND date_naissance = @date_naissance
+			
+		IF (@nouveau_nom IS NOT NULL)
+		BEGIN
+			UPDATE CompteAbonne
+			SET CompteAbonne.nom = @nouveau_nom
+			WHERE CompteAbonne.nom = @nom
+			AND	CompteAbonne.prenom = @prenom
+			AND CompteAbonne.date_naissance = @date_naissance
+		END
+		
+		IF(@nouveau_nom IS NULL)
+		BEGIN
+			IF (@nouveau_prenom IS NOT NULL)
+				UPDATE CompteAbonne
+				SET prenom = @nouveau_prenom
+				WHERE nom = @nom
+				AND	prenom = @prenom
+				AND date_naissance = @date_naissance
+		END
+		ELSE
+		BEGIN
+			IF (@nouveau_prenom IS NOT NULL)
+				UPDATE CompteAbonne
+				SET prenom = @nouveau_prenom
+				WHERE nom = @nouveau_nom
+				AND	prenom = @prenom
+				AND date_naissance = @date_naissance
+		END
 		
 		COMMIT TRANSACTION modifyCompte
 		PRINT('modifyCompte OK');

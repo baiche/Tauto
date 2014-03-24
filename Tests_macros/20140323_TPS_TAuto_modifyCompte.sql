@@ -35,7 +35,7 @@ BEGIN TRY
 		@nom = 'TASociety',
 		@prenom = 'TASociety',				
 		@date_naissance = '2014-02-24',		
-		@nouveau_nom = 'TA_Enterprise',		
+		@nouveau_nom = 'TAEnterprise',		
 		@nouveau_prenom	= 'TACorp',	
 		@iban =	'LU2800194006447545001234568',			
 		@courriel =	'tasociety@hotmail.fr',			
@@ -50,7 +50,7 @@ BEGIN TRY
 		--verification de la modification du compte
 			IF ((SELECT COUNT(*) FROM CompteAbonne
 			WHERE nom = 'TAEnterprise'
-			AND	prenom = 'TASociety'
+			AND	prenom = 'TACorp'
 			AND date_naissance = '2014-02-24'
 			AND iban = 'LU2800194006447545001234568'
 			AND courriel = 'tasociety@hotmail.fr'
@@ -60,7 +60,7 @@ BEGIN TRY
 			--verification de la modification dans Particulier
 			IF((SELECT COUNT(*) FROM Entreprise
 				WHERE nom_compte = 'TAEnterprise'
-				AND prenom_compte = 'TASociety'
+				AND prenom_compte = 'TACorp'
 				AND date_naissance_compte = '2014-02-24'
 				AND siret = '73282932014786'
 				AND nom = 'PromoTA') = 1)
