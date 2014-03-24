@@ -27,22 +27,24 @@ DECLARE @msg VARCHAR(4000)
 
 --Test 1
 -- Utilisation de tous les champs 
-BEGIN TRY
-	DECLARE @ReturnValue int;
-	EXEC @ReturnValue = dbo.searchVehicule
-		@nom_categorie = 'Vehicule Simple',
-		@marque 	   = 'BMW',
-		@serie 		   = '5 F10 M5',
-		@type_carburant= 'Diesel',
-		@portieres 	   = 5,
-		@prix_max 	   = 1000,
-		@prix_min 	   = 0,
-		@date_debut    = '2014-03-29',
-		@date_fin 	   = '2014-03-31';
-END TRY
-BEGIN CATCH
-	SET @msg = ERROR_MESSAGE();
-	PRINT('------------------------------Test 1 - Exception leve - KO');
-	PRINT(@msg);
-END CATCH
+BEGIN --TRY
+	SELECT *
+	FROM dbo.searchVehicule(
+		'Vehicule Simple',
+		'BMW',
+		'5 F10 M5',
+		'Diesel',
+		5,
+		1000,
+		0,
+		'2014-03-29',
+		'2014-03-31',
+		'Noir'
+	)
+END --TRY
+--BEGIN CATCH
+--	SET @msg = ERROR_MESSAGE();
+--	PRINT(@msg);
+--	PRINT('------------------------------Test 1 - Exception leve - KO');
+--END CATCH
 GO
