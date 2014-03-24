@@ -19,7 +19,7 @@ SET NOCOUNT ON
 */
 
 --Test 1
--- Utilisation de tous les champs 
+-- Desactivation d'un compte utilisateur actif
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.closeCompte
@@ -31,33 +31,13 @@ BEGIN TRY
 	BEGIN
 		--verification de la modification du compte
 			IF ((SELECT COUNT(*) FROM CompteAbonne
-			WHERE nom = 'TAEnterprise'
-			AND	prenom = 'TACorp'
-			AND date_naissance = '2014-02-24'
-			AND iban = 'LU2800194006447545001234568'
-			AND courriel = 'tasociety@hotmail.fr'
-			AND	telephone = '0506038406'
-			AND liste_grise = 'true') = 1)
-		BEGIN
-			--verification de la modification dans Particulier
-			IF((SELECT COUNT(*) FROM Entreprise
-				WHERE nom_compte = 'TAEnterprise'
-				AND prenom_compte = 'TACorp'
-				AND date_naissance_compte = '2014-02-24'
-				AND siret = '73282932014786'
-				AND nom = 'PromoTA') = 1)
-			BEGIN
+			WHERE nom = 'De Finance'
+			AND	prenom = 'Boris'
+			AND date_naissance = '1990-09-08'
+			AND actif = 'false') = 1)
 				PRINT('------------------------------Test 1 - OK');
-			END
-			ELSE 
-			BEGIN
-				PRINT('------------------------------Test 1 - Erreur de modification dans Entreprise - KO');
-			END
-		END
-		ELSE
-		BEGIN
-			PRINT('------------------------------Test 1 - Erreur de modification dans Particulier - KO');
-		END
+			ELSE
+				PRINT('------------------------------Test 1 - KO');
 	END
 	ELSE
 	BEGIN
@@ -66,5 +46,134 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test 1 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 2
+-- Desactivation d'un compte utilisateur inactif
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeCompte
+	@nom = 'De Finance',
+	@prenom = 'Boris',
+	@date_naissance = '1990-09-08'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+			PRINT('------------------------------Test 2 - Erreur valeur de retour - KO');
+	END
+	ELSE
+	BEGIN
+	IF ((SELECT COUNT(*) FROM CompteAbonne
+			WHERE nom = 'De Finance'
+			AND	prenom = 'Boris'
+			AND date_naissance = '1990-09-08'
+			AND actif = 'false') = 1)
+				PRINT('------------------------------Test 2 - OK');
+			ELSE
+				PRINT('------------------------------Test 2 - KO');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 2 - Exception leve - KO');
+END CATCH
+GO
+
+--Test3
+--Fermeture d'un compte qui n'existe pas
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeCompte
+	@nom = 'DeFinance',
+	@prenom = 'Boris',
+	@date_naissance = '1990-09-08'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+			PRINT('------------------------------Test 3 - Erreur valeur de retour - KO');
+	END
+	ELSE
+	BEGIN
+	IF ((SELECT COUNT(*) FROM CompteAbonne
+			WHERE nom = 'DeFinance'
+			AND	prenom = 'Boris'
+			AND date_naissance = '1990-09-08'
+			AND actif = 'false') = 0)
+				PRINT('------------------------------Test 3 - OK');
+			ELSE
+				PRINT('------------------------------Test 3 - KO');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 3 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 4
+--Test d'un nom NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeCompte
+	@nom = NULL,
+	@prenom = 'Boris',
+	@date_naissance = '1990-09-08'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+			PRINT('------------------------------Test 4 - Erreur valeur de retour - KO');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 4 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 4 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 5
+--Test d'un prenom NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeCompte
+	@nom = 'De Finance',
+	@prenom = NULL,
+	@date_naissance = '1990-09-08'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+			PRINT('------------------------------Test 5 - Erreur valeur de retour - KO');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 5 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 5 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 6
+--Test d'une date_naissance NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeCompte
+	@nom = 'De Finance',
+	@prenom = 'Boris',
+	@date_naissance = NULL
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+			PRINT('------------------------------Test 6 - Erreur valeur de retour - KO');
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 6 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 6 - Exception leve - KO');
 END CATCH
 GO
