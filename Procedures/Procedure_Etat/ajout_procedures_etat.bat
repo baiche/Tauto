@@ -6,7 +6,7 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs : Mohamed Neti, David Lecoconnier
 rem -- Testeurs    : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : Ajouter les procedures concernant les etats
 rem ------------------------------------------------------------
 
