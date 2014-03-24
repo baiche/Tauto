@@ -27,30 +27,31 @@ CREATE PROCEDURE dbo.modifyCompte
 	@telephone 				nvarchar(50), -- nullable
 	@siret 					nvarchar(50), -- nullable
 	@nom_entreprise			nvarchar(50), -- nullable
-	@greyList				bit, 		  -- nullable
-	@renouvellement_auto	bit 		  -- nullable
+	@greyList				bit 		  -- nullable
 AS
 	BEGIN TRANSACTION modifyCompte
 	DECLARE @msg varchar(4000)
 	BEGIN TRY
-		
-		IF (@nouveau_nom IS NOT NULL)
+		IF	(@nom IS NULL)
 		BEGIN
-			PRINT('avant')
-			UPDATE CompteAbonne
-			SET CompteAbonne.nom = @nouveau_nom
-			WHERE CompteAbonne.nom = @nom
-			AND	CompteAbonne.prenom = @prenom
-			AND CompteAbonne.date_naissance = @date_naissance
-			PRINT('apres')
+			PRINT('modifyCompte: Le nom ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
 		END
 		
-		IF (@nouveau_prenom IS NOT NULL)
-			UPDATE CompteAbonne
-			SET prenom = @nouveau_prenom
-			WHERE nom = @nom
-			AND	prenom = @prenom
-			AND date_naissance = @date_naissance
+		IF	(@prenom IS NULL)
+		BEGIN
+			PRINT('modifyCompte: Le prenom ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
+		END
+		
+		IF	(@date_naissance IS NULL)
+		BEGIN
+			PRINT('modifyCompte: La date_naissance ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
+		END
 		
 		IF (@iban IS NOT NULL)
 			UPDATE CompteAbonne
@@ -93,6 +94,34 @@ AS
 			WHERE nom = @nom
 			AND	prenom = @prenom
 			AND date_naissance = @date_naissance
+			
+		IF (@nouveau_nom IS NOT NULL)
+		BEGIN
+			UPDATE CompteAbonne
+			SET CompteAbonne.nom = @nouveau_nom
+			WHERE CompteAbonne.nom = @nom
+			AND	CompteAbonne.prenom = @prenom
+			AND CompteAbonne.date_naissance = @date_naissance
+		END
+		
+		IF(@nouveau_nom IS NULL)
+		BEGIN
+			IF (@nouveau_prenom IS NOT NULL)
+				UPDATE CompteAbonne
+				SET prenom = @nouveau_prenom
+				WHERE nom = @nom
+				AND	prenom = @prenom
+				AND date_naissance = @date_naissance
+		END
+		ELSE
+		BEGIN
+			IF (@nouveau_prenom IS NOT NULL)
+				UPDATE CompteAbonne
+				SET prenom = @nouveau_prenom
+				WHERE nom = @nouveau_nom
+				AND	prenom = @prenom
+				AND date_naissance = @date_naissance
+		END
 		
 		COMMIT TRANSACTION modifyCompte
 		PRINT('modifyCompte OK');

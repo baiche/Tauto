@@ -12,7 +12,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.searchVehicule', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.searchVehicule	
+	DROP PROCEDURE dbo.searchVehicule
 GO
 
 CREATE PROCEDURE dbo.searchVehicule
@@ -26,16 +26,16 @@ CREATE PROCEDURE dbo.searchVehicule
 	@date_debut 			date, -- nullable
 	@date_fin 				date -- nullable
 AS
-	BEGIN TRANSACTION searchVehicule
+	--BEGIN TRANSACTION searchVehicule
 	BEGIN TRY
 	
 		--On crée la table qui va contenir tous les vehicule correspondant aux différents filtre
 		CREATE TABLE #out (
-		matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
+		matricule 			nvarchar(50) 	PRIMARY KEY											CHECK(dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
 		kilometrage 		int 							NOT NULL 	DEFAULT 0,
 		couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 		statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
-		num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
+		num_serie			nvarchar(50)					NOT NULL							CHECK(dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
   		marque_modele 		nvarchar(50) 					NOT NULL,
 		serie_modele 		nvarchar(50) 					NOT NULL,
 		portieres_modele 	tinyint 						NOT NULL,
@@ -45,11 +45,11 @@ AS
 		)
 		
 		CREATE TABLE #in (
-		matricule 			nvarchar(50) 	PRIMARY KEY											CHECK( dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
+		matricule 			nvarchar(50) 	PRIMARY KEY											CHECK(dbo.clrRegex('^([a-zA-Z0-9-]+)$',matricule) = 1), --ex: AX-580-VT ca correspond??
 		kilometrage 		int 							NOT NULL 	DEFAULT 0,
 		couleur 			nvarchar(50) 					NOT NULL 	DEFAULT 'Gris'			CHECK(couleur IN('Bleu', 'Blanc', 'Rouge', 'Noir', 'Gris')), --c'est un enum  A changer
 		statut 				nvarchar(50) 					NOT NULL 	DEFAULT 'Disponible'	CHECK(statut IN('Disponible', 'Louee', 'En panne', 'Perdue')), --c'est un enum
-		num_serie			nvarchar(50)					NOT NULL							CHECK( dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
+		num_serie			nvarchar(50)					NOT NULL							CHECK(dbo.clrRegex('^(([a-zA-Z0-9-\.]|\s)+)$',num_serie) = 1),
   		marque_modele 		nvarchar(50) 					NOT NULL,
 		serie_modele 		nvarchar(50) 					NOT NULL,
 		portieres_modele 	tinyint 						NOT NULL,
@@ -240,7 +240,7 @@ AS
 			IF (@date_debut > @date_fin)
 			BEGIN
 				PRINT('searchVehicule: La date de début doit être supèrieur a la date de fin');
-				ROLLBACK TRANSACTION searchVehicule
+				--ROLLBACK TRANSACTION searchVehicule
 				RETURN -1;
 			END
 		
@@ -334,13 +334,13 @@ AS
 		CLOSE Curseur_Location
 		
 		
-		COMMIT TRANSACTION searchVehicule
+		--COMMIT TRANSACTION searchVehicule
 		PRINT('searchVehicule OK');
 		RETURN 1;
 	END TRY
 	BEGIN CATCH
 		PRINT('searchVehicule: ERROR');
-		ROLLBACK TRANSACTION searchVehicule
+		--ROLLBACK TRANSACTION searchVehicule
 		RETURN -1;
 	END CATCH
 GO
