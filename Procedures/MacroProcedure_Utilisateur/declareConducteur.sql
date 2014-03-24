@@ -94,7 +94,7 @@ AS
 																			  AND   numero_permis = @numero_permis)=0)
 			BEGIN
 				--la date d'obtention et la date d'expiration du sous permis doivent etre indique, a defaut on sort
-				IF(@date_obtention IS NULL AND @date_expiration IS NULL)
+				IF(@date_obtention IS NULL OR @date_expiration IS NULL)
 				BEGIN
 					PRINT('declareConducteur: ERROR veuillez indiquer la date d''obtention et la date d''expiration');
 					ROLLBACK TRANSACTION declareConducteur

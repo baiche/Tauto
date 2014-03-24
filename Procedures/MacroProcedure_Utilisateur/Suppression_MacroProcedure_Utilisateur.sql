@@ -30,3 +30,55 @@ GO
 IF OBJECT_ID ('dbo.declareConducteur', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.declareConducteur	
 GO
+
+IF OBJECT_ID ('dbo.modifyConducteur', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.modifyConducteur	
+GO
+
+IF OBJECT_ID ('dbo.makeAbonnement', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeAbonnement	
+GO
+
+IF OBJECT_ID ('dbo.makeCatalogue', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeCatalogue	
+GO
+
+IF OBJECT_ID ('dbo.makeCategorie', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeCategorie	
+GO
+
+IF OBJECT_ID ('dbo.makeCompteEntreprise', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeCompteEntreprise	
+GO
+
+IF OBJECT_ID ('dbo.makeCompteParticulier', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeCompteParticulier	
+GO
+
+IF OBJECT_ID ('dbo.makeModele', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeModele	
+GO
+
+IF OBJECT_ID ('dbo.makeReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeReservation	
+GO
+
+IF OBJECT_ID ('dbo.makeVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeVehicule	
+GO
+
+IF OBJECT_ID ('dbo.modifyCompte', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.modifyCompte	
+GO
+
+IF OBJECT_ID ('dbo.modifyConducteur', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.modifyConducteur	
+GO
+
+IF OBJECT_ID ('dbo.searchVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.searchVehicule
+GO
+
+IF OBJECT_ID ('dbo.turnReservationIntoContratLocat', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.turnReservationIntoContratLocat	
+GO
