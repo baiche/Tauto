@@ -33,7 +33,7 @@ AS
 		
 		IF(@prenom IS NULL)
 		BEGIN
-			PRINT('closeCompte: Le nom doit etre renseigne');
+			PRINT('closeCompte: Le prenom doit etre renseigne');
 			ROLLBACK TRANSACTION closeCompte
 			RETURN -1;
 		END
