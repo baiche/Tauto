@@ -42,6 +42,14 @@ cd Tests_macros
 sqlcmd -S %mssqlInstanceName% -i 20140323_TPS_TAuto_makeCompteEntreprise.sql >> ..\rapport_tests_macros.txt
 echo. >> ..\rapport_tests_macros.txt
 
+echo Test modifyCompte >> ..\rapport_tests_macros.txt
+echo. >> ..\rapport_tests_macros.txt
+cd ..
+call .\run_peuplement.bat nopause
+cd Tests_macros
+sqlcmd -S %mssqlInstanceName% -i 20140323_TPS_TAuto_modifyCompte.sql >> ..\rapport_tests_macros.txt
+echo. >> ..\rapport_tests_macros.txt
+
 echo Test turnReservationIntoContratLocation >> ..\rapport_tests_macros.txt
 echo. >> ..\rapport_tests_macros.txt
 cd ..
