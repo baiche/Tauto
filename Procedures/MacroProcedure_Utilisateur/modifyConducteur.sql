@@ -1,4 +1,4 @@
-------------------------------------------------------------
+﻿------------------------------------------------------------
 -- Fichier     : modifyConducteur.sql
 -- Date        : 14/03/2014
 -- Version     : 1.0
@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : modifie le conducteur ou supprime un permis. 
+-- Commentaire : modifie le conducteur ou modifie un permis. 
 --				 Les arguments sont optionnels. Le nom du type 
 --				 de permis est à recherché dans l'ensemble des sous-permis
 ------------------------------------------------------------
@@ -19,22 +19,21 @@ GO
 
 CREATE PROCEDURE dbo.modifyConducteur
 	--Conducteur
+	@nom 				nvarchar(50), -- NOT NULL
+	@prenom 			nvarchar(50), -- NOT NULL	
 	@piece_identite 	nvarchar(50), -- PK
 	@nationalite 		nvarchar(50), -- PK
-	@nom 				nvarchar(50), -- NOT NULL
-	@prenom 			nvarchar(50), -- NOT NULL
-	--Permis
-	@valide 			bit,		  -- DEFAULT 'true'
-	@points_estimes 	tinyint, 	  -- NOT NULL 	DEFAULT 12
 	--SousPermis
 	@nom_typepermis		nvarchar(10), -- PK
 	@date_obtention 	date,     	  -- NOT NULL
+	@periode_probatoire tinyint,   	  -- NOT NULL 	DEFAULT 3
 	@date_expiration 	date,         -- NOT NULL
-	@periode_probatoire tinyint   	  -- NOT NULL 	DEFAULT 3
+	--Permis
+	@valide 			bit,		  -- DEFAULT 'true'
+	@points_estimes 	tinyint 	  -- NOT NULL 	DEFAULT 12
 AS
 	BEGIN TRANSACTION modifyConducteur
 	BEGIN TRY
-	
 		DECLARE @asConducteur	 	int,
 				@asSousPermis		int,
 				@numPemis			nvarchar(50);
@@ -72,16 +71,16 @@ AS
 			WHERE piece_identite = @piece_identite
 			AND   nationalite = @nationalite;
 		END
-		
+
 		--Si le prenom est renseigner, on met a jour le prenom du conducteur
-		IF(@nom IS NOT NULL)
+		IF(@prenom IS NOT NULL)
 		BEGIN
 			UPDATE Conducteur
 			SET prenom = @prenom
 			WHERE piece_identite = @piece_identite
 			AND   nationalite = @nationalite;
 		END
-		
+	
 		--Si la validité du permis est renseigner, on met a jour la validité du permis du conducteur
 		IF(@valide IS NOT NULL)
 		BEGIN
@@ -91,7 +90,7 @@ AS
 		END
 
 		--Si l'estimation de point du permis est renseigner, on met a jour l'estimation de point du permis du conducteur
-		IF(@valide IS NOT NULL)
+		IF(@points_estimes IS NOT NULL)
 		BEGIN
 			UPDATE Permis
 			SET points_estimes = @points_estimes
@@ -109,7 +108,7 @@ AS
 			--si le sous permis n'existe pas deja, on le cré
 			IF(@asSousPermis = 0)
 			BEGIN
-				--on verifie que la date d'obte,tion et d'expiration sont renseigner, a defaut on sort
+				--on verifie que la date d'obtention et d'expiration sont renseigner, a defaut on sort
 				IF(@date_obtention IS NULL OR @date_expiration IS NULL)
 				BEGIN
 					PRINT('modifyConducteur: ERROR veuillez indiquer la date d''obtention et la date d''expiration');
