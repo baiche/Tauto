@@ -154,6 +154,12 @@ cd ..\Procedure_Vehicule
 call .\ajout_procedures_vehicule.bat nopause
 echo.
 
+echo ajout des MacroProcedure_Utilisateur
+echo.
+cd ..\MacroProcedure_Utilisateur 
+call .\ajout_MacroProcedure_Utilisateur.bat nopause
+echo.
+
 cd ..
 cd ..
 if "%1"=="nopause" goto start
