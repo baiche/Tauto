@@ -6,7 +6,7 @@ rem -- Version     : 2.0
 rem -- Auteur      : Jean-Luc Amitousa Mankoy
 rem -- Correcteurs  : Allan Mottier
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 

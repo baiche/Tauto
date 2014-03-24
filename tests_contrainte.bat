@@ -6,7 +6,7 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : La base est censé être créé et vide au lancement des tests
 rem ----------------------------------------------------------------------------
 
