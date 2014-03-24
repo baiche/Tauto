@@ -18,10 +18,12 @@ GO
 CREATE PROCEDURE dbo.findOtherVehicule
 	@matricule 			nvarchar(50), -- PK
 	@itMustBeDone		bit, -- true si c'est obligatoire (dans le cas d'une détérioration du véhicule), il faut modifier les réservations concernées
-							 -- false si c'est pour étendre un contrat utiliser l'argument suivant
-	@date_fin			date -- permet de déterminer s'il est possible d'étendre la location jusqu'à cette date
+							 -- false si c'est pour étendre un contrat, utiliser l'argument suivant
+	@date_fin			date -- permet de déterminer s'il est possible d'étendre la location jusqu'à cette date. Le conflit est obligatoirement avec la date de début !
 AS
 	BEGIN TRY
+		RETURN -1;
+	
 		PRINT('findOtherVehicule OK');
 		RETURN 1;
 	END TRY
