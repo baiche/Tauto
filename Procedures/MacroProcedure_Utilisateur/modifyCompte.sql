@@ -27,12 +27,31 @@ CREATE PROCEDURE dbo.modifyCompte
 	@telephone 				nvarchar(50), -- nullable
 	@siret 					nvarchar(50), -- nullable
 	@nom_entreprise			nvarchar(50), -- nullable
-	@greyList				bit, 		  -- nullable
-	@renouvellement_auto	bit 		  -- nullable
+	@greyList				bit 		  -- nullable
 AS
 	BEGIN TRANSACTION modifyCompte
 	DECLARE @msg varchar(4000)
 	BEGIN TRY
+		IF	(@nom IS NULL)
+		BEGIN
+			PRINT('modifyCompte: Le nom ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
+		END
+		
+		IF	(@prenom IS NULL)
+		BEGIN
+			PRINT('modifyCompte: Le prenom ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
+		END
+		
+		IF	(@date_naissance IS NULL)
+		BEGIN
+			PRINT('modifyCompte: La date_naissance ne doit pas être NULL');
+			ROLLBACK TRANSACTION modifyCompte
+			RETURN -1;
+		END
 		
 		IF (@iban IS NOT NULL)
 			UPDATE CompteAbonne

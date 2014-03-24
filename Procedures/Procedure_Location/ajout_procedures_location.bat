@@ -6,7 +6,7 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 

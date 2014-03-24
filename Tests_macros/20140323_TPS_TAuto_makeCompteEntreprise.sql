@@ -11,7 +11,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-
+SET NOCOUNT ON
 /*dbo.makeCompteEntreprise
 	@nom 				nvarchar(50), -- PK
 	@prenom 			nvarchar(50), -- PK

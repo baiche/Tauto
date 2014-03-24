@@ -6,7 +6,7 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
@@ -152,6 +152,12 @@ echo ajout des Procedure_Vehicule
 echo.
 cd ..\Procedure_Vehicule 
 call .\ajout_procedures_vehicule.bat nopause
+echo.
+
+echo ajout des MacroProcedure_Utilisateur
+echo.
+cd ..\MacroProcedure_Utilisateur 
+call .\ajout_MacroProcedure_Utilisateur.bat nopause
 echo.
 
 cd ..
