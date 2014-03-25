@@ -42,6 +42,9 @@ AS
 			--2 - suppression de CategorieModele
 			
 			--3 - suppression de Categorie
+		
+		DELETE FROM Categorie
+		WHERE a_supprimer = 'true'
 			
 		--SUPPRESSION des VEHICULES
 			
@@ -66,6 +69,8 @@ AS
 				
 			--3 - suppression de Vehicule 
 				
+		DELETE FROM Vehicule
+		WHERE a_supprimer = 'true'
 				
 		--SUPPRESSION des MODELES
 		
@@ -94,11 +99,17 @@ AS
 			
 			--2 - suppression de Modele
 			
+		DELETE FROM Modele
+		WHERE a_supprimer = 'true'
+			
 		--SUPPRESSION des RESERVATIONS
 			
 			--1 - suppression de ReservationVehicule
 			
 			--2 - suppression de Reservation
+			
+		DELETE FROM Reservation
+		WHERE a_supprimer = 'true'
 			
 		--SUPPRESSION des ABONNEMENTS
 		
@@ -128,6 +139,9 @@ AS
 				
 				--2.2 suppression de ContratLocation
 				
+		DELETE FROM Abonnement
+		WHERE a_supprimer = 'true'
+		
 		--SUPPRESSION des TYPEABONNEMENTS
 		
 			--1 - SUPPRESSION des ABONNEMENTS
@@ -159,6 +173,9 @@ AS
 					--1.2.2 suppression de ContratLocation
 					
 			--2 - suppression de TypeAbonnement
+			
+		DELETE FROM TypeAbonnement
+		WHERE a_supprimer = 'true'	
 					
 		--SUPPRESSION de CompteAbonne
 		
@@ -198,10 +215,17 @@ AS
 			
 			--5 - suppression de RelanceDecouvert
 			
+			--6 - suppression de CompteAbonne
+			
+		DELETE FROM CompteAbonne
+		WHERE a_supprimer = 'true'
+			
 		--SUPPRESSION de RelanceDecouvert
 			
 			--1 - suppression de RelanceDecouvert
-	
+			
+		DELETE FROM RelanceDecouvert
+		WHERE a_supprimer = 'true'
 		--Fin du nettoyage de la base de donnees	
 			
 		COMMIT TRANSACTION deleteTrigger
