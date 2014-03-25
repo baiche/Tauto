@@ -114,30 +114,3 @@ BEGIN CATCH
 	PRINT('------------------------------Test 4 NOT - - OK');
 END CATCH
 GO
-
---Test 5
--- Calcul de la facture de la location avec une infraction de 100€ non regle
-/*BEGIN TRY
-	DECLARE @ReturnValue int;
-	EXEC @ReturnValue = dbo.endContratLocation
-		@idContratLocation = 8,
-		@date_fin_effective = ;
-		
-	DECLARE @nbContratLoc int;
-	SELECT @nbContratLoc = COUNT (*) FROM ContratLoc WHERE
-			id = 3 AND
-			date_fin_effective = '2014-04-01T18:55:00'
-
-	IF ( @nbContratLoc = 1 AND @ReturnValue = 1 )
-	BEGIN
-		PRINT('------------------------------Test 5 OK');
-	END
-	ELSE
-	BEGIN
-		PRINT('------------------------------Test 5 NOT -- OK');
-	END
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 5 NOT - - OK');
-END CATCH
-GO*/
