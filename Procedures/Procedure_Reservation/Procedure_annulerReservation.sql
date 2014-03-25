@@ -1,9 +1,9 @@
 ------------------------------------------------------------
--- Fichier     : Procedure_annulerReservation
+-- Fichier     : Procedure_cancelReservation
 -- Date        : 12/03/2014
 -- Version     : 1.0
 -- Auteur      : Seyyid Ouir
--- Correcteur  : Baiche ( modification du nom de la fonction  ) 
+-- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -11,11 +11,11 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.annulerReservation', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.annulerReservation
+IF OBJECT_ID ('dbo.cancelReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.cancelReservation
 GO
 
-CREATE PROCEDURE dbo.annulerReservation
+CREATE PROCEDURE dbo.cancelReservation
 	@id	 					int
 AS
 	UPDATE Reservation

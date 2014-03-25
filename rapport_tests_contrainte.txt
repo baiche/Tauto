@@ -237,7 +237,7 @@ Vider toutes les tables - Fin
 ------------------------------Test A.7 OK
 ------------------------------Test A.8 OK
 ------------------------------Test A.9 OK
-------------------------------Test A.10 OK
+------------------------------Test A.10 NOT OK
 ------------------------------Test A.11 OK
 ------------------------------Test B.1 OK
 ------------------------------Test B.2 OK
@@ -249,47 +249,11 @@ Vider toutes les tables - Debut
 ===============================
 Vider toutes les tables - Fin
 =============================
-Msg 547, Level 16, State 1, Server VAIO, Line 21
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 28
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
 ------------------------------Test A.1 OK
-Msg 547, Level 16, State 1, Server VAIO, Line 79
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 86
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
 ------------------------------Test A.2 OK
-Msg 547, Level 16, State 1, Server VAIO, Line 136
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 143
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
 ------------------------------Test B.1 OK
-Msg 547, Level 16, State 1, Server VAIO, Line 193
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 200
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
-------------------------------Test B.2 NOT OK
-Msg 547, Level 16, State 1, Server VAIO, Line 250
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 257
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
+------------------------------Test B.2 OK
 ------------------------------Test C.1 OK
-Msg 547, Level 16, State 1, Server VAIO, Line 307
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 314
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
-The statement has been terminated.
 ------------------------------Test C.2 OK
  
 Test Abonnement 
@@ -316,10 +280,26 @@ Vider toutes les tables - Fin
  
 Test Retard 
  
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_avant'.
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_apres'.
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test D.1 OK
+------------------------------Test D.2 OK
+------------------------------Test E.1 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
  
 Test TypeAbonnement 
  
@@ -346,15 +326,6 @@ Vider toutes les tables - Debut
 ===============================
 Vider toutes les tables - Fin
 =============================
-Msg 547, Level 16, State 1, Server VAIO, Line 25
-The INSERT statement conflicted with the CHECK constraint "CK__Categorie__descr__7C66E722". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'description'.
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 28
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Catalogue__nom_c__216361A7". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'nom'.
-The statement has been terminated.
-Msg 547, Level 16, State 1, Server VAIO, Line 34
-The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Categorie__nom_c__271C3AFD". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'nom'.
-The statement has been terminated.
 ------------------------------Test A.1 OK
 ------------------------------Test A.2 OK
 ------------------------------Test A.3 OK
@@ -374,17 +345,61 @@ The statement has been terminated.
  
 Test Incident 
  
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_avant'.
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_apres'.
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test D.1 OK
+------------------------------Test D.2 OK
+------------------------------Test D.3 OK
+------------------------------Test E.1 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
  
 Test Infraction 
  
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_avant'.
-Msg 207, Level 16, State 1, Server VAIO, Line 18
-Invalid column name 'date_etat_apres'.
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test D.1 OK
+------------------------------Test D.2 OK
+------------------------------Test E.1 OK
+------------------------------Test E.2 OK
+------------------------------Test E.3 OK
+------------------------------Test E.4 OK
+------------------------------Test F.1 OK
+------------------------------Test F.2 OK
+------------------------------Test F.3 OK
+------------------------------Test G.1 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
  
 Test ConducteurLocation 
  

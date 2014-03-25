@@ -16,20 +16,28 @@ IF OBJECT_ID ('dbo.cancelReservation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.cancelReservation
-	@id_reservation 		int -- PK
+	@matricule		VARCHAR(50), -- PK
+	@date_debut		datetime,
+	@date_fin		datetime
 AS
 	BEGIN TRANSACTION cancelReservation
 	BEGIN TRY
-	
-	IF (SELECT COUNT(*) FROM Reservation r WHERE r.id=@id_reservation)=0
+
+	IF (SELECT COUNT(*) FROM ReservationVehicule  WHERE matricule_vehicule=@matricule)=0
 		BEGIN
 			PRINT('cette reservation n''existe pas! ')
 			return -1;
 		END  
 	ELSE
-		EXEC cancelReservation @id_reservation;
-		DELETE FROM ReservationVehicule WHERE id_reservation=@id_reservation;
+
+	DECLARE @res INT;
+		SET @res = (SELECT  id_reservation  FROM ReservationVehicule WHERE matricule_vehicule=@matricule);
 		
+		EXEC annulerReservation @res;
+	
+		DELETE FROM ReservationVehicule WHERE matricule_vehicule=@matricule;
+
+	
 		COMMIT TRANSACTION cancelReservation
 		PRINT('cancelReservation OK');
 		RETURN 1;

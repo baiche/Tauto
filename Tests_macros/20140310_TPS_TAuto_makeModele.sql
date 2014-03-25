@@ -14,6 +14,13 @@ USE TAuto_IBDR;
 
 DELETE FROM CatalogueCategorie;
 DELETE FROM CategorieModele;
+DELETE FROM Incident;
+DELETE FROM Infraction;
+DELETE FROM Retard;
+DELETE FROM ConducteurLocation;
+DELETE FROM Location;
+DELETE FROM ReservationVehicule;
+DELETE FROM Vehicule;
 DELETE FROM Modele;
 DELETE FROM Catalogue;
 DELETE FROM Categorie;

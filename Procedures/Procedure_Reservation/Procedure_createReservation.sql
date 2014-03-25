@@ -21,8 +21,10 @@ CREATE PROCEDURE dbo.createReservation
 	@id_abonnement			int
 AS
 	INSERT INTO Reservation(
+		date_creation,
 		date_debut,
 		date_fin,
+		a_supprimer,
 		id_abonnement
 	)
 	VALUES (

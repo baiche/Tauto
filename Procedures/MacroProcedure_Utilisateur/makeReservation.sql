@@ -40,21 +40,27 @@ AS
 		return -1;
 	END
 	ELSE
-	
-	BEGIN
-	-- verifier si on a un vehicule disponible
-		DECLARE ListeVoiture CURSOR FOR SELECT v.matricule FROM Vehicule v WHERE v.marque_modele=@marque AND v.serie_modele=@serie AND v.portieres_modele=@portieres AND v.type_carburant_modele=@type_carburant AND
-		v.a_supprimer='false';  
 		
-		OPEN ListeVoiture;
+	BEGIN
+
+	-- verifier si on a un vehicule disponible
+		DECLARE ListeVoiture CURSOR LOCAL  
+		FOR SELECT matricule 
+		FROM Vehicule  
+		WHERE marque_modele=@marque AND serie_modele=@serie AND portieres_modele=@portieres AND type_carburant_modele=@type_carburant AND a_supprimer='false';  
+		
+		
+		OPEN ListeVoiture
 		FETCH NEXT FROM ListeVoiture INTO @matricule;
 		
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
-			
+		
 		IF (SELECT v.statut FROM Vehicule v WHERE v.matricule=@matricule)='Disponible'
 		BEGIN
+			
 			SET @matricule_disponible=@matricule;
+		
 			BREAK;
 		END
 		
@@ -69,13 +75,15 @@ AS
 			return -1;
 		END 
 		ELSE 
-		BEGIN 
+		BEGIN
+		 
 		-- creer la reservation
 		-- 
-		EXEC dbo.isDisponible1 @matricule_disponible,@date_debut,@date_fin = @return OUTPUT;
+		EXEC @return=dbo.isDisponible1 @matricule_disponible,@date_debut,@date_fin ;
 		
 		IF (@return =1 ) 
 		BEGIN 
+			
 			EXEC dbo.createReservation @date_debut,@date_fin,@id_abonnement; 
 			DECLARE @id_res INT;
 			SELECT @id_res=res.id FROM Reservation res WHERE res.id_abonnement=@id_abonnement AND res.date_debut=@date_debut AND res.date_fin=@date_fin ;

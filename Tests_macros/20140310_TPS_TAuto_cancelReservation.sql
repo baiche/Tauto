@@ -1,29 +1,22 @@
 ------------------------------------------------------------
--- Fichier     : 20140310_TPS_TAuto_makeVehicule
+-- Fichier     : 20140310_TPS_TAuto_makeReservation
 -- Date        : 18/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Test de la procédure makeVehicule qui permet a l'utilisateur de creer une un Vehicule
+-- Commentaire : Test de la procédure makeReservation qui permet de reserver un vehicule
 ------------------------------------------------------------
-
 USE TAuto_IBDR;
 
-
-DELETE FROM CatalogueCategorie;
-DELETE FROM CategorieModele;
-DELETE FROM Incident;
-DELETE FROM Infraction;
-DELETE FROM Retard;
-DELETE FROM ConducteurLocation;
-DELETE FROM Location;
-DELETE FROM ReservationVehicule;
-DELETE FROM Vehicule;
-DELETE FROM Modele;
-DELETE FROM Catalogue;
-DELETE FROM Categorie;
+DELETE FROM ReservationVehicule WHERE  matricule_vehicule='ff456'
+DELETE FROM CatalogueCategorie WHERE nom_catalogue='myCatalogue'
+DELETE FROM Vehicule WHERE matricule='ff456'
+DELETE FROM CategorieModele WHERE nom_categorie='pic-up'
+DELETE FROM Modele WHERE marque='Mercedes' AND serie ='GLA'
+DELETE FROM Catalogue WHERE  nom='myCatalogue'
+DELETE FROM Reservation WHERE id_abonnement=1;
 
 --Test 1
 BEGIN TRY
@@ -38,6 +31,12 @@ BEGIN TRY
 	
 	EXEC makeVehicule 'Mercedes','GLA','Diesel',5,'ff456',12785,'Bleu','8787878754ttt7','pic-up' ;
 	PRINT('ajout d''un Vehicule--- Test OK');
+	
+	-- reserver un vehicule avec l'id de l'abonnement 1 
+	EXEC dbo.makeReservation 1,'2014-03-26','2014-03-26','Mercedes','GLA','Diesel',5;
+	
+	EXEC dbo.cancelReservation 'ff456','2014-03-26','2014-03-26';
+	PRINT ('Reservation annulee');
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test  NOT -- OK');
