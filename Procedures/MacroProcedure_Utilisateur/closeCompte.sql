@@ -21,7 +21,29 @@ CREATE PROCEDURE dbo.closeCompte
 	@date_naissance 	date -- PK
 AS
 	BEGIN TRANSACTION closeCompte
+	DECLARE @msg varchar(4000)
 	BEGIN TRY
+		-- verification des arguments
+		IF(@nom IS NULL)
+		BEGIN
+			PRINT('closeCompte: Le nom doit etre renseigne');
+			ROLLBACK TRANSACTION closeCompte
+			RETURN -1;
+		END
+		
+		IF(@prenom IS NULL)
+		BEGIN
+			PRINT('closeCompte: Le prenom doit etre renseigne');
+			ROLLBACK TRANSACTION closeCompte
+			RETURN -1;
+		END
+		
+		IF(@date_naissance IS NULL)
+		BEGIN
+			PRINT('closeCompte: La date_naissance doit etre renseignee');
+			ROLLBACK TRANSACTION closeCompte
+			RETURN -1;
+		END
 	
 		-- on regarde si le compte existe
 		
@@ -58,6 +80,8 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT('closeCompte: ERROR');
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
 		ROLLBACK TRANSACTION closeCompte
 		RETURN -1;
 	END CATCH

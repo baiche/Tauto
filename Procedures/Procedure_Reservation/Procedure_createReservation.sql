@@ -21,10 +21,8 @@ CREATE PROCEDURE dbo.createReservation
 	@id_abonnement			int
 AS
 	INSERT INTO Reservation(
-		date_creation,
 		date_debut,
 		date_fin,
-		annule,
 		id_abonnement
 	)
 	VALUES (
@@ -34,5 +32,5 @@ AS
 		'false',
 		@id_abonnement
 	);
-
+	RETURN SCOPE_IDENTITY();
 GO

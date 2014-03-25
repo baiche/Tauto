@@ -114,7 +114,7 @@ CREATE TABLE SousPermis(
 	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
 	numero_permis 		nvarchar(50),							 
 	date_obtention 		date 							NOT NULL, --CHECK(date_obtention < date_expiration),
-	date_expiration 	date 							NOT NULL, --CHECK(date_obtention < date_expiration),
+	date_expiration 	date, --CHECK(date_obtention < date_expiration),
 	periode_probatoire 	tinyint 						NOT NULL 	DEFAULT 3,
 	PRIMARY KEY(nom_typepermis, numero_permis)
 );
@@ -353,7 +353,7 @@ CREATE TABLE Infraction(
 	id_location 		int,
 	nom 				nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( nom='' or dbo.clrRegex('^((\p{L}|[0-9'',\.-]|\s)+)$',nom) = 1),
 	montant 			money 							NOT NULL 	DEFAULT 0,
-	description 		nvarchar(50)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
+	description 		nvarchar(150)					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9'',\.\/-]|\s)+)$',description) = 1),
 	regle 				bit 										DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -368,7 +368,7 @@ BEGIN
 CREATE TABLE Incident(
 	date 				datetime 									DEFAULT GETDATE(),
 	id_location 		int,
-	description 		nvarchar(50) 					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
+	description 		nvarchar(150) 					NOT NULL 	DEFAULT ''				CHECK( description='' or dbo.clrRegex('^((\p{L}|[0-9''-,\.]|\s)+)$',description) = 1),
 	penalisable 		bit 							NOT NULL 	DEFAULT 'false',
 	PRIMARY KEY(date, id_location)
 );
@@ -499,7 +499,8 @@ CREATE TABLE CompteAbonneConducteur(
 	PRIMARY KEY(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne,nationalite_conducteur,piece_identite_conducteur),
 	
 	FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance),
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE,
 	FOREIGN KEY(piece_identite_conducteur,nationalite_conducteur) 
 		REFERENCES Conducteur(piece_identite,nationalite)
 );
@@ -532,13 +533,15 @@ PRINT('=========================');
 GO
 ALTER TABLE Entreprise
 	ADD FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table Entreprise modifiée');
 
 GO
 ALTER TABLE Particulier
 	ADD FOREIGN KEY(nom_compte, prenom_compte, date_naissance_compte)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table Particulier modifiée');
 
 GO
@@ -562,7 +565,8 @@ PRINT('Table Reservation modifiée');
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-			REFERENCES CompteAbonne(nom,prenom,date_naissance),
+			REFERENCES CompteAbonne(nom,prenom,date_naissance)
+			ON UPDATE CASCADE,
 		FOREIGN KEY(nom_typeabonnement)
 			REFERENCES TypeAbonnement(nom);
 PRINT('Table Abonnement modifiée');
@@ -612,7 +616,8 @@ PRINT('Table Retard modifiée');
 GO
 ALTER TABLE RelanceDecouvert
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance);
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON UPDATE CASCADE;
 PRINT('Table RelanceDecouvert modifiée');
 
 GO

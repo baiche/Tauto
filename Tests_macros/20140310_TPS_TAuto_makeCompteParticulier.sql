@@ -11,7 +11,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-
+SET NOCOUNT ON
 /*dbo.makeCompteParticulier
 	@nom 				nvarchar(50), -- PK
 	@prenom 			nvarchar(50), -- PK
@@ -29,10 +29,9 @@ BEGIN TRY
 			@nom = 'Bon',
 			@prenom = 'Jean', 		
 			@date_naissance = '1951-05-21',
-			@iban = 'LU2800193006447500001234567',
+			@iban = 'LU2800194006447500001234567',
 			@courriel = 'blabla@mail.com',
 			@telephone = '0324858889'
-			
 			
 	IF ( @ReturnValue = 1)
 	BEGIN
@@ -41,7 +40,7 @@ BEGIN TRY
 			WHERE nom = 'Bon'
 			AND	prenom = 'Jean'
 			AND date_naissance = '1951-05-21'
-			AND iban = 'LU2800193006447500001234567'
+			AND iban = 'LU2800194006447500001234567'
 			AND courriel = 'blabla@mail.com'
 			AND	telephone = '0324858889') = 1)
 		BEGIN
@@ -76,11 +75,159 @@ GO
 --Test 2
 -- Utilisation avec le paramètre nom à NULL
 
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = NULL,
+			@prenom = 'Carmen', 		
+			@date_naissance = '1990-09-10',
+			@iban = 'LU2800194006456500001234567',
+			@courriel = 'blubla@mail.com',
+			@telephone = '0324858789'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 2 - La fonction accepte un nom NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 2 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 2 - Exception leve - KO');
+END CATCH
+GO
+
+
 --Test 3
 -- Utilisation avec le paramètre prenom à NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = 'Durand',
+			@prenom = NULL, 		
+			@date_naissance = '1990-09-10',
+			@iban = 'LU2800194006456500001234567',
+			@courriel = 'blubla@mail.com',
+			@telephone = '0324858789'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 3 - La fonction accepte un prenom NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 3 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 3 - Exception leve - KO');
+END CATCH
+GO
+
 
 --Test 4
 -- Utilisation avec le paramètre date_naissance à NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = 'Durand',
+			@prenom = 'Carmen', 		
+			@date_naissance = NULL,
+			@iban = 'LU2800194006456500001234567',
+			@courriel = 'blubla@mail.com',
+			@telephone = '0324858789'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 4 - La fonction accepte une date de naissance NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 4 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 4 - Exception leve - KO');
+END CATCH
+GO
 
 --Test 5
 -- Utilisation avec le paramètre iban à NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = 'Durand',
+			@prenom = 'Carmen', 		
+			@date_naissance = '1990-09-10',
+			@iban = NULL,
+			@courriel = 'blubla@mail.com',
+			@telephone = '0324858789'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 5 - La fonction accepte un iban NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 5 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 5 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 6
+-- Utilisation avec le paramètre courriel à NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = 'Durand',
+			@prenom = 'Carmen', 		
+			@date_naissance = '1990-09-10',
+			@iban = 'LU2800194006456500001234567',
+			@courriel = NULL,
+			@telephone = '0324858789'
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 6 - La fonction accepte un courriel NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 6 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 6 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 7
+-- Utilisation avec le paramètre telephone à NULL
+BEGIN TRY
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.makeCompteParticulier 
+			@nom = 'Durand',
+			@prenom = 'Carmen', 		
+			@date_naissance = '1990-09-10',
+			@iban = 'LU2800194006456500001234567',
+			@courriel = 'blubla@mail.com',
+			@telephone = NULL
+			
+	IF ( @ReturnValue = 1)
+	BEGIN
+		PRINT('------------------------------Test 7 - La fonction accepte un telephone NULL - KO')
+	END
+	ELSE
+	BEGIN
+		PRINT('------------------------------Test 7 - OK');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 7 - Exception leve - KO');
+END CATCH
+GO
+

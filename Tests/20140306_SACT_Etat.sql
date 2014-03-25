@@ -23,7 +23,7 @@ INSERT INTO Catalogue(nom,date_debut,date_fin)
 VALUES('Flotte','2014-01-01', '2014-06-01');
 
 INSERT INTO Categorie(nom,description,nom_typepermis) 
-VALUES('Vehicule simple','tout type de véhicule simple a 4 roues','B');
+VALUES('Vehicule simple','Tout type de vehicule simple a 4 roues','B');
 
 INSERT INTO CatalogueCategorie(nom_catalogue, nom_categorie)
 VALUES('Flotte', 'Vehicule simple');

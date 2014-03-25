@@ -6,11 +6,11 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_CloseFile.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_OpenFile.sql

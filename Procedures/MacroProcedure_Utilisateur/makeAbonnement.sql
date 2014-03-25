@@ -27,28 +27,51 @@ CREATE PROCEDURE dbo.makeAbonnement
 	
 AS
 	BEGIN TRANSACTION makeAbonnement
+	DECLARE @msg varchar(4000)
 	BEGIN TRY
 	
 		DECLARE @asCompteAbonne	 	int,
 				@asTypeAbonnement	int,
 				@idAbonnement		int,
-				@returnPS		int;;
+				@returnPS			int;
+		
+		IF(@date_debut IS NULL)
+		BEGIN
+			PRINT('makeAbonnement: la date de debut doit etre renseigne');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+		
+		IF(@duree IS NULL)
+		BEGIN
+			PRINT('makeAbonnement: la duree doit etre renseigne');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
 
-		IF(@nom_compteabonne = NULL)
+		IF(@renouvellement_auto IS NULL)
+		BEGIN
+			PRINT('makeAbonnement: le renouvellement automatique de l''abonnement doit etre renseigne');
+			ROLLBACK TRANSACTION makeAbonnement
+			RETURN -1;
+		END
+
+
+		IF(@nom_compteabonne IS NULL)
 		BEGIN
 			PRINT('makeAbonnement: le nom doit etre renseigne');
 			ROLLBACK TRANSACTION makeAbonnement
 			RETURN -1;
 		END
 		
-		IF(@prenom_compteabonne = NULL)
+		IF(@prenom_compteabonne IS NULL)
 		BEGIN
 			PRINT('makeAbonnement: le prenom doit etre renseigne');
 			ROLLBACK TRANSACTION makeAbonnement
 			RETURN -1;
 		END
 		
-		IF(@date_naissance_compteabonne = NULL)
+		IF(@date_naissance_compteabonne IS NULL)
 		BEGIN
 			PRINT('makeAbonnement: la date de naissance doit etre renseignee');
 			ROLLBACK TRANSACTION makeAbonnement
@@ -67,7 +90,7 @@ AS
 			RETURN -1;
 		END
 		
-		IF(@nom_typeabonnement = NULL)
+		IF(@nom_typeabonnement IS NULL)
 		BEGIN
 			PRINT('makeAbonnement: la type de l''abonnement doit etre renseignee');
 			ROLLBACK TRANSACTION makeAbonnement
@@ -120,7 +143,7 @@ AS
 			RETURN -1;
 		END
 
-		EXEC dbo.updateAbonnement @idAbonnement, @date_debut, @duree, @renouvellement_auto = @returnPS OUTPUT;
+		EXEC @returnPS = dbo.updateAbonnement @idAbonnement, @date_debut, @duree, @renouvellement_auto;
 		
 		IF(@returnPS <> 1)
 		BEGIN
@@ -161,6 +184,8 @@ AS
 	END TRY
 	BEGIN CATCH
 		PRINT('makeAbonnement: ERROR');
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
 		ROLLBACK TRANSACTION makeAbonnement
 		RETURN -1;
 	END CATCH

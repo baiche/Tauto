@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\"
+SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_addVehiculeToReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_removeVehiculeFromReservation.sql

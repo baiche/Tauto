@@ -6,11 +6,13 @@ rem -- Version     : 2.0
 rem -- Auteur      : Boris de Finance
 rem -- Correcteurs  : 
 rem -- Testeurs     : 
-rem -- Integrateur : 
+rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\"
+
+call .\set_metadata.bat
+
 
 cd Procedures
 sqlcmd -S %mssqlInstanceName% -i Procedure_Abonnement\Suppression_Procedure_Abonnement.sql
