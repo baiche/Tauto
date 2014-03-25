@@ -16,28 +16,19 @@ IF OBJECT_ID ('dbo.createReservation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.createReservation
-	@id	 					int,
-	@date_creation			date,
 	@date_debut				datetime,
 	@date_fin				datetime,
-	@annule					bit,
 	@id_abonnement			int
 AS
 	INSERT INTO Reservation(
-		id,
-		date_creation,
 		date_debut,
 		date_fin,
-		annule,
 		id_abonnement
 	)
 	VALUES (
-		@id,
-		@date_creation,
 		@date_debut,
 		@date_fin,
-		@annule,
 		@id_abonnement
 	);
-
+	RETURN SCOPE_IDENTITY();
 GO
