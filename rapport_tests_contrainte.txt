@@ -1,0 +1,451 @@
+Debut des tests 
+ 
+Test ListeNoire 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.3 OK
+------------------------------Test A.5 OK
+------------------------------Test A.6 OK
+------------------------------Test A.7 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test B.4 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+ 
+Test RelanceDecouvert 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test A.6 OK
+------------------------------Test A.7 OK
+------------------------------Test A.8 OK
+------------------------------Test A.9 OK
+------------------------------Test A.10 OK
+------------------------------Test B.1 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+ 
+Test Catalogue 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK.1
+------------------------------Test A.4 OK.2
+------------------------------Test A.4 OK.3
+------------------------------Test A.4 OK.4
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+ 
+Test CategorieModele 
+ 
+Changed database context to 'TAuto_IBDR'.
+------------------------------Test A.1 et B.1 OK
+------------------------------Test A.2 OK
+------------------------------Test B.2 OK
+ 
+Test CompteAbonne 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3  OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3  OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK.1
+------------------------------Test C.2 OK.2
+------------------------------Test C.2 OK.3
+------------------------------Test C.2 OK.4
+------------------------------Test C.2 OK.5
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test D.1 NOT OK
+------------------------------Test D.2 OK.1
+------------------------------Test D.2 OK.2
+------------------------------Test D.2 OK.3
+------------------------------Test D.2 OK.4
+------------------------------Test D.2 OK.5
+------------------------------Test D.3 OK
+------------------------------Test D.4 OK
+------------------------------Test E.1 OK
+------------------------------Test E.2 OK
+------------------------------Test E. OK
+------------------------------Test E.4 OK.1
+------------------------------Test E.4 OK.2
+------------------------------Test E.4 OK.3
+------------------------------Test E.5 OK
+------------------------------Test E.6 OK
+------------------------------Test F.1 OK
+------------------------------Test F.2 OK
+------------------------------Test F.3 OK
+------------------------------Test F.4 OK
+------------------------------Test G.1 OK
+------------------------------Test G.2 OK
+------------------------------Test G.4 OK
+------------------------------Test H.1 OK.1
+------------------------------Test H.1 OK.2
+------------------------------Test H.1 OK.3
+------------------------------Test H.2 OK
+------------------------------Test H.3 OK
+------------------------------Test H.4 OK
+------------------------------Test H.5 OK
+------------------------------Test H.6 OK
+------------------------------Test I.1 OK
+------------------------------Test I.2  OK
+ 
+Test CompteAbonneConducteur 
+ 
+Changed database context to 'TAuto_IBDR'.
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test B.2 OK
+------------------------------Test C.2 OK
+------------------------------Test C.2 OK
+------------------------------Test C.2 OK
+ 
+Test Conducteur 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test A.6 OK
+------------------------------Test A.7 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test C.5 OK
+ 
+Test Entreprise 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test A.6 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK.1
+------------------------------Test B.2 OK.2
+------------------------------Test B.2 OK.3
+------------------------------Test B.2 OK.4
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test C.5 OK
+ 
+Test Facturation 
+ 
+Changed database context to 'TAuto_IBDR'.
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+Test Particulier 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+ 
+Test Permis 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+Test SousPermis 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test A.6 OK
+------------------------------Test A.6 OK
+------------------------------Test A.7 OK
+------------------------------Test A.8 OK
+------------------------------Test A.9 OK
+------------------------------Test A.10 OK
+------------------------------Test A.11 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+Test Location 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+Msg 547, Level 16, State 1, Server VAIO, Line 21
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 28
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test A.1 OK
+Msg 547, Level 16, State 1, Server VAIO, Line 79
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 86
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test A.2 OK
+Msg 547, Level 16, State 1, Server VAIO, Line 136
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 143
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test B.1 OK
+Msg 547, Level 16, State 1, Server VAIO, Line 193
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 200
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test B.2 NOT OK
+Msg 547, Level 16, State 1, Server VAIO, Line 250
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 257
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test C.1 OK
+Msg 547, Level 16, State 1, Server VAIO, Line 307
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Vehicule__3C1757E3". The conflict occurred in database "TAuto_IBDR", table "dbo.Modele".
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 314
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Abonnemen__nom_t__3EF3C48E". The conflict occurred in database "TAuto_IBDR", table "dbo.TypeAbonnement", column 'nom'.
+The statement has been terminated.
+------------------------------Test C.2 OK
+ 
+Test Abonnement 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+ 
+Test Retard 
+ 
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_avant'.
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_apres'.
+ 
+Test TypeAbonnement 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test B.3 OK
+------------------------------Test C.1 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+ 
+Test Etat 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+Msg 547, Level 16, State 1, Server VAIO, Line 25
+The INSERT statement conflicted with the CHECK constraint "CK__Categorie__descr__7C66E722". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'description'.
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 28
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Catalogue__nom_c__216361A7". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'nom'.
+The statement has been terminated.
+Msg 547, Level 16, State 1, Server VAIO, Line 34
+The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Categorie__nom_c__271C3AFD". The conflict occurred in database "TAuto_IBDR", table "dbo.Categorie", column 'nom'.
+The statement has been terminated.
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test E.1 OK.1
+------------------------------Test E.1 OK.2
+------------------------------Test E.1 OK.3
+------------------------------Test E.2 OK
+------------------------------Test G.1 OK
+------------------------------Test G.2 OK
+------------------------------Test G.3 OK
+------------------------------Test G.4 OK
+ 
+Test Incident 
+ 
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_avant'.
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_apres'.
+ 
+Test Infraction 
+ 
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_avant'.
+Msg 207, Level 16, State 1, Server VAIO, Line 18
+Invalid column name 'date_etat_apres'.
+ 
+Test ConducteurLocation 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test B.1 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+------------------------------Test C.5 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+ 
+Test Reservation 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test A.5 OK
+------------------------------Test B.1 OK
+------------------------------Test B.2 OK
+------------------------------Test C.1 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+ 
+Test ReservationVehicule 
+ 
+Changed database context to 'TAuto_IBDR'.
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+------------------------------Test A.1 OK
+------------------------------Test A.2 OK
+------------------------------Test A.3 OK
+------------------------------Test A.4 OK
+------------------------------Test B.1 OK
+------------------------------Test C.1 OK
+------------------------------Test C.2 OK
+------------------------------Test C.3 OK
+------------------------------Test C.4 OK
+Vider toutes les tables - Debut
+===============================
+Vider toutes les tables - Fin
+=============================
+ 

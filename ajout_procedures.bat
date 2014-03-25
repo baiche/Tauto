@@ -154,6 +154,13 @@ cd ..\Procedure_Vehicule
 call .\ajout_procedures_vehicule.bat nopause
 echo.
 
+cd Procedures
+echo ajout des Procedure_ReservationVehicule
+echo.
+cd ..\Procedure_ReservationVehicule
+call .\ajout_procedures_reservationVehicules.bat nopause
+echo.
+
 if "%1"=="nopause" goto start
 pause
 :start

@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : La base est censé être créé et vide au lancement des tests
 rem ----------------------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+SET mssqlInstanceName=".\"
 
 @echo on
 cd Tests_macros

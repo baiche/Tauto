@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=".\"
 
 cd Procedures
 sqlcmd -S %mssqlInstanceName% -i Procedure_Abonnement\Suppression_Procedure_Abonnement.sql

@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=".\"
 
 cd Generation
 sqlcmd -S %mssqlInstanceName% -i Generation\ScriptSuppression.sql

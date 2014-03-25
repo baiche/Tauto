@@ -10,7 +10,7 @@ rem -- Integrateur :
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=".\"
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_addConducteurToCompteAbonne.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_removeConducteurFromCompteAbonne.sql
