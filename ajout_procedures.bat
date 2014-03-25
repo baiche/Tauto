@@ -134,6 +134,12 @@ cd ..\Procedure_Reservation
 call .\ajout_procedures_reservation.bat nopause %mssqlInstanceName% 
 echo.
 
+echo ajout des Procedure_ReservationVehicule
+echo.
+cd ..\Procedure_ReservationVehicule
+call .\ajout_procedures_reservationVehicules.bat nopause %mssqlInstanceName%
+echo.
+
 echo ajout des Procedure_Retard
 echo.
 cd ..\Procedure_Retard 
@@ -164,18 +170,9 @@ cd ..\MacroProcedure_Utilisateur
 call .\ajout_MacroProcedure_Utilisateur.bat nopause %mssqlInstanceName%
 echo.
 
-<<<<<<< HEAD
-cd Procedures
-echo ajout des Procedure_ReservationVehicule
-echo.
-cd ..\Procedure_ReservationVehicule
-call .\ajout_procedures_reservationVehicules.bat nopause
-echo.
+cd ..
+cd ..
 
-=======
-cd ..
-cd ..
->>>>>>> aecfda78c293f01829b7fefbf23928208db7b496
 if "%1"=="nopause" goto start
 pause
 :start
