@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -26,8 +26,10 @@ AS
 		id_abonnement
 	)
 	VALUES (
+		GETDATE(),
 		@date_debut,
 		@date_fin,
+		'false',
 		@id_abonnement
 	);
 	RETURN SCOPE_IDENTITY();

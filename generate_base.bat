@@ -13,7 +13,6 @@ rem ------------------------------------------------------------
 
 call .\set_metadata.bat
 
-
 cd Generation
 sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i Generation.sql -v Param1="%cd%"

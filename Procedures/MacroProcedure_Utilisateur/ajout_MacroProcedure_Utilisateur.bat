@@ -12,6 +12,7 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=%2
 
+
 sqlcmd -S %mssqlInstanceName% -i associateConducteurToLocation.sql
 sqlcmd -S %mssqlInstanceName% -i blackListCompte.sql
 sqlcmd -S %mssqlInstanceName% -i cancelReservation.sql

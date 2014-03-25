@@ -13,7 +13,6 @@ rem ----------------------------------------------------------------------------
 
 call .\set_metadata.bat
 
-
 cd Tests
 
 sqlcmd -S %mssqlInstanceName% -i ..\Generation\ScriptSuppression.sql

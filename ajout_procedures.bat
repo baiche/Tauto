@@ -164,8 +164,18 @@ cd ..\MacroProcedure_Utilisateur
 call .\ajout_MacroProcedure_Utilisateur.bat nopause %mssqlInstanceName%
 echo.
 
+<<<<<<< HEAD
+cd Procedures
+echo ajout des Procedure_ReservationVehicule
+echo.
+cd ..\Procedure_ReservationVehicule
+call .\ajout_procedures_reservationVehicules.bat nopause
+echo.
+
+=======
 cd ..
 cd ..
+>>>>>>> aecfda78c293f01829b7fefbf23928208db7b496
 if "%1"=="nopause" goto start
 pause
 :start

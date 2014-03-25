@@ -10,6 +10,7 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : Ajoute les procedures concernant les abonnements de la base.
 rem ------------------------------------------------------------
 
+
 SET mssqlInstanceName=%2
 
 echo %mssqlInstanceName%

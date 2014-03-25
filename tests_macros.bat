@@ -11,6 +11,7 @@ rem -- Commentaire : La base est censé être créé et vide au lancement des te
 rem ----------------------------------------------------------------------------
 
 
+
 call .\set_metadata.bat
 
 

@@ -28,6 +28,7 @@ AS
 		END  
 	ELSE
 		EXEC cancelReservation @id_reservation;
+		DELETE FROM ReservationVehicule WHERE id_reservation=@id_reservation;
 		
 		COMMIT TRANSACTION cancelReservation
 		PRINT('cancelReservation OK');
