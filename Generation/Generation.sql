@@ -438,8 +438,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.tables t INNER join sys.schemas s on (t.schema_id = s.schema_id) WHERE s.name='dbo' and t.name='CatalogueCategorie')
 BEGIN
 CREATE TABLE CatalogueCategorie(
-	nom_catalogue 		nvarchar(50) REFERENCES Catalogue(nom),
-	nom_categorie 		nvarchar(50) REFERENCES  Categorie(nom),
+	nom_catalogue 		nvarchar(50) REFERENCES Catalogue(nom) ON DELETE CASCADE,
+	nom_categorie 		nvarchar(50) REFERENCES Categorie(nom) ON DELETE CASCADE,
 	PRIMARY KEY(nom_catalogue, nom_categorie)
 );
 PRINT('Table CatalogueCategorie créée');
@@ -461,7 +461,7 @@ CREATE TABLE CategorieModele(
 	FOREIGN KEY(marque_modele,serie_modele,type_carburant_modele, portieres_modele) 
 		REFERENCES Modele(marque,serie,type_carburant, portieres),
 	FOREIGN KEY(nom_categorie)
-		REFERENCES Categorie(nom)
+		REFERENCES Categorie(nom) ON DELETE CASCADE
 );
 PRINT('Table CategorieModele créée');
 END
@@ -520,7 +520,7 @@ CREATE TABLE ReservationVehicule(
 	FOREIGN KEY (id_reservation)
 		REFERENCES Reservation(id),
 	FOREIGN KEY (matricule_vehicule) 
-		REFERENCES Vehicule(matricule)
+		REFERENCES Vehicule(matricule) ON DELETE CASCADE
 );
 PRINT('Table ReservationVehicule créée');
 END
@@ -574,7 +574,7 @@ PRINT('Table Abonnement modifiée');
 GO
 ALTER TABLE Location
 	ADD FOREIGN KEY(matricule_vehicule)
-			REFERENCES Vehicule(matricule),
+			REFERENCES Vehicule(matricule) ON DELETE CASCADE,
 		FOREIGN KEY(id_facturation)
 			REFERENCES Facturation(id),
 		FOREIGN KEY(id_etat)
