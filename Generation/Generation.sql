@@ -114,7 +114,7 @@ CREATE TABLE SousPermis(
 	nom_typepermis 		nvarchar(10) 					NOT NULL CHECK(nom_typepermis IN('A1', 'A2', 'B', 'C', 'D', 'E', 'F')),--c'est un enum
 	numero_permis 		nvarchar(50),							 
 	date_obtention 		date 							NOT NULL, --CHECK(date_obtention < date_expiration),
-	date_expiration 	date 							NOT NULL, --CHECK(date_obtention < date_expiration),
+	date_expiration 	date, --CHECK(date_obtention < date_expiration),
 	periode_probatoire 	tinyint 						NOT NULL 	DEFAULT 3,
 	PRIMARY KEY(nom_typepermis, numero_permis)
 );
