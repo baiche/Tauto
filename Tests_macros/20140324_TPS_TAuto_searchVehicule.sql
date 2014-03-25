@@ -45,9 +45,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -71,9 +71,9 @@ BEGIN
 			WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -98,9 +98,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -125,9 +125,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -152,9 +152,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -179,9 +179,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -206,9 +206,9 @@ BEGIN
 		WHERE matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 3)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -236,9 +236,9 @@ BEGIN
 			OR matricule = '1775896we'
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt' ) = 6)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -270,9 +270,9 @@ BEGIN
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt'
 			OR matricule = '1775896wy' ) = 10)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO
 
@@ -304,8 +304,8 @@ BEGIN
 			OR matricule = '1775896wr'
 			OR matricule = '1775896wt'
 			OR matricule = '1775896wy' ) = 10)
-		PRINT ('OK');
+		PRINT ('searchVehicule OK');
 	ELSE
-		PRINT ('KO');
+		PRINT ('searchVehicule KO');
 END
 GO

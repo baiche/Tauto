@@ -6,7 +6,8 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : 
+-- Commentaire : Retourne une table de Vehicules en fonction
+--               de plusieurs paramètres de recherche.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -16,7 +17,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
   
-IF OBJECT_ID(N'[dbo].[searchVehicule]', 'IF') IS NOT NULL 
+IF OBJECT_ID(N'[dbo].[searchVehicule]', 'TF') IS NOT NULL 
     DROP FUNCTION [dbo].[searchVehicule]
 GO
   
@@ -94,19 +95,17 @@ BEGIN
 				END
 			END
 		
-			IF exists
+			IF EXISTS
 				(SELECT 1
 				FROM ReservationVehicule rv
 				INNER JOIN Reservation r
 				ON rv.id_reservation = r.id
 				WHERE 
-						rv.matricule_vehicule = @matricule_courant
-						AND 
-						(r.date_debut between @date_debut AND @date_fin
-							OR r.date_fin between @date_debut AND @date_fin
-							OR (r.date_debut <= @date_debut AND r.date_fin >= @date_fin)
-						)
-				)	
+					rv.matricule_vehicule = @matricule_courant
+					AND (r.date_debut BETWEEN @date_debut AND @date_fin
+					OR r.date_fin BETWEEN @date_debut AND @date_fin
+					OR (r.date_debut <= @date_debut AND r.date_fin >= @date_fin))
+				)
 			BEGIN
 				DELETE FROM @returnTable where matricule = @matricule_courant;
 			END

@@ -16,5 +16,6 @@ INSERT INTO Conducteur(piece_identite, nationalite, nom, prenom, id_permis) VALU
 	('123456789', 'Francais', 'de Finance', 'Boris', '0000000001'),
 	('987654321', 'Francais', 'le Coco', 'David', '0000000002'),
 	('100000001', 'Anglais', 'Amitousa', 'Jean Luc', '0000000003'),
-	('200000002', 'Francais', 'Marshall', 'Michel', '0000000004')
+	('200000002', 'Francais', 'Marshall', 'Michel', '0000000004'),
+	('300000003', 'Francais', 'Ouir', 'Seyyid', NULL)
 GO
