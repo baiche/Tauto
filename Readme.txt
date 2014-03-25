@@ -45,6 +45,7 @@ Contenue du projet  :
 	- le "Readme.txt" : explique la structure du projet.
 	
 Pour lancer le projet :
+	0- initialisez les variable qui dependent de votre machine dans le script set_metatada.bat
 	1- pour avoir la base vide : "generate_base.bat"
 	2- pour avoir la base peuplée : "run_peuplement.bat"
 	3- pour executer les tests des contraintes de la base de donnée : tests_contrainte.bat

@@ -10,7 +10,9 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+
+call .\set_metadata.bat
+
 
 cd Generation
 sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql

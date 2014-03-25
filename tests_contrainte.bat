@@ -10,7 +10,9 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : La base est censé être créé et vide au lancement des tests
 rem ----------------------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLEXPRESS"
+
+call .\set_metadata.bat
+
 
 cd Tests
 
