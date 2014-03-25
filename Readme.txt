@@ -2,7 +2,7 @@
 -- Fichier     : Readme.txt
 -- Date        : 17/02/2014
 -- Auteur      : Baiche Mourad
--- Correcteur  : 
+-- Correcteur  : Alexis Deluze
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Ce projet est fait dans un cadre pédagogique pour l'UE Ingénierie des Base de Données Répartis ( IBDR ) . 
@@ -35,6 +35,8 @@ Contenue du projet  :
 	- le script "generate_base.bat" : genere la base.
 	
 	- le script "run_peuplement.bat" : peuple la base.
+
+	- le script set_metadata.bat : A MODIFIER : indique le chemin vers l'instance du sql server. 
 	
 	- le script "suppression_procedures.bat" : vide la base de l'ensemble des procédures.
 	
