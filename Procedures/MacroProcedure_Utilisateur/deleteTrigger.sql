@@ -67,11 +67,11 @@ AS
 				
 				--2.7 suppression de Location
 				
-			--3 - suppression de Vehicule 
-				
-		DELETE FROM Vehicule
+			--3 - suppression de Vehicule
+			
+		DELETE FROM Vehicule	
 		WHERE a_supprimer = 'true'
-				
+
 		--SUPPRESSION des MODELES
 		
 			--1 - SUPPRESSION des VEHICULES
@@ -98,6 +98,7 @@ AS
 				--1.3 - suppression de Vehicule 
 			
 			--2 - suppression de Modele
+			
 			
 		DELETE FROM Modele
 		WHERE a_supprimer = 'true'
@@ -177,7 +178,7 @@ AS
 		DELETE FROM TypeAbonnement
 		WHERE a_supprimer = 'true'	
 					
-		--SUPPRESSION de CompteAbonne
+		--SUPPRESSION des COMPTEABONNES
 		
 			--1 - SUPPRESSION des ABONNEMENTS
 		
