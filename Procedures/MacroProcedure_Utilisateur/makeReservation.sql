@@ -3,10 +3,10 @@
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
--- Correcteur  : 
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : 
+-- Commentaire : Renvoie l'id de la réservation, -1 en cas d'erreur
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -27,74 +27,74 @@ AS
 	
 	BEGIN TRANSACTION makeReservation
 	BEGIN TRY
-	
-	DECLARE @return INT ;
-	DECLARE @matricule VARCHAR(50);
-	DECLARE @matricule_disponible VARCHAR(50);
-	SET @matricule_disponible = '0';
-		
-	 -- verifier s'il a le droit d'emprunter
-	IF (SELECT COUNT(*) FROM ListeNoire ln,Abonnement a WHERE a.nom_compteabonne=ln.nom AND a.prenom_compteabonne=ln.prenom AND a.date_naissance_compteabonne=ln.date_naissance ) !=0
-	BEGIN
-		PRINT('vous ne pouvez pas reserver vous etes en liste noire')
-		return -1;
-	END
-	ELSE
-		
-	BEGIN
-
-	-- verifier si on a un vehicule disponible
-		DECLARE ListeVoiture CURSOR LOCAL  
-		FOR SELECT matricule 
-		FROM Vehicule  
-		WHERE marque_modele=@marque AND serie_modele=@serie AND portieres_modele=@portieres AND type_carburant_modele=@type_carburant AND a_supprimer='false';  
-		
-		
-		OPEN ListeVoiture
-		FETCH NEXT FROM ListeVoiture INTO @matricule;
-		
-		WHILE @@FETCH_STATUS = 0
-		BEGIN
-		
-		IF (SELECT v.statut FROM Vehicule v WHERE v.matricule=@matricule)='Disponible'
-		BEGIN
+		DECLARE @ReturnValue int;
+		DECLARE @return INT ;
+		DECLARE @matricule VARCHAR(50);
+		DECLARE @matricule_disponible VARCHAR(50);
+		SET @matricule_disponible = '0';
 			
-			SET @matricule_disponible=@matricule;
-		
-			BREAK;
-		END
-		
-		FETCH NEXT FROM ListeVoiture INTO @matricule 
-		END 
-		
-		CLOSE ListeVoiture;
-		
-		IF @matricule_disponible ='0'
+		 -- verifier s'il a le droit d'emprunter
+		IF (SELECT COUNT(*) FROM ListeNoire ln,Abonnement a WHERE a.nom_compteabonne=ln.nom AND a.prenom_compteabonne=ln.prenom AND a.date_naissance_compteabonne=ln.date_naissance ) !=0
 		BEGIN
-			PRINT('Aucun vehicule disponible')
+			PRINT('vous ne pouvez pas reserver vous etes en liste noire')
 			return -1;
-		END 
-		ELSE 
-		BEGIN
-		 
-		-- creer la reservation
-		-- 
-		EXEC @return=dbo.isDisponible1 @matricule_disponible,@date_debut,@date_fin ;
-		
-		IF (@return =1 ) 
-		BEGIN 
-			
-			EXEC dbo.createReservation @date_debut,@date_fin,@id_abonnement; 
-			DECLARE @id_res INT;
-			SELECT @id_res=res.id FROM Reservation res WHERE res.id_abonnement=@id_abonnement AND res.date_debut=@date_debut AND res.date_fin=@date_fin ;
-			EXEC dbo.addVehiculeToReservation @id_res,@matricule_disponible ;
 		END
-		END 
-	END
+		ELSE
+			
+		BEGIN
+
+		-- verifier si on a un vehicule disponible
+			DECLARE ListeVoiture CURSOR LOCAL  
+			FOR SELECT matricule 
+			FROM Vehicule  
+			WHERE marque_modele=@marque AND serie_modele=@serie AND portieres_modele=@portieres AND type_carburant_modele=@type_carburant AND a_supprimer='false';  
+			
+			
+			OPEN ListeVoiture
+			FETCH NEXT FROM ListeVoiture INTO @matricule;
+			
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+			
+				IF (SELECT v.statut FROM Vehicule v WHERE v.matricule=@matricule)='Disponible'
+				BEGIN
+					
+					SET @matricule_disponible=@matricule;
+				
+					BREAK;
+				END
+			
+			FETCH NEXT FROM ListeVoiture INTO @matricule 
+			END 
+			
+			CLOSE ListeVoiture;
+			
+			IF @matricule_disponible ='0'
+			BEGIN
+				PRINT('Aucun vehicule disponible')
+				return -1;
+			END 
+			ELSE 
+			BEGIN
+			 
+			-- creer la reservation
+			-- 
+			EXEC @return=dbo.isDisponible1 @matricule_disponible,@date_debut,@date_fin ;
+			
+			IF (@return =1 ) 
+			BEGIN 
+				
+				EXEC @ReturnValue = dbo.createReservation
+					@date_debut, @date_fin, @id_abonnement;
+				EXEC dbo.addVehiculeToReservation
+					@ReturnValue, @matricule_disponible ;
+			END
+			END 
+		END
 	 
 		COMMIT TRANSACTION makeReservation
 		PRINT('makeReservation OK');
-		RETURN 1;
+		RETURN @ReturnValue;
 	END TRY
 	BEGIN CATCH
 		PRINT('makeReservation: ERROR');

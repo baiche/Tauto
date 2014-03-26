@@ -59,13 +59,13 @@ AS
 			
 		IF ( @annul = 'true' )
 		BEGIN
-			RAISERROR('Reservation annule', 10, -1);
-			RETURN -1;
+			RAISERROR('Reservation annulee', 16, 1);
+			--RETURN -1;
 		END
 			
 		IF ( @a_supprimer = 'true' )
 		BEGIN
-			RAISERROR('Reservation supprimee', 10, -1);
+			RAISERROR('Reservation supprimee', 11, 1);
 			RETURN -1;
 		END
 			
@@ -93,7 +93,9 @@ AS
 				SELECT @vehiculeStatut = statut FROM Vehicule WHERE matricule = @matricule_veh;				
 				
 				IF (@vehiculeStatut NOT LIKE 'Disponible')
+				BEGIN
 					RAISERROR('Vehicule louee', 10, -1);
+				END
 					
 				EXEC dbo.createLocation 
 					@matricule_vehicule = @matricule_veh,
