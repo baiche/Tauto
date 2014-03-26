@@ -60,7 +60,7 @@ AS
 		IF ( @annul = 'true' )
 		BEGIN
 			RAISERROR('Reservation annulee', 16, 1);
-			--RETURN -1;
+			RETURN -1;
 		END
 			
 		IF ( @a_supprimer = 'true' )
