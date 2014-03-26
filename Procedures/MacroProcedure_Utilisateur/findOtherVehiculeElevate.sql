@@ -15,7 +15,7 @@
 USE TAuto_IBDR;
 
 IF OBJECT_ID ('dbo.findOtherVehiculeElevate', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.findOtherVehicule	
+	DROP PROCEDURE dbo.findOtherVehiculeElevate	
 GO
 
 CREATE PROCEDURE dbo.findOtherVehiculeElevate
@@ -45,12 +45,13 @@ AS
 			ROLLBACK TRANSACTION findOtherVehiculeElevate
 			RETURN -1;
 		END
-		
+		-- on recupere les informations concernant ce Vehicule 
 		SET @marque_modele = (SELECT marque_modele FROM Vehicule WHERE matricule=@matricule);
 		SET @serie_modele = (SELECT serie_modele FROM Vehicule WHERE matricule=@matricule);
 		SET @type_carburant_modele = (SELECT type_carburant_modele FROM Vehicule WHERE matricule=@matricule);
 		SET @portieres_modele = (SELECT portieres_modele FROM Vehicule WHERE matricule=@matricule);
 		SET @prix_modele = (SELECT prix FROM Modele  WHERE marque=@marque_modele AND serie=@serie_modele AND type_carburant = @type_carburant_modele AND portieres = @portieres_modele); 
+		
 		
 		IF(@itMustBeDone = 'false')
 		BEGIN
