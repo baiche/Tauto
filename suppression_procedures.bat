@@ -10,7 +10,9 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+
+call .\set_metadata.bat
+
 
 cd Procedures
 sqlcmd -S %mssqlInstanceName% -i Procedure_Abonnement\Suppression_Procedure_Abonnement.sql

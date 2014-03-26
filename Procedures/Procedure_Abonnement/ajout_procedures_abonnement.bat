@@ -10,7 +10,11 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : Ajoute les procedures concernant les abonnements de la base.
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+
+SET mssqlInstanceName=%2
+
+echo %mssqlInstanceName%
+
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteAbonnement.sql

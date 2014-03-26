@@ -10,7 +10,7 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createSousPermis.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteSousPermis.sql

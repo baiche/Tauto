@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Mohamed Neti
--- Correcteur  : 
+-- Correcteur  : Baiche Mourad
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire :
@@ -21,13 +21,17 @@ CREATE PROCEDURE dbo.createReservation
 	@id_abonnement			int
 AS
 	INSERT INTO Reservation(
+		date_creation,
 		date_debut,
 		date_fin,
+		a_supprimer,
 		id_abonnement
 	)
 	VALUES (
+		GETDATE(),
 		@date_debut,
 		@date_fin,
+		'false',
 		@id_abonnement
 	);
 	RETURN SCOPE_IDENTITY();

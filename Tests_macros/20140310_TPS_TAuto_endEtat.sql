@@ -82,7 +82,7 @@ BEGIN TRY
 	SELECT @nbVeh = COUNT(*) FROM Vehicule WHERE matricule = '0775896wi' AND statut LIKE 'Disponible';
 	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
 	
-	IF ( @nbEtat = 1 AND @nbVeh = 1 AND @factVal = 60.00 )
+	IF ( @nbEtat = 1 AND @nbVeh = 1 AND @factVal = 100.00 )
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END

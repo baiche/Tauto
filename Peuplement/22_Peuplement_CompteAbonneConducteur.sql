@@ -27,6 +27,7 @@ INSERT INTO CompteAbonneConducteur(nom_compteabonne, prenom_compteabonne, date_n
 	('Ouir', 'Seyyid', '1986-05-25', 'Francais', '200000002'),
 	('Baiche', 'Mourad', '1989-04-25', 'Francais', '200000002'),
 	('Deluze', 'Alexis', '1974-02-12', 'Francais', '987654321'),
+	('Deluze', 'Alexis', '1974-02-12', 'Francais', '123456789'),
 	('Mottier', 'Allan', '1989-03-23', 'Anglais', '100000001')
 ;
 

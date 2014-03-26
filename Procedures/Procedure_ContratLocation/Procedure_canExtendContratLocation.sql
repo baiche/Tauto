@@ -25,16 +25,15 @@ AS
 	-- étendre la location, sinon on ne peut pas.
 	IF 	
 	(SELECT COUNT(*)
-	FROM Vehicule v, Location l1,Location l2, ContratLocation cl1 , ContratLocation cl2
+	FROM Vehicule v, Location l1, ContratLocation cl1 , ReservationVehicule rv, Reservation r
 	WHERE cl1.id = @id_contrat_location
-	AND l1.id <> l2.id
-	AND cl1.id <> cl2.id
 	AND cl1.id = l1.id_contratLocation
 	AND l1.matricule_vehicule = v.matricule
-	AND	l2.matricule_vehicule = v.matricule
-	AND l2.id_contratLocation = cl2.id
-	AND cl1.date_fin < cl2.date_debut
-	AND DATEDIFF(DAY, cl1.date_fin, cl2.date_debut) < (@nb_jours + 1)) = 0
+	AND v.matricule =  rv.matricule_vehicule
+	AND rv.id_reservation = r.id
+	AND r.annule = 'false'
+	AND cl1.date_fin < r.date_debut
+	AND DATEDIFF(DAY, cl1.date_fin, r.date_debut) < (@nb_jours + 1)) = 0
 	RETURN 1
 	ELSE
 	RETURN 0

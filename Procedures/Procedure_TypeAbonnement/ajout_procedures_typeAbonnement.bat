@@ -10,7 +10,7 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : Ajoute les procedures concernant les types d'abonnements
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createTypeAbonnement.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteTypeAbonnement.sql

@@ -10,7 +10,7 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_CloseFile.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_OpenFile.sql

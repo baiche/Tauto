@@ -10,16 +10,16 @@ rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
 rem ------------------------------------------------------------
 
-SET mssqlInstanceName=".\SQLexpress"
+
+call .\set_metadata.bat
 
 cd Generation
 sqlcmd -S %mssqlInstanceName% -i ScriptSuppression.sql
 sqlcmd -S %mssqlInstanceName% -i Generation.sql -v Param1="%cd%"
 sqlcmd -S %mssqlInstanceName% -i ProcedureAnnexe.sql
 cd ..
-
 call .\ajout_procedures.bat nopause
-
+pause
 if "%1"=="nopause" goto start
 pause
 :start

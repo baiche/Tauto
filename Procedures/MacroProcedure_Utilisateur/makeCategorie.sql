@@ -34,7 +34,7 @@ AS
 			END
 		ELSE
 			BEGIN
-			PRINT ('je suis laaaa');
+
 			EXEC addCategorieToCatalogue @nom_catalogue,@nom;
 			END
 			
