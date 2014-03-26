@@ -18,7 +18,7 @@ GO
 CREATE PROCEDURE dbo.declarePermis
 	@piece_identite 	nvarchar(50), -- PK
 	@nationalite 		nvarchar(50), -- PK
-	@numero				nvarchar(50), -- nullable, pas besoin de resaisir le permis s'il existe dÃ©jÃ  en base
+	@numero				nvarchar(50), -- nullable, pas besoin de resaisir le permis s'il existe déjà en base
 	@nom_typepermis		nvarchar(10),  -- PK
 	@date_obtention 	date,
 	@periode_probatoire tinyint, -- csq sur le nombre de points de base
@@ -63,14 +63,14 @@ AS
 		
 		IF @date_obtention > GETDATE()
 		BEGIN
-			PRINT('declareConducteur: ERROR La date d obtention est postÃ©reure Ã  la date d aujourd hui');
+			PRINT('declareConducteur: ERROR La date d''obtention est postéreure à la date d''aujourd''hui');
 			ROLLBACK TRANSACTION declareConducteur
 			RETURN -1
 		END
 		
 		IF @date_expiration IS NOT NULL AND @date_expiration < GETDATE()
 		BEGIN
-			PRINT('declareConducteur: ERROR La date d expiration est antÃ©rieure Ã  la date d aujourd hui');
+			PRINT('declareConducteur: ERROR La date d''expiration est antérieure à la date d''aujourd''hui');
 			ROLLBACK TRANSACTION declareConducteur
 			RETURN -1
 		END
