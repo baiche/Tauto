@@ -97,7 +97,6 @@ AS
 			       nationalite_conducteur = @nationalite_conducteur
 			)	
 		BEGIN
-			PRINT('ass not exist');
 			EXECUTE dbo.addConducteurToCompteAbonne 
 						@nom_compteabonne, @prenom_compteabonne, @date_naissance_compteabonne,
 						@piece_identite_conducteur, @nationalite_conducteur;
