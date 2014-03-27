@@ -1,1 +1,1 @@
-schtasks /create /sc Minute /mo 1 /tn "TAuto IBDR" /tr "C:\Users\Etrange02\Documents\Tauto\Procedures\MacroProcedure_Utilisateur\V3\checkImpaye.bat"
+schtasks /create /sc Minute /mo 1 /tn "TAuto IBDR" /tr "C:\Users\Etrange02\Documents\Tauto\Procedures\MacroProcedure_Utilisateur\V3\checkImpaye.bat" /F

@@ -2,7 +2,7 @@
 -- Fichier     : makeCompteEntreprise.sql
 -- Date        : 14/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Alexis Deluze
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 

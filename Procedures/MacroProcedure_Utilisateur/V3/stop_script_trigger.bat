@@ -1,1 +1,1 @@
-schtasks /delete /TN "TAuto IBDR"
+schtasks /delete /TN "TAuto IBDR" /F
