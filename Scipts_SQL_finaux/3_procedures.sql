@@ -1479,7 +1479,6 @@ GO
 
 IF OBJECT_ID ('dbo.notReservedVehicle1', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.notReservedVehicle1;
-	PRINT('PROCEDURE dbo.notReservedVehicle1 supprimée');
 GO
 
 
@@ -1516,9 +1515,6 @@ AS
 	END CATCH
 GO
 
-PRINT('PROCEDURE dbo.notReservedVehicle1 créée');
-GO
-
 
 ------------------------------------------------------------
 -- Fichier     : Procedure_isDisponible1
@@ -1537,7 +1533,6 @@ GO
 
 IF OBJECT_ID ('dbo.isDisponible1', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.isDisponible1;
-	PRINT('PROCEDURE dbo.isDisponible1 supprimée');
 GO
 
 
@@ -1600,9 +1595,6 @@ AS
 	BEGIN CATCH
 		RAISERROR('Erreur dans la procedure dbo.isDisponible1',10,1)
 	END CATCH
-GO
-
-PRINT('PROCEDURE dbo.isDisponible1 créée');
 GO
 
 ------------------------------------------------------------
@@ -3071,6 +3063,7 @@ BEGIN
 		CLOSE Curseur_vehicule
     RETURN
 END
+GO
 
 ------------------------------------------------------------
 -- Fichier     : makeReservation.sql
