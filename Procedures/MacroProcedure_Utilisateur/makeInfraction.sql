@@ -1,9 +1,9 @@
 ------------------------------------------------------------
 -- Fichier     : makeInfraction.sql
--- Date        : 15/03/2014
+-- Date        : 27/03/2014
 -- Version     : 1.0
--- Auteur      : 
--- Correcteur  : 
+-- Auteur      : Baiche Mourad
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : 
@@ -17,23 +17,13 @@ GO
 
 CREATE PROCEDURE dbo.makeInfraction
 	@matricule				nvarchar(50), -- FK
-	@date					datetime,
 	@nom 					nvarchar(50),
 	@montant 				money,
 	@description 			nvarchar(50)
 AS
 	BEGIN TRANSACTION makeInfraction
+	SELECT FROM Location WHERE matricule_vehicule=@matricule;
 	BEGIN TRY
-	
-		DECLARE @id_location INT;
-		SET @id_location = (SELECT l.id FROM Location l,ContratLocation cl 
-										WHERE l.matricule_vehicule=@matricule 
-										AND  l.id_contratLocation=cl.id 
-										AND cl.date_debut<=@date
-										AND cl.date_fin >= @date);
-		
-		EXEC createInfraction @date,@id_location,@nom,@montant,@description,'false' ;
-		
 		COMMIT TRANSACTION makeInfraction
 		PRINT('makeInfraction OK');
 		RETURN 1;
