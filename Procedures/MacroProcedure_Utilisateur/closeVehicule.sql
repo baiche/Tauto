@@ -20,6 +20,7 @@ CREATE PROCEDURE dbo.closeVehicule
 AS
 	BEGIN TRANSACTION closeVehicule	
 	DECLARE @msg varchar(4000)
+	DECLARE @tmp int
 	BEGIN TRY 
 		
 		--verification de l'argument
@@ -55,10 +56,16 @@ AS
 			FROM ReservationVehicule
 			WHERE matricule_vehicule = @matricule) > 0)
 		BEGIN
-			--TODO : remplacer le vehicule dans ces reservations
-			PRINT('closeVehicule: Le vehicule est reserve');
-			ROLLBACK TRANSACTION closeVehicule
-			RETURN -1
+			BEGIN TRY
+				EXEC  findOtherVehicule @matricule, 'true', NULL
+				-- TODO : gerer le surclassement
+				PRINT('Le vehicule a ete remplace dans toutes les autres reservations future')
+			END TRY
+			BEGIN CATCH
+				PRINT('closeVehicule: Le vehicule est reserve et ne peut etre remplace par un modele equivalent.');
+				ROLLBACK TRANSACTION closeVehicule
+				RETURN -1			
+			END CATCH
 		END
 		
 		-- le vehicule est-il present dans la table Location

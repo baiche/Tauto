@@ -10,7 +10,7 @@
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
-
+SET NOCOUNT ON
 /*dbo.closeVehicule
 	@matricule varchar(50)--PK
 */
@@ -86,21 +86,66 @@ END CATCH
 GO
 
 --Test 4
---vehicule present dans une reservation (a modifier)
+--vehicule present dans des reservation non remplacable
 BEGIN TRY
+	--lie aux reservations 7,8,16 
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.closeVehicule
 		@matricule = '0775896we';
 	IF ( @ReturnValue = 1)
 	BEGIN
-		PRINT('------------------------------Test 4 - Ne drevrais pas etre accepte - KO');
+		IF((SELECT COUNT(*) 
+		FROM ReservationVehicule
+		WHERE id_reservation = 7
+		OR id_reservation = 8
+		OR id_reservation = 16
+		AND  matricule_vehicule = '0775896we') <> 0)
+		BEGIN
+			PRINT('------------------------------Test 4 - Erreur de remplacement - KO');
+		END
+		ELSE
+		BEGIN
+			PRINT('------------------------------Test 4 - OK');
+		END
 	END
 	ELSE	
 	BEGIN
-		PRINT('------------------------------Test 4 - OK temporairement');
+		PRINT('------------------------------Test 4 - OK');
 	END
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 4  - Exception leve - KO');
+	PRINT('------------------------------Test 4 - Exception leve - KO');
+END CATCH
+GO
+
+--Test 5
+--vehicule present dans des reservations remplacable
+BEGIN TRY
+	--lie aux reservations 6,11
+	DECLARE @ReturnValue int;
+	EXEC @ReturnValue = dbo.closeVehicule
+		@matricule = '0775896wi';
+	IF ( @ReturnValue = 1)
+	BEGIN
+		IF((SELECT COUNT(*) 
+		FROM ReservationVehicule
+		WHERE (id_reservation = 6
+		OR id_reservation = 11)
+		AND  matricule_vehicule = '0775896wi') <> 0)
+		BEGIN
+			PRINT('------------------------------Test 5 - Erreur de remplacement - KO');
+		END
+		ELSE
+		BEGIN
+			PRINT('------------------------------Test 5 - OK');
+		END
+	END
+	ELSE	
+	BEGIN
+		PRINT('------------------------------Test 5 - Ne drevrais pas etre accepte - KO');
+	END
+END TRY
+BEGIN CATCH
+	PRINT('------------------------------Test 5 - Exception leve - KO');
 END CATCH
 GO
