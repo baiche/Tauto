@@ -131,7 +131,7 @@ INSERT INTO ReservationVehicule
 VALUES
 	(@idReservation, '0775896wr'); -- '406',5,'Diesel'
 
-	
+/*	
 SELECT @idReservation = id FROM Reservation
 WHERE date_debut = '2014-03-05T08:00:00' AND date_fin = '2014-03-06T16:00:00'; -- 13
 
@@ -139,7 +139,7 @@ INSERT INTO ReservationVehicule
 	(id_reservation,matricule_vehicule)
 VALUES
 	(@idReservation, '0775896wt'); -- '206',5,'Diesel'
-
+*/
 	
 SELECT @idReservation = id FROM Reservation
 WHERE date_debut = '2014-12-01T09:00:00' AND date_fin = '2014-12-22T17:00:00'; -- 14
