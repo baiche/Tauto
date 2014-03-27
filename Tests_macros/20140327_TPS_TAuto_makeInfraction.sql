@@ -11,14 +11,11 @@
 
 USE TAuto_IBDR;
 
-DELETE FROM CatalogueCategorie;
-DELETE FROM Catalogue;
-DELETE FROM Categorie;
 
 --Test 1
 BEGIN TRY
 	
-	EXEC makeInfraction '0775896wt','2014-02-16','exces de vitesse',75,'roule a 90 km en plein aglomeration' ;
+	EXEC dbo.makeInfraction '0775896wt','2014-02-16T00:00:00','exces de vitesse',75,'roule a 90 km en plein aglomeration' ;
 	
 	PRINT('infraction cree--- Test OK');
 END TRY
