@@ -15,6 +15,136 @@
 ------------------------------------------------------------
 
 ------------------------------------------------------------
+-- Fichier     : Procedure_greyListCompteAbonne
+-- Date        : 11/03/2014
+-- Version     : 1.0
+-- Auteur      : Jean-Luc Amitousa Mankoy
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire :
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.greyListCompteAbonne', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.greyListCompteAbonne
+GO
+
+CREATE PROCEDURE dbo.greyListCompteAbonne
+	@nom_abonne 				nvarchar(50),
+	@prenom_abonne 				nvarchar(50),
+	@date_naissance_abonne 		date
+AS
+	UPDATE CompteAbonne 
+	SET liste_grise = 'true' 
+	WHERE nom = @nom_abonne
+	AND prenom = @prenom_abonne 
+	AND date_naissance = @date_naissance_abonne;
+GO
+
+
+------------------------------------------------------------
+-- Fichier     : Procedure_updateNiveauRelanceDecouvert
+-- Date        : 24/02/2014
+-- Version     : 1.0
+-- Auteur      : Allan Mottier
+-- Correcteur  : David Lecoconnier
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Augmente le niveau d'une RelanceDecouvert et remet la date à jour.
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.updateNiveauRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.updateNiveauRelanceDecouvert
+GO
+
+CREATE PROCEDURE dbo.updateNiveauRelanceDecouvert
+	@nom_compteabonne 				nvarchar(50),
+	@prenom_compteabonne			nvarchar(50),
+	@date_naissance_compteabonne	date,
+	@date_creation					datetime
+AS
+	UPDATE RelanceDecouvert
+	SET niveau = niveau + 1
+	WHERE   nom_compteabonne = @nom_compteabonne 
+		AND prenom_compteabonne = @prenom_compteabonne
+		AND date_naissance_compteabonne = @date_naissance_compteabonne
+		AND date = @date_creation;
+
+GO
+
+------------------------------------------------------------
+-- Fichier     : Procedure_disableRelanceDecouvert
+-- Date        : 24/02/2014
+-- Version     : 1.0
+-- Auteur      : Allan Mottier
+-- Correcteur  : David Lecoconnier
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Met le champ a_supprimer d'une RelanceDecouvert a true
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.disableRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.disableRelanceDecouvert
+GO
+
+CREATE PROCEDURE dbo.disableRelanceDecouvert
+	@nom_compteabonne 				nvarchar(50),
+	@prenom_compteabonne			nvarchar(50),
+	@date_naissance_compteabonne	date,
+	@date							datetime
+AS
+	UPDATE RelanceDecouvert
+	SET a_supprimer = 'true'
+	WHERE   nom_compteabonne = @nom_compteabonne
+		AND prenom_compteabonne = @prenom_compteabonne
+		AND date_naissance_compteabonne = @date_naissance_compteabonne
+		AND date = @date;
+
+GO
+
+------------------------------------------------------------
+-- Fichier     : Procedure_createRelanceDecouvert
+-- Date        : 24/02/2014
+-- Version     : 1.0
+-- Auteur      : Allan Mottier
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Crée une nouvelle RelanceDecouvert à la date actuelle et au niveau 0.
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.createRelanceDecouvert', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createRelanceDecouvert
+GO
+
+CREATE PROCEDURE dbo.createRelanceDecouvert
+	@nom_compteabonne 				nvarchar(50),
+	@prenom_compteabonne			nvarchar(50),
+	@date_naissance_compteabonne	date
+AS
+	INSERT INTO RelanceDecouvert(
+		nom_compteabonne,
+		prenom_compteabonne,
+		date_naissance_compteabonne
+	)
+	VALUES (
+		@nom_compteabonne,
+		@prenom_compteabonne,
+		@date_naissance_compteabonne
+	);
+	
+GO
+
+
+------------------------------------------------------------
 -- Fichier     : Procedure_updateContratLocation
 -- Date        : 24/02/2014
 -- Version     : 1.0
@@ -1349,7 +1479,6 @@ GO
 
 IF OBJECT_ID ('dbo.notReservedVehicle1', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.notReservedVehicle1;
-	PRINT('PROCEDURE dbo.notReservedVehicle1 supprimée');
 GO
 
 
@@ -1386,9 +1515,6 @@ AS
 	END CATCH
 GO
 
-PRINT('PROCEDURE dbo.notReservedVehicle1 créée');
-GO
-
 
 ------------------------------------------------------------
 -- Fichier     : Procedure_isDisponible1
@@ -1407,7 +1533,6 @@ GO
 
 IF OBJECT_ID ('dbo.isDisponible1', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.isDisponible1;
-	PRINT('PROCEDURE dbo.isDisponible1 supprimée');
 GO
 
 
@@ -1470,9 +1595,6 @@ AS
 	BEGIN CATCH
 		RAISERROR('Erreur dans la procedure dbo.isDisponible1',10,1)
 	END CATCH
-GO
-
-PRINT('PROCEDURE dbo.isDisponible1 créée');
 GO
 
 ------------------------------------------------------------
@@ -2941,6 +3063,7 @@ BEGIN
 		CLOSE Curseur_vehicule
     RETURN
 END
+GO
 
 ------------------------------------------------------------
 -- Fichier     : makeReservation.sql
@@ -4781,6 +4904,595 @@ AS
 	BEGIN CATCH
 		PRINT('modifyAbonnement: ERROR');
 		ROLLBACK TRANSACTION modifyAbonnement
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : deleteTrigger.sql
+-- Date        : 25/03/2014
+-- Version     : 1.0
+-- Auteur      : Boris de Finance
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : S'occupe de toute les suppressions
+-- en attente de la base. Il est supposé que les fonctions
+-- demandant la suppression d'un element de la base vérifient
+-- que les données affectées ne sont plus nécessaire. 
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.deleteTrigger', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.deleteTrigger	
+GO
+
+CREATE PROCEDURE dbo.deleteTrigger
+AS
+	BEGIN TRANSACTION deleteTrigger
+	DECLARE @msg varchar(4000)
+	BEGIN TRY
+	
+		--Debut du nettoyage de la base de donnees
+		
+		--SUPPRESSION des CATALOGUES
+		
+			--1 - suppression de CatalogueCategorie
+			
+			--2 - suppression de Catalogue
+			
+		DELETE FROM Catalogue
+		WHERE a_supprimer = 'true'
+			
+		--SUPPRESSION des CATEGORIES
+		
+			--1 - suppression de CatalogueCategorie
+			
+			--2 - suppression de CategorieModele
+			
+			--3 - suppression de Categorie
+		
+		DELETE FROM Categorie
+		WHERE a_supprimer = 'true'
+			
+		--SUPPRESSION des VEHICULES
+			
+			--1 - suppression de ReservationVehicule
+			
+			
+			--2 - SUPPRESSION des LOCATIONS
+				
+				--2.1 suppression de Infraction
+				
+				--2.2 suppression de Incident
+				
+				--2.3 suppression de Retard
+				
+				--2.4 suppression de ConducteurLocation
+				
+				--2.5 suppression de Facturation
+				
+				--2.6 suppression de Etat
+				
+				--2.7 suppression de Location
+				
+			--3 - suppression de Vehicule
+			
+		DELETE FROM Vehicule	
+		WHERE a_supprimer = 'true'
+
+		--SUPPRESSION des MODELES
+		
+			--1 - SUPPRESSION des VEHICULES
+			
+				--1.1 - suppression de ReservationVehicule
+				
+				
+				--1.2 - SUPPRESSION des LOCATIONS
+					
+					--1.2.1 suppression de Infraction
+					
+					--1.2.2 suppression de Incident
+					
+					--1.2.3 suppression de Retard
+					
+					--1.2.4 suppression de ConducteurLocation
+					
+					--1.2.5 suppression de Facturation
+					
+					--1.2.6 suppression de Etat
+					
+					--1.2.7 suppression de Location
+					
+				--1.3 - suppression de Vehicule 
+			
+			--2 - suppression de Modele
+			
+			
+		DELETE FROM Modele
+		WHERE a_supprimer = 'true'
+			
+		--SUPPRESSION des RESERVATIONS
+			
+			--1 - suppression de ReservationVehicule
+			
+			--2 - suppression de Reservation
+			
+		DELETE FROM Reservation
+		WHERE a_supprimer = 'true'
+			
+		--SUPPRESSION des ABONNEMENTS
+		
+			--1 - SUPPRESSION des RESERVATIONS
+			
+				--1.1 - suppression de ReservationVehicule
+				
+				--1.2 - suppression de Reservation
+			
+			--2 - SUPPRESSION des CONTRATLOCATIONS
+			
+				--2.1 - SUPPRESSION des LOCATIONS
+					
+					--2.1.1 suppression de Infraction
+					
+					--2.1.2 suppression de Incident
+					
+					--2.1.3 suppression de Retard
+					
+					--2.1.4 suppression de ConducteurLocation
+					
+					--2.1.5 suppression de Facturation
+					
+					--2.1.6 suppression de Etat
+					
+					--2.1.7 suppression de Location
+				
+				--2.2 suppression de ContratLocation
+				
+		DELETE FROM Abonnement
+		WHERE a_supprimer = 'true'
+		
+		--SUPPRESSION des TYPEABONNEMENTS
+		
+			--1 - SUPPRESSION des ABONNEMENTS
+		
+				--1.1 - SUPPRESSION des RESERVATIONS
+				
+					--1.1.1 - suppression de ReservationVehicule
+					
+					--1.1.2 - suppression de Reservation
+				
+				--1.2 - SUPPRESSION des CONTRATLOCATIONS
+				
+					--1.2.1 - SUPPRESSION des LOCATIONS
+						
+						--1.2.1.1 suppression de Infraction
+						
+						--1.2.1.2 suppression de Incident
+						
+						--1.2.1.3 suppression de Retard
+						
+						--1.2.1.4 suppression de ConducteurLocation
+						
+						--1.2.1.5 suppression de Facturation
+						
+						--1.2.1.6 suppression de Etat
+						
+						--1.2.1.7 suppression de Location
+					
+					--1.2.2 suppression de ContratLocation
+					
+			--2 - suppression de TypeAbonnement
+			
+		DELETE FROM TypeAbonnement
+		WHERE a_supprimer = 'true'	
+					
+		--SUPPRESSION des COMPTEABONNES
+		
+			--1 - SUPPRESSION des ABONNEMENTS
+		
+				--1.1 - SUPPRESSION des RESERVATIONS
+				
+					--1.1.1 - suppression de ReservationVehicule
+					
+					--1.1.2 - suppression de Reservation
+				
+				--1.2 - SUPPRESSION des CONTRATLOCATIONS
+				
+					--1.2.1 - SUPPRESSION des LOCATIONS
+						
+						--1.2.1.1 suppression de Infraction
+						
+						--1.2.1.2 suppression de Incident
+						
+						--1.2.1.3 suppression de Retard
+						
+						--1.2.1.4 suppression de ConducteurLocation
+						
+						--1.2.1.5 suppression de Facturation
+						
+						--1.2.1.6 suppression de Etat
+						
+						--1.2.1.7 suppression de Location
+					
+					--1.2.2 suppression de ContratLocation
+					
+			--2 - suppression de Particulier
+			
+			--3 - suppression de Entreprise
+			
+			--4 - suppression de CompteAbonneConducteur
+			
+			--5 - suppression de RelanceDecouvert
+			
+			--6 - suppression de CompteAbonne
+			
+		DELETE FROM CompteAbonne
+		WHERE a_supprimer = 'true'
+			
+		--SUPPRESSION de RelanceDecouvert
+			
+			--1 - suppression de RelanceDecouvert
+			
+		DELETE FROM RelanceDecouvert
+		WHERE a_supprimer = 'true'
+		--Fin du nettoyage de la base de donnees	
+			
+		COMMIT TRANSACTION deleteTrigger
+		PRINT('deleteTrigger OK');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('deleteTrigger: ERROR');
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
+		ROLLBACK TRANSACTION deleteTrigger
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : checkImpayeTrigger.sql
+-- Date        : 15/03/2014
+-- Version     : 1.0
+-- Auteur      : David Lecoconnier
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : 
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.checkImpayeTriggerRec') IS NOT NULL
+	DROP PROCEDURE dbo.checkImpayeTriggerRec	
+GO
+
+CREATE PROCEDURE dbo.checkImpayeTriggerRec
+AS
+	DECLARE @idFac int;
+	DECLARE @niveau int;
+	DECLARE @courriel nvarchar(50);
+	DECLARE @nom nvarchar(50);
+	DECLARE @prenom nvarchar(50);
+	DECLARE @date_naissance date;
+	DECLARE @date_ datetime;
+	DECLARE @a_supprimer bit;
+			
+	DECLARE Impaye_cursor CURSOR
+		FOR SELECT * FROM RelanceDecouvert;
+	OPEN Impaye_cursor;
+	FETCH NEXT FROM Impaye_cursor
+		INTO @date_, @nom, @prenom, @date_naissance, @niveau, @a_supprimer; 
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		IF @a_supprimer = 'false'
+		BEGIN
+			IF @niveau < 5
+			BEGIN
+				SELECT @courriel = courriel FROM CompteAbonne WHERE nom = @nom AND prenom = @prenom AND date_naissance = @date_naissance;
+				EXEC dbo.updateNiveauRelanceDecouvert
+					@nom, @prenom, @date_naissance, @date_;
+				PRINT 'Niveau de relance incremente pour ' + @nom + N' ' + @prenom;
+				PRINT 'Message envoye a l''adresse ' + @courriel + ', niveau ' + CAST(@niveau AS nvarchar(2));
+			END
+			ELSE
+			BEGIN
+				PRINT N'Niveau 5 atteint, ' + @nom + N' ' + @prenom + N' mis en liste grise';
+				EXEC dbo.greyListCompteAbonne
+					@nom, @prenom, @date_naissance;
+				EXEC dbo.disableRelanceDecouvert
+					@nom, @prenom, @date_naissance, @date_;
+			END
+		END
+		PRINT '';
+		FETCH NEXT FROM Impaye_cursor
+			INTO @date_, @nom, @prenom, @date_naissance, @niveau, @a_supprimer; 
+	END
+	
+	CLOSE Impaye_cursor;
+	DEALLOCATE Impaye_cursor;
+GO
+
+------------------------------------------------------------
+-- Fichier     : fixFacturation.sql
+-- Date        : 26/03/2014
+-- Version     : 1.0
+-- Auteur      : Alexis Deluze
+-- Correcteur  : Boris de Finance
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Indique que la facture a ete paye en ajoutant la 
+-- date du paiement de la location. Si la
+-- date de reception du paiement n'a pas ete renseigne, la
+-- date renseigné est aujourd'hui.
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.fixFacturation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.fixFacturation	
+GO
+
+CREATE PROCEDURE dbo.fixFacturation
+	@id_contrat					nvarchar(50),	-- PK
+	@matricule 					nvarchar(50),	-- PK
+	@date_reception				date			-- nullable
+AS
+	BEGIN TRANSACTION fixFacturation
+	DECLARE @msg varchar(4000)
+	BEGIN TRY
+		
+		/*
+		DECLARE @tmp int;
+		SET @tmp =(SELECT id
+					FROM Location
+					WHERE id_contratLocation = @id_contrat
+					AND matricule_vehicule = @matricule)
+		PRINT('test1')
+		PRINT('id_location = ' + CONVERT(varchar(10),@tmp))
+		PRINT('test2')
+		*/
+						
+		IF(@id_contrat IS NULL)
+		BEGIN
+			PRINT('fixFacturation: id_contrat ne doit pas etre NULL');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END 
+		
+		IF(@matricule IS NULL)
+		BEGIN
+			PRINT('fixFacturation: matricule ne doit pas etre NULL');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END 
+		
+		
+		IF((SELECT date_reception 
+			FROM Facturation
+			WHERE id = (SELECT id_facturation 
+						FROM Location
+						WHERE id_contratLocation = @id_contrat
+						AND matricule_vehicule = @matricule)) IS NOT NULL)
+			BEGIN
+				PRINT('fixFacturation: la facturation a deja ete regle');
+				ROLLBACK TRANSACTION fixFacturation
+				RETURN -1;
+			END
+			
+		IF(@date_reception > GETDATE())
+		BEGIN
+			PRINT('fixFacturation: la facturation ne peut pas avoir ete regle dans le future');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END
+		
+		IF((SELECT date_creation 
+			FROM Facturation
+			WHERE id = (SELECT id_facturation 
+						FROM Location
+						WHERE id_contratLocation = @id_contrat
+						AND matricule_vehicule = @matricule)) > @date_reception)
+		BEGIN
+			PRINT('fixFacturation: la facturation ne peut pas avoir ete regle avant d''avoir ete cree');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END
+						
+		UPDATE Facturation
+		SET date_reception =	CASE WHEN (@date_reception IS NULL) 
+								THEN GETDATE()
+								ELSE @date_reception
+								END  
+		WHERE id = (SELECT id_facturation 
+					FROM Location
+					WHERE id_contratLocation = @id_contrat
+					AND matricule_vehicule = @matricule)
+	
+		COMMIT TRANSACTION fixFacturation
+		PRINT('fixFacturation OK');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('fixFacturation: ERROR');
+		SET @msg = ERROR_MESSAGE()
+		PRINT(@msg)
+		ROLLBACK TRANSACTION fixFacturation
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : makeInfraction.sql
+-- Date        : 27/03/2014
+-- Version     : 1.0
+-- Auteur      : Mourad Baiche
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : 
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.makeInfraction', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeInfraction	
+GO
+
+CREATE PROCEDURE dbo.makeInfraction
+	@matricule				nvarchar(50), -- FK
+	@date					datetime,
+	@nom 					nvarchar(50),
+	@montant 				money,
+	@description 			nvarchar(50)
+AS
+	BEGIN TRANSACTION makeInfraction
+	BEGIN TRY
+	
+		DECLARE @id_location INT;
+		SET @id_location = (SELECT l.id FROM Location l,ContratLocation cl 
+										WHERE l.matricule_vehicule=@matricule 
+										AND  l.id_contratLocation=cl.id 
+										AND cl.date_debut<=@date
+										AND cl.date_fin >= @date);
+		
+		EXEC createInfraction @date,@id_location,@nom,@montant,@description,'false' ;
+		
+		COMMIT TRANSACTION makeInfraction
+		PRINT('makeInfraction OK');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('makeInfraction: ERROR');
+		ROLLBACK TRANSACTION makeInfraction
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : fixInfraction.sql
+-- Date        : 15/03/2014
+-- Version     : 1.0
+-- Auteur      : Mourad Baiche
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : 
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.fixInfraction', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.fixInfraction	
+GO
+
+CREATE PROCEDURE dbo.fixInfraction
+	@matricule				nvarchar(50), -- FK
+	@date					datetime
+AS
+	BEGIN TRANSACTION fixInfraction
+	BEGIN TRY
+	
+		DECLARE @id_location INT;
+		SET @id_location = (SELECT l.id FROM Location l,Infraction i 
+										WHERE l.matricule_vehicule=@matricule 
+										AND  l.id=i.id_location
+										AND i.date = @date);	
+										
+		UPDATE Infraction SET regle='true' WHERE date = @date			
+										   AND id_location = @id_location;			
+
+		COMMIT TRANSACTION fixInfraction
+		PRINT('fixInfraction OK');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('fixInfraction: ERROR');
+		ROLLBACK TRANSACTION fixInfraction
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : showInfraction.sql
+-- Date        : 15/03/2014
+-- Version     : 1.0
+-- Auteur      : Mourad Baiche
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : 
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.showInfraction', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.showInfraction	
+GO
+
+CREATE PROCEDURE dbo.showInfraction
+	@matricule				nvarchar(50), -- FK
+	@date					datetime
+AS
+	BEGIN TRANSACTION showInfraction
+	BEGIN TRY
+	
+		DECLARE @id_location		INT,
+				@nom_Infraction		varchar(50),
+				@description		varchar(50),
+				@montant			money,
+				@regle				bit,
+				@nom				varchar(50),
+				@prenom				varchar(50),
+				@date_naissance		date;
+		
+		
+		SET @id_location = (SELECT l.id FROM Location l,Infraction i 
+										WHERE l.matricule_vehicule=@matricule 
+										AND  l.id=i.id_location
+										AND i.date = @date);
+										
+		SELECT @nom_Infraction = nom, @description=description, @montant = montant, @regle = regle   FROM Infraction WHERE date = @date
+																													 AND   id_location = @id_location;
+										
+										
+		SELECT @nom=a.nom_compteabonne, @prenom=a.prenom_compteabonne, @date_naissance=a.date_naissance_compteabonne  FROM Abonnement a, ContratLocation cl, Location l
+																													  WHERE l.id = @id_location
+																													  AND   cl.id = l.id_contratLocation
+																													  AND   a.id = cl.id_abonnement;
+	
+	
+--affichage de l(infraction
+PRINT '_________________________________________________________________________';
+PRINT 'Nom infraction : ' + convert(varchar(50),@nom_Infraction);
+PRINT 'Date infraction : ' + convert(varchar(10),@date);
+PRINT 'Description de l''infraction : ' + convert(varchar(50),@description);
+PRINT 'Montant de l''infraction : ' + convert(varchar(50),@montant);
+IF(@regle = 'false')
+BEGIN
+PRINT 'Infraction réglé : NON';
+END
+ELSE
+BEGIN
+PRINT 'Infraction réglé : OUI';
+END
+PRINT 'Information de l''abonné concerné par l''infraction : ';
+PRINT '		Nom : ' + convert(varchar(50),@nom);
+PRINT '		Prenom : ' + convert(varchar(50),@prenom);
+PRINT '		Date de naissance : ' + convert(varchar(50),@date_naissance);
+
+PRINT '_________________________________________________________________________';
+
+		COMMIT TRANSACTION showInfraction
+		PRINT('showInfraction OK');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('showInfraction: ERROR');
+		ROLLBACK TRANSACTION showInfraction
 		RETURN -1;
 	END CATCH
 GO
