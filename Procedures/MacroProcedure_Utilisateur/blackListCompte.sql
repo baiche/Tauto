@@ -68,6 +68,8 @@ AS
 		-- liberer les voitures reservees
 		DELETE FROM ReservationVehicule WHERE id_reservation in (select id_reservation from #Temp);
 		
+		DROP Table #Temp;
+		
 		COMMIT TRANSACTION blackListCompte
 		PRINT('blackListCompte OK');
 		RETURN 1;
