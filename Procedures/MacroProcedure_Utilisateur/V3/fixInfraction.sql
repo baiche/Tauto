@@ -2,7 +2,7 @@
 -- Fichier     : fixInfraction.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Mourad Baiche
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
