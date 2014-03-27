@@ -1,8 +1,8 @@
 ------------------------------------------------------------
 -- Fichier     : fixInfraction.sql
--- Date        : 15/03/2014
+-- Date        : 27/03/2014
 -- Version     : 1.0
--- Auteur      : 
+-- Auteur      : Baiche Mourad & Neti Mohamed
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
@@ -17,19 +17,56 @@ GO
 
 CREATE PROCEDURE dbo.fixInfraction
 	@matricule				nvarchar(50), -- FK
+	@nom_conducteur			nvarchar(50),
+	@prenom_conducteur		varchar(50),
+	@somme					int,
+	@nbPoint				int,
 	@date					datetime
+	
 AS
 	BEGIN TRANSACTION fixInfraction
 	BEGIN TRY
 	
-		DECLARE @id_location INT;
+	DECLARE		@id_location		INT,
+				@nom_Infraction		varchar(50),
+				@description		varchar(50),
+				@montant			money,
+				@regle				bit,
+				@nom				varchar(50),
+				@prenom				varchar(50),
+				@date_naissance		date,
+				@id_permis			nvarchar(50);
+				
 		SET @id_location = (SELECT l.id FROM Location l,Infraction i 
 										WHERE l.matricule_vehicule=@matricule 
 										AND  l.id=i.id_location
-										AND i.date = @date);	
+										AND i.date = @date);
 										
-		UPDATE Infraction SET regle='true' WHERE date = @date			
-										   AND id_location = @id_location;			
+		SELECT @nom_Infraction = nom, @description=description, @montant = montant, @regle = regle   FROM Infraction WHERE date = @date
+																													 AND   id_location = @id_location;
+										
+		IF(@somme<>@montant)
+		BEGIN 
+		PRINT('fixInfraction: ERROR le montant n''est pas valide');
+		ROLLBACK TRANSACTION fixInfraction
+		RETURN -1;
+		END 
+				
+		UPDATE Infraction SET regle='true',montant=0 WHERE date = @date			
+										   AND id_location = @id_location;
+										 				
+		SELECT @nom=a.nom_compteabonne, @prenom=a.prenom_compteabonne, @date_naissance=a.date_naissance_compteabonne  FROM Abonnement a, ContratLocation cl, Location l
+																													  WHERE l.id = @id_location
+																													  AND   cl.id = l.id_contratLocation
+																													  AND   a.id = cl.id_abonnement;
+		
+		SET @id_permis = (SELECT c.id_permis FROM Conducteur c, ConducteurLocation cl  WHERE c.nom = @nom_conducteur
+																					   AND	 c.prenom = @prenom_conducteur
+																					   AND   cl.id_location = @id_location
+																					   AND   cl.piece_identite_conducteur = c.piece_identite
+																					   AND   cl.nationalite_conducteur = c.nationalite);
+																	    					
+		UPDATE Permis SET points_estimes=points_estimes - @nbPoint WHERE numero = @id_permis;
 
 		COMMIT TRANSACTION fixInfraction
 		PRINT('fixInfraction OK');
