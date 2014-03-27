@@ -54,4 +54,7 @@ VALUES('0775896wx',1,1,1),--1
 ('0775896wi', NULL, 8, 8),--12
 ('0775896wy', NULL, 9, 8),--13 - incident non pénalisable
 ('0775896wr', NULL, 10, 8),--14 - incident pénalisable
-('0775896wt', NULL, 11, 8);--15 - 100€ d'amende
+('0775896wt', NULL, 11, 8),--15 - 100€ d'amende
+
+--Test de fixFacturation
+('2775896wi', 7, NULL, 9);--16
