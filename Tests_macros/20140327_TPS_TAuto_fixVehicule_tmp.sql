@@ -94,7 +94,7 @@ END CATCH
 GO
 
 
---Test 3 : OK
+--Test 4 : OK
 
 BEGIN TRY
 	DECLARE @ReturnValue int, @Status_avant nvarchar(50), @Status_apres nvarchar(50);
@@ -112,12 +112,12 @@ BEGIN TRY
 	-- verification
 	IF ( @ReturnValue = 1 AND @Status_avant = 'En panne' AND @Status_apres = 'Disponible')
 	BEGIN
-		PRINT('------------------------------Test 3 -- OK'+char(13));
+		PRINT('------------------------------Test 4 -- OK'+char(13));
 	END
 	
 	ELSE
 	BEGIN
-		PRINT('------------------------------Test 3 -- NOT OK');
+		PRINT('------------------------------Test 4 -- NOT OK');
 	END
 	
 	-- remettre la base a son etat initial
@@ -127,7 +127,7 @@ BEGIN TRY
 
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test 3 - - NOT OK');
+	PRINT('------------------------------Test 4 - - NOT OK');
 END CATCH
 GO
 
