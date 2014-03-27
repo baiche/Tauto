@@ -14,8 +14,7 @@ USE TAuto_IBDR;
 GO
 
 IF OBJECT_ID ('dbo.fixVehicule', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.isDisponible1;
-	PRINT('PROCEDURE dbo.fixVehicule supprimée');
+	DROP PROCEDURE dbo.fixVehicule;
 GO
 
 
@@ -25,7 +24,30 @@ AS
 	BEGIN TRANSACTION fixVehicule
 	BEGIN TRY
 
-		-- in progress ...
+		IF(@matricule IS NULL)
+		BEGIN
+			PRINT('fixVehicule: ERROR Le matricule du vehicule n''est pas renseigne');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1;
+		END
+		
+		IF not exists (SELECT 1 FROM Vehicule WHERE matricule = @matricule)	
+		BEGIN
+			PRINT('fixVehicule: ERROR Vehicule inexistant');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+		
+		IF (SELECT statut FROM Vehicule WHERE matricule = @matricule) <> 'En panne'
+		BEGIN
+			PRINT('fixVehicule: ERROR Le status du vehicule n''est pas ''En panne'' !');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+
+		UPDATE Vehicule
+		SET statut = 'Disponible'
+		WHERE matricule = @matricule;
 
 		COMMIT TRANSACTION fixVehicule
 		PRINT('fixVehicule OK');
