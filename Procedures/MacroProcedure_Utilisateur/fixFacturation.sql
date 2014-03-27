@@ -27,6 +27,17 @@ AS
 	DECLARE @msg varchar(4000)
 	BEGIN TRY
 		
+		/*
+		DECLARE @tmp int;
+		SET @tmp =(SELECT id
+					FROM Location
+					WHERE id_contratLocation = @id_contrat
+					AND matricule_vehicule = @matricule)
+		PRINT('test1')
+		PRINT('id_location = ' + CONVERT(varchar(10),@tmp))
+		PRINT('test2')
+		*/
+						
 		IF(@id_contrat IS NULL)
 		BEGIN
 			PRINT('fixFacturation: id_contrat ne doit pas etre NULL');
