@@ -164,11 +164,11 @@ BEGIN TRY
 	INSERT INTO SousPermis(nom_typepermis, numero_permis, date_obtention, date_expiration, periode_probatoire) VALUES
 		('B', '0000000001', '2001-01-01', NULL, DEFAULT);
     
-	PRINT('------------------------------Test A.10 NOT OK')
+	PRINT('------------------------------Test A.10 OK')
 		
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test A.10 OK')
+	PRINT('------------------------------Test A.10 NOT OK')
 END CATCH 
 DELETE FROM SousPermis;
 

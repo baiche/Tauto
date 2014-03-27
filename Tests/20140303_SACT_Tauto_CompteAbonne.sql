@@ -293,7 +293,7 @@ DELETE FROM CompteAbonne WHERE nom='Lastname' AND prenom='Firstname' AND date_na
 BEGIN TRY
 
 	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
-    ('Dupont', 'André', '1992-05-7','false','true','AB0020012800000012005276005', 
+    ('Dupont', 'Andre', '1992-05-8','false','true','AB0020012800000012005276005', 
      'andre.dupont@gmail.fr', '0605040302');
     
 	PRINT('------------------------------Test D.1 OK')
