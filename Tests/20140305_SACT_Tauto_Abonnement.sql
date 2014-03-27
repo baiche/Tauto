@@ -12,8 +12,7 @@
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
-
-EXEC dbo.videTables
+GO
 
 -- preparation : un type abonnement, un compte abonne
 
