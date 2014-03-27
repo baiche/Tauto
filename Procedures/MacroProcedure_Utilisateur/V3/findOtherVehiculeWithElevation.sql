@@ -195,7 +195,8 @@ AS
 																		   AND   serie_modele = @serie_modele
 																		   AND   type_carburant_modele <> @type_carburant_modele
 																		   AND   portieres_modele <> @portieres_modele
-																		   AND   matricule <> @matricule;
+																		   AND   matricule <> @matricule
+																							 ;
 																	   
 									OPEN curseur_matricule
 									FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
@@ -230,11 +231,20 @@ AS
 												--K3 -----------------------------------------------				
 																	
 																	DECLARE curseur_matricule CURSOR FOR
-																		SELECT matricule FROM Vehicule WHERE marque_modele = @marque_modele
+																		SELECT matricule FROM Vehicule ,CategorieModel cm WHERE marque_modele = @marque_modele
 																									   AND   serie_modele <> @serie_modele
 																									   AND   type_carburant_modele <> @type_carburant_modele
 																									   AND   portieres_modele <> @portieres_modele
-																									   AND   matricule <> @matricule;
+																									   AND   matricule <> @matricule
+																														   
+																									   AND	marque_modele = cm.marque_modele
+																									   AND  serie_modele=cm.serie_modele
+																									   AND  type_carburant_modele = cm.type_carburant_modele
+																									   AND  portieres_modele = cm.portieres_modele
+																									   AND	cm.nom_categorie=@categorie;
+																									   
+																									  
+																									   ;
 																								   
 																OPEN curseur_matricule
 																FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
@@ -267,11 +277,18 @@ AS
 																										
 																										--K 4-----------------------------------------------
 																																DECLARE curseur_matricule CURSOR FOR
-																																SELECT matricule FROM Vehicule WHERE marque_modele <> @marque_modele
-																																										   AND   serie_modele <> @serie_modele
-																																										   AND   type_carburant_modele = @type_carburant_modele
-																																										   AND   portieres_modele = @portieres_modele
-																																										   AND   matricule <> @matricule;
+																																SELECT matricule FROM Vehicule v,CategorieModele cm WHERE v.marque_modele <> @marque_modele
+																																										   AND   v.serie_modele <> @serie_modele
+																																										   AND   v.type_carburant_modele = @type_carburant_modele
+																																										   AND   v.portieres_modele = @portieres_modele
+																																										   AND   v.matricule <> @matricule
+																																										   
+																																										   AND	v.marque_modele = cm.marque_modele
+																																										   AND  v.serie_modele=cm.serie_modele
+																																										   AND  v.type_carburant_modele = cm.type_carburant_modele
+																																										   AND  v.portieres_modele = cm.portieres_modele
+																																										   AND	cm.nom_categorie=@categorie;
+																																																	
 																																									   
 																																	OPEN curseur_matricule
 																																	FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
