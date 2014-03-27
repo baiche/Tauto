@@ -6,7 +6,7 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Test de la procÃ©dure "declarePermis"
+-- Commentaire : Test de la procédure "declarePermis"
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
@@ -255,7 +255,7 @@ BEGIN TRY
 	SET @nbPermis_Avant = (SELECT COUNT(*) FROM Permis );
 	
 	EXEC @ReturnValue = dbo.declarePermis
-		@piece_identite = '300000003',
+		@piece_identite = '330000033',
 		@nationalite = 'Francais',
 		@numero = NULL,
 		@nom_typepermis = 'E',
@@ -466,10 +466,10 @@ BEGIN TRY
 	
 	SELECT @id_permis_conducteur_avant = id_permis 
 	FROM Conducteur 
-	WHERE  piece_identite = '300000003' AND nationalite = 'Francais';
+	WHERE  piece_identite = '330000033' AND nationalite = 'Francais';
 	
 	EXEC @ReturnValue = dbo.declarePermis
-		@piece_identite = '300000003',
+		@piece_identite = '330000033',
 		@nationalite = 'Francais',
 		@numero = '0000000004',
 		@nom_typepermis = 'B',
@@ -482,7 +482,7 @@ BEGIN TRY
 	
 	SELECT @id_permis_conducteur_apres = id_permis 
 	FROM Conducteur 
-	WHERE  piece_identite = '300000003' AND nationalite = 'Francais';
+	WHERE  piece_identite = '330000033' AND nationalite = 'Francais';
 	
 	IF ( @ReturnValue = -1 AND
 	     @nbSousPermis_Avant = @nbSousPermis_Apres AND 
@@ -516,12 +516,12 @@ BEGIN TRY
 	
 	SELECT @id_permis_conducteur_avant = id_permis 
 	FROM Conducteur 
-	WHERE  piece_identite = '300000003' AND nationalite = 'Francais';
+	WHERE  piece_identite = '330000033' AND nationalite = 'Francais';
 	
 	EXEC @ReturnValue = dbo.declarePermis
-		@piece_identite = '300000003',
+		@piece_identite = '330000033',
 		@nationalite = 'Francais',
-		@numero = '0000000005',
+		@numero = '0000000055',
 		@nom_typepermis = 'B',
 		@date_obtention = '2012-03-01',
 		@periode_probatoire = NULL,
@@ -532,20 +532,20 @@ BEGIN TRY
 	
 	SELECT @id_permis_conducteur_apres = id_permis 
 	FROM Conducteur 
-	WHERE  piece_identite = '300000003' AND nationalite = 'Francais';
+	WHERE  piece_identite = '330000033' AND nationalite = 'Francais';
 	
 	IF ( @ReturnValue = 1 AND
 	     @nbSousPermis_Avant+1 = @nbSousPermis_Apres AND 
 	     @nbPermis_Avant+1 = @nbPermis_Apres AND
 	     @id_permis_conducteur_avant IS NULL AND
-	     @id_permis_conducteur_apres = '0000000005')
+	     @id_permis_conducteur_apres = '0000000055')
 	BEGIN
 		PRINT('------------------------------Test 13 -- OK');
 		UPDATE Conducteur
 		SET id_permis = NULL
-		WHERE piece_identite = '300000003' AND nationalite = 'Francais';
-		DELETE FROM SousPermis WHERE nom_typepermis = 'B' AND numero_permis = '0000000005';
-		DELETE FROM Permis WHERE numero = '0000000005';
+		WHERE piece_identite = '330000033' AND nationalite = 'Francais';
+		DELETE FROM SousPermis WHERE nom_typepermis = 'B' AND numero_permis = '0000000055';
+		DELETE FROM Permis WHERE numero = '0000000055';
 
 	END
 	

@@ -459,7 +459,7 @@ CREATE TABLE CategorieModele(
 	PRIMARY KEY(marque_modele,serie_modele,type_carburant_modele, portieres_modele, nom_categorie),
 	
 	FOREIGN KEY(marque_modele,serie_modele,type_carburant_modele, portieres_modele) 
-		REFERENCES Modele(marque,serie,type_carburant, portieres),
+		REFERENCES Modele(marque,serie,type_carburant, portieres) ON DELETE CASCADE,
 	FOREIGN KEY(nom_categorie)
 		REFERENCES Categorie(nom) ON DELETE CASCADE
 );
@@ -478,7 +478,7 @@ CREATE TABLE ConducteurLocation(
 	PRIMARY KEY(id_location, piece_identite_conducteur, nationalite_conducteur),
 	
 	FOREIGN KEY(id_location)
-		REFERENCES Location(id),
+		REFERENCES Location(id)ON DELETE CASCADE,
 	FOREIGN KEY(piece_identite_conducteur,nationalite_conducteur) 
 		REFERENCES Conducteur(piece_identite, nationalite)
 );
@@ -499,7 +499,7 @@ CREATE TABLE CompteAbonneConducteur(
 	PRIMARY KEY(nom_compteabonne, prenom_compteabonne, date_naissance_compteabonne,nationalite_conducteur,piece_identite_conducteur),
 	
 	FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
-		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		REFERENCES CompteAbonne(nom,prenom,date_naissance)ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	FOREIGN KEY(piece_identite_conducteur,nationalite_conducteur) 
 		REFERENCES Conducteur(piece_identite,nationalite)
@@ -518,7 +518,7 @@ CREATE TABLE ReservationVehicule(
 	PRIMARY KEY(id_reservation, matricule_vehicule),
 	
 	FOREIGN KEY (id_reservation)
-		REFERENCES Reservation(id),
+		REFERENCES Reservation(id) ON DELETE CASCADE,
 	FOREIGN KEY (matricule_vehicule) 
 		REFERENCES Vehicule(matricule) ON DELETE CASCADE
 );
@@ -534,6 +534,7 @@ GO
 ALTER TABLE Entreprise
 	ADD FOREIGN KEY (nom_compte, prenom_compte, date_naissance_compte)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 PRINT('Table Entreprise modifiée');
 
@@ -541,6 +542,7 @@ GO
 ALTER TABLE Particulier
 	ADD FOREIGN KEY(nom_compte, prenom_compte, date_naissance_compte)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 PRINT('Table Particulier modifiée');
 
@@ -553,22 +555,23 @@ PRINT('Table SousPermis modifiée');
 GO
 ALTER TABLE Vehicule
 	ADD FOREIGN KEY(marque_modele, serie_modele, type_carburant_modele, portieres_modele) 
-		REFERENCES Modele(marque, serie, type_carburant, portieres);
+		REFERENCES Modele(marque, serie, type_carburant, portieres) ON DELETE CASCADE;
 PRINT('Table Vehicule modifiée');
 
 GO
 ALTER TABLE Reservation
 	ADD FOREIGN KEY (id_abonnement)
-			REFERENCES Abonnement(id);
+			REFERENCES Abonnement(id)ON DELETE CASCADE;
 PRINT('Table Reservation modifiée');
 
 GO
 ALTER TABLE Abonnement
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 			REFERENCES CompteAbonne(nom,prenom,date_naissance)
+			ON DELETE CASCADE
 			ON UPDATE CASCADE,
 		FOREIGN KEY(nom_typeabonnement)
-			REFERENCES TypeAbonnement(nom);
+			REFERENCES TypeAbonnement(nom) ON DELETE CASCADE;
 PRINT('Table Abonnement modifiée');
 
 GO
@@ -580,13 +583,13 @@ ALTER TABLE Location
 		FOREIGN KEY(id_etat)
 			REFERENCES Etat(id),
 		FOREIGN KEY(id_contratLocation)
-			REFERENCES  ContratLocation(id);
+			REFERENCES  ContratLocation(id)ON DELETE CASCADE;
 PRINT('Table Location modifiée');
 
 GO
 ALTER TABLE ContratLocation
 	ADD FOREIGN KEY(id_abonnement)
-		REFERENCES Abonnement(id);
+		REFERENCES Abonnement(id)ON DELETE CASCADE;
 PRINT('Table ContratLocation modifiée');
 
 GO
@@ -598,25 +601,26 @@ PRINT('Table Conducteur modifiée');
 GO
 ALTER TABLE Infraction
 	ADD FOREIGN KEY(id_location)
-		REFERENCES Location(id);
+		REFERENCES Location(id) ON DELETE CASCADE;
 PRINT('Table Infraction modifiée');
 
 GO
 ALTER TABLE Incident
 	ADD FOREIGN KEY(id_location)
-		REFERENCES Location(id);
+		REFERENCES Location(id) ON DELETE CASCADE;
 PRINT('Table Incident modifiée');
 
 GO
 ALTER TABLE Retard
 	ADD FOREIGN KEY(id_location)
-		REFERENCES Location(id);
+		REFERENCES Location(id)ON DELETE CASCADE;
 PRINT('Table Retard modifiée');
 
 GO
 ALTER TABLE RelanceDecouvert
 	ADD FOREIGN KEY(nom_compteabonne,prenom_compteabonne,date_naissance_compteabonne)
 		REFERENCES CompteAbonne(nom,prenom,date_naissance)
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 PRINT('Table RelanceDecouvert modifiée');
 

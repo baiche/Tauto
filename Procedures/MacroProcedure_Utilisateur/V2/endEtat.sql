@@ -26,7 +26,8 @@ CREATE PROCEDURE dbo.endEtat
 AS
 	BEGIN TRANSACTION endEtat
 	BEGIN TRY
-		DECLARE @id_Loc int, @idEtat int, @date_av datetime, @date_ap datetime, @km_ap int, @fiche_ap nvarchar(50), @diffDay int, @prix money, @idFac int, @nbIntePenal int, @sumInfra int;
+		DECLARE @id_Loc int, @idEtat int, @date_av datetime, @date_ap datetime, @km_ap int, @fiche_ap nvarchar(50), @diffDay int;
+		DECLARE @prix money, @idFac int, @nbIntePenal int, @sumInfra int, @reduction int;
 		
 		SELECT @id_Loc = id, @idEtat = id_etat FROM Location WHERE matricule_vehicule = @matricule AND id_contratLocation = @idContratLocation;
 				
@@ -86,10 +87,19 @@ AS
 			@matricule = @matricule,
 			@statut = @vehicule_statut;
 			
-		SELECT @diffDay = DATEDIFF(day, @date_av, @date_apres);
+		SELECT @diffDay = DATEDIFF(day, @date_av, @date_apres) + (SELECT extension FROM ContratLocation WHERE id = @idContratLocation);
 		SET @prix = @diffDay * (SELECT prix FROM TypeAbonnement WHERE nom = 
 			(SELECT nom_typeabonnement FROM Abonnement WHERE id =
 				(SELECT id_abonnement FROM ContratLocation WHERE id = @idContratLocation)))
+				
+		SELECT @reduction = reduction FROM Modele m, Vehicule v
+		WHERE   v.matricule = @matricule
+			AND m.marque = v.marque_modele
+			AND m.serie = v.serie_modele
+			AND m.portieres = v.portieres_modele
+			AND m.type_carburant = v.type_carburant_modele;
+				
+		SET @prix = (@prix * (100 - @reduction )) / 100;
 
 		SET @sumInfra = 0;
 		SELECT @sumInfra = SUM(montant) FROM Infraction WHERE id_location = @id_Loc AND regle = 'false';

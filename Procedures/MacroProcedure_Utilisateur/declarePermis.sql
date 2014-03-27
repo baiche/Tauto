@@ -18,7 +18,7 @@ GO
 CREATE PROCEDURE dbo.declarePermis
 	@piece_identite 	nvarchar(50), -- PK
 	@nationalite 		nvarchar(50), -- PK
-	@numero				nvarchar(50), -- nullable, pas besoin de resaisir le permis s'il existe dÃ©jÃ  en base
+	@numero				nvarchar(50), -- nullable, pas besoin de resaisir le permis s'il existe déjà en base
 	@nom_typepermis		nvarchar(10),  -- PK
 	@date_obtention 	date,
 	@periode_probatoire tinyint, -- csq sur le nombre de points de base
@@ -30,16 +30,16 @@ AS
 		-- les information concernant le conducteur ne sont pas renseignees
 		IF(@piece_identite IS NULL OR @nationalite IS NULL)
 		BEGIN
-			PRINT('declareConducteur: ERROR Les informations concernant le conducteur sont incompletes');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incompletes');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
 		-- les information concernant le type de permis ne sont pas renseignees
 		IF(@nom_typepermis IS NULL OR @date_obtention IS NULL)
 		BEGIN
-			PRINT('declareConducteur: ERROR Les informations concernant le type de permis sont incompletes');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR Les informations concernant le type de permis sont incompletes');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
@@ -49,29 +49,29 @@ AS
 			 WHERE piece_identite = @piece_identite AND nationalite = @nationalite
 			)	
 		BEGIN
-			PRINT('declareConducteur: ERROR Les informations concernant le conducteur sont incorrectes');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incorrectes');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @nom_typepermis NOT IN ('A1', 'A2', 'B', 'C', 'D', 'E', 'F')
 		BEGIN
-			PRINT('declareConducteur: ERROR Le type de permis est incorrect');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR Le type de permis est incorrect');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_obtention > GETDATE()
 		BEGIN
-			PRINT('declareConducteur: ERROR La date d obtention est postÃ©reure Ã  la date d aujourd hui');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR La date d''obtention est postéreure à la date d''aujourd''hui');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_expiration IS NOT NULL AND @date_expiration < GETDATE()
 		BEGIN
-			PRINT('declareConducteur: ERROR La date d expiration est antÃ©rieure Ã  la date d aujourd hui');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR La date d''expiration est antérieure à la date d''aujourd''hui');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
@@ -86,14 +86,14 @@ AS
 			IF @numero IS NULL
 			BEGIN
 				PRINT('makeAbonnement: le numero de permis doit etre renseigne');
-				ROLLBACK TRANSACTION declareConducteur
+				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 
 			IF exists (SELECT 1 FROM Permis WHERE numero = @numero)	
 			BEGIN
-				PRINT('declareConducteur: ERROR Le numero de permis renseigne est le numero de permis d''un autre conducteur');
-				ROLLBACK TRANSACTION declareConducteur
+				PRINT('declarePermis: ERROR Le numero de permis renseigne est le numero de permis d''un autre conducteur');
+				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 		
@@ -111,8 +111,8 @@ AS
 			 WHERE nom_typepermis = @nom_typepermis AND numero_permis = @numero_permis
 			)	
 		BEGIN
-			PRINT('declareConducteur: ERROR Le type de permis est deja enregistre');
-			ROLLBACK TRANSACTION declareConducteur
+			PRINT('declarePermis: ERROR Le type de permis est deja enregistre');
+			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 

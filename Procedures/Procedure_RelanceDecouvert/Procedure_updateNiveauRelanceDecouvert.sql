@@ -3,7 +3,7 @@
 -- Date        : 24/02/2014
 -- Version     : 1.0
 -- Auteur      : Allan Mottier
--- Correcteur  : 
+-- Correcteur  : David Lecoconnier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Augmente le niveau d'une RelanceDecouvert et remet la date à jour.
@@ -18,10 +18,14 @@ GO
 CREATE PROCEDURE dbo.updateNiveauRelanceDecouvert
 	@nom_compteabonne 				nvarchar(50),
 	@prenom_compteabonne			nvarchar(50),
-	@date_naissance_compteabonne	date
+	@date_naissance_compteabonne	date,
+	@date_creation					datetime
 AS
 	UPDATE RelanceDecouvert
-	SET niveau = niveau+1
-	WHERE nom_compteabonne=@nom_compteabonne AND prenom_compteabonne=@prenom_compteabonne AND date_naissance_compteabonne=@date_naissance_compteabonne;
+	SET niveau = niveau + 1
+	WHERE   nom_compteabonne = @nom_compteabonne 
+		AND prenom_compteabonne = @prenom_compteabonne
+		AND date_naissance_compteabonne = @date_naissance_compteabonne
+		AND date = @date_creation;
 
 GO

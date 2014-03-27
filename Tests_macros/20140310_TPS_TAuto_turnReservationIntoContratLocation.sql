@@ -17,7 +17,7 @@ USE TAuto_IBDR;
 */
 
 --Test 1
--- Transformation d'une réservation annulée
+-- Transformation d'une réservation
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	DECLARE @Location_T TABLE (
@@ -64,33 +64,5 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	PRINT('------------------------------Test 1 NOT -- OK');
-END CATCH
-GO
-
---Test 3
--- Transformation d'une réservation annulée
-BEGIN TRY
-	EXEC dbo.addConducteurToLocation 
-			@id_reservation = 10,
-			@km_reservation = 5
-			
-	PRINT('------------------------------Test 3 NOT -- OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 3 OK');
-END CATCH
-GO
-
---Test 4
--- Transformation avec un kilométrage négatif
-BEGIN TRY
-	EXEC dbo.addConducteurToLocation 
-			@id_reservation = 6,
-			@km_reservation = 5
-
-	PRINT('------------------------------Test 4 NOT -- OK');
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 4 OK');
 END CATCH
 GO
