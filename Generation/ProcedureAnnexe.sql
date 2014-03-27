@@ -1,6 +1,14 @@
------------------------------------------
--- PROCEDURE - Vider toutes les tables --
------------------------------------------
+------------------------------------------------------------
+-- Fichier     : ProcedureAnnexe.sql
+-- Date        : 12/03/2014
+-- Version     : 1.0
+-- Auteur      : Seyyid Ouir
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : procedure "videTables" : Vider toutes les tables
+------------------------------------------------------------
+
 
 USE TAuto_IBDR;
 GO
