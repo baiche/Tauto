@@ -11,4 +11,4 @@ rem -- Commentaire :
 rem ------------------------------------------------------------
 
 
-SET mssqlInstanceName=".\SQLExpress"
+SET mssqlInstanceName=".\"
