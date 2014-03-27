@@ -29,3 +29,4 @@ INSERT INTO Vehicule (matricule,kilometrage,couleur,statut,num_serie,marque_mode
 		('1775896wu','60000','Noir','Perdue','ABS X0988 155','BMW','5 F10 M5',5,'Essence','false'), 
 		('1775896wi','120000','Noir','Disponible','ABS X0988 156','BMW','5 F10 M5',5,'Essence','false');   	
 GO
+ 
