@@ -6,10 +6,10 @@
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
--- Commentaire : Permet d’étendre une location du véhicule en cours de 
---				 location ou avec un autre de même modèle ou de remplacer 
+-- Commentaire : Permet de confirmer l'extention de la location du véhicule  
+--				 en cours de location  ou de remplacer 
 --				 toute les réservations affectées à un véhicule qui serai 
---				 declaré par exemple endomager par d’autres véhicules de même modèle.
+--				 declaré par exemple endomager par d’autres véhicules de même modèle exactement.
 ------------------------------------------------------------
 
 USE TAuto_IBDR;
