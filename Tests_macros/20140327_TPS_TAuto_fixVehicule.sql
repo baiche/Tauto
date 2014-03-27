@@ -230,22 +230,122 @@ GO
 
 --Test 8 : 'Disponible' -> 'En panne'
 
-BEGIN TRY
-	DECLARE @ReturnValue int, @Status_avant nvarchar(50), @Status_apres nvarchar(50);
-	
-	-- pre
-	SELECT @Status_avant = statut FROM Vehicule WHERE matricule = '0775896wi';
+-- '0775896wi' est reserve pour les periodes suivantes :
 
-	-- test
+--      - Reservation1  : 2014-04-06 -> 2014-04-10 
+--      (d'autres vehicules disponibles pour ces dates : 2775896wi)
+
+--      - Reservation2 : 2014-07-11 -> 2014-09-22 
+--      (d'autres vehicules disponibles pour ces dates : 0775896wt ou 2775896wi)
+
+BEGIN TRY
+	DECLARE @ReturnValue int, @Status_avant nvarchar(50), @Status_apres nvarchar(50),
+	        @marque_modele nvarchar(50), @serie_modele nvarchar(50),
+	        @portieres_modele tinyint, @type_carburant_modele nvarchar(50),
+			@IdReservation1 int, @IdReservation2 int, 
+			@Matricule_Reservation1_apres nvarchar(50), @Matricule_Reservation2_apres nvarchar(50),
+			@Reservation1_date_debut datetime, @Reservation1_date_fin datetime,
+			@Reservation2_date_debut datetime, @Reservation2_date_fin datetime,
+			@matricule_boucle nvarchar(50), @isDispo int;
+
+	CREATE TABLE #DispoPrReservation1(matricule nvarchar(50));
+	CREATE TABLE #DispoPrReservation2(matricule nvarchar(50));
+
+	-- pre ***********************
+	
+	SELECT @Status_avant = statut, @marque_modele = marque_modele, @serie_modele = serie_modele, 
+	       @portieres_modele = portieres_modele, @type_carburant_modele = type_carburant_modele
+	FROM Vehicule 
+	WHERE matricule = '0775896wi';
+	
+	-- Reservation 1
+	
+	SET @Reservation1_date_debut = '2014-04-06T13:00:00';
+	SET @Reservation1_date_fin = '2014-04-10T18:00:00';
+	
+	SELECT @IdReservation1 = r.id 
+	FROM Reservation r
+	INNER JOIN ReservationVehicule rv ON r.id = rv.id_reservation
+	WHERE rv.matricule_vehicule = '0775896wi' AND 
+	      r.date_debut = @Reservation1_date_debut AND r.date_fin = @Reservation1_date_fin;
+
+	-- Reservation 2
+	
+	SET @Reservation2_date_debut = '2014-07-11T09:00:00';
+	SET @Reservation2_date_fin = '2014-09-22T17:00:00';
+	
+	SELECT @IdReservation2 = r.id 
+	FROM Reservation r
+	INNER JOIN ReservationVehicule rv ON r.id = rv.id_reservation
+	WHERE rv.matricule_vehicule = '0775896wi' AND 
+	      r.date_debut = @Reservation2_date_debut AND r.date_fin = @Reservation2_date_fin;
+
+	-- remplir les 2 tables : #DispoPrReservation1 et #DispoPrReservation2
+	
+	DECLARE curseur_matricule CURSOR FOR
+				SELECT matricule 
+				FROM Vehicule 
+				WHERE marque_modele = @marque_modele AND
+					  serie_modele = @serie_modele AND 
+					  type_carburant_modele = @type_carburant_modele AND 
+					  portieres_modele = @portieres_modele AND 
+					  matricule <> '0775896wi';
+									   
+	OPEN curseur_matricule
+	FETCH NEXT FROM curseur_matricule INTO @matricule_boucle
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+		EXEC @isDispo = dbo.isDisponible1 @matricule_boucle, @Reservation1_date_debut, @Reservation1_date_fin
+
+		IF( @isDispo = 1)
+		BEGIN
+			INSERT INTO #DispoPrReservation1 VALUES (@matricule_boucle);
+		END
+
+		EXEC @isDispo = dbo.isDisponible1 @matricule_boucle, @Reservation2_date_debut, @Reservation2_date_fin
+
+		IF( @isDispo = 1)
+		BEGIN
+			INSERT INTO #DispoPrReservation2 VALUES (@matricule_boucle);
+		END
+		
+		FETCH NEXT FROM curseur_matricule INTO @matricule_boucle
+	END
+	CLOSE curseur_matricule
+	DEALLOCATE curseur_matricule
+	       
+	-- test ***********************
+
 	EXEC @ReturnValue = dbo.fixVehicule
 			@matricule = '0775896wi',
 			@statut_future = 'En panne'
-		
-	-- post
+
+	-- post ***********************
+	
 	SELECT @Status_apres = statut FROM Vehicule WHERE matricule = '0775896wi';
 	
-	-- verification
-	IF ( @ReturnValue = 1 AND @Status_avant = 'Disponible' AND @Status_apres = 'En panne')
+	-- le matricule qui est associe a la reservation 1 apres l'execution de la procedure
+	SELECT @Matricule_Reservation1_apres = matricule_vehicule 
+	FROM ReservationVehicule 
+	WHERE id_reservation = @IdReservation1;
+	
+	-- le matricule qui est associe a la reservation 2 apres l'execution de la procedure
+	SELECT @Matricule_Reservation2_apres = matricule_vehicule 
+	FROM ReservationVehicule 
+	WHERE id_reservation = @IdReservation2;
+	
+	
+	-- verification ***********************
+
+	IF ( @ReturnValue = 1 AND 
+	     @Status_avant = 'Disponible' AND @Status_apres = 'En panne' AND
+	     @Matricule_Reservation1_apres IN (SELECT matricule FROM #DispoPrReservation1) AND
+	     @Matricule_Reservation2_apres IN (SELECT matricule FROM #DispoPrReservation2) AND
+	     not exists (SELECT 1 FROM ReservationVehicule WHERE id_reservation = @IdReservation1 AND matricule_vehicule = '0775896wi') AND
+	     not exists (SELECT 1 FROM ReservationVehicule WHERE id_reservation = @IdReservation2 AND matricule_vehicule = '0775896wi')
+	   )
 	BEGIN
 		PRINT('------------------------------Test 8 -- OK'+char(13));
 	END
@@ -254,6 +354,10 @@ BEGIN TRY
 	BEGIN
 		PRINT('------------------------------Test 8 -- NOT OK');
 	END
+
+
+	DROP Table #DispoPrReservation1;
+	DROP Table #DispoPrReservation2;
 
 END TRY
 BEGIN CATCH

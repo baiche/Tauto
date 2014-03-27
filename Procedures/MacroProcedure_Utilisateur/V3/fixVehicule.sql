@@ -66,7 +66,6 @@ AS
 		
 		IF @statut_future = 'Disponible'
 		BEGIN
-			PRINT('== statut_future = Disponible');
 			UPDATE Vehicule
 			SET statut = 'Disponible'
 			WHERE matricule = @matricule;
@@ -76,7 +75,6 @@ AS
 		
 		IF @statut_future IN ('En panne', 'Perdue') AND @Status_actuel IN ('Disponible', 'Louee')
 		BEGIN
-			PRINT('== statut_future = En panne ou Perdue');
 			DECLARE @ReturnValue int;
 			
 			EXEC @ReturnValue = dbo.findOtherVehicule @matricule, 1, NULL;
