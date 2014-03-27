@@ -53,7 +53,26 @@ AS
 				ROLLBACK TRANSACTION fixFacturation
 				RETURN -1;
 			END
+			
+		IF(@date_reception > GETDATE())
+		BEGIN
+			PRINT('fixFacturation: la facturation ne peut pas avoir ete regle dans le future');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END
 		
+		IF((SELECT date_creation 
+			FROM Facturation
+			WHERE id = (SELECT id_facturation 
+						FROM Location
+						WHERE id_contratLocation = @id_contrat
+						AND matricule_vehicule = @matricule)) > @date_reception)
+		BEGIN
+			PRINT('fixFacturation: la facturation ne peut pas avoir ete regle avant d''avoir ete cree');
+			ROLLBACK TRANSACTION fixFacturation
+			RETURN -1;
+		END
+						
 		UPDATE Facturation
 		SET date_reception =	CASE WHEN (@date_reception IS NULL) 
 								THEN GETDATE()

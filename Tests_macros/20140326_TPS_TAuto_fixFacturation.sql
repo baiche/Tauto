@@ -20,13 +20,13 @@ USE TAuto_IBDR;
 */
 
 --Test 1
--- cas nominal
+-- cas ou la date indique precede la date de creation de la facturation
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.fixFacturation
-		@id_contrat		= 3,		
+		@id_contrat		= 9,		
 		@matricule		= '0775896wr',
-		@date_reception = '
+		@date_reception = ''
 	IF ( @ReturnValue = 1)
 	BEGIN
 		--verification de la suppression du vehicule
@@ -52,61 +52,13 @@ END CATCH
 GO
 
 --Test 2
--- matricule NULL
-BEGIN TRY
-	DECLARE @ReturnValue int;
-	EXEC @ReturnValue = dbo.closeVehicule
-		@matricule = NULL;
-	IF ( @ReturnValue = 1)
-	BEGIN
-		PRINT('------------------------------Test 2 - Ne drevrais pas etre accepte - KO');
-	END
-	ELSE	
-	BEGIN
-		PRINT('------------------------------Test 2 - OK');
-	END
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 2 - Exception leve - KO');
-END CATCH
-GO
+--cas ou la date indique est dans le future
+
 
 --Test 3
--- matricule inexistant
-BEGIN TRY
-	DECLARE @ReturnValue int;
-	EXEC @ReturnValue = dbo.closeVehicule
-		@matricule = '1435896wy';
-	IF ( @ReturnValue = 1)
-	BEGIN
-		PRINT('------------------------------Test 3 - Ne drevrais pas etre accepte - KO');
-	END
-	ELSE	
-	BEGIN
-		PRINT('------------------------------Test 3 - OK');
-	END
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 3 - Exception leve - KO');
-END CATCH
-GO
+--cas ou la facture a deja ete regle
 
---Test 4
---vehicule present dans une reservation (a modifier)
-BEGIN TRY
-	DECLARE @ReturnValue int;
-	EXEC @ReturnValue = dbo.closeVehicule
-		@matricule = '0775896we';
-	IF ( @ReturnValue = 1)
-	BEGIN
-		PRINT('------------------------------Test 4 - Ne drevrais pas etre accepte - KO');
-	END
-	ELSE	
-	BEGIN
-		PRINT('------------------------------Test 4 - OK temporairement');
-	END
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test 4  - Exception leve - KO');
-END CATCH
-GO
+
+--Test 4 
+--cas nominal 
+
