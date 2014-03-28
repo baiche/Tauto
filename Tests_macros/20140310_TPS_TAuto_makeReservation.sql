@@ -33,10 +33,10 @@ BEGIN TRY
 	PRINT('ajout d''un Vehicule--- Test OK');
 	
 	-- reserver un vehicule avec l'id de l'abonnement 1 
-	EXEC dbo.makeReservation 1,'2014-03-26','2014-04-30','Mercedes','GLA','Diesel',5;
+	EXEC dbo.makeReservation 1,'2014-03-26T00:00:00','2014-04-30T00:00:00','Mercedes','GLA','Diesel',5;
 	PRINT ('Vehicule reserve');
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test  NOT -- OK');
+	PRINT('------------------------------Test  NOT -- OKI');
 END CATCH
 GO
