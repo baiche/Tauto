@@ -12,7 +12,8 @@
 USE TAuto_IBDR;
 GO
 
---Test 1
+--Test 1 : ERROR Les informations concernant le conducteur sont incompletes
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -51,7 +52,8 @@ END CATCH
 GO
 
 
---Test 2
+--Test 2 : ERROR Les informations concernant le type de permis sont incompletes
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -90,7 +92,8 @@ END CATCH
 GO
 
 
---Test 3
+--Test 3 : ERROR Les informations concernant le conducteur sont incorrectes
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -129,7 +132,8 @@ END CATCH
 GO
 
 
---Test 4
+--Test 4 : ERROR Le type de permis est incorrect
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -168,7 +172,8 @@ END CATCH
 GO
 
 
---Test 5
+--Test 5 : ERROR La date d'obtention est postéreure à la date d'aujourd'hui
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -207,7 +212,8 @@ END CATCH
 GO
 
 
---Test 6
+--Test 6 : ERROR La date d'expiration est antérieure à la date d'aujourd'hui
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -246,7 +252,8 @@ END CATCH
 GO
 
 
---Test 7
+--Test 7 : le numero de permis doit etre renseigne
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -285,7 +292,8 @@ END CATCH
 GO
 
 
---Test 8
+--Test 8 : ERROR Le type de permis est deja enregistre
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -325,7 +333,8 @@ END CATCH
 GO
 
 
---Test 9
+--Test 9 : declarePermis OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int;
@@ -365,7 +374,8 @@ END CATCH
 GO
 
 
---Test 10
+--Test 10 : declarePermis OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int, @date_expiration_apres date;
@@ -410,7 +420,8 @@ END CATCH
 GO
 
 
---Test 11
+--Test 11 : declarePermis OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int, @periode_probatoire_apres int;
@@ -455,7 +466,8 @@ END CATCH
 GO
 
 
---Test 12
+--Test 12 : ERROR Le numero de permis renseigne est le numero de permis d'un autre conducteur
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int,
@@ -505,7 +517,8 @@ END CATCH
 GO
 
 
---Test 13
+--Test 13 : declarePermis OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbSousPermis_Avant int, @nbPermis_Avant int, 
 			@nbSousPermis_Apres int, @nbPermis_Apres int,
