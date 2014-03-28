@@ -77,6 +77,7 @@ GO
 --		declareConducteur
 --		makeReservation
 --		turnReservationIntoContratLocation
+--		makeEtat
 --
 -- Scénario :
 -- Inscripton de Sophie Dupont avec choix de l'abonnement 
@@ -107,7 +108,10 @@ AS
 		PRINT('');
 			
 		DECLARE @id_abo int,
-				@id_reservation int;
+				@id_reservation int,
+				@id_contratLoc int,
+				@date_deb date = '2014-03-29',
+				@date_fin date = '2014-04-02';
 
 -- debut du test
 
@@ -123,7 +127,7 @@ AS
 					
 
 		EXEC dbo.makeCompteParticulier 'Dupont', 'Sophie', '1990-09-10', 'LU2800194006447500001234567', 'sophie.dupont@mail.com', '0123456789';
-		EXEC dbo.makeAbonnement '2014-03-29', 5, 'false', '1vehicule', 'Dupont', 'Sophie', '1990-09-10';
+		EXEC dbo.makeAbonnement @date_deb, 5, 'false', '1vehicule', 'Dupont', 'Sophie', '1990-09-10';
 
 		PRINT('');
 		PRINT('Liste des associations Abonnement-CompteAbonne après ajout');
@@ -179,7 +183,7 @@ AS
 		PRINT('Reservation par Sophie d''une Peugeot 406 Diesel 5 portes du 2014-03-28 au 2014-04-01');		
 		SET @id_abo = (SELECT a.id FROM Abonnement a WHERE a.nom_compteabonne = 'Dupont' AND a.prenom_compteabonne = 'Sophie' AND a.date_naissance_compteabonne = '1990-09-10');
 
-		EXEC @id_reservation = dbo.makeReservation @id_abo,'2014-03-29','2014-04-03', 'Peugeot', '406', 'Diesel', 5;
+		EXEC @id_reservation = dbo.makeReservation @id_abo,@date_deb,@date_fin, 'Peugeot', '406', 'Diesel', 5;
 
 		PRINT('');
 		PRINT('Liste des reservations après demande');
@@ -193,7 +197,7 @@ AS
 					ON res.id_abonnement=abo.id;
 
 		PRINT('Passage en Location immédiate');
-		EXEC dbo.turnReservationIntoContratLocat @id_reservation, 100;
+		EXEC @id_contratLoc = dbo.turnReservationIntoContratLocat @id_reservation, 100;
 
 		PRINT('');
 		PRINT('Liste des reservations après location');
@@ -216,6 +220,13 @@ AS
 				JOIN Vehicule veh
 					ON veh.matricule = loc.matricule_vehicule;
 
+		EXEC dbo.makeEtat @id_contratLoc, '0123456ac', NULL, NULL, 'Parfait';
+		
+		PRINT('');
+		PRINT('Etat nouvellement créée pour la location');
+		SELECT * FROM Etat;
+		
+		
 	END
 GO
 -----------------testReservationModeleIndisponible--------------------
@@ -227,8 +238,47 @@ GO
 CREATE PROCEDURE dbo.testReservationModeleIndisponible
 AS
 	BEGIN
-
-		SELECT * FROM Reservation;
+		SET NOCOUNT ON
+		
+-- Remplissage des tables avec le minimum d'information nécéssaire
+		
+		EXEC dbo.videTables;
+		PRINT('');
+		PRINT('Remplissage des informations minimum nécéssaire au test');
+		PRINT('');
+		
+		DECLARE @id_abo1 int,
+				@id_abo2 int,
+				@id_reservation int,
+				@date_deb1 date = '2014-05-20',
+				@date_deb2 date = '2014-05-21',
+				@date_fin1 date = '2014-05-22',
+				@date_fin2 date = '2014-05-24';
+				
+		EXEC dbo.createTypeAbonnement '1vehicule', '5', 1, 100;
+		EXEC dbo.makeCatalogue 'printemps 2014', '2014-03-20', '2014-06-20';
+		EXEC dbo.makeCategorie 'printemps 2014', 'voiture', 'Voitures de toutes tailles', 'B';
+		EXEC dbo.makeModele 'printemps 2014', 'voiture', 'Peugeot', '406', 'Diesel', 5, 2004, 45, 0;
+		EXEC dbo.makeVehicule 'Peugeot', '406', 'Diesel', 5, '0123456ab', 1000, 'Bleu', 'VF3 8C4HXF 81100000', 'voiture';
+		EXEC dbo.makeModele 'printemps 2014', 'voiture', 'Peugeot', '407', 'Diesel', 5, 2006, 45, 0;
+		EXEC dbo.makeVehicule 'Peugeot', '406', 'Diesel', 5, '9876543xw', 43500, 'Rouge', 'SQ5 2G1BVC 45660012', 'voiture';
+		EXEC dbo.makeCompteParticulier 'Dupont', 'Sophie', '1990-09-10', 'LU2800194006447500001234567', 'sophie.dupont@mail.com', '0123456789';
+		EXEC dbo.makeAbonnement '2014-03-29', 5, 'false', '1vehicule', 'Dupont', 'Sophie', '1990-09-10';
+		EXEC dbo.makeCompteParticulier 'Smith', 'John', '1984-11-03', 'AZ2800112345447500001233210', 'john.smith@mail.com', '0987654321';
+		EXEC dbo.makeAbonnement '2014-03-29', 5, 'false', '1vehicule', 'Smith', 'John', '1984-11-03';
+		EXEC dbo.declareConducteur 'Dupont', 'Sophie', '1990-09-10', 'Dupont', 'Sophie', '123456009', 'Francais', '0000000006', 'B', '2010-03-14', NULL, '2025-03-14', 'true', 12;
+		EXEC dbo.declareConducteur 'Smith', 'John', '1984-11-03', 'Smith', 'John', '123456010', 'Francais', '0000000007', 'B', '2002-03-17', NULL, '2017-03-17', 'true', 7;
+		SET @id_abo1 = (SELECT a.id FROM Abonnement a WHERE a.nom_compteabonne = 'Dupont' AND a.prenom_compteabonne = 'Sophie' AND a.date_naissance_compteabonne = '1990-09-10');
+		SET @id_abo2 = (SELECT a.id FROM Abonnement a WHERE a.nom_compteabonne = 'Smith' AND a.prenom_compteabonne = 'John' AND a.date_naissance_compteabonne = '1984-11-03');
+		EXEC dbo.makeReservation @id_abo1,@date_deb1,@date_fin1, 'Peugeot', '406', 'Diesel', 5;
+		
+		SELECT * from Reservation;
+		SELECT * from Vehicule;
+		
+		EXEC dbo.makeReservation @id_abo2,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
+		
+		SELECT * from Reservation;
+		SELECT * from Vehicule;
 
 
 	END
@@ -366,6 +416,70 @@ AS
 
 	END
 GO
+
+-----------------testFinDeLocation--------------------
+
+IF OBJECT_ID ('dbo.testFinDeLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.testFinDeLocation
+GO
+
+------------------------------------------------------------
+-- Procédure de démonstration des macros:
+--		endEtat
+--		endContratLocation
+--
+-- Scénario :
+-- L'abonne rend le vehicule dans un etat moyen et reçoit 
+-- sa facture.
+------------------------------------------------------------
+CREATE PROCEDURE dbo.testFinDeLocation
+AS
+	BEGIN
+		SET NOCOUNT ON
+		
+-- Remplissage des tables avec le minimum d'information nécéssaire
+		
+		EXEC dbo.videTables;
+		PRINT('');
+		PRINT('Remplissage des informations minimum nécéssaire au test');
+		PRINT('');
+		DECLARE @id_abo int,
+				@id_reservation int,
+				@id_contratLoc int,
+				@date_deb1 date = '2014-05-20',
+				@date_deb2 date = '2014-03-29',
+				@date_fin1 date = '2014-05-22',
+				@date_fin2 date = '2014-04-03';
+				
+		EXEC dbo.createTypeAbonnement '1vehicule', '5', 1, 100;
+		EXEC dbo.makeCatalogue 'printemps 2014', '2014-03-20', '2014-06-20';
+		EXEC dbo.makeCategorie 'printemps 2014', 'voiture', 'Voitures de toutes tailles', 'B';
+		EXEC dbo.makeModele 'printemps 2014', 'voiture', 'Peugeot', '406', 'Diesel', 5, 2004, 45, 0;
+		EXEC dbo.makeVehicule 'Peugeot', '406', 'Diesel', 5, '0123456ab', 1000, 'Bleu', 'VF3 8C4HXF 81100000', 'voiture';
+		EXEC dbo.makeCompteParticulier 'Dupont', 'Sophie', '1990-09-10', 'LU2800194006447500001234567', 'sophie.dupont@mail.com', '0123456789';
+		EXEC dbo.makeAbonnement '2014-03-29', 5, 'false', '1vehicule', 'Dupont', 'Sophie', '1990-09-10';
+		EXEC dbo.declareConducteur 'Dupont', 'Sophie', '1990-09-10', 'Dupont', 'Sophie', '123456009', 'Francais', '0000000006', 'B', '2010-03-14', NULL, '2025-03-14', 'true', 12;
+		EXEC dbo.declareConducteur 'Dupont', 'Sophie', '1990-09-10', 'Dupont', 'Jean', '123456010', 'Francais', '0000000007', 'B', '2014-03-17', 3, '2029-03-17', 'true', 4;
+		SET @id_abo = (SELECT a.id FROM Abonnement a WHERE a.nom_compteabonne = 'Dupont' AND a.prenom_compteabonne = 'Sophie' AND a.date_naissance_compteabonne = '1990-09-10');
+		EXEC dbo.makeReservation @id_abo,@date_deb1,@date_fin1, 'Peugeot', '406', 'Diesel', 5;
+		EXEC @id_reservation = dbo.makeReservation @id_abo,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
+		EXEC @id_contratLoc = dbo.turnReservationIntoContratLocat @id_reservation, 100;
+		EXEC dbo.makeEtat @id_contratLoc, '0123456ab', NULL, NULL, 'Parfait';
+		
+		PRINT('');
+		PRINT('Etat lié au début de la location');
+		SELECT * FROM Etat;
+		EXEC dbo.endEtat @id_contratLoc, '0123456ab', @date_fin2, 1200, 'Moyen', 'true', NULL;
+		PRINT('');
+		PRINT('Etat à la fin de la location');
+		SELECT * FROM Etat;
+		
+		EXEC dbo.endContratLocation @id_contratLoc, @date_fin2;
+
+	END
+GO
+
+
 
 
 
