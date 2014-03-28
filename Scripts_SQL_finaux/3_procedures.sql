@@ -5511,7 +5511,7 @@ AS
 		BEGIN
 			DECLARE @ReturnValue int;
 			
-			EXEC @ReturnValue = dbo.findOtherVehicule @matricule, 1, NULL;
+			EXEC @ReturnValue = dbo.findOtherVehiculeWithElevation @matricule, 1, NULL;
 			IF ( @ReturnValue = -1)
 			BEGIN
 				PRINT('fixVehicule: ERROR pas reussi a remplacer le vehicule pour les reservations concernees !');
