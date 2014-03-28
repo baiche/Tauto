@@ -83,10 +83,10 @@ AS
 																											AND	  m.type_carburant = cm.type_carburant_modele
 																											AND   m.portieres = cm.portieres_modele
 																											AND   cm.nom_categorie = @categorie
-																											AND   m.marque <> @marque
-																											AND   m.serie <> @serie
-																											AND	  m.type_carburant <> @type_carburant
-																											AND   m.portieres <> @portieres;
+																											AND   (m.marque <> @marque
+																											OR    m.serie <> @serie
+																											OR	  m.type_carburant <> @type_carburant
+																											OR    m.portieres <> @portieres);
 				OPEN model_cursor
 				FETCH NEXT FROM model_cursor INTO @marque, @serie, @type_carburant, @portieres ;
 				WHILE @@FETCH_STATUS = 0
