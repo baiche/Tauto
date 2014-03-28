@@ -33,6 +33,11 @@ AS
 				@isDispo			int,
 				@categorie			VARCHAR(50);
 				
+		DECLARE @marque_tmp	nvarchar(50), 
+				@serie_tmp nvarchar(50), 
+				@type_carburant_tmp nvarchar(50), 
+				@portieres_tmp tinyint;
+				
 		SET @matricule_dispo = '0';
 			
 		 -- verifier s'il a le droit d'emprunter
@@ -88,16 +93,16 @@ AS
 																											OR	  m.type_carburant <> @type_carburant
 																											OR    m.portieres <> @portieres);
 				OPEN model_cursor
-				FETCH NEXT FROM model_cursor INTO @marque, @serie, @type_carburant, @portieres ;
+				FETCH NEXT FROM model_cursor INTO @marque_tmp, @serie_tmp, @type_carburant_tmp, @portieres_tmp ;
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
-				PRINT('MOMO j''ffiche le model ds le quel je sios'+ convert(varchar(50),@marque)+', '+ convert(varchar(50),@serie)+', '+convert(varchar(50),@type_carburant)+', '+convert(varchar(50),@portieres));
+				PRINT('MOMO j''ffiche le model ds le quel je sios'+ convert(varchar(50),@marque_tmp)+', '+ convert(varchar(50),@serie_tmp)+', '+convert(varchar(50),@type_carburant_tmp)+', '+convert(varchar(50),@portieres_tmp));
 				--------boucle sur vehicule de meme modele
 					DECLARE matricule_cursor CURSOR LOCAL  
-						FOR SELECT matricule FROM Vehicule WHERE marque_modele=@marque 
-														   AND   serie_modele=@serie 
-														   AND   portieres_modele=@portieres 
-														   AND   type_carburant_modele=@type_carburant 
+						FOR SELECT matricule FROM Vehicule WHERE marque_modele=@marque_tmp 
+														   AND   serie_modele=@serie_tmp 
+														   AND   portieres_modele=@portieres_tmp 
+														   AND   type_carburant_modele=@type_carburant_tmp 
 														   AND   a_supprimer='false';  
 														   
 					OPEN matricule_cursor
@@ -108,10 +113,10 @@ AS
 						IF (@isDispo = 1)
 						BEGIN						
 							PRINT('Information du vehicule trouver-------------------------------------------------------------------');
-							PRINT 'Marque : ' + convert(varchar(50),@marque);
-							PRINT 'Serie : ' + convert(varchar(50),@serie);
-							PRINT 'Type de carburant : ' + convert(varchar(50),@type_carburant);
-							PRINT 'Nombre de porte : ' + convert(varchar(50),@portieres);
+							PRINT 'Marque : ' + convert(varchar(50),@marque_tmp);
+							PRINT 'Serie : ' + convert(varchar(50),@serie_tmp);
+							PRINT 'Type de carburant : ' + convert(varchar(50),@type_carburant_tmp);
+							PRINT 'Nombre de porte : ' + convert(varchar(50),@portieres_tmp);
 							PRINT 'Matricule : ' + convert(varchar(50),@matricule);
 							PRINT('FIN Vehicule trouver-------------------------------------------------------------------');
 							BREAK;
