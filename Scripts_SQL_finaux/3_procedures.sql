@@ -159,7 +159,7 @@ GO
 -- Date        : 05/03/2014
 -- Version     : 1.0
 -- Auteur      : David Lecoconnier
--- Correcteur  : 
+-- Correcteur  : Allan Mottier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Crée une jointure seulement si le tuple n'existe pas.
@@ -173,10 +173,12 @@ IF OBJECT_ID ('dbo.addConducteurToLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.addConducteurToLocation
-	@id_location 						int,
+	@id_contratLocation 						int,
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
+	DECLARE @id_location int;
+	SELECT @id_location=id FROM Location WHERE id_contratLocation = @id_contratLocation;
 	/*BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			@id_location = id_location AND
@@ -5298,7 +5300,9 @@ AS
 				@nom				varchar(50),
 				@prenom				varchar(50),
 				@date_naissance		date,
-				@id_permis			nvarchar(50);
+				@id_permis			nvarchar(50),
+				@nb_point_new		int,
+				@nb_point_avant		int;
 				
 		SET @id_location = (SELECT l.id FROM Location l,Infraction i 
 										WHERE l.matricule_vehicule=@matricule 
@@ -5323,13 +5327,18 @@ AS
 																													  AND   cl.id = l.id_contratLocation
 																													  AND   a.id = cl.id_abonnement;
 		
-		SET @id_permis = (SELECT c.id_permis FROM Conducteur c, ConducteurLocation cl  WHERE c.nom = @nom_conducteur
-																					   AND	 c.prenom = @prenom_conducteur
+		SET @id_permis = (SELECT id_permis FROM Conducteur c, ConducteurLocation cl   WHERE nom = @nom_conducteur
+																					   AND	 prenom = @prenom_conducteur
 																					   AND   cl.id_location = @id_location
 																					   AND   cl.piece_identite_conducteur = c.piece_identite
 																					   AND   cl.nationalite_conducteur = c.nationalite);
-																	    					
-		UPDATE Permis SET points_estimes=points_estimes - @nbPoint WHERE numero = @id_permis;
+		
+		SET @nb_point_avant = (SELECT points_estimes FROM Permis WHERE numero = @id_permis);
+		SET @nb_point_new = @nb_point_avant - @nbPoint;
+													    					
+		UPDATE Permis SET points_estimes=@nb_point_new WHERE numero = @id_permis;
+		SET @nb_point_avant = (SELECT points_estimes FROM Permis WHERE numero = @id_permis);
+
 
 		COMMIT TRANSACTION fixInfraction
 		PRINT('fixInfraction OK');
@@ -5394,7 +5403,7 @@ AS
 --affichage de l(infraction
 PRINT '_________________________________________________________________________';
 PRINT 'Nom infraction : ' + convert(varchar(50),@nom_Infraction);
-PRINT 'Date infraction : ' + convert(varchar(10),@date);
+PRINT 'Date infraction : ' + convert(varchar(30),@date);
 PRINT 'Description de l''infraction : ' + convert(varchar(50),@description);
 PRINT 'Montant de l''infraction : ' + convert(varchar(50),@montant);
 IF(@regle = 'false')

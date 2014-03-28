@@ -50,7 +50,7 @@ AS
 --affichage de l(infraction
 PRINT '_________________________________________________________________________';
 PRINT 'Nom infraction : ' + convert(varchar(50),@nom_Infraction);
-PRINT 'Date infraction : ' + convert(varchar(10),@date);
+PRINT 'Date infraction : ' + convert(varchar(30),@date);
 PRINT 'Description de l''infraction : ' + convert(varchar(50),@description);
 PRINT 'Montant de l''infraction : ' + convert(varchar(50),@montant);
 IF(@regle = 'false')

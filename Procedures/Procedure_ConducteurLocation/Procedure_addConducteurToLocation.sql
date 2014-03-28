@@ -17,10 +17,12 @@ IF OBJECT_ID ('dbo.addConducteurToLocation', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.addConducteurToLocation
-	@id_location 						int,
+	@id_contratLocation 						int,
 	@piece_identite_conducteur 			nvarchar(50),
 	@nationalite_conducteur 			nvarchar(50)
 AS
+	DECLARE @id_location int;
+	SELECT @id_location=id FROM Location WHERE id_contratLocation = @id_contratLocation;
 	/*BEGIN TRY
 		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
 			@id_location = id_location AND
