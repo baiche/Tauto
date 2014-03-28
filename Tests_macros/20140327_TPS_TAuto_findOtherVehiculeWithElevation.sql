@@ -28,7 +28,7 @@ BEGIN TRY
 			@tmp_ReservationVehicule_Apres int,
 			@tmp_ContratLocation_Apres int;
 			
-			
+/*			
 --Test 1 si le matricule est bien renseigne
 	SET @nbReservationVehicule_Avant = (SELECT COUNT(*) FROM ReservationVehicule );
 	SET @nbContratLocation_Avant = (SELECT COUNT(*) FROM ContratLocation );													   
@@ -166,6 +166,7 @@ BEGIN TRY
 	BEGIN
 		PRINT('------------------------------Test 6 - KO');
 	END
+	*/
 ------tout vider et inserer
 DELETE FROM ReservationVehicule;
 DELETE FROM Reservation;
@@ -220,7 +221,7 @@ SELECT @idReservation = id FROM Reservation WHERE date_debut = '2014-05-26T08:00
 INSERT INTO ReservationVehicule (id_reservation,matricule_vehicule) VALUES
 		(@idReservation, 'AX-580-VT');		
 ----------------------
-	
+/*	
 --Test 7 si le vehicule es dispo pour la prolongation
 	SET @nbReservationVehicule_Avant = (SELECT COUNT(*) FROM ReservationVehicule );
 	SET @nbContratLocation_Avant = (SELECT COUNT(*) FROM ContratLocation );													   
@@ -266,7 +267,7 @@ INSERT INTO ReservationVehicule (id_reservation,matricule_vehicule) VALUES
 	BEGIN
 		PRINT('------------------------------Test 8 - KO');
 	END
-	
+*/	
 --Test 9 test ki remplace le cehicule endomager  pour les reservations concerné
 INSERT INTO Vehicule (matricule,kilometrage,couleur,statut,num_serie,marque_modele,serie_modele,portieres_modele,type_carburant_modele,a_supprimer)VALUES
 		('AX-581-VT','140000','Gris','Disponible','VF3 8C4HXF 81100000','Peugeot','406','5','Essence','false');

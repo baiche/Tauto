@@ -3,7 +3,7 @@
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : Baiche Mourad
--- Correcteur  : 
+-- Correcteur  : Allan Mottier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : 
@@ -31,11 +31,16 @@ AS
 	ELSE
 
 	DECLARE @res INT;
-		SET @res = (SELECT  id_reservation  FROM ReservationVehicule WHERE matricule_vehicule=@matricule);
+		SET @res = (SELECT  id_reservation  
+						FROM ReservationVehicule resVeh, Reservation res 
+						WHERE matricule_vehicule=@matricule
+							AND resVeh.id_reservation = res.id
+							AND res.date_debut=@date_debut
+							AND res.date_fin=@date_fin);
 		
 		EXEC annulerReservation @res;
 	
-		DELETE FROM ReservationVehicule WHERE matricule_vehicule=@matricule;
+		DELETE FROM ReservationVehicule WHERE id_reservation=@res;
 
 	
 		COMMIT TRANSACTION cancelReservation

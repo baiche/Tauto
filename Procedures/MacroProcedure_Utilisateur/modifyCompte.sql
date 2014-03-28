@@ -3,7 +3,7 @@
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : Boris de Finance
--- Correcteur  : 
+-- Correcteur  : Allan Mottier
 -- Testeur     : 
 -- Integrateur : 
 -- Commentaire : Methode modifant les champs d'un compte
@@ -60,7 +60,7 @@ AS
 			AND	prenom = @prenom
 			AND date_naissance = @date_naissance
 		
-		IF (@nom IS NOT NULL)
+		IF (@courriel IS NOT NULL)
 			UPDATE CompteAbonne
 			SET courriel = @courriel
 			WHERE nom = @nom
