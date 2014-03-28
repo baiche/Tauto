@@ -1,0 +1,11 @@
+------------------------------------------------------------
+-- Fichier     : 8_tests_contraintes.sql
+-- Date        : 28/03/2014
+-- Version     : 1.0
+-- Auteur      : de Finance Boris
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Petits scenarios presentant le bon
+-- montrant le fonctionnement de la base de donnees
+------------------------------------------------------------
