@@ -1,5 +1,5 @@
 ------------------------------------------------------------
--- Fichier     : makeReservation.sql
+-- Fichier     : makeReservationWithElevation.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
 -- Auteur      : Neti Mohamed
@@ -11,11 +11,11 @@
 
 USE TAuto_IBDR;
 
-IF OBJECT_ID ('dbo.makeReservation', 'P') IS NOT NULL
-	DROP PROCEDURE dbo.makeReservation	
+IF OBJECT_ID ('dbo.makeReservationWithElevation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.makeReservationWithElevation	
 GO
 
-CREATE PROCEDURE dbo.makeReservation
+CREATE PROCEDURE dbo.makeReservationWithElevation
 	@id_abonnement			int, -- FK
 	@date_debut				dateTime,
 	@date_fin				dateTime,
@@ -25,7 +25,7 @@ CREATE PROCEDURE dbo.makeReservation
 	@portieres 				tinyint -- PK
 AS
 	
-	BEGIN TRANSACTION makeReservation
+	BEGIN TRANSACTION makeReservationWithElevation
 	BEGIN TRY
 		DECLARE @idRes 				int,
 				@matricule 			VARCHAR(50),
@@ -96,7 +96,7 @@ AS
 				FETCH NEXT FROM model_cursor INTO @marque_tmp, @serie_tmp, @type_carburant_tmp, @portieres_tmp ;
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
-				PRINT('MOMO j''ffiche le model ds le quel je sios'+ convert(varchar(50),@marque_tmp)+', '+ convert(varchar(50),@serie_tmp)+', '+convert(varchar(50),@type_carburant_tmp)+', '+convert(varchar(50),@portieres_tmp));
+				
 				--------boucle sur vehicule de meme modele
 					DECLARE matricule_cursor CURSOR LOCAL  
 						FOR SELECT matricule FROM Vehicule WHERE marque_modele=@marque_tmp 
@@ -109,6 +109,7 @@ AS
 					FETCH NEXT FROM matricule_cursor INTO @matricule;
 					WHILE @@FETCH_STATUS = 0
 					BEGIN
+						
 						EXEC @isDispo = dbo.isDisponible1 @matricule, @date_debut, @date_fin
 						IF (@isDispo = 1)
 						BEGIN						
@@ -125,15 +126,15 @@ AS
 					END 	
 					CLOSE matricule_cursor;
 					DEALLOCATE matricule_cursor;
-				
-				----------fin boucle sur vehicule de meme modele
 
+				----------fin boucle sur vehicule de meme modele
+					FETCH NEXT FROM model_cursor INTO @marque_tmp, @serie_tmp, @type_carburant_tmp, @portieres_tmp ;
 				END 	
 				CLOSE model_cursor;
 				DEALLOCATE model_cursor;
 				PRINT('-------------------------------------------------------------------');
 				PRINT('FIN de recherche de vehicule equivalent');
-				ROLLBACK TRANSACTION makeReservation
+				ROLLBACK TRANSACTION makeReservationWithElevation
 				RETURN -1;
 				
 			END 
@@ -143,13 +144,13 @@ AS
 
 		END--fin else
 	 
-		COMMIT TRANSACTION makeReservation
-		PRINT('makeReservation OK');
+		COMMIT TRANSACTION makeReservationWithElevation
+		PRINT('makeReservationWithElevation OK');
 		RETURN @idRes;
 	END TRY
 	BEGIN CATCH
-		PRINT('makeReservation: ERROR');
-		ROLLBACK TRANSACTION makeReservation
+		PRINT('makeReservationWithElevation: ERROR');
+		ROLLBACK TRANSACTION makeReservationWithElevation
 		RETURN -1;
 	END CATCH
 GO
