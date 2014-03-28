@@ -233,6 +233,16 @@ IF OBJECT_ID ('dbo.testReservationModeleIndisponible', 'P') IS NOT NULL
 	DROP PROCEDURE dbo.testReservationModeleIndisponible
 GO
 
+------------------------------------------------------------
+-- Procédure de démonstration des macros:
+--		makeReservationWithElevation
+--
+-- Scénario :
+-- L'abonne Sophie reserve une peugeot 406.
+-- L'abonne John reserve la deuxieme Peugeot 406
+-- L'abonne Bob tente aussi une reservation d'une Peugeot 406,
+-- un autre modèle lui est proposé.
+------------------------------------------------------------
 CREATE PROCEDURE dbo.testReservationModeleIndisponible
 AS
 	BEGIN
@@ -280,7 +290,7 @@ AS
 		SELECT * from Vehicule;
 		
 		PRINT('Premiere reservation d''une Peugeo 406');
-		EXEC dbo.makeReservation @id_abo1,@date_deb1,@date_fin1, 'Peugeot', '406', 'Diesel', 5;
+		EXEC dbo.makeReservationWithElevation @id_abo1,@date_deb1,@date_fin1, 'Peugeot', '406', 'Diesel', 5;
 		
 		PRINT('');
 		SELECT abo.nom_compteabonne AS nom, abo.prenom_compteabonne AS prenom, veh.matricule, veh.marque_modele AS marque, veh.serie_modele AS serie, res.date_debut, res.date_fin 
@@ -291,7 +301,7 @@ AS
 		
 		
 		PRINT('Deuxieme reservation d''une Peugeo 406');
-		EXEC dbo.makeReservation @id_abo2,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
+		EXEC dbo.makeReservationWithElevation @id_abo2,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
 		
 		PRINT('');
 		SELECT abo.nom_compteabonne AS nom, abo.prenom_compteabonne AS prenom, veh.matricule, veh.marque_modele AS marque, veh.serie_modele AS serie, res.date_debut, res.date_fin 
@@ -301,7 +311,7 @@ AS
 				AND res.id_abonnement = abo.id;
 
 		PRINT('Troisieme reservation d''une Peugeo 406');
-		EXEC dbo.makeReservation @id_abo2,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
+		EXEC dbo.makeReservationWithElevation @id_abo2,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
 		
 		PRINT('');
 		SELECT abo.nom_compteabonne AS nom, abo.prenom_compteabonne AS prenom, veh.matricule, veh.marque_modele AS marque, veh.serie_modele AS serie, res.date_debut, res.date_fin 
@@ -518,12 +528,13 @@ GO
 
 ------------------------------------------------------------
 -- Procédure de démonstration des macros:
---		endEtat
---		endContratLocation
+--		makeInfraction
+--		showInfraction
+--		fixInfraction
 --
 -- Scénario :
--- L'abonne rend le vehicule dans un etat moyen et reçoit 
--- sa facture.
+-- L'abonne a commit une infraction et la paie, des points 
+-- de permis lui sont retirés.
 ------------------------------------------------------------
 CREATE PROCEDURE dbo.testInfraction
 AS
