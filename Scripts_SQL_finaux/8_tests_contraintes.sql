@@ -2580,14 +2580,12 @@ BEGIN TRY
 		SET @id_Abonnement = SCOPE_IDENTITY();
 	INSERT INTO ContratLocation(date_debut,date_fin,date_fin_effective,extension,id_abonnement)VALUES
 		('20140108 00:00:00','20140306 00:00:00','20140326 00:00:00',-13,@id_Abonnement);
-	IF (( SELECT COUNT(*)
-		FROM ContratLocation) = 1)
-		PRINT('------------------------------Test F.3 OK')
-	ELSE
-		PRINT('------------------------------Test F.3 NOT OK')
+
+
+	PRINT('------------------------------Test F.3 NOT OK')
 END TRY
 BEGIN CATCH
-	PRINT('------------------------------Test F.3 NOT OK')
+	PRINT('------------------------------Test F.3 OK')
 END CATCH
 DELETE FROM ContratLocation;
 DELETE FROM Abonnement;
