@@ -589,3 +589,167 @@ AS
 	END
 GO
 
+
+------------------------------------------------------------
+-- Date        : 28/03/2014
+-- Version     : 1.0
+-- Auteur      : Seyyid Ouir
+-- Commentaire : Test de la procédure "fixVehicule"
+
+--               Le status du vehicule (matricule = 0775896wi) change : "Disponible" -> "En panne"
+
+--               '0775896wi' est reserve pour les periodes suivantes :
+
+--               - Reservation1  : 2014-04-06 -> 2014-04-10 
+--               (d'autres vehicules disponibles pour ces dates : 2775896wi)
+
+--               - Reservation2 : 2014-07-11 -> 2014-09-22 
+--               (d'autres vehicules disponibles pour ces dates : 0775896wt ou 2775896wi)
+------------------------------------------------------------
+
+IF OBJECT_ID ('dbo.testFixVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.testFixVehicule
+GO
+
+
+CREATE PROCEDURE dbo.testFixVehicule
+AS
+	BEGIN
+	
+		DECLARE @ReturnValue int, @Status_avant nvarchar(50), @Status_apres nvarchar(50),
+				@marque_modele nvarchar(50), @serie_modele nvarchar(50),
+				@portieres_modele tinyint, @type_carburant_modele nvarchar(50),
+				@IdReservation1 int, @IdReservation2 int, @nbReservations int, 
+				@Matricule_Reservation1_apres nvarchar(50), @Matricule_Reservation2_apres nvarchar(50),
+				@Reservation1_date_debut datetime, @Reservation1_date_fin datetime,
+				@Reservation2_date_debut datetime, @Reservation2_date_fin datetime,
+				@matricule_boucle nvarchar(50), @isDispo int;
+	
+		PRINT('* Le status du vehicule (matricule = 0775896wi) va changer : "Disponible" -> "En panne"'+char(13));
+		
+		PRINT('Avant l''operation : ');
+		PRINT('------------------- '+char(13));
+		
+		SELECT @Status_avant = statut, @marque_modele = marque_modele, @serie_modele = serie_modele, 
+			   @portieres_modele = portieres_modele, @type_carburant_modele = type_carburant_modele
+		FROM Vehicule 
+		WHERE matricule = '0775896wi';
+		
+		PRINT('Le vehicule (matricule = 0775896wi) : ' + 
+				@marque_modele + ', ' + @serie_modele + ', ' + 
+				CONVERT(varchar(10), @portieres_modele) + ' portes, ' + 
+				@type_carburant_modele + ', (status : ' +
+				@Status_avant + ')');
+				
+		SELECT @nbReservations = COUNT(*)
+		FROM ReservationVehicule
+		WHERE matricule_vehicule = '0775896wi';
+				
+		PRINT('Reservations pour ce vehicule : ' +
+				CONVERT(varchar(10), @nbReservations) + ' reservation(s)');
+		
+		-- Reservation 1
+		
+		SET @Reservation1_date_debut = '2014-04-06T13:00:00';
+		SET @Reservation1_date_fin = '2014-04-10T18:00:00';
+		
+		SELECT @IdReservation1 = r.id 
+		FROM Reservation r
+		INNER JOIN ReservationVehicule rv ON r.id = rv.id_reservation
+		WHERE rv.matricule_vehicule = '0775896wi' AND 
+			  r.date_debut = @Reservation1_date_debut AND r.date_fin = @Reservation1_date_fin;
+			  
+		PRINT(' - R1 : (id = ' + CONVERT(varchar(10), @IdReservation1) + ')  "2014-04-06" -> "2014-04-10"');
+
+		-- Reservation 2
+		
+		SET @Reservation2_date_debut = '2014-07-11T09:00:00';
+		SET @Reservation2_date_fin = '2014-09-22T17:00:00';
+		
+		SELECT @IdReservation2 = r.id 
+		FROM Reservation r
+		INNER JOIN ReservationVehicule rv ON r.id = rv.id_reservation
+		WHERE rv.matricule_vehicule = '0775896wi' AND 
+			  r.date_debut = @Reservation2_date_debut AND r.date_fin = @Reservation2_date_fin;
+		
+		PRINT(' - R2 : (id = ' + CONVERT(varchar(10), @IdReservation2) + ') "2014-07-11" -> "2014-09-22"'+char(13));
+
+		-- Les vehicules du meme modele (avant)
+
+		PRINT('Les vehicules du meme modele : '+char(13));
+		DECLARE curseur_matricule CURSOR FOR
+					SELECT matricule 
+					FROM Vehicule 
+					WHERE marque_modele = @marque_modele AND
+						  serie_modele = @serie_modele AND 
+						  type_carburant_modele = @type_carburant_modele AND 
+						  portieres_modele = @portieres_modele AND 
+						  matricule <> '0775896wi';
+										   
+		OPEN curseur_matricule
+		FETCH NEXT FROM curseur_matricule INTO @matricule_boucle
+		
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+		
+			PRINT(' ** Le vehicule (matricule = ' + @matricule_boucle + ') : ');
+		
+			SET NOCOUNT ON
+			EXEC @isDispo = dbo.isDisponible1 @matricule_boucle, @Reservation1_date_debut, @Reservation1_date_fin
+
+			IF( @isDispo = 1)
+				PRINT('  --> Disponible pour R1 : "2014-04-06" -> "2014-04-10"');
+			ELSE
+				PRINT('  --> Pas disponible pour R1 : "2014-04-06" -> "2014-04-10"');
+				
+			SET NOCOUNT ON
+			EXEC @isDispo = dbo.isDisponible1 @matricule_boucle, @Reservation2_date_debut, @Reservation2_date_fin
+
+			IF( @isDispo = 1)
+				PRINT('  --> Disponible pour R2 : "2014-07-11" -> "2014-09-22"');
+			ELSE
+				PRINT('  --> Pas disponible pour R2 : "2014-07-11" -> "2014-09-22"');
+				
+			PRINT('');
+			
+			FETCH NEXT FROM curseur_matricule INTO @matricule_boucle
+		END
+		CLOSE curseur_matricule
+		DEALLOCATE curseur_matricule
+
+
+		PRINT('EXECUTE fixVehicule : ');
+		PRINT('------------------- '+char(13));
+
+		EXEC @ReturnValue = dbo.fixVehicule
+				@matricule = '0775896wi',
+				@statut_future = 'En panne'
+
+		IF( @ReturnValue = 1)
+			PRINT('===> Operation reussi' + char(13));
+
+		PRINT('Apres l''operation : ');
+		PRINT('------------------- '+char(13));
+		
+		SELECT @Status_apres = statut FROM Vehicule WHERE matricule = '0775896wi';
+
+		PRINT('Le vehicule (matricule = 0775896wi) : (status avant : ' + @Status_avant + 
+				') -> (status apres : ' + @Status_apres + ')' + char(13));
+
+		-- le matricule qui est associe a la reservation 1 apres l'execution de la procedure
+		SELECT @Matricule_Reservation1_apres = matricule_vehicule 
+		FROM ReservationVehicule 
+		WHERE id_reservation = @IdReservation1;
+		
+		PRINT('Pour R1 ("2014-04-06" -> "2014-04-10") ==> vehicule (matricule = ' + @Matricule_Reservation1_apres + ')' + char(13));
+		
+		-- le matricule qui est associe a la reservation 2 apres l'execution de la procedure
+		SELECT @Matricule_Reservation2_apres = matricule_vehicule 
+		FROM ReservationVehicule 
+		WHERE id_reservation = @IdReservation2;
+
+		PRINT('Pour R2 ("2014-07-11" -> "2014-09-22") ==> vehicule (matricule = ' + @Matricule_Reservation2_apres + ')' + char(13));
+
+	END
+GO	
+
