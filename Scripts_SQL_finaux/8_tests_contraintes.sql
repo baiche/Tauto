@@ -10,107 +10,6 @@
 ------------------------------------------------------------
 SET NOCOUNT ON
 GO
-------------------------------------------------------------
--- Fichier     : 20140228_SACT_ImcompleteExample_Particulier.sql
--- Date        : 28/02/2014
--- Version     : 1.0
--- Auteur      : Jean-Luc Amitousa Mankoy
--- Correcteur  : 
--- Testeur     : 
--- Integrateur : 
--- Commentaire :
---	Ce document a pour but de montrer comment réaliser différents type de tests.
-------------------------------------------------------------
-
-
-USE Tauto_IBDR;
-
-EXEC dbo.videTables
-
---(ERASEME: les commentaires suivant correspond au 1er test de la contrainte A 
--- répertorié dans le document 20140228_ACT_ImcompleteExample_Particulier.docx. 
--- Les autres commentaires correspondent chacun à un test dans le documents 
--- 20140228_ACT_ImcompleteExample_Particulier.docx en respectant la même logique.
--- Vous n'êtes cependant pas réduit à ces commentaires.)
-
---Test A.1
-BEGIN TRY
-	INSERT INTO CompteAbonne(nom,prenom,date_naissance,liste_grise,iban,courriel,telephone) VALUES
-    ('Lastname1', 'Firstname1', '1992-05-7','false', 'LU28 0019 4006 4475 0010', 
-     'firstname.lastname@gmail.fr', '0605040301');
-     
-    INSERT INTO Particulier(nom_compte,prenom_compte,date_naissance_compte) VALUES
-    ('Lastname1', 'Firstname1', '1992-05-7');
-    
-    IF(SELECT actif 
-	   FROM CompteAbonne 
-	   WHERE nom='Lastname1' 
-			 AND prenom='Firstname1' 
-		     AND date_naissance='1992-05-7') = 'true'
-	
-		PRINT('------------------------------Test A.1 OK')
-	ELSE
-		PRINT('------------------------------Test A.1 NOT OK')
-		
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test A.1 NOT OK')
-END CATCH 
-
-
-
---Test A.2
-BEGIN TRY
-
-	INSERT INTO CompteAbonne(nom,prenom,date_naissance,actif,liste_grise,iban,courriel,telephone) VALUES
-    ('Lastname2', 'Firstname2', '1992-05-7','false','false', 'LU28 0019 4006 4475 0020', 
-     'firstname2.lastname2@gmail.fr', '0605040302');
-     
-    INSERT INTO Particulier(nom_compte,prenom_compte,date_naissance_compte) VALUES
-    ('Lastname2', 'Firstname2', '1992-05-7');
-    
-    IF(SELECT actif 
-	   FROM CompteAbonne 
-	   WHERE nom='Lastname2' 
-			 AND prenom='Firstname2' 
-		     AND date_naissance='1992-05-7') = 'false'
-	
-		PRINT('------------------------------Test A.2 OK')
-	ELSE
-		PRINT('------------------------------Test A.2 NOT OK')
-		
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test A.2 NOT OK')
-END CATCH 
-
---Test B.1
---Test B.2
---Test C.1
---Test C.2
-
-
-
---Test C.3
-BEGIN TRY
-	
-	INSERT INTO CompteAbonne(nom,prenom,actif,liste_grise,iban,courriel,telephone) VALUES
-    ('LastnameX', 'FirstnameX','false','false', 'LU28 0019 4006 4475 00X0', 
-     'firstnameX.lastnameX@gmail.fr', '0605040300');
-    
-    INSERT INTO Particulier(nom_compte,prenom_compte,date_naissance_compte) VALUES
-    ('LastnameX', 'FirstnameX', '1992-05-7');
-    
-	PRINT('------------------------------Test C.3 NOT OK')
-	
-END TRY
-BEGIN CATCH
-	PRINT('------------------------------Test C.3 OK')
-END CATCH 
-
-
-
---Test D.1
 
 ------------------------------------------------------------
 -- Fichier     : 20140228_SACT_ListeNoire.sql
@@ -123,6 +22,10 @@ END CATCH
 -- Commentaire :
 --	Test des contraintes sur liste noire
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes ListeNoire')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -364,6 +267,10 @@ SET NOCOUNT ON
 --	Test des contraintes sur RelanceDecouvert
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes RelanceDecouvert')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -593,6 +500,10 @@ SET NOCOUNT ON
 -- Commentaire : test de la table Catalogue
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Catalogue')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -758,6 +669,11 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : test de la table CatalogueCategorie
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes CatalogueCategorie')
+PRINT('--------------------------------------------------')
+
 USE Tauto_IBDR;
 
 DELETE FROM CatalogueCategorie;
@@ -830,6 +746,11 @@ DELETE FROM Categorie;
 -- Integrateur : 
 -- Commentaire : test de la table CatalogueCategorie
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes CatalogueCategorie')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE TAuto_IBDR;
@@ -906,6 +827,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes de la table CompteAbonne.
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes CompteAbonne')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -1795,6 +1720,10 @@ SET NOCOUNT ON
 -- Commentaire : test de la table CompteAbonneConducteur
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes CompteAbonneConducteur')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -1975,6 +1904,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes sur la table Conducteur
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Conducteur')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -2222,6 +2155,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : test de la table ContratLocation
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes ContratLocation')
+PRINT('--------------------------------------------------')
 
 USE Tauto_IBDR;
 
@@ -2668,6 +2605,10 @@ DELETE FROM TypeAbonnement;
 -- Commentaire : Test des contraintes de la table Entreprise.
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Entreprise')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -3025,6 +2966,10 @@ SET NOCOUNT ON
 -- Commentaire : test de la table Facturation
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Facturation')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -3168,6 +3113,10 @@ SET NOCOUNT ON
 -- Commentaire : Test des contraintes de la table Particulier.
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Particulier')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -3284,6 +3233,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes sur la table Permis
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Permis')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -3421,6 +3374,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes sur la table SousPermis
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes SousPermis')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -3662,6 +3619,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes de la table Location.
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Location')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -4035,6 +3996,10 @@ SET NOCOUNT ON
 -- Commentaire : Test des contraintes de la table Abonnement.
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Abonnement')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -4245,6 +4210,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes sur la table Retard
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Retard')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -4478,6 +4447,10 @@ SET NOCOUNT ON
 -- Commentaire : Test des contraintes de la table TypeAbonnement.
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes TypeAbonnement')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -4661,6 +4634,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes de la table Etat.
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Etat')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -5016,6 +4993,10 @@ SET NOCOUNT ON
 -- Commentaire : Test des contraintes sur la table Incident
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Incident')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -5289,6 +5270,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes sur la table Infraction
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Infraction')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -5662,6 +5647,10 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : Test des contraintes de la table ConducteurLocation.
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes ConducteurLocation')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -6061,6 +6050,10 @@ SET NOCOUNT ON
 -- Commentaire : Test des contraintes de la table Reservation.
 ------------------------------------------------------------
 
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Reservation')
+PRINT('--------------------------------------------------')
+
 SET NOCOUNT ON
 
 USE Tauto_IBDR;
@@ -6290,6 +6283,10 @@ GO
 -- Integrateur : 
 -- Commentaire : Test des contraintes de la table ReservationVehicule.
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes ReservationVehicule')
+PRINT('--------------------------------------------------')
 
 SET NOCOUNT ON
 
@@ -6645,6 +6642,11 @@ SET NOCOUNT ON
 -- Integrateur : 
 -- Commentaire : test de la table Categorie
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Categorie')
+PRINT('--------------------------------------------------')
+
 USE TAuto_IBDR;
 
 DELETE FROM CatalogueCategorie;
@@ -6765,6 +6767,11 @@ END CATCH
 -- Integrateur : 
 -- Commentaire : test de la table Modele
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Modele')
+PRINT('--------------------------------------------------')
+
 USE TAuto_IBDR;
 
 DELETE FROM CategorieModele;
@@ -6910,6 +6917,11 @@ DELETE FROM Modele;
 -- Integrateur : 
 -- Commentaire : test de la table Vehicule
 ------------------------------------------------------------
+
+PRINT('--------------------------------------------------')
+PRINT('Tests de contraintes Vehicule')
+PRINT('--------------------------------------------------')
+
 USE TAuto_IBDR;
 
 DELETE FROM ReservationVehicule;
