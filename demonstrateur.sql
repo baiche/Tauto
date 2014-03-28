@@ -268,7 +268,7 @@ AS
 		EXEC dbo.makeReservation @id_abo,@date_deb1,@date_fin1, 'Peugeot', '406', 'Diesel', 5;
 		EXEC @id_reservation = dbo.makeReservation @id_abo,@date_deb2,@date_fin2, 'Peugeot', '406', 'Diesel', 5;
 		EXEC dbo.turnReservationIntoContratLocat @id_reservation, 100;
-		EXEC dbo.cancelReservation '0123456ab', NULL, NULL;
+
 		PRINT('');
 		PRINT('Liste des compteAbonne-Abonnement avant modification');
 		SELECT cpta.nom, cpta.prenom, abo.nom_typeabonnement AS type_abonnement, abo.date_debut, abo.duree 
