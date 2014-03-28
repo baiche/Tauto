@@ -55,7 +55,6 @@ AS
 			
 			WHILE @@FETCH_STATUS = 0
 			BEGIN
-				--IF (SELECT v.statut FROM Vehicule v WHERE v.matricule=@matricule)='Disponible'
 				EXEC @isDispo = dbo.isDisponible1 @matricule, @date_debut, @date_fin
 				IF (@isDispo = 1)
 				BEGIN
@@ -73,16 +72,10 @@ AS
 				ROLLBACK TRANSACTION makeReservation
 				return -1;
 			END 
-			--ELSE 
-			--BEGIN
-			-- creer la reservation
-				--EXEC @return=dbo.isDisponible1 @matricule_disponible,@date_debut,@date_fin ;
-				--IF (@return =1 ) 
-				--BEGIN 
-					EXEC @ReturnValue = dbo.createReservation @date_debut, @date_fin, @id_abonnement;
-					EXEC dbo.addVehiculeToReservation @ReturnValue, @matricule_disponible ;
-				--END
-			--END 
+
+			EXEC @ReturnValue = dbo.createReservation @date_debut, @date_fin, @id_abonnement;
+			EXEC dbo.addVehiculeToReservation @ReturnValue, @matricule_disponible ;
+
 		END--fin else
 	 
 		COMMIT TRANSACTION makeReservation
