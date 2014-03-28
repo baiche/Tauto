@@ -79,6 +79,138 @@ END
 GO
 
 ------------------------------------------------------------
+-- Fichier     : Procedure_annulerReservation
+-- Date        : 12/03/2014
+-- Version     : 1.0
+-- Auteur      : Seyyid Ouir
+-- Correcteur  : Baiche ( modification du nom de la fonction  ) 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire :
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.annulerReservation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.annulerReservation
+GO
+
+CREATE PROCEDURE dbo.annulerReservation
+	@id	 					int
+AS
+	UPDATE Reservation
+	SET annule='true'
+	WHERE id = @id;
+
+GO
+
+
+------------------------------------------------------------
+-- Fichier     : Procedure_createInfraction
+-- Date        : 24/02/2014
+-- Version     : 1.0
+-- Auteur      : Baiche Mourad
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire :
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.createInfraction', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.createInfraction
+GO
+
+CREATE PROCEDURE dbo.createInfraction 
+	@date_creation datetime,
+	@id_location int,
+	@nom nvarchar(50),
+	@montant_infraction money,
+	@description_infraction nvarchar(50),
+	@regle bit
+	
+	AS
+	INSERT INTO Infraction(
+	date, 	
+	id_location, 
+	nom,
+	montant,
+	description,
+	regle 
+	)
+	
+	VALUES (
+	@date_creation ,
+	@id_location,
+	@nom,
+	@montant_infraction,
+	@description_infraction,
+	@regle
+	)
+	
+GO
+
+
+
+
+------------------------------------------------------------
+-- Fichier     : Procedure_addConducteurToLocation
+-- Date        : 05/03/2014
+-- Version     : 1.0
+-- Auteur      : David Lecoconnier
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Crée une jointure seulement si le tuple n'existe pas.
+--				 Renvoie 1 en cas de succès, -1 autrement
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.addConducteurToLocation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.addConducteurToLocation
+GO
+
+CREATE PROCEDURE dbo.addConducteurToLocation
+	@id_location 						int,
+	@piece_identite_conducteur 			nvarchar(50),
+	@nationalite_conducteur 			nvarchar(50)
+AS
+	/*BEGIN TRY
+		IF ( (SELECT COUNT (*) FROM ConducteurLocation WHERE
+			@id_location = id_location AND
+			@piece_identite_conducteur = piece_identite_conducteur AND
+			@nationalite_conducteur = nationalite_conducteur
+		) = 0)
+		BEGIN*/
+			INSERT INTO ConducteurLocation (
+				id_location,
+				piece_identite_conducteur,
+				nationalite_conducteur
+			)
+			VALUES (
+				@id_location,
+				@piece_identite_conducteur,
+				@nationalite_conducteur
+			);
+			--RAISERROR('Creation de la jointure ConducteurLocation impossible', 10, 1);
+			--PRINT('Conducteur ajouté à la location');
+			RETURN 1;
+		/*END
+		ELSE
+		BEGIN
+			PRINT('addConducteurToLocation: ERROR, tuple existant');
+			RETURN -1;
+		END*/
+	/*END TRY
+	BEGIN CATCH
+		PRINT('addConducteurToLocation: ERROR, clef primaire');
+		RETURN -1;
+	END CATCH*/
+GO
+
+------------------------------------------------------------
 -- Fichier     : Procedure_greyListCompteAbonne
 -- Date        : 11/03/2014
 -- Version     : 1.0
@@ -4282,6 +4414,8 @@ AS
 		-- liberer les voitures reservees
 		DELETE FROM ReservationVehicule WHERE id_reservation in (select id_reservation from #Temp);
 		
+		DROP Table #Temp;
+		
 		COMMIT TRANSACTION blackListCompte
 		PRINT('blackListCompte OK');
 		RETURN 1;
@@ -4293,6 +4427,7 @@ AS
 		RETURN -1;
 	END CATCH
 GO
+
 
 ------------------------------------------------------------
 -- Fichier     : makeTypeAbonnement.sql
@@ -5130,9 +5265,9 @@ GO
 
 ------------------------------------------------------------
 -- Fichier     : fixInfraction.sql
--- Date        : 15/03/2014
+-- Date        : 27/03/2014
 -- Version     : 1.0
--- Auteur      : Mourad Baiche
+-- Auteur      : Baiche Mourad & Neti Mohamed
 -- Correcteur  : 
 -- Testeur     : 
 -- Integrateur : 
@@ -5147,19 +5282,56 @@ GO
 
 CREATE PROCEDURE dbo.fixInfraction
 	@matricule				nvarchar(50), -- FK
+	@nom_conducteur			nvarchar(50),
+	@prenom_conducteur		varchar(50),
+	@somme					int,
+	@nbPoint				int,
 	@date					datetime
+	
 AS
 	BEGIN TRANSACTION fixInfraction
 	BEGIN TRY
 	
-		DECLARE @id_location INT;
+	DECLARE		@id_location		INT,
+				@nom_Infraction		varchar(50),
+				@description		varchar(50),
+				@montant			money,
+				@regle				bit,
+				@nom				varchar(50),
+				@prenom				varchar(50),
+				@date_naissance		date,
+				@id_permis			nvarchar(50);
+				
 		SET @id_location = (SELECT l.id FROM Location l,Infraction i 
 										WHERE l.matricule_vehicule=@matricule 
 										AND  l.id=i.id_location
-										AND i.date = @date);	
+										AND i.date = @date);
 										
-		UPDATE Infraction SET regle='true' WHERE date = @date			
-										   AND id_location = @id_location;			
+		SELECT @nom_Infraction = nom, @description=description, @montant = montant, @regle = regle   FROM Infraction WHERE date = @date
+																													 AND   id_location = @id_location;
+										
+		IF(@somme<>@montant)
+		BEGIN 
+		PRINT('fixInfraction: ERROR le montant n''est pas valide');
+		ROLLBACK TRANSACTION fixInfraction
+		RETURN -1;
+		END 
+				
+		UPDATE Infraction SET regle='true',montant=0 WHERE date = @date			
+										   AND id_location = @id_location;
+										 				
+		SELECT @nom=a.nom_compteabonne, @prenom=a.prenom_compteabonne, @date_naissance=a.date_naissance_compteabonne  FROM Abonnement a, ContratLocation cl, Location l
+																													  WHERE l.id = @id_location
+																													  AND   cl.id = l.id_contratLocation
+																													  AND   a.id = cl.id_abonnement;
+		
+		SET @id_permis = (SELECT c.id_permis FROM Conducteur c, ConducteurLocation cl  WHERE c.nom = @nom_conducteur
+																					   AND	 c.prenom = @prenom_conducteur
+																					   AND   cl.id_location = @id_location
+																					   AND   cl.piece_identite_conducteur = c.piece_identite
+																					   AND   cl.nationalite_conducteur = c.nationalite);
+																	    					
+		UPDATE Permis SET points_estimes=points_estimes - @nbPoint WHERE numero = @id_permis;
 
 		COMMIT TRANSACTION fixInfraction
 		PRINT('fixInfraction OK');
@@ -5252,3 +5424,518 @@ PRINT '_________________________________________________________________________
 		RETURN -1;
 	END CATCH
 GO
+
+------------------------------------------------------------
+-- Fichier     : fixVehicule.sql
+-- Date        : 27/03/2014
+-- Version     : 1.0
+-- Auteur      : Seyyid Ouir
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Modifie l'état du véhicule.
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+GO
+
+IF OBJECT_ID ('dbo.fixVehicule', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.fixVehicule;
+GO
+
+
+CREATE PROCEDURE dbo.fixVehicule
+	@matricule		nvarchar(50),
+	@statut_future	nvarchar(50)
+AS
+	BEGIN TRANSACTION fixVehicule
+	BEGIN TRY
+		DECLARE @Status_actuel nvarchar(50);
+
+		IF(@matricule IS NULL)
+		BEGIN
+			PRINT('fixVehicule: ERROR Le matricule du vehicule n''est pas renseigne');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1;
+		END
+		
+		IF not exists (SELECT 1 FROM Vehicule WHERE matricule = @matricule)	
+		BEGIN
+			PRINT('fixVehicule: ERROR Vehicule inexistant');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+		
+		IF(@statut_future IS NULL)
+		BEGIN
+			PRINT('fixVehicule: ERROR Le status souhaite du vehicule n''est pas renseigne');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1;
+		END
+		
+		IF @statut_future NOT IN ('Disponible', 'Louee', 'En panne', 'Perdue')
+		BEGIN
+			PRINT('fixVehicule: ERROR Status inconnu');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+		
+		SELECT @Status_actuel = statut FROM Vehicule WHERE matricule = @matricule;
+		
+		IF @statut_future = @Status_actuel
+		BEGIN
+			PRINT('fixVehicule: ERROR Le vehicule a deja ce status !');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+		
+		-- ('Louee' ou 'En panne' ou 'Perdue') -> 'Disponible'
+		
+		IF @statut_future = 'Disponible'
+		BEGIN
+			UPDATE Vehicule
+			SET statut = 'Disponible'
+			WHERE matricule = @matricule;
+		END
+		
+		-- ('Disponible' ou 'Louee') -> ('En panne' ou 'Perdue')
+		
+		IF @statut_future IN ('En panne', 'Perdue') AND @Status_actuel IN ('Disponible', 'Louee')
+		BEGIN
+			DECLARE @ReturnValue int;
+			
+			EXEC @ReturnValue = dbo.findOtherVehicule @matricule, 1, NULL;
+			IF ( @ReturnValue = -1)
+			BEGIN
+				PRINT('fixVehicule: ERROR pas reussi a remplacer le vehicule pour les reservations concernees !');
+				ROLLBACK TRANSACTION fixVehicule
+				RETURN -1
+			END
+		
+			UPDATE Vehicule
+			SET statut = @statut_future
+			WHERE matricule = @matricule;
+		END
+		
+		-- verifier le update
+		
+		SELECT @Status_actuel = statut FROM Vehicule WHERE matricule = @matricule;
+		
+		IF @statut_future <> @Status_actuel
+		BEGIN
+			PRINT('fixVehicule: ERROR L''operation a echouee !');
+			ROLLBACK TRANSACTION fixVehicule
+			RETURN -1
+		END
+
+		COMMIT TRANSACTION fixVehicule
+		PRINT('fixVehicule OK');
+		RETURN 1;
+		
+	END TRY
+	BEGIN CATCH
+		PRINT('fixVehicule: ERROR');
+		ROLLBACK TRANSACTION fixVehicule
+		RETURN -1;
+	END CATCH
+GO
+
+------------------------------------------------------------
+-- Fichier     : findOtherVehiculeWithElevation.sql
+-- Date        : 15/03/2014
+-- Version     : 1.0
+-- Auteur      : Neti Mohamed
+-- Correcteur  : 
+-- Testeur     : 
+-- Integrateur : 
+-- Commentaire : Permet de confirmer l'extention de la location du véhicule  
+--				 en cours de location  ou de remplacer 
+--				 toute les réservations affectées à un véhicule qui serai 
+--				 declaré par exemple endomager par d’autres véhicules de même modèle exactement.
+------------------------------------------------------------
+
+USE TAuto_IBDR;
+
+IF OBJECT_ID ('dbo.findOtherVehiculeWithElevation', 'P') IS NOT NULL
+	DROP PROCEDURE dbo.findOtherVehiculeWithElevation	
+GO
+
+CREATE PROCEDURE dbo.findOtherVehiculeWithElevation
+	@matricule 			nvarchar(50), -- PK
+	@itMustBeDone		bit, 		  -- true si c'est obligatoire (dans le cas d'une détérioration du véhicule), il faut modifier les réservations concernées
+									  -- false si c'est pour étendre un contrat utiliser l'argument suivant
+	@date_fin			datetime 	  -- permet de déterminer s'il est possible d'étendre la location jusqu'à cette date
+AS
+	BEGIN TRANSACTION findOtherVehiculeWithElevation
+	BEGIN TRY
+		
+		DECLARE @marque_modele			nvarchar(50),
+				@serie_modele			nvarchar(50),
+				@type_carburant_modele 	nvarchar(50),
+				@portieres_modele		tinyint,
+				@asLocation				int,
+				@idAbonne				int,
+				@date_fin_location 		datetime,
+				@isDispo				int,
+				@matricule_chreno 		nvarchar(50),
+				@returnPS				int,
+				@breakIsOK				int,
+				@categorie				varchar(50);
+				
+		IF ( @matricule IS NULL)
+		BEGIN
+			PRINT('findOtherVehiculeWithElevation : ERROR veuillez indiquer le matricule du véhicule');
+			ROLLBACK TRANSACTION findOtherVehiculeWithElevation
+			RETURN -1;
+		END
+		
+		IF ( (SELECT COUNT(*) FROM Vehicule WHERE matricule=@matricule) = 0)
+		BEGIN
+			PRINT('findOtherVehiculeWithElevation : ERROR aucun vehicule correspondant au matricule n''a été trouvé');
+			ROLLBACK TRANSACTION findOtherVehiculeWithElevation
+			RETURN -1;
+		END
+		
+		SET @marque_modele = (SELECT marque_modele FROM Vehicule WHERE matricule=@matricule);
+		SET @serie_modele = (SELECT serie_modele FROM Vehicule WHERE matricule=@matricule);
+		SET @type_carburant_modele = (SELECT type_carburant_modele FROM Vehicule WHERE matricule=@matricule);
+		SET @portieres_modele = (SELECT portieres_modele FROM Vehicule WHERE matricule=@matricule);
+		SET @categorie = (SELECT nom_categorie FROM CategorieModele WHERE marque_modele = @marque_modele
+																	AND serie_modele = @serie_modele
+																	AND type_carburant_modele = @type_carburant_modele
+																	AND portieres_modele = @portieres_modele);
+	
+/*		IF(@itMustBeDone = 'false')
+		BEGIN
+			IF ( @date_fin IS NULL)
+			BEGIN
+				PRINT('findOtherVehicule : ERROR veuillez indiquer la date de fin pour etendre la location');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+			IF ( @date_fin < GETDATE())
+			BEGIN
+				PRINT('findOtherVehicule : ERROR la date de fin indiquer pour etendre la location est déjà passée');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+			
+			--verifier qu'il existe une location en cours pour ce vehicule
+			SET @asLocation	= (SELECT COUNT(cl.date_fin) FROM ContratLocation cl, Location l WHERE l.matricule_vehicule = @matricule
+																							 AND   l.id_contratLocation = cl.id
+																							 AND   cl.date_fin_effective IS NULL);
+			IF ( @asLocation = 0)
+			BEGIN
+				PRINT('findOtherVehicule : ERROR pas de location en cours pour le vehicule indiqué');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+			
+			IF ( @asLocation > 1)
+			BEGIN
+				PRINT('findOtherVehicule : ERROR GROS PROBLEME, plusieurs  location en cours pour le vehicule indiqué');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+			
+			--recuperer l'id_abonnement ratacher au contratLocation
+			SET @idAbonne = (SELECT cl.id_abonnement FROM ContratLocation cl, Location l WHERE l.matricule_vehicule = @matricule
+																						 AND   l.id_contratLocation = cl.id
+																						 AND   cl.date_fin_effective IS NULL);
+			--recuperer la date de fin de la location en cours du vehicule
+			SET @date_fin_location = (SELECT cl.date_fin FROM ContratLocation cl, Location l WHERE l.matricule_vehicule = @matricule
+																							 AND   l.id_contratLocation = cl.id
+																							 AND   cl.date_fin_effective IS NULL);
+			
+			--verfier que la date fin pour l'extention est coherente
+			IF ( @date_fin_location >= @date_fin)
+			BEGIN
+				PRINT('findOtherVehicule : ERROR la date de fin indiquer pour etendre la location est anterieur a celle de la fin de location en cours');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+			
+
+			EXEC @isDispo =  dbo.isDisponible1 @matricule, @date_fin_location, @date_fin
+			IF( @isDispo = 1)
+			BEGIN																		  
+				PRINT('findOtherVehicule : INFO le vehicule en question est disponible pour la prologation');
+				COMMIT TRANSACTION modifyConducteur	
+				RETURN 1;
+			END
+			ELSE
+			BEGIN
+				PRINT('findOtherVehicule : INFO le vehicule en question n''est pas disponible pour la prologation');
+				ROLLBACK TRANSACTION findOtherVehicule
+				RETURN -1;
+			END
+		END
+*/
+		--si @itMustBeDone = true
+--		ELSE
+--		BEGIN
+
+			--pour chaque reservation qui correspondent aux vehicule endomager chercher un autre vehicule de meme modele qui colle au chreno
+				--si trouver, mise a jour de la table ReservationVehicule avec le matricule du nouveau vehicule
+				--si non un message de non possibiliter et on sort en annulant toute les modif precedente
+			DECLARE @id_res int,
+					@date_d datetime,
+					@date_f datetime;
+
+			DECLARE curseur_reservation CURSOR LOCAL FOR
+				 SELECT r.id FROM ReservationVehicule rv, Reservation r WHERE rv.matricule_vehicule = @matricule
+																		AND   rv.id_reservation = r.id
+
+			OPEN curseur_reservation
+			FETCH NEXT FROM curseur_reservation INTO @id_res
+
+			WHILE @@FETCH_STATUS = 0
+			BEGIN
+				--curseur sur les vehicule de meme modele
+				----------------------------
+				SET @date_d= (SELECT date_debut FROM Reservation WHERE id=@id_res)
+				SET @date_f= (SELECT date_fin FROM Reservation WHERE id=@id_res)
+--K1-----------------------------------------------
+				DECLARE curseur_matricule CURSOR FOR
+						SELECT matricule FROM Vehicule WHERE marque_modele = @marque_modele
+													   AND   serie_modele = @serie_modele
+													   AND   type_carburant_modele = @type_carburant_modele
+													   AND   portieres_modele = @portieres_modele
+													   AND   matricule <> @matricule;
+												   
+				OPEN curseur_matricule
+				FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+				SET @breakIsOK = 0;
+
+				WHILE @@FETCH_STATUS = 0
+				BEGIN
+
+					--si aucune reservation n'occupe le chreno souhaiité, on retourne 1 pour le vehicule et on sort
+					EXEC @isDispo = dbo.isDisponible1 @matricule_chreno, @date_d, @date_f
+
+					IF( @isDispo = 1)
+					BEGIN
+					
+						--modifie le matricule de la reservation dans reservation vehicule
+						UPDATE ReservationVehicule SET matricule_vehicule = @matricule_chreno WHERE id_reservation = @id_res
+																						      AND   matricule_vehicule = @matricule;
+						SET @breakIsOK = 1;
+						BREAK;
+					END
+					FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+				END
+				CLOSE curseur_matricule
+				DEALLOCATE curseur_matricule
+--FIN K1-----------------------------------------------
+				IF(@breakIsOK = 0)
+				BEGIN
+										PRINT('findOtherVehicule : Impossible de remplacer toute les reservation par un vehicule de meme modele exactement');
+										PRINT('findOtherVehicule : remplacer les reservation restante par des vehicule de meme equivalent avec surelevation');
+					--K2-----------------------------------------------
+										DECLARE curseur_matricule CURSOR FOR
+											SELECT matricule FROM Vehicule WHERE marque_modele = @marque_modele
+																		   AND   serie_modele = @serie_modele
+																		   AND   type_carburant_modele <> @type_carburant_modele
+																		   AND   portieres_modele <> @portieres_modele
+																		   AND   matricule <> @matricule
+																							 ;
+																	   
+									OPEN curseur_matricule
+									FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+									SET @breakIsOK = 0;
+
+									WHILE @@FETCH_STATUS = 0
+									BEGIN
+
+										--si aucune reservation n'occupe le chreno souhaiité, on retourne 1 pour le vehicule et on sort
+										EXEC @isDispo = dbo.isDisponible1 @matricule_chreno, @date_d, @date_f
+
+										IF( @isDispo = 1)
+										BEGIN
+										
+											--modifie le matricule de la reservation dans reservation vehicule
+											UPDATE ReservationVehicule SET matricule_vehicule = @matricule_chreno WHERE id_reservation = @id_res
+																												  AND   matricule_vehicule = @matricule;
+											SET @breakIsOK = 1;
+											BREAK;
+										END
+										FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+									END
+									CLOSE curseur_matricule
+									DEALLOCATE curseur_matricule
+					--FIN K2-----------------------------------------------
+									IF(@breakIsOK = 0)
+																BEGIN
+																	PRINT('findOtherVehicule : Impossible de remplacer toute les reservation par un vehicule de meme modele exactement');
+																	PRINT('findOtherVehicule : remplacer les reservation restante par des vehicule de meme equivalent avec surelevation');
+																	--ROLLBACK TRANSACTION findOtherVehicule
+																	--RETURN -1;
+												--K3 -----------------------------------------------				
+																	
+																	DECLARE curseur_matricule CURSOR FOR
+																		SELECT matricule FROM Vehicule ,CategorieModel cm WHERE marque_modele = @marque_modele
+																									   AND   serie_modele <> @serie_modele
+																									   AND   type_carburant_modele <> @type_carburant_modele
+																									   AND   portieres_modele <> @portieres_modele
+																									   AND   matricule <> @matricule
+																														   
+																									   AND	marque_modele = cm.marque_modele
+																									   AND  serie_modele=cm.serie_modele
+																									   AND  type_carburant_modele = cm.type_carburant_modele
+																									   AND  portieres_modele = cm.portieres_modele
+																									   AND	cm.nom_categorie=@categorie;
+																									   
+																									  
+																									   ;
+																								   
+																OPEN curseur_matricule
+																FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																SET @breakIsOK = 0;
+
+																WHILE @@FETCH_STATUS = 0
+																BEGIN
+
+																	--si aucune reservation n'occupe le chreno souhaiité, on retourne 1 pour le vehicule et on sort
+																	EXEC @isDispo = dbo.isDisponible1 @matricule_chreno, @date_d, @date_f
+
+																	IF( @isDispo = 1)
+																	BEGIN
+																	
+																		--modifie le matricule de la reservation dans reservation vehicule
+																		UPDATE ReservationVehicule SET matricule_vehicule = @matricule_chreno WHERE id_reservation = @id_res
+																																			  AND   matricule_vehicule = @matricule;
+																		SET @breakIsOK = 1;
+																		BREAK;
+																	END
+																	FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																END
+																CLOSE curseur_matricule
+																DEALLOCATE curseur_matricule
+											     --FIN K3-----------------------------------------------
+																									IF(@breakIsOK = 0)
+																									BEGIN
+																										PRINT('findOtherVehicule : Impossible de remplacer toute les reservation par un vehicule de meme modele exactement');
+																										PRINT('findOtherVehicule : remplacer les reservation restante par des vehicule de meme equivalent avec surelevation');
+																										
+																										--K 4-----------------------------------------------
+																																DECLARE curseur_matricule CURSOR FOR
+																																SELECT matricule FROM Vehicule v,CategorieModele cm WHERE v.marque_modele <> @marque_modele
+																																										   AND   v.serie_modele <> @serie_modele
+																																										   AND   v.type_carburant_modele = @type_carburant_modele
+																																										   AND   v.portieres_modele = @portieres_modele
+																																										   AND   v.matricule <> @matricule
+																																										   
+																																										   AND	v.marque_modele = cm.marque_modele
+																																										   AND  v.serie_modele=cm.serie_modele
+																																										   AND  v.type_carburant_modele = cm.type_carburant_modele
+																																										   AND  v.portieres_modele = cm.portieres_modele
+																																										   AND	cm.nom_categorie=@categorie;
+																																																	
+																																									   
+																																	OPEN curseur_matricule
+																																	FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																																	SET @breakIsOK = 0;
+
+																																	WHILE @@FETCH_STATUS = 0
+																																	BEGIN
+
+																																		--si aucune reservation n'occupe le chreno souhaiité, on retourne 1 pour le vehicule et on sort
+																																		EXEC @isDispo = dbo.isDisponible1 @matricule_chreno, @date_d, @date_f
+
+																																		IF( @isDispo = 1)
+																																		BEGIN
+																																		
+																																			--modifie le matricule de la reservation dans reservation vehicule
+																																			UPDATE ReservationVehicule SET matricule_vehicule = @matricule_chreno WHERE id_reservation = @id_res
+																																																				  AND   matricule_vehicule = @matricule;
+																																			SET @breakIsOK = 1;
+																																			BREAK;
+																																		END
+																																		FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																																	END
+																																	CLOSE curseur_matricule
+																																	DEALLOCATE curseur_matricule
+																											--FIN K4-----------------------------------------------
+																																	IF(@breakIsOK = 0)
+																																	
+																																	BEGIN
+																																	PRINT('findOtherVehicule : Impossible de remplacer toute les reservation par un vehicule de meme modele exactement');
+																																	PRINT('findOtherVehicule : remplacer les reservation restante par des vehicule de meme equivalent avec surelevation');
+																													-- K5-----------------------------------------------								
+																																								DECLARE curseur_matricule CURSOR FOR
+																																											SELECT v.matricule FROM Vehicule v,CategorieModele cm WHERE cm.marque_modele = v.marque_modele
+																																																					   AND  cm.serie_modele = v.serie_modele
+																																																					   AND  cm.type_carburant_modele = v.type_carburant_modele
+																																																					   AND  cm.portieres_modele = v.portieres_modele
+																																																					   AND	v.matricule <> @matricule
+																																																					   AND	cm.nom_categorie=@categorie
+																																																					   AND v.matricule NOT IN (SELECT v2.matricule FROM Vehicule v2  WHERE cm.marque_modele = v2.marque_modele
+																																																																						AND  cm.serie_modele = v2.serie_modele
+																																																																					   AND  cm.type_carburant_modele = v2.type_carburant_modele
+																																																																					   AND  cm.portieres_modele = v2.portieres_modele);
+																																																				   
+																																												OPEN curseur_matricule
+																																												FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																																												SET @breakIsOK = 0;
+
+																																												WHILE @@FETCH_STATUS = 0
+																																												BEGIN
+
+																																													--si aucune reservation n'occupe le chreno souhaiité, on retourne 1 pour le vehicule et on sort
+																																													EXEC @isDispo = dbo.isDisponible1 @matricule_chreno, @date_d, @date_f
+
+																																													IF( @isDispo = 1)
+																																													BEGIN
+																																													
+																																														--modifie le matricule de la reservation dans reservation vehicule
+																																														UPDATE ReservationVehicule SET matricule_vehicule = @matricule_chreno WHERE id_reservation = @id_res
+																																																															  AND   matricule_vehicule = @matricule;
+																																														SET @breakIsOK = 1;
+																																														BREAK;
+																																													END
+																																													FETCH NEXT FROM curseur_matricule INTO @matricule_chreno
+																																												END
+																																												CLOSE curseur_matricule
+																																												DEALLOCATE curseur_matricule
+																																						--FIN K5-----------------------------------------------
+																																												IF(@breakIsOK = 0)
+																																												
+																																												BEGIN
+																																												PRINT('findOtherVehicule : Impossible de remplacer toute les reservation par un vehicule de meme modele');
+																																												ROLLBACK TRANSACTION findOtherVehicule
+																																												RETURN -1;
+																																										
+																																						END
+																											
+																											END
+																END
+
+									END
+				-----------------------------
+				FETCH NEXT FROM curseur_reservation INTO @id_res
+			END
+			CLOSE curseur_reservation
+			DEALLOCATE curseur_reservation
+		END
+
+
+
+
+
+
+
+
+
+
+
+		COMMIT TRANSACTION modifyConducteur	
+		PRINT('findOtherVehicule OK : remplacement de toute les reservation par un vehicule de meme modele');
+		RETURN 1;
+	END TRY
+	BEGIN CATCH
+		PRINT('findOtherVehicule: ERROR');
+		ROLLBACK TRANSACTION findOtherVehicule
+		RETURN -1;
+	END CATCH
+GO
+

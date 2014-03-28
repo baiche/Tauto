@@ -13,7 +13,7 @@ rem ------------------------------------------------------------
 rem Parametrage des variables (a modifier par l'utilisateur)
 set SERVERNAME=.\SQLEXPRESS
 set DATABASENAME=TAuto_IBDR.dbo
-set PATHTOBATCH=C:\Users\boris\Documents\IBDR\Repository\Scripts_SQL_finaux\script_taches_planifiees
+set PATHTOBATCH=C:\Users\boris\Documents\IBDR\Repository\Scripts_SQL_finaux\5.5_script_taches_planifiees
 
 
 rem Generation des scripts de lancement des procedure stockees
