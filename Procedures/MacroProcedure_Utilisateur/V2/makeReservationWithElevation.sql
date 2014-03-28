@@ -2,9 +2,9 @@
 -- Fichier     : makeReservation.sql
 -- Date        : 15/03/2014
 -- Version     : 1.0
--- Auteur      : Baiche Mourad
--- Correcteur  : David Lecoconnier & Neti Mohamed
--- Testeur     : 
+-- Auteur      : Neti Mohamed
+-- Correcteur  : 
+-- Testeur     : Baiche Mourad
 -- Integrateur : 
 -- Commentaire : Renvoie l'id de la réservation, -1 en cas d'erreur
 ------------------------------------------------------------
@@ -91,6 +91,7 @@ AS
 				FETCH NEXT FROM model_cursor INTO @marque, @serie, @type_carburant, @portieres ;
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
+				PRINT('MOMO j''ffiche le model ds le quel je sios'+ convert(varchar(50),@marque)+', '+ convert(varchar(50),@serie)+', '+convert(varchar(50),@type_carburant)+', '+convert(varchar(50),@portieres));
 				--------boucle sur vehicule de meme modele
 					DECLARE matricule_cursor CURSOR LOCAL  
 						FOR SELECT matricule FROM Vehicule WHERE marque_modele=@marque 
