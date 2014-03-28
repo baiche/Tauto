@@ -12,7 +12,8 @@
 USE TAuto_IBDR;
 GO
 
---Test 1
+--Test 1 : ERROR Les informations concernant le conducteur sont incompletes
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int;
@@ -47,7 +48,8 @@ END CATCH
 GO
 
 
---Test 2
+--Test 2 : ERROR L'identifiant de la location n'est pas renseigne
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int;
@@ -82,7 +84,8 @@ END CATCH
 GO
 
 
---Test 3
+--Test 3 : ERROR Les informations concernant le conducteur sont incorrectes
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int;
@@ -117,7 +120,8 @@ END CATCH
 GO
 
 
---Test 4
+--Test 4 : ERROR L'identifiant de la location est incorrect
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int;
@@ -152,7 +156,8 @@ END CATCH
 GO
 
 
---Test 5
+--Test 5 : ERROR Le conducteur est deja associe a la location
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int,
@@ -202,7 +207,8 @@ END CATCH
 GO
 
 
---Test 6
+--Test 6 : associateConducteurToLocation OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int, 
@@ -286,7 +292,8 @@ END CATCH
 GO
 
 
---Test 7
+--Test 7 : associateConducteurToLocation OK
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @nbConducteurLocation_Avant int, @nbCompteAbonneConducteur_Avant int, 
 			@nbConducteurLocation_Apres int, @nbCompteAbonneConducteur_Apres int, 

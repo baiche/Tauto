@@ -12,7 +12,8 @@
 USE TAuto_IBDR;
 GO
 
---Test 1
+--Test 1 : Les informations concernant le compte abonne sont incompletes
+
 BEGIN TRY
 	DECLARE @ReturnValue int;
 
@@ -38,7 +39,8 @@ END CATCH
 GO
 
 
---Test 2
+--Test 2 : Il est deja en liste noire
+
 BEGIN TRY
 	DECLARE @ReturnValue int;
 
@@ -64,7 +66,8 @@ END CATCH
 GO
 
 
---Test 3
+--Test 3 : mettre le compte abonne ('Deluze', 'Alexis', '1974-02-12') dans la liste noire
+
 BEGIN TRY
 	DECLARE @ReturnValue int, @IsInBlackList_avant int, @IsInBlackList_apres int,
 	        @actif_avant int, @actif_apres int;
