@@ -16,7 +16,7 @@ IF OBJECT_ID ('dbo.closeTypeAbonnement', 'P') IS NOT NULL
 GO
 
 CREATE PROCEDURE dbo.closeTypeAbonnement
-	@nom 				nvarchar(50), -- PK
+	@nom 				nvarchar(50) -- PK
 AS
 	BEGIN TRANSACTION closeTypeAbonnement
 	BEGIN TRY

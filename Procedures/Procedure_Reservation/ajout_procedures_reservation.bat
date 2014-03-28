@@ -12,6 +12,7 @@ rem ------------------------------------------------------------
 
 SET mssqlInstanceName=%2
 
+sqlcmd -S %mssqlInstanceName% -i Procedure_annulerReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_createReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteReservation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_updateReservation.sql

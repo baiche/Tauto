@@ -14,6 +14,7 @@ SET mssqlInstanceName=%2
 
 sqlcmd -S %mssqlInstanceName% -i Procedure_createLocation.sql
 sqlcmd -S %mssqlInstanceName% -i Procedure_deleteLocation.sql
+sqlcmd -S %mssqlInstanceName% -i Procedure_updateLocation.sql
 
 if "%1"=="nopause" goto start
 pause

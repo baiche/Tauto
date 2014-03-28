@@ -4,7 +4,7 @@ rem -- Fichier     : run_peuplement.bat
 rem -- Date        : 17/02/2014
 rem -- Version     : 2.0
 rem -- Auteur      : Jean-Luc Amitousa Mankoy
-rem -- Correcteurs  : Allan Mottier
+rem -- Correcteurs  : Allan Mottier & Neti Mohamed
 rem -- Testeurs     : 
 rem -- Integrateur : Alexis Deluze
 rem -- Commentaire : 
