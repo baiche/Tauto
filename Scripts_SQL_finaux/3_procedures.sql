@@ -4585,28 +4585,28 @@ AS
 				
 		IF @id_Loc IS NULL
 		BEGIN
-			RAISERROR('Location pas trouvee', 10, -1);
-			RETURN -1;
+			RAISERROR('Location pas trouvee', 18, -1);
+			--RETURN -1;
 		END
 			
 		IF @idEtat IS NULL
 		BEGIN
-			RAISERROR('Etat inexistant', 10, -1);
-			RETURN -1;
+			RAISERROR('Etat inexistant', 18, -1);
+			--RETURN -1;
 		END		
 		
 		SELECT @date_ap = date_apres, @km_ap = km_apres, @fiche_ap = fiche_apres, @date_av = date_avant FROM Etat WHERE id = @idEtat;
 		
 		IF @date_ap IS NOT NULL OR @km_ap IS NOT NULL OR @fiche_ap NOT LIKE ''
 		BEGIN
-			RAISERROR('Etat deja termine', 10, -1);
-			RETURN -1;
+			RAISERROR('Etat deja termine', 18, -1);
+			--RETURN -1;
 		END
 			
 		IF @km_apres < (SELECT km_avant FROM Etat WHERE id = @idEtat)
 		BEGIN
-			RAISERROR('Kilometrage moins eleve que prevu', 10, -1);
-			RETURN -1;
+			RAISERROR('Kilometrage moins eleve que prevu', 18, -1);
+			--RETURN -1;
 		END
 		
 		IF @degat IS NULL
@@ -4715,8 +4715,8 @@ AS
 		SELECT @date_fi = date_fin_effective FROM ContratLocation WHERE id = @idContratLocation;
 		IF @date_fi IS NOT NULL
 		BEGIN
-			RAISERROR('Contrat deja fini', 10, -1);
-			RETURN -1;
+			RAISERROR('Contrat deja fini', 18, -1);
+			--RETURN -1;
 		END
 			
 		INSERT INTO @Location_T(id_facturation, id_etat, km) (SELECT l.id_facturation, l.id_etat, e.km_apres FROM Location l, Etat e WHERE l.id_contratLocation = @idContratLocation AND e.id = l.id_etat);
@@ -4732,18 +4732,18 @@ AS
 		BEGIN
 			IF @idFac IS NULL
 			BEGIN
-				RAISERROR('Pas de facture cree', 10, -1);
-				RETURN -1;
+				RAISERROR('Pas de facture cree', 18, -1);
+				--RETURN -1;
 			END
 			IF @km IS NULL
 			BEGIN
-				RAISERROR('Pas de km dans la location', 10, -1);
-				RETURN -1;
+				RAISERROR('Pas de km dans la location', 18, -1);
+				--RETURN -1;
 			END
 			IF (SELECT fiche_apres FROM Etat WHERE id = @idEtat) LIKE ''
 			BEGIN
-				RAISERROR('Etat non termine', 10, -1);
-				RETURN -1;
+				RAISERROR('Etat non termine', 18, -1);
+				--RETURN -1;
 			END
 			FETCH NEXT FROM Locat_cursor
 				INTO @idFac, @idEtat, @km;		

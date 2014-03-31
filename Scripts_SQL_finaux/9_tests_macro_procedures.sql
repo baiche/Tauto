@@ -14,6 +14,7 @@
 SET NOCOUNT ON
 GO
 
+USE TAuto_IBDR;
 ------------------------------------------------------------
 -- Fichier     : 20140310_TPS_TAuto_cancelReservation
 -- Date        : 18/03/2014
@@ -28,8 +29,7 @@ PRINT('--------------------------------------')
 PRINT('test de cancelReservation')
 PRINT('--------------------------------------')
 
-EXEC dbo.videTables
-USE TAuto_IBDR;
+EXEC dbo.peuplerBase
 
 DELETE FROM ReservationVehicule WHERE  matricule_vehicule='ff456'
 DELETE FROM CatalogueCategorie WHERE nom_catalogue='myCatalogue'
@@ -54,9 +54,9 @@ BEGIN TRY
 	PRINT('ajout d''un Vehicule--- Test OK');
 	
 	-- reserver un vehicule avec l'id de l'abonnement 1 
-	EXEC dbo.makeReservation 1,'2014-03-26','2014-03-26','Mercedes','GLA','Diesel',5;
+	EXEC dbo.makeReservation 1,'2014-03-26T00:00:00','2014-03-26T00:00:00','Mercedes','GLA','Diesel',5;
 	
-	EXEC dbo.cancelReservation 'ff456','2014-03-26','2014-03-26';
+	EXEC dbo.cancelReservation 'ff456','2014-03-26T00:00:00','2014-03-26T00:00:00';
 	PRINT ('Reservation annulee');
 END TRY
 BEGIN CATCH
@@ -1904,12 +1904,11 @@ BEGIN TRY
 		@idContratLocation = 5,
 		@date_fin_effective = NULL;
 		
-	DECLARE @nbContratLoc int;
-	SELECT @nbContratLoc = COUNT (*) FROM ContratLocation WHERE
-			id = 5 AND
-			date_fin_effective = GETDATE()
-
-	IF ( @nbContratLoc = 1 AND @ReturnValue = 1 )
+	DECLARE @date datetime;
+	SELECT @date = date_fin_effective FROM ContratLocation WHERE
+			id = 5
+			
+	IF DATEDIFF(SECOND, @date, GETDATE()) <= 1
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END
@@ -2058,7 +2057,7 @@ BEGIN TRY
 	SELECT @nbVeh = COUNT(*) FROM Vehicule WHERE matricule = '0775896wi' AND statut LIKE 'Disponible';
 	SELECT @factVal = montant FROM Facturation WHERE id = (SELECT id_facturation FROM Location WHERE id_etat = @ReturnValue);
 	
-	IF ( @nbEtat = 1 AND @nbVeh = 1 AND @factVal = 100.00 )
+	IF ( @nbEtat = 1 AND @nbVeh = 1 AND @factVal = 150.00 )
 	BEGIN
 		PRINT('------------------------------Test 2 OK');
 	END
@@ -3226,7 +3225,7 @@ END CATCH
 GO
 
 --Test 3
--- Insertion en mettant une date de fin < date de début
+-- Insertion en mettant une date nulle
 BEGIN TRY
 	DECLARE @ReturnValue int;
 	EXEC @ReturnValue = dbo.makeEtat
@@ -3244,11 +3243,13 @@ BEGIN TRY
 	BEGIN
 		PRINT('------------------------------Test 3 - Tuple inséré');
 	END*/
+	
+	DECLARE @date datetime;
+	SELECT @date = date_avant FROM Etat WHERE id = @ReturnValue
+	
+	PRINT @date
 
-	IF (  (SELECT COUNT (*) FROM Etat WHERE
-			id = 9 AND
-			date_avant = GETDATE()
-		) = 1)
+	IF DATEDIFF(SECOND, @date, GETDATE()) <= 1
 	BEGIN
 		PRINT('------------------------------Test 3 OK');
 	END
@@ -6697,7 +6698,7 @@ BEGIN TRY
 	END
 
 	-- remettre la base à son etat initial
-	EXECUTE dbo.removeConducteurFromLocation 1, '123456789', 'Francais'
+	--EXECUTE dbo.removeConducteurFromLocation 1, '123456789', 'Francais'
 
 END TRY
 BEGIN CATCH
@@ -6782,8 +6783,8 @@ BEGIN TRY
 	END
 
 	-- remettre la base à son etat initial
-	EXECUTE dbo.removeConducteurFromCompteAbonne 'Deluze', 'Alexis', '1974-02-12', '100000001', 'Anglais';
-	EXECUTE dbo.removeConducteurFromLocation 1, '100000001', 'Anglais';
+	--EXECUTE dbo.removeConducteurFromCompteAbonne 'Deluze', 'Alexis', '1974-02-12', '100000001', 'Anglais';
+	--EXECUTE dbo.removeConducteurFromLocation 1, '100000001', 'Anglais';
 
 END TRY
 BEGIN CATCH
@@ -6980,6 +6981,7 @@ BEGIN TRY
 	DECLARE @estGris bit;
 	EXEC dbo.checkImpayeTriggerRec;--4
 	EXEC dbo.checkImpayeTriggerRec;--5
+	EXEC dbo.checkImpayeTriggerRec;--6
 	EXEC dbo.checkImpayeTriggerRec;--gris
 		
 	SELECT @NbRelance = COUNT(*) FROM RelanceDecouvert
@@ -6994,6 +6996,9 @@ BEGIN TRY
 	WHERE   nom = 'PIndustrie'
 		AND prenom = 'PIndustrie'
 		AND date_naissance = '2014-02-17';
+		
+	PRINT @NbRelance
+	PRINT @estGris
 	
 	IF ( @NbRelance = 1 AND @estGris = 'true')
 	BEGIN
