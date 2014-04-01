@@ -3055,7 +3055,6 @@ AS
 		IF(@piece_identite_conducteur IS NULL OR @nationalite_conducteur IS NULL)
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Les informations concernant le conducteur sont incompletes');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1;
 		END
 
@@ -3063,7 +3062,6 @@ AS
 		IF(@id_location IS NULL)
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR L''identifiant de la location n''est pas renseigne');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1;
 		END
 
@@ -3074,7 +3072,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Les informations concernant le conducteur sont incorrectes');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
@@ -3085,7 +3082,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR L''identifiant de la location est incorrect');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
@@ -3098,7 +3094,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Le conducteur est deja associe a la location');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
@@ -3922,7 +3917,6 @@ AS
 		IF(@piece_identite IS NULL OR @nationalite IS NULL)
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incompletes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
@@ -3930,7 +3924,6 @@ AS
 		IF(@nom_typepermis IS NULL OR @date_obtention IS NULL)
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le type de permis sont incompletes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
@@ -3941,28 +3934,24 @@ AS
 			)	
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incorrectes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @nom_typepermis NOT IN ('A1', 'A2', 'B', 'C', 'D', 'E', 'F')
 		BEGIN
 			PRINT('declarePermis: ERROR Le type de permis est incorrect');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_obtention > GETDATE()
 		BEGIN
 			PRINT('declarePermis: ERROR La date d''obtention est postéreure à la date d''aujourd''hui');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_expiration IS NOT NULL AND @date_expiration < GETDATE()
 		BEGIN
 			PRINT('declarePermis: ERROR La date d''expiration est antérieure à la date d''aujourd''hui');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
@@ -3977,14 +3966,12 @@ AS
 			IF @numero IS NULL
 			BEGIN
 				PRINT('makeAbonnement: le numero de permis doit etre renseigne');
-				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 
 			IF exists (SELECT 1 FROM Permis WHERE numero = @numero)	
 			BEGIN
 				PRINT('declarePermis: ERROR Le numero de permis renseigne est le numero de permis d''un autre conducteur');
-				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 		
@@ -4372,7 +4359,6 @@ AS
 		IF(@nom IS NULL OR @prenom IS NULL OR @date_naissance IS NULL)
 		BEGIN
 			PRINT('declareConducteur: ERROR Les informations concernant le compte abonne sont incompletes');
-			ROLLBACK TRANSACTION blackListCompte
 			RETURN -1;
 		END
 		
@@ -4383,7 +4369,6 @@ AS
 		IF(@IsInBlackList = 1)
 		BEGIN
 			PRINT('declareConducteur: ERROR Il est deja en liste noire');
-			ROLLBACK TRANSACTION blackListCompte
 			RETURN -1;
 		END
 		
@@ -4415,6 +4400,8 @@ AS
 		DELETE FROM ReservationVehicule WHERE id_reservation in (select id_reservation from #Temp);
 		
 		DROP Table #Temp;
+		
+		-- a_supprimer abonnements...
 		
 		COMMIT TRANSACTION blackListCompte
 		PRINT('blackListCompte OK');
@@ -5757,28 +5744,24 @@ AS
 		IF(@matricule IS NULL)
 		BEGIN
 			PRINT('fixVehicule: ERROR Le matricule du vehicule n''est pas renseigne');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1;
 		END
 		
 		IF not exists (SELECT 1 FROM Vehicule WHERE matricule = @matricule)	
 		BEGIN
 			PRINT('fixVehicule: ERROR Vehicule inexistant');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		
 		IF(@statut_future IS NULL)
 		BEGIN
 			PRINT('fixVehicule: ERROR Le status souhaite du vehicule n''est pas renseigne');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1;
 		END
 		
 		IF @statut_future NOT IN ('Disponible', 'Louee', 'En panne', 'Perdue')
 		BEGIN
 			PRINT('fixVehicule: ERROR Status inconnu');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		
@@ -5787,7 +5770,6 @@ AS
 		IF @statut_future = @Status_actuel
 		BEGIN
 			PRINT('fixVehicule: ERROR Le vehicule a deja ce status !');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		
