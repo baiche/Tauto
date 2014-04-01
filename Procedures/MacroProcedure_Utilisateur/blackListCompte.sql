@@ -26,7 +26,6 @@ AS
 		IF(@nom IS NULL OR @prenom IS NULL OR @date_naissance IS NULL)
 		BEGIN
 			PRINT('declareConducteur: ERROR Les informations concernant le compte abonne sont incompletes');
-			ROLLBACK TRANSACTION blackListCompte
 			RETURN -1;
 		END
 		
@@ -37,7 +36,6 @@ AS
 		IF(@IsInBlackList = 1)
 		BEGIN
 			PRINT('declareConducteur: ERROR Il est deja en liste noire');
-			ROLLBACK TRANSACTION blackListCompte
 			RETURN -1;
 		END
 		
@@ -69,6 +67,8 @@ AS
 		DELETE FROM ReservationVehicule WHERE id_reservation in (select id_reservation from #Temp);
 		
 		DROP Table #Temp;
+		
+		-- a_supprimer les abonnements...
 		
 		COMMIT TRANSACTION blackListCompte
 		PRINT('blackListCompte OK');

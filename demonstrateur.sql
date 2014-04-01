@@ -605,6 +605,8 @@ GO
 
 --               - Reservation2 : 2014-07-11 -> 2014-09-22 
 --               (d'autres vehicules disponibles pour ces dates : 0775896wt ou 2775896wi)
+
+--               la base doit etre peuplee avant le test
 ------------------------------------------------------------
 
 IF OBJECT_ID ('dbo.testFixVehicule', 'P') IS NOT NULL

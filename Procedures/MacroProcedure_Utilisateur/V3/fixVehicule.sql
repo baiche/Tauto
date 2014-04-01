@@ -28,28 +28,24 @@ AS
 		IF(@matricule IS NULL)
 		BEGIN
 			PRINT('fixVehicule: ERROR Le matricule du vehicule n''est pas renseigne');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1;
 		END
 		
 		IF not exists (SELECT 1 FROM Vehicule WHERE matricule = @matricule)	
 		BEGIN
 			PRINT('fixVehicule: ERROR Vehicule inexistant');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		
 		IF(@statut_future IS NULL)
 		BEGIN
 			PRINT('fixVehicule: ERROR Le status souhaite du vehicule n''est pas renseigne');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1;
 		END
 		
 		IF @statut_future NOT IN ('Disponible', 'Louee', 'En panne', 'Perdue')
 		BEGIN
 			PRINT('fixVehicule: ERROR Status inconnu');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		
@@ -58,7 +54,6 @@ AS
 		IF @statut_future = @Status_actuel
 		BEGIN
 			PRINT('fixVehicule: ERROR Le vehicule a deja ce status !');
-			ROLLBACK TRANSACTION fixVehicule
 			RETURN -1
 		END
 		

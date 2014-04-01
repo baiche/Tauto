@@ -31,7 +31,6 @@ AS
 		IF(@piece_identite IS NULL OR @nationalite IS NULL)
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incompletes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
@@ -39,7 +38,6 @@ AS
 		IF(@nom_typepermis IS NULL OR @date_obtention IS NULL)
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le type de permis sont incompletes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1;
 		END
 		
@@ -50,28 +48,24 @@ AS
 			)	
 		BEGIN
 			PRINT('declarePermis: ERROR Les informations concernant le conducteur sont incorrectes');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @nom_typepermis NOT IN ('A1', 'A2', 'B', 'C', 'D', 'E', 'F')
 		BEGIN
 			PRINT('declarePermis: ERROR Le type de permis est incorrect');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_obtention > GETDATE()
 		BEGIN
 			PRINT('declarePermis: ERROR La date d''obtention est postéreure à la date d''aujourd''hui');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
 		IF @date_expiration IS NOT NULL AND @date_expiration < GETDATE()
 		BEGIN
 			PRINT('declarePermis: ERROR La date d''expiration est antérieure à la date d''aujourd''hui');
-			ROLLBACK TRANSACTION declarePermis
 			RETURN -1
 		END
 		
@@ -86,14 +80,12 @@ AS
 			IF @numero IS NULL
 			BEGIN
 				PRINT('makeAbonnement: le numero de permis doit etre renseigne');
-				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 
 			IF exists (SELECT 1 FROM Permis WHERE numero = @numero)	
 			BEGIN
 				PRINT('declarePermis: ERROR Le numero de permis renseigne est le numero de permis d''un autre conducteur');
-				ROLLBACK TRANSACTION declarePermis
 				RETURN -1
 			END
 		

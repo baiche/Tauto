@@ -28,7 +28,6 @@ AS
 		IF(@piece_identite_conducteur IS NULL OR @nationalite_conducteur IS NULL)
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Les informations concernant le conducteur sont incompletes');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1;
 		END
 
@@ -36,7 +35,6 @@ AS
 		IF(@id_location IS NULL)
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR L''identifiant de la location n''est pas renseigne');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1;
 		END
 
@@ -47,7 +45,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Les informations concernant le conducteur sont incorrectes');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
@@ -58,7 +55,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR L''identifiant de la location est incorrect');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
@@ -71,7 +67,6 @@ AS
 			)	
 		BEGIN
 			PRINT('associateConducteurToLocation: ERROR Le conducteur est deja associe a la location');
-			ROLLBACK TRANSACTION associateConducteurToLocation
 			RETURN -1
 		END
 		
